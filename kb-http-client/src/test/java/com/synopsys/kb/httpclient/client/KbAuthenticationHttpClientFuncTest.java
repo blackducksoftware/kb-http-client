@@ -11,6 +11,8 @@
  */
 package com.synopsys.kb.httpclient.client;
 
+import java.util.UUID;
+
 import org.apache.hc.core5.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -48,9 +50,11 @@ public class KbAuthenticationHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertFalse(httpResponse.getMessageBody().isPresent(), "Message body should not be present.");
     }
 
-    @Test
+    @Test(enabled = false)
     public void testAuthenticateWithValidLicenseKey() {
-        Result<Authentication> result = authenticationApi.authenticate("eng_hub_build");
+        // Requires KB test product registration key.
+        String licenseKey = UUID.randomUUID().toString();
+        Result<Authentication> result = authenticationApi.authenticate(licenseKey);
 
         HttpResponse<Authentication> httpResponse = result.getHttpResponse().orElse(null);
 

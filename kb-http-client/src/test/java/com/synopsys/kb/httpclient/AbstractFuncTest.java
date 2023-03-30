@@ -11,6 +11,8 @@
  */
 package com.synopsys.kb.httpclient;
 
+import java.util.UUID;
+
 import com.synopsys.kb.httpclient.api.HttpClientConfiguration;
 import com.synopsys.kb.httpclient.api.HttpClientConfigurationBuilder;
 import com.synopsys.kb.httpclient.api.IKbHttpApi;
@@ -33,7 +35,9 @@ public abstract class AbstractFuncTest {
     protected synchronized IKbHttpApi getKbHttpApi() {
         if (null == kbHttpApi) {
             HttpClientConfiguration httpClientConfiguration = HttpClientConfigurationBuilder.create().userAgent("KB HTTP Client/latest").build();
-            KbConfiguration kbConfiguration = new KbConfiguration("https", "kbtest.blackducksoftware.com", 443, "eng_hub_build");
+            // Requires KB test product registration key.
+            String licenseKey = UUID.randomUUID().toString();
+            KbConfiguration kbConfiguration = new KbConfiguration("https", "kbtest.blackducksoftware.com", 443, licenseKey);
 
             this.kbHttpApi = new KbHttpClientFactory().create(httpClientConfiguration, kbConfiguration);
         }
