@@ -1,0 +1,11 @@
+dependencies {
+	api 'com.google.guava:guava:31.1-jre'
+	api 'com.fasterxml.jackson.core:jackson-annotations:2.13.4'
+	api 'com.fasterxml.jackson.core:jackson-databind:2.13.4'
+	api 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.13.4'
+	api 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.4' 
+	api 'org.apache.httpcomponents.client5:httpclient5:5.2.1'
+	
+	testImplementation 'org.testng:testng:7.6.0'
+	testImplementation 'org.mockito:mockito-core:5.2.0'
+}
