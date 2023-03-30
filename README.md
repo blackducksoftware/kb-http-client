@@ -22,6 +22,25 @@ The KB HTTP client makes certain assumptions in favor of convention...
 * BDSA feature flags - Requests for BDSA vulnerability data given a license with disabled BDSA feature flag can result in a HTTP 402 Payment Required or HTTP 403 Forbidden response from KnowledgeBase services.   The KB HTTP client gracefully accounts for these response codes for applicable endpoints by translating the response as absent rather than error as a means of graceful handling.   This is done to bolster reliability.   Users still have the option to check for these response codes and handle them in an alternate manner if desired.
 * Authentication and authorization - The KB HTTP client will automatically authenticate to the KnowledgeBase to provide an authorization token.   The KB HTTP client will automatically reauthenticate to the KnowledgeBase when an existing, provided authorization token expires.
 
+# Supported endpoints
+
++ Component APIs
+    - Find component
+    - Search component (package identifier component matching)
++ Component version APIs
+    - Find component version
+    - Find component version CVE vulnerabilities
+    - Find component version BDSA vulnerabilities
+    - Find component version upgrade guidance
++ Component variant APIs
+    - Find component variant
+    - Find component variant CVE vulnerabilities
+    - Find component variant BDSA vulnerabilities
+    - Find component variant upgrade guidance
+    - Find component variant transitive upgrade guidance
++ License APIs
+    - Find license
+
 # TODOs
 
 * Add SLF4J API to support debug logging.
