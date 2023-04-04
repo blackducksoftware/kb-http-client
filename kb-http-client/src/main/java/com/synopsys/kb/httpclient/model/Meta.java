@@ -14,6 +14,7 @@ package com.synopsys.kb.httpclient.model;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -21,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 
 /**
  * Meta representation.
@@ -112,6 +114,29 @@ public class Meta extends AbstractEntity {
     }
 
     /**
+     * Finds the link ids that match the given relationship and uses the path variable as a finding mechanism.
+     *
+     * @param rel
+     *            The relationship.
+     * @param pathVariable
+     *            The path variable.
+     * @return Returns the link ids.
+     */
+    public Set<String> findLinkIds(String rel, String pathVariable) {
+        Preconditions.checkArgument(!Strings.isNullOrEmpty(rel), "Rel must not be null or empty.");
+        Preconditions.checkArgument(!Strings.isNullOrEmpty(pathVariable), "Path variable must not be null or empty.");
+
+        ImmutableSet.Builder<String> builder = ImmutableSet.builder();
+
+        List<Link> links = findLinks(rel);
+        for (Link link : links) {
+            link.getHrefId(pathVariable).ifPresent((id) -> builder.add(id));
+        }
+
+        return builder.build();
+    }
+
+    /**
      * Finds a unique link that matches the given relationship.
      * 
      * A unique link is present if there is one and only one link that matches the given relationship.
@@ -131,6 +156,22 @@ public class Meta extends AbstractEntity {
         }
 
         return Optional.ofNullable(link);
+    }
+
+    /**
+     * Finds a unique link id that matches the given relationship and uses the path variable as a finding mechanism.
+     *
+     * @param rel
+     *            The relationship.
+     * @param pathVariable
+     *            The path variable.
+     * @return Returns the unique link id if present and emptiness otherwise.
+     */
+    public Optional<String> findUniqueLinkId(String rel, String pathVariable) {
+        Preconditions.checkArgument(!Strings.isNullOrEmpty(rel), "Rel must not be null or empty.");
+        Preconditions.checkArgument(!Strings.isNullOrEmpty(pathVariable), "Path variable must not be null or empty.");
+
+        return findUniqueLink(rel).map((link) -> link.getHrefId(pathVariable).orElse(null));
     }
 
     @Override

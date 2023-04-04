@@ -39,10 +39,10 @@ public class KbConfigurationTest extends AbstractTest {
     }
 
     @Test
-    public void testToString() {
+    public void testGetHref() {
         KbConfiguration kbConfiguration = new KbConfiguration(KbConfiguration.DEFAULT_SCHEME, HOST, KbConfiguration.DEFAULT_PORT, LICENSE_KEY_SUPPLIER);
-        String value = kbConfiguration.toString();
+        String href = kbConfiguration.getHref();
 
-        Assert.assertEquals(value, KbConfiguration.DEFAULT_SCHEME + "://" + HOST + ':' + KbConfiguration.DEFAULT_PORT, "Values should be equal.");
+        Assert.assertEquals(href, KbConfiguration.DEFAULT_SCHEME + "://" + HOST + ':' + KbConfiguration.DEFAULT_PORT, "HREFs should be equal.");
     }
 }

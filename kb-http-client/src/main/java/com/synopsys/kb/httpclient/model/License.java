@@ -61,6 +61,19 @@ public class License {
         this.meta = meta;
     }
 
+    public License(License license) {
+        Objects.requireNonNull(license, "License must be initialized.");
+
+        this.name = license.getName();
+        this.codeSharing = license.getCodeSharing();
+        this.ownership = license.getOwnership();
+        this.lastUpdatedAt = license.getLastUpdatedAt();
+        this.spdxId = license.getSpdxId().orElse(null);
+        this.isParentDeleted = license.isParentDeleted();
+        this.restriction = license.getRestriction();
+        this.meta = license.getMeta();
+    }
+
     /**
      * Gets the id.
      *

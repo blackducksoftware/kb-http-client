@@ -24,7 +24,7 @@ public interface ILicenseApi {
     /**
      * Finds a license by its id.
      * 
-     * Response codes of 404 Not Found should be gracefully handled as an absent result.
+     * - Response codes of 404 Not Found should be gracefully handled as an absent result.
      * 
      * Expected response codes
      * 200 OK

@@ -1,0 +1,8 @@
+dependencies {
+    api project(':kb-http-client') 
+    
+	api 'com.google.guava:guava:31.1-jre'
+	
+	testImplementation 'org.testng:testng:7.6.0'
+	testImplementation 'org.mockito:mockito-core:5.2.0'
+}

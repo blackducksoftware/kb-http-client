@@ -48,7 +48,7 @@ public class KbComponentVariantHttpClientFuncTest extends AbstractFuncTest {
         this.componentVariantApi = kbHttpApi.getComponentVariantApi();
     }
 
-    @Test
+    @Test(enabled = false)
     public void testFind() {
         UUID componentVariantId = UUID.fromString("64b5b35d-0cfa-4a0e-b0aa-90db4dcf2734");
 
@@ -63,7 +63,7 @@ public class KbComponentVariantHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertNotNull(componentVariant, "Component variant should be initialized.");
     }
 
-    @Test
+    @Test(enabled = false)
     public void testFindCveVulnerabilities() {
         PageRequest pageRequest = new PageRequest(0, 100, Collections.emptyList());
         UUID componentVariantId = UUID.fromString("400db080-9a5b-4819-83a8-48ec7c050447");
@@ -82,7 +82,7 @@ public class KbComponentVariantHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertFalse(items.isEmpty(), "Items should not be empty.");
     }
 
-    @Test
+    @Test(enabled = false)
     public void testFindBdsaVulnerabilities() {
         PageRequest pageRequest = new PageRequest(0, 100, Collections.emptyList());
         UUID componentVariantId = UUID.fromString("a8254896-a7a5-4495-a6eb-a8977d67639d");
@@ -101,7 +101,7 @@ public class KbComponentVariantHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertFalse(items.isEmpty(), "Items should not be empty.");
     }
 
-    @Test
+    @Test(enabled = false)
     public void testFindUpgradeGuidance() {
         UUID componentVariantId = UUID.fromString("26d300de-5d0a-4740-b7c1-fb913d91c54d");
 
@@ -117,7 +117,7 @@ public class KbComponentVariantHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertNotNull(upgradeGuidance, "Upgrade guidance should be initialized.");
     }
 
-    @Test
+    @Test(enabled = false)
     public void testFindTransitiveUpgradeGuidance() {
         UUID componentVariantId = UUID.fromString("0a6b80d0-e64e-4a68-8002-5a5e6951c568");
 

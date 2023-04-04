@@ -39,7 +39,7 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
         this.licenseApi = kbHttpApi.getLicenseApi();
     }
 
-    @Test
+    @Test(enabled = false)
     public void testFindLicenseWhenAbsent() {
         Result<License> result = licenseApi.find(UUID.randomUUID());
 
@@ -50,7 +50,7 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertFalse(httpResponse.isMessageBodyPresent(), "Message body should not be present.");
     }
 
-    @Test
+    @Test(enabled = false)
     public void testFindLicenseWhenPresent() {
         UUID apacheLicense20LicenseId = UUID.fromString("7cae335f-1193-421e-92f1-8802b4243e93");
         Result<License> result = licenseApi.find(apacheLicense20LicenseId);

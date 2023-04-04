@@ -17,16 +17,31 @@ package com.synopsys.kb.httpclient.api;
  * @author skatzman
  */
 public final class Relationship {
+    // Designates a related BDSA vulnerability association.
+    public static final String BDSA = "bdsa";
+
+    // Designates a related child BDSA vulnerability association.
+    public static final String CHILD_BDSA = "child-bdsa";
+
+    // Designates a related child CVE vulnerability association.
+    public static final String CHILD_CVE = "child-cve";
+
     // Designates the internal API for an entity's associated component.
     public static final String COMPONENT = "component";
 
     // Designates the internal API for a component version's crypto algorithms when available.
     public static final String CRYPTO_ALGORITMHS = "crypto-algorithms";
 
+    // Designates a related CVE vulnerability association.
+    public static final String CVE = "cve";
+
+    // Designates the common weakness enumeration (CWE) value.
+    public static final String CWE = "cwe";
+
     // Designates the external homepage URI for a given entity such as an OSS component.
     public static final String HOMEPAGE = "homepage";
 
-    // Designates a internal migration of a source entity to a destination entity.
+    // Designates an internal migration of a source entity to a destination entity.
     public static final String MOVED = "moved";
 
     // Designates the internal API for a component's ongoing version when available. An ongoing version is
@@ -38,6 +53,9 @@ public final class Relationship {
 
     // Designates the external project URI for a given entity such as an OSS component.
     public static final String PROJECT = "project";
+
+    // Designates a related reference.
+    public static final String RELATED = "related";
 
     // Designates the external release URI for a given entity such as an OSS component version.
     public static final String RELEASE = "release";

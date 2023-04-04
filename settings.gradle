@@ -10,3 +10,4 @@
 rootProject.name = 'kb-http-client'
 
 include('kb-http-client')
+include('bd-kb-http-client')

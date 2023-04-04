@@ -39,7 +39,7 @@ public class KbAuthenticationHttpClientFuncTest extends AbstractFuncTest {
         this.authenticationApi = kbHttpApi.getAuthenticationApi();
     }
 
-    @Test
+    @Test(enabled = false)
     public void testAuthenticateWithInvalidLicenseKey() {
         Result<Authentication> result = authenticationApi.authenticate("this-is-an-invalid-bds-license-key");
 

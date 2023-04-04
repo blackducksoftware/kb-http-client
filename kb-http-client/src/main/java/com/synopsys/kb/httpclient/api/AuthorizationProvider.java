@@ -131,16 +131,8 @@ public class AuthorizationProvider {
 
     @Nullable
     private Authentication authenticate(String licenseKey) {
-        Authentication authentication = null;
-
         Result<Authentication> authenticationResult = authenticationApi.authenticate(licenseKey);
-        if (authenticationResult.isHttpResponsePresent()) {
-            HttpResponse<Authentication> authenticationHttpResponse = authenticationResult.getHttpResponse().orElse(null);
-            if (authenticationHttpResponse.isMessageBodyPresent()) {
-                authentication = authenticationHttpResponse.getMessageBody().orElse(null);
-            }
-        }
 
-        return authentication;
+        return authenticationResult.getHttpResponse().map((httpResponse) -> httpResponse.getMessageBody().orElse(null)).orElse(null);
     }
 }

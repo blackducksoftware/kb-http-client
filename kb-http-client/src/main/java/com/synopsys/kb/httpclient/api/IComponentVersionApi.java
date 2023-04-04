@@ -30,7 +30,7 @@ public interface IComponentVersionApi {
     /**
      * Finds a component version by its id.
      * 
-     * Response codes of 402 Payment Required and 403 Forbidden are recommended to be gracefully handled as an absent
+     * - Response codes of 402 Payment Required and 403 Forbidden are recommended to be gracefully handled as an absent
      * result. These response codes can occur if a KB request is made without the BDSA feature enabled within product
      * licensing.
      * 
@@ -59,6 +59,10 @@ public interface IComponentVersionApi {
     /**
      * Finds the CVE vulnerabilities associated to the given component version.
      *
+     * - Raw unfiltered CVE vulnerability representations are returned.
+     * - Take precaution for differing migration responses when making multiple requests for different pages for the
+     * same component version id.
+     * 
      * Expected response codes
      * 200 OK
      * 404 Not Found
@@ -77,6 +81,10 @@ public interface IComponentVersionApi {
 
     /**
      * Finds the BDSA vulnerabilities associated to the given component version.
+     * 
+     * - Raw unfiltered BDSA vulnerability representations are returned.
+     * - Take precaution for differing migration responses when making multiple requests for different pages for the
+     * same component version id.
      * 
      * Response codes of 402 Payment Required and 403 Forbidden are recommended to be gracefully handled as an absent
      * result. These response codes can occur if a KB request is made without the BDSA feature enabled within product
@@ -103,7 +111,7 @@ public interface IComponentVersionApi {
     /**
      * Finds upgrade guidance for the given component version.
      * 
-     * Response codes of 402 Payment Required and 403 Forbidden are recommended to be gracefully handled as an absent
+     * - Response codes of 402 Payment Required and 403 Forbidden are recommended to be gracefully handled as an absent
      * result. These response codes can occur if a KB request is made without the BDSA feature enabled within product
      * licensing.
      *

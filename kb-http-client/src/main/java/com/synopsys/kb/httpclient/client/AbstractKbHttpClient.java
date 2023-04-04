@@ -368,7 +368,7 @@ public abstract class AbstractKbHttpClient {
     }
 
     private URI constructUri(String path, Map<String, String> parameters) {
-        String fullPath = kbConfiguration.toString() + path;
+        String fullPath = kbConfiguration.getHref() + path;
 
         try {
             URIBuilder builder = new URIBuilder(fullPath);

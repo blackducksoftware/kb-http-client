@@ -1,0 +1,28 @@
+<!--
+  ~ Copyright (C) 2023 Synopsys Inc.
+  ~ http://www.synopsys.com/
+  ~ All rights reserved.
+  ~
+  ~ This software is the confidential and proprietary information of
+  ~ Synopsys ("Confidential Information"). You shall not
+  ~ disclose such Confidential Information and shall use it only in
+  ~ accordance with the terms of the license agreement you entered into
+  ~ with Synopsys.
+  -->
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="bd-kb-http-client" verbose="1">
+        <test name="bd-kb-http-client">
+                <groups>
+                        <run>
+                                <exclude name="WIP_GROUP" />
+                                <exclude name="DONT_RUN_IN_BUILD_GROUP" />
+                                <exclude name="SLOW_TEST_METHOD_GROUP" />
+                                <exclude name="SLOW_TEST_DONT_RUN_IN_CI_BUILD_GROUP" />
+                        </run>
+                </groups>
+                <classes>
+                        <class name="com.synopsys.bd.kb.httpclient.BdKbHttpClientTestFactory" />
+                </classes>
+        </test>
+</suite>

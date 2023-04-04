@@ -27,6 +27,8 @@ import com.synopsys.kb.httpclient.AbstractTest;
  * @author skatzman
  */
 public class LicenseTest extends AbstractTest {
+    private static final UUID ID = UUID.randomUUID();
+
     private static final String NAME = "Apache License 2.0";
 
     private static final LicenseCodeSharing CODE_SHARING = LicenseCodeSharing.PERMISSIVE;
@@ -37,11 +39,9 @@ public class LicenseTest extends AbstractTest {
 
     private static final String SPDX_ID = "Apache-2.0";
 
-    private static final Boolean IS_PARENT_DELETED = Boolean.FALSE;
+    private static final Boolean PARENT_DELETED = Boolean.FALSE;
 
     private static final LicenseRestriction RESTRICTION = LicenseRestriction.UNRESTRICTED;
-
-    private static final UUID ID = UUID.randomUUID();
 
     private static final String HREF = "https://kbtest.blackducksoftware.com/api/licenses/" + ID;
 
@@ -51,7 +51,7 @@ public class LicenseTest extends AbstractTest {
 
     @Test
     public void testConstructor() {
-        License license = new License(NAME, CODE_SHARING, OWNERSHIP, LAST_UPDATED_AT, SPDX_ID, IS_PARENT_DELETED, RESTRICTION, META);
+        License license = new License(NAME, CODE_SHARING, OWNERSHIP, LAST_UPDATED_AT, SPDX_ID, PARENT_DELETED, RESTRICTION, META);
 
         Assert.assertEquals(license.getId(), ID, "Ids should be equal.");
         Assert.assertEquals(license.getName(), NAME, "Names should be equal.");
@@ -59,14 +59,14 @@ public class LicenseTest extends AbstractTest {
         Assert.assertEquals(license.getOwnership(), OWNERSHIP, "Ownerships should be equal.");
         Assert.assertEquals(license.getLastUpdatedAt(), LAST_UPDATED_AT, "Last updated ats should be equal.");
         Assert.assertEquals(license.getSpdxId().orElse(null), SPDX_ID, "SPDX ids should be equal.");
-        Assert.assertEquals(license.isParentDeleted(), IS_PARENT_DELETED, "Is parent deleted flags should be equal.");
+        Assert.assertEquals(license.isParentDeleted(), PARENT_DELETED.booleanValue(), "Is parent deleted flags should be equal.");
         Assert.assertEquals(license.getRestriction(), RESTRICTION, "Restrictions should be equal.");
         Assert.assertEquals(license.getMeta(), META, "Metas should be equal.");
     }
 
     @Test
     public void testDeserialization() throws JsonProcessingException {
-        License license = new License(NAME, CODE_SHARING, OWNERSHIP, LAST_UPDATED_AT, SPDX_ID, IS_PARENT_DELETED, RESTRICTION, META);
+        License license = new License(NAME, CODE_SHARING, OWNERSHIP, LAST_UPDATED_AT, SPDX_ID, PARENT_DELETED, RESTRICTION, META);
 
         String json = serialize(license);
         License result = deserialize(json, License.class);
@@ -76,7 +76,7 @@ public class LicenseTest extends AbstractTest {
         Assert.assertEquals(result.getOwnership(), OWNERSHIP, "Ownerships should be equal.");
         Assert.assertNotNull(result.getLastUpdatedAt(), "Last updated at should be initialized.");
         Assert.assertEquals(result.getSpdxId().orElse(null), SPDX_ID, "SPDX ids should be equal.");
-        Assert.assertEquals(result.isParentDeleted(), IS_PARENT_DELETED, "Is parent deleted flags should be equal.");
+        Assert.assertEquals(result.isParentDeleted(), PARENT_DELETED.booleanValue(), "Is parent deleted flags should be equal.");
         Assert.assertEquals(result.getRestriction(), RESTRICTION, "Restrictions should be equal.");
         Assert.assertEquals(result.getMeta(), META, "Metas should be equal.");
     }

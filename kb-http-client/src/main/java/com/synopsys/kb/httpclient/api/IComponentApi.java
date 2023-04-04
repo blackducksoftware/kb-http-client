@@ -45,7 +45,7 @@ public interface IComponentApi {
      * 
      * This operation is used to match package identifiers to components.
      * 
-     * Response codes of 400 Bad Request, 404 Not Found, and 410 Gone should be gracefully handled as an absent search
+     * - Response codes of 400 Bad Request, 404 Not Found, and 410 Gone should be gracefully handled as an absent search
      * result.
      * 
      * Expected response codes

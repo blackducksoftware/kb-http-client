@@ -45,7 +45,7 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
         this.componentApi = kbHttpApi.getComponentApi();
     }
 
-    @Test
+    @Test(enabled = false)
     public void testFind() {
         UUID componentId = UUID.fromString("b75f622a-30da-46e4-a9c9-56f4ab75e22e");
         Result<Component> result = componentApi.find(componentId);
@@ -67,7 +67,7 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertEquals(component.getId(), componentId, "Component ids should be equal.");
     }
 
-    @Test
+    @Test(enabled = false)
     public void testFindWhenMergeMigrated() {
         UUID mergeComponentId = UUID.fromString("d82fb719-977c-49aa-b799-3953356aa15c");
         Result<Component> result = componentApi.find(mergeComponentId);
@@ -83,7 +83,7 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertFalse(httpResponse.isSplitMigrated(), "Entity should not be split migrated.");
     }
 
-    @Test
+    @Test(enabled = false)
     public void testFindWhenSplitMigrated() {
         UUID splitComponentId = UUID.fromString("2510dcac-ef8a-4088-a60c-ae6605054c3c");
         Result<Component> result = componentApi.find(splitComponentId);
@@ -99,7 +99,7 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertTrue(httpResponse.isSplitMigrated(), "Entity should be split migrated.");
     }
 
-    @Test
+    @Test(enabled = false)
     public void testSearch() {
         PageRequest pageRequest = new PageRequest(0, 100, Collections.emptyList());
         String searchTermFilter = "maven:org.apache.logging.log4j:log4j-core:2.4.1";

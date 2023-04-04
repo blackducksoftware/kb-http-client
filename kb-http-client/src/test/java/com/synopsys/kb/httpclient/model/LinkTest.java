@@ -11,6 +11,7 @@
  */
 package com.synopsys.kb.httpclient.model;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.testng.Assert;
@@ -27,7 +28,9 @@ import com.synopsys.kb.httpclient.AbstractTest;
 public class LinkTest extends AbstractTest {
     private static final String REL = "text";
 
-    private static final String HREF = "https://kbtest.blackducksoftware.com/api/licenses/" + UUID.randomUUID() + "/text";
+    private static final UUID ID = UUID.randomUUID();
+
+    private static final String HREF = "https://kbtest.blackducksoftware.com/api/licenses/" + ID + "/text";
 
     @Test
     public void testConstructor() {
@@ -35,6 +38,24 @@ public class LinkTest extends AbstractTest {
 
         Assert.assertEquals(link.getRel(), REL, "Rels should be equal.");
         Assert.assertEquals(link.getHref(), HREF, "HREFs should be equal.");
+    }
+
+    @Test
+    public void testGetHrefIdWhenAbsent() {
+        Link link = new Link(REL, HREF);
+
+        Optional<String> hrefId = link.getHrefId("components");
+
+        Assert.assertFalse(hrefId.isPresent(), "HREF id should not be present.");
+    }
+
+    @Test
+    public void testGetHrefIdWhenPresent() {
+        Link link = new Link(REL, HREF);
+
+        String hrefId = link.getHrefId("licenses").orElse(null);
+
+        Assert.assertEquals(hrefId, ID.toString(), "HREF ids should be equal.");
     }
 
     @Test

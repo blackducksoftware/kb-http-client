@@ -73,6 +73,21 @@ public class ComponentVariant extends AbstractEntity {
         this.meta = meta;
     }
 
+    public ComponentVariant(ComponentVariant componentVariant) {
+        Objects.requireNonNull(componentVariant, "Component variant must be initialized.");
+
+        this.version = componentVariant.getVersion();
+        this.externalNamespace = componentVariant.getExternalNamespace().orElse(null);
+        this.isExternalNamespaceDistribution = componentVariant.isExternalNamespaceDistribution();
+        this.externalId = componentVariant.getExternalId().orElse(null);
+        this.packageUrl = componentVariant.getPackageUrl().orElse(null);
+        this.type = componentVariant.getType();
+        this.licenseDefinition = componentVariant.getLicenseDefinition().orElse(null);
+        this.isDeleted = componentVariant.isDeleted();
+        this.isComponentIntelligencePresent = componentVariant.isComponentIntelligencePresent();
+        this.meta = componentVariant.getMeta();
+    }
+
     /**
      * Gets the id.
      *
@@ -120,7 +135,7 @@ public class ComponentVariant extends AbstractEntity {
     }
 
     public Optional<String> getExternalId() {
-        return Optional.of(externalId);
+        return Optional.ofNullable(externalId);
     }
 
     public boolean isExternalNamespaceDistribution() {

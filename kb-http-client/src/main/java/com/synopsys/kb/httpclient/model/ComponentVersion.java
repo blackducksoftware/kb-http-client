@@ -62,6 +62,18 @@ public class ComponentVersion extends AbstractEntity {
         this.meta = meta;
     }
 
+    public ComponentVersion(ComponentVersion componentVersion) {
+        Objects.requireNonNull(componentVersion, "Component version must be initialized.");
+
+        this.version = componentVersion.getVersion().orElse(null);
+        this.releasedOn = componentVersion.getReleasedOn().orElse(null);
+        this.licenseDefinition = componentVersion.getLicenseDefinition().orElse(null);
+        this.riskProfile = componentVersion.getRiskProfile();
+        this.isDeleted = componentVersion.isDeleted();
+        this.isComponentIntelligencePresent = componentVersion.isComponentIntelligencePresent();
+        this.meta = componentVersion.getMeta();
+    }
+
     /**
      * Gets the id.
      *

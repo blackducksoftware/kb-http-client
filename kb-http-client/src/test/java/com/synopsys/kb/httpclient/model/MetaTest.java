@@ -13,6 +13,7 @@ package com.synopsys.kb.httpclient.model;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 import org.testng.Assert;
@@ -164,6 +165,49 @@ public class MetaTest extends AbstractTest {
     }
 
     @Test
+    public void testFindLinkIdsWhenAbsent() {
+        Link link = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + UUID.randomUUID());
+        List<Link> links = List.of(link);
+        Meta meta = new Meta(HREF, links);
+
+        Set<String> ids = meta.findLinkIds("pears", "pears");
+
+        Assert.assertTrue(ids.isEmpty(), "Ids should be empty.");
+    }
+
+    @Test
+    public void testFindLinkIdsWithSinglePresentLink() {
+        UUID id = UUID.randomUUID();
+        Link link = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + id);
+        List<Link> links = List.of(link);
+        Meta meta = new Meta(HREF, links);
+
+        Set<String> ids = meta.findLinkIds("apples", "apples");
+
+        Assert.assertEquals(ids.size(), 1, "Number of ids should be equal.");
+        Assert.assertTrue(ids.contains(id.toString()), "Id should be present.");
+    }
+
+    @Test
+    public void testFindLinkIdsWithMultiplePresentLinks() {
+        UUID id1 = UUID.randomUUID();
+        UUID id2 = UUID.randomUUID();
+        UUID id3 = UUID.randomUUID();
+        Link link1 = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + id1);
+        Link link2 = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + id2);
+        Link link3 = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + id3);
+        List<Link> links = List.of(link1, link2, link3);
+        Meta meta = new Meta(HREF, links);
+
+        Set<String> ids = meta.findLinkIds("apples", "apples");
+
+        Assert.assertEquals(ids.size(), 3, "Number of ids should be equal.");
+        Assert.assertTrue(ids.contains(id1.toString()), "Id should be present.");
+        Assert.assertTrue(ids.contains(id2.toString()), "Id should be present.");
+        Assert.assertTrue(ids.contains(id3.toString()), "Id should be present.");
+    }
+
+    @Test
     public void testFindUniqueLinkWhenAbsent() {
         Link link = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + UUID.randomUUID());
         List<Link> links = List.of(link);
@@ -196,6 +240,46 @@ public class MetaTest extends AbstractTest {
         Optional<Link> uniqueLink = meta.findUniqueLink("apples");
 
         Assert.assertFalse(uniqueLink.isPresent(), "Unique link should not be present.");
+    }
+
+    @Test
+    public void testFindUniqueLinkIdWhenAbsent() {
+        Link link = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + UUID.randomUUID());
+        List<Link> links = List.of(link);
+        Meta meta = new Meta(HREF, links);
+
+        Optional<String> optionalId = meta.findUniqueLinkId("pears", "pears");
+
+        Assert.assertFalse(optionalId.isPresent(), "Id should not be present.");
+    }
+
+    @Test
+    public void testFindUniqueLinkIdWithSinglePresentLink() {
+        UUID id = UUID.randomUUID();
+        Link link = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + id);
+        List<Link> links = List.of(link);
+        Meta meta = new Meta(HREF, links);
+
+        Optional<String> optionalId = meta.findUniqueLinkId("apples", "apples");
+
+        Assert.assertTrue(optionalId.isPresent(), "Id should be present.");
+        Assert.assertEquals(optionalId.orElse(null), id.toString(), "Ids should be equal.");
+    }
+
+    @Test
+    public void testFindUniqueLinkIdWithMultiplePresentLinks() {
+        UUID id1 = UUID.randomUUID();
+        UUID id2 = UUID.randomUUID();
+        UUID id3 = UUID.randomUUID();
+        Link link1 = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + id1);
+        Link link2 = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + id2);
+        Link link3 = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + id3);
+        List<Link> links = List.of(link1, link2, link3);
+        Meta meta = new Meta(HREF, links);
+
+        Optional<String> optionalId = meta.findUniqueLinkId("apples", "apples");
+
+        Assert.assertFalse(optionalId.isPresent(), "Id should not be present.");
     }
 
     @Test

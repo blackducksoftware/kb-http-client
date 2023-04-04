@@ -12,6 +12,7 @@
 package com.synopsys.kb.httpclient.model;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * 
  * @author skatzman
  */
-public class Link {
+public class Link extends AbstractEntity {
     private final String rel;
 
     private final String href;
@@ -39,6 +40,17 @@ public class Link {
 
     public String getHref() {
         return href;
+    }
+
+    /**
+     * Finds the HREF's id using the path variable as a finding mechanism.
+     *
+     * @param pathVariable
+     *            The path variable.
+     * @return Returns the HREF id if present and absence otherwise.
+     */
+    public Optional<String> getHrefId(String pathVariable) {
+        return extractId(getHref(), pathVariable);
     }
 
     @Override

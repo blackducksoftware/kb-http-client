@@ -20,9 +20,11 @@ import com.google.common.base.Strings;
 /**
  * KnowledgeBase access configuration.
  * 
+ * Also acts as a supplier for the base HREF for KnowledgeBase connectivity.
+ * 
  * @author skatzman
  */
-public class KbConfiguration {
+public class KbConfiguration implements Supplier<String> {
     public static final String DEFAULT_SCHEME = "https";
 
     public static final String DEFAULT_HOST = "kb.blackducksoftware.com";
@@ -127,8 +129,12 @@ public class KbConfiguration {
         return licenseKeySupplier;
     }
 
-    @Override
-    public String toString() {
+    public String getHref() {
         return scheme + "://" + host + ':' + port;
+    }
+
+    @Override
+    public String get() {
+        return getHref();
     }
 }
