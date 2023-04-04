@@ -26,6 +26,8 @@ public interface IComponentApi {
     /**
      * Finds a component by its id.
      * 
+     * This operation explicitly does NOT follow migration links.
+     * 
      * Expected response codes
      * 200 OK
      * 404 Not Found

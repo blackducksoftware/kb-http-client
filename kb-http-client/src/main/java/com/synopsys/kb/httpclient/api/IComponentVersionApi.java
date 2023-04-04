@@ -30,6 +30,8 @@ public interface IComponentVersionApi {
     /**
      * Finds a component version by its id.
      * 
+     * This operation explicitly does NOT follow migration links.
+     * 
      * - Response codes of 402 Payment Required and 403 Forbidden are recommended to be gracefully handled as an absent
      * result. These response codes can occur if a KB request is made without the BDSA feature enabled within product
      * licensing.
@@ -59,6 +61,8 @@ public interface IComponentVersionApi {
     /**
      * Finds the CVE vulnerabilities associated to the given component version.
      *
+     * This operation explicitly does NOT follow migration links.
+     *
      * - Raw unfiltered CVE vulnerability representations are returned.
      * - Take precaution for differing migration responses when making multiple requests for different pages for the
      * same component version id.
@@ -81,6 +85,8 @@ public interface IComponentVersionApi {
 
     /**
      * Finds the BDSA vulnerabilities associated to the given component version.
+     * 
+     * This operation explicitly does NOT follow migration links.
      * 
      * - Raw unfiltered BDSA vulnerability representations are returned.
      * - Take precaution for differing migration responses when making multiple requests for different pages for the
@@ -110,6 +116,8 @@ public interface IComponentVersionApi {
 
     /**
      * Finds upgrade guidance for the given component version.
+     * 
+     * This operation explicitly does NOT follow migration links.
      * 
      * - Response codes of 402 Payment Required and 403 Forbidden are recommended to be gracefully handled as an absent
      * result. These response codes can occur if a KB request is made without the BDSA feature enabled within product
