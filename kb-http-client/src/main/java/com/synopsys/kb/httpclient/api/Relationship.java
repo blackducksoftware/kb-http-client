@@ -44,12 +44,18 @@ public final class Relationship {
     // Designates an internal migration of a source entity to a destination entity.
     public static final String MOVED = "moved";
 
+    // Designates the external URI for the next content section.
+    public static final String NEXT = "next";
+
     // Designates the internal API for a component's ongoing version when available. An ongoing version is
     // defined and sourced from OpenHub.
     public static final String ONGOING_VERSIONS = "ongoing-versions";
 
     // Designates the external OpenHub URI for a given OSS component.
     public static final String OPEN_HUB = "openHub";
+
+    // Designates the external URI for the previous content section.
+    public static final String PREV = "prev";
 
     // Designates the external project URI for a given entity such as an OSS component.
     public static final String PROJECT = "project";
