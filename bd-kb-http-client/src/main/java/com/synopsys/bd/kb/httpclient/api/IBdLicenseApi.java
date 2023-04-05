@@ -14,7 +14,9 @@ package com.synopsys.bd.kb.httpclient.api;
 import java.util.UUID;
 
 import com.synopsys.bd.kb.httpclient.model.BdLicense;
+import com.synopsys.kb.httpclient.api.PageRequest;
 import com.synopsys.kb.httpclient.api.Result;
+import com.synopsys.kb.httpclient.model.Page;
 
 /**
  * Black Duck-centric license API interface.
@@ -23,7 +25,7 @@ import com.synopsys.kb.httpclient.api.Result;
  */
 public interface IBdLicenseApi {
     /**
-     * Finds a Black Duck license by its id.
+     * Finds a Black Duck-centric license by its id.
      * 
      * Expected response codes
      * 200 OK
@@ -34,4 +36,16 @@ public interface IBdLicenseApi {
      * @return Returns the Black Duck-centric license result.
      */
     Result<BdLicense> find(UUID licenseId);
+
+    /**
+     * Finds many Black Duck-centric licenses.
+     * 
+     * Expected response codes
+     * 200 OK
+     * 
+     * @param pageRequest
+     *            The page request.
+     * @return Returns the Black Duck-centric license page result.
+     */
+    Result<Page<BdLicense>> findMany(PageRequest pageRequest);
 }

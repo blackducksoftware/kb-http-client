@@ -43,7 +43,8 @@ The Black Duck-centric KB HTTP client makes certain assumptions in favor of conv
 + Component variant
    - Find component variant (converts to BD-centric component variant result).
 + License
-   - Find license (converts to BD-centric license result).   
+   - Find license (converts to BD-centric license result).  
+   - Find many licenses (converts to BD-centric license page result). 
    
 ## TODOs   
 

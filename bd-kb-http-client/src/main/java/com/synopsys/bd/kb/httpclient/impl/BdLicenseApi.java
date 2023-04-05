@@ -11,15 +11,20 @@
  */
 package com.synopsys.bd.kb.httpclient.impl;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import com.synopsys.bd.kb.httpclient.api.IBdLicenseApi;
 import com.synopsys.bd.kb.httpclient.model.BdLicense;
 import com.synopsys.kb.httpclient.api.ILicenseApi;
+import com.synopsys.kb.httpclient.api.PageRequest;
 import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.License;
+import com.synopsys.kb.httpclient.model.Meta;
+import com.synopsys.kb.httpclient.model.Page;
 
 /**
  * Black Duck-centric license API implementation.
@@ -46,6 +51,23 @@ public class BdLicenseApi extends AbstractBdApi implements IBdLicenseApi {
         // Convert a license to a BD license.
         Function<License, BdLicense> conversionFunction = (license) -> {
             return new BdLicense(license);
+        };
+
+        return convert(result, conversionFunction);
+    }
+
+    @Override
+    public Result<Page<BdLicense>> findMany(PageRequest pageRequest) {
+        Objects.requireNonNull(pageRequest, "Page request must be initialized.");
+
+        Result<Page<License>> result = licenseApi.findMany(pageRequest);
+
+        Function<Page<License>, Page<BdLicense>> conversionFunction = (licensePage) -> {
+            int totalCount = licensePage.getTotalCount();
+            List<BdLicense> bdLicenses = licensePage.getItems().stream().map(BdLicense::new).collect(Collectors.toList());
+            Meta meta = licensePage.getMeta();
+
+            return new Page<>(totalCount, bdLicenses, meta);
         };
 
         return convert(result, conversionFunction);

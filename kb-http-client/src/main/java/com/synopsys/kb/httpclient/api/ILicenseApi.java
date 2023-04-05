@@ -14,6 +14,7 @@ package com.synopsys.kb.httpclient.api;
 import java.util.UUID;
 
 import com.synopsys.kb.httpclient.model.License;
+import com.synopsys.kb.httpclient.model.Page;
 
 /**
  * License API interface.
@@ -45,7 +46,19 @@ public interface ILicenseApi {
      * 
      * @param licenseId
      *            The license id.
-     * @return Returns the orignal license text.
+     * @return Returns the original license text result.
      */
     Result<String> findText(UUID licenseId);
+
+    /**
+     * Finds many licenses.
+     * 
+     * Expected response codes
+     * 200 OK
+     * 
+     * @param pageRequest
+     *            The page request.
+     * @return Returns the license page result.
+     */
+    Result<Page<License>> findMany(PageRequest pageRequest);
 }

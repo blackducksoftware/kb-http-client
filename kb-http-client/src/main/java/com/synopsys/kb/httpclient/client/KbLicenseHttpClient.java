@@ -13,21 +13,27 @@ package com.synopsys.kb.httpclient.client;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.core5.http.ClassicHttpRequest;
 import org.apache.hc.core5.http.Header;
 import org.apache.hc.core5.http.HttpHeaders;
+import org.apache.hc.core5.http.HttpStatus;
 import org.apache.hc.core5.http.message.BasicHeader;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.synopsys.kb.httpclient.api.AuthorizationProvider;
 import com.synopsys.kb.httpclient.api.ILicenseApi;
 import com.synopsys.kb.httpclient.api.KbConfiguration;
+import com.synopsys.kb.httpclient.api.PageRequest;
 import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.License;
+import com.synopsys.kb.httpclient.model.Page;
 
 /**
  * License HTTP client implementation.
@@ -71,5 +77,23 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
                 DEFAULT_EXPECTED_CODES,
                 true,
                 false);
+    }
+
+    @Override
+    public Result<Page<License>> findMany(PageRequest pageRequest) {
+        Objects.requireNonNull(pageRequest, "Page request must be initialized.");
+
+        Map<String, String> pageRequestParameters = constructPageRequestParameters(pageRequest);
+        Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_COMPONENT_DETAILS_V4_JSON);
+        Collection<Header> headers = List.of(acceptHeader);
+        ClassicHttpRequest request = constructGetHttpRequest("/api/licenses", pageRequestParameters, headers);
+
+        return execute(request,
+                DEFAULT_SUCCESS_CODES,
+                Set.of(HttpStatus.SC_OK),
+                true, // Reauthenticate on Unauthorized response.
+                false, // Request does not trigger migrated response.
+                new TypeReference<Page<License>>() {
+                });
     }
 }

@@ -42,6 +42,7 @@ The KB HTTP client makes certain assumptions in favor of convention...
 + License APIs
     - Find license
     - Find license text    
+    - Find many licenses
 + Activity APIs
     - Find component activities
     - Find component version activities
