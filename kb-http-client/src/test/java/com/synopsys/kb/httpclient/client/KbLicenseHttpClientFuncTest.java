@@ -40,7 +40,7 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test(enabled = false)
-    public void testFindLicenseWhenAbsent() {
+    public void testFindWhenAbsent() {
         Result<License> result = licenseApi.find(UUID.randomUUID());
 
         HttpResponse<License> httpResponse = result.getHttpResponse().orElse(null);
@@ -51,7 +51,7 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test(enabled = false)
-    public void testFindLicenseWhenPresent() {
+    public void testFindWhenPresent() {
         UUID apacheLicense20LicenseId = UUID.fromString("7cae335f-1193-421e-92f1-8802b4243e93");
         Result<License> result = licenseApi.find(apacheLicense20LicenseId);
 
@@ -63,5 +63,19 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
         License license = httpResponse.getMessageBody().orElse(null);
         Assert.assertNotNull(license, "License should be initialized.");
         Assert.assertEquals(license.getId(), apacheLicense20LicenseId, "License ids should be equal.");
+    }
+
+    @Test(enabled = false)
+    public void testFindText() {
+        UUID apacheLicense20LicenseId = UUID.fromString("7cae335f-1193-421e-92f1-8802b4243e93");
+        Result<String> result = licenseApi.findText(apacheLicense20LicenseId);
+
+        HttpResponse<String> httpResponse = result.getHttpResponse().orElse(null);
+
+        Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
+        Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
+        Assert.assertTrue(httpResponse.isMessageBodyPresent(), "Message body should be present.");
+        String licenseText = httpResponse.getMessageBody().orElse(null);
+        Assert.assertNotNull(licenseText, "License text should be initialized.");
     }
 }

@@ -32,6 +32,7 @@ import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.Header;
 import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.HttpStatus;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.http.io.support.ClassicRequestBuilder;
 import org.apache.hc.core5.net.URIBuilder;
@@ -198,11 +199,10 @@ public abstract class AbstractKbHttpClient {
     }
 
     /**
-     * Execute a HTTP request.
+     * Executes a HTTP request.
      * 
-     * Assumes reauthentication on Unauthorized response.
-     * 
-     * Assumes no migratable responses.
+     * - Assumes reauthentication on Unauthorized response.
+     * - Assumes no migratable responses.
      * 
      * @param request
      *            The request.
@@ -226,11 +226,10 @@ public abstract class AbstractKbHttpClient {
     }
 
     /**
-     * Execute a HTTP request.
+     * Executes a HTTP request.
      * 
-     * Assumes reauthentication on Unauthorized response.
-     * 
-     * Assumes no migratable responses.
+     * - Assumes reauthentication on Unauthorized response.
+     * - Assumes no migratable responses.
      * 
      * @param request
      *            The request.
@@ -252,7 +251,7 @@ public abstract class AbstractKbHttpClient {
     }
 
     /**
-     * Execute a HTTP request.
+     * Executes a HTTP request.
      * 
      * @param request
      *            The request.
@@ -282,7 +281,7 @@ public abstract class AbstractKbHttpClient {
     }
 
     /**
-     * Execute a HTTP request.
+     * Executes a HTTP request.
      * 
      * @param request
      *            The request.
@@ -291,7 +290,7 @@ public abstract class AbstractKbHttpClient {
      * @param expectedCodes
      *            The expected response codes.
      * @param isReauthenticationSupported
-     *            The given request support reauthentication if an unauthorized response is returned.
+     *            The given request supports reauthentication if an unauthorized response is returned.
      * @param isMigratable
      *            The given request can yield a migrated response when enabled and false otherwise.
      * @param typeReference
@@ -361,6 +360,97 @@ public abstract class AbstractKbHttpClient {
                         } // Unexpected response code.
 
                         HttpResponse<T> httpResponse = new HttpResponse<>(code, expectedCodes, messageBody, migratedMeta);
+
+                        return new Result<>(method, requestUri, httpResponse);
+                    }
+                } finally {
+                    response.close();
+                }
+            });
+        } catch (IOException e) {
+            return new Result<>(method, requestUri, e);
+        }
+    }
+
+    /**
+     * Executes a HTTP request.
+     * 
+     * - Assumes deserialization of the response message body to a string.
+     * 
+     * @param request
+     *            The request.
+     * @param successCodes
+     *            The success codes.
+     * @param expectedCodes
+     *            The expected codes.
+     * @param isReauthenticationSupported
+     *            The given request supports reauthentication if an unauthorized response is returned.
+     * @param isMigratable
+     *            The given request can yield a migrated response when enabled and false otherwise.
+     * @return Returns the result.
+     */
+    protected Result<String> execute(ClassicHttpRequest request,
+            Set<Integer> successCodes,
+            Set<Integer> expectedCodes,
+            boolean isReauthenticationSupported,
+            boolean isMigratable) {
+        Objects.requireNonNull(request, "Request must be initialized.");
+        Objects.requireNonNull(successCodes, "Success response codes must be initialized.");
+        Preconditions.checkArgument(!successCodes.isEmpty(), "Success response codes must not be empty.");
+        Objects.requireNonNull(expectedCodes, "Expected response codes must be initialized.");
+        Preconditions.checkArgument(!expectedCodes.isEmpty(), "Expected response codes must not be empty.");
+
+        String method = request.getMethod();
+        String requestUri = request.getRequestUri();
+
+        try {
+            return httpClient.execute(request, (response) -> {
+                try {
+                    // HTTP response yielded response code.
+                    int code = response.getCode();
+
+                    // HTTP 401 Unauthorized handling.
+                    // If a HTTP 401 Unauthorized response is received, then the original request was sent with invalid
+                    // or expired authorization. If this HTTP client supports an authorization provider and the request
+                    // supports re-authentication, then re-authenticate to yield a fresh authorization token.
+                    if (((isReauthenticationSupported)) && (getAuthorizationProvider().isPresent()) && (HttpStatus.SC_UNAUTHORIZED == code)) {
+                        // Clear the existing authentication object and attempt to re-authenticate.
+                        AuthorizationProvider authorizationProvider = getAuthorizationProvider().get();
+                        if (authorizationProvider.clearAndAuthenticate().isPresent()) {
+                            // Re-authentication is successful. Repeat the original request but do not support
+                            // re-authentication if a HTTP 401 Unauthorized response is received on the subsequent
+                            // request.
+                            return execute(request, successCodes, expectedCodes, false, isMigratable);
+                        } else {
+                            // Re-authentication failed. Return the HTTP 401 Unauthorized response from the original
+                            // request.
+                            HttpResponse<String> httpResponse = new HttpResponse<>(code, expectedCodes, null, null);
+
+                            return new Result<>(method, requestUri, httpResponse);
+                        }
+                    } else {
+                        // Response codes other than HTTP 401 Unauthorized or HTTP client does not support authorization
+                        // or HTTP request does not support re-authentication.
+                        String messageBody = null;
+                        Meta migratedMeta = null;
+
+                        if (isMigratable && MIGRATION_CODES.contains(code)) {
+                            // Request can receive migrated responses and actual response code is contained within the
+                            // set of expected, migration response codes. This means the response message body should
+                            // contain expected contents and requires deserialization.
+                            MetaWrapper migratedMetaWrapper = readValueAsObject(response, MetaWrapper.class);
+                            migratedMeta = migratedMetaWrapper.getMeta().orElse(null);
+                        } else if (successCodes.contains(code)) {
+                            // Received response code is contained within the set of expected, successful response
+                            // codes. This means the response message body should contain expected contents and requires
+                            // deserialization.
+                            HttpEntity httpEntity = response.getEntity();
+                            if (httpEntity != null) {
+                                messageBody = EntityUtils.toString(httpEntity, "UTF-8");
+                            }
+                        } // Unexpected response code.
+
+                        HttpResponse<String> httpResponse = new HttpResponse<>(code, expectedCodes, messageBody, migratedMeta);
 
                         return new Result<>(method, requestUri, httpResponse);
                     }

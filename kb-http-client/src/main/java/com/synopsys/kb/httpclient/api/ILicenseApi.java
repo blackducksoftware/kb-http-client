@@ -35,4 +35,17 @@ public interface ILicenseApi {
      * @return Returns the license result.
      */
     Result<License> find(UUID licenseId);
+
+    /**
+     * Finds a license's original license text by its id.
+     * 
+     * Expected response codes
+     * 200 OK
+     * 404 Not Found
+     * 
+     * @param licenseId
+     *            The license id.
+     * @return Returns the orignal license text.
+     */
+    Result<String> findText(UUID licenseId);
 }

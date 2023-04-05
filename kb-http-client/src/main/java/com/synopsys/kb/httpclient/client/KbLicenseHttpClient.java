@@ -57,4 +57,19 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
                 DEFAULT_EXPECTED_CODES,
                 License.class);
     }
+
+    @Override
+    public Result<String> findText(UUID licenseId) {
+        Objects.requireNonNull(licenseId, "License id must be initialized.");
+
+        Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_LICENSE_TEXT_ORIGINAL_V1);
+        Collection<Header> headers = List.of(acceptHeader);
+        ClassicHttpRequest request = constructGetHttpRequest("/api/licenses/" + licenseId + "/text", null, headers);
+
+        return execute(request,
+                DEFAULT_SUCCESS_CODES,
+                DEFAULT_EXPECTED_CODES,
+                true,
+                false);
+    }
 }
