@@ -43,7 +43,20 @@ The KB HTTP client makes certain assumptions in favor of convention...
     - Find license
 + Activity APIs
     - Find component activities
-
+    - Find component version activities
+    - Find component version license activities
+    - Find component version CVE vulnerability activities
+    - Find component version BDSA vulnerability activities
+    - Find component version upgrade guidance activities
+    - Find component variant activities
+    - Find component variant CVE vulnerability activities        
+    - Find component variant BDSA vulnerability activities
+    - Find component variant upgrade guidance activities
+    - Find component variant transitive upgrade guidance activities
+    - Find license activities
+    - Find CVE vulnerability activities
+    - Find BDSA vulnerability activities
+                            
 ## TODOs
 
 * Add SLF4J API to support debug logging.

@@ -26,18 +26,23 @@ import com.synopsys.kb.httpclient.api.ProxyConfigurationTest;
 import com.synopsys.kb.httpclient.api.SortExpressionTest;
 import com.synopsys.kb.httpclient.api.StaticLicenseKeySupplierTest;
 import com.synopsys.kb.httpclient.model.AuthenticationTest;
+import com.synopsys.kb.httpclient.model.BdsaVulnerabilityActivityTest;
 import com.synopsys.kb.httpclient.model.BdsaVulnerabilityTest;
 import com.synopsys.kb.httpclient.model.ComponentActivityTest;
 import com.synopsys.kb.httpclient.model.ComponentSearchResultTest;
 import com.synopsys.kb.httpclient.model.ComponentTest;
+import com.synopsys.kb.httpclient.model.ComponentVariantActivityTest;
 import com.synopsys.kb.httpclient.model.ComponentVariantTest;
+import com.synopsys.kb.httpclient.model.ComponentVersionActivityTest;
 import com.synopsys.kb.httpclient.model.ComponentVersionTest;
+import com.synopsys.kb.httpclient.model.CveVulnerabilityActivityTest;
 import com.synopsys.kb.httpclient.model.CveVulnerabilityTest;
 import com.synopsys.kb.httpclient.model.Cvss2ScoreTest;
 import com.synopsys.kb.httpclient.model.Cvss2TemporalMetricsTest;
 import com.synopsys.kb.httpclient.model.Cvss3ScoreTest;
 import com.synopsys.kb.httpclient.model.Cvss3TemporalMetricsTest;
 import com.synopsys.kb.httpclient.model.IdHolderTest;
+import com.synopsys.kb.httpclient.model.LicenseActivityTest;
 import com.synopsys.kb.httpclient.model.LicenseDefinitionItemTest;
 import com.synopsys.kb.httpclient.model.LicenseDefinitionTest;
 import com.synopsys.kb.httpclient.model.LicenseTest;
@@ -66,13 +71,17 @@ public class KbHttpClientTestFactory {
                 new AuthenticationTest(),
                 new AuthorizationHttpRequestInterceptorTest(),
                 new AuthorizationProviderTest(),
+                new BdsaVulnerabilityActivityTest(),
                 new BdsaVulnerabilityTest(),
                 new ComponentActivityTest(),
                 new ComponentSearchResultTest(),
                 new ComponentTest(),
+                new ComponentVariantActivityTest(),
                 new ComponentVariantTest(),
+                new ComponentVersionActivityTest(),
                 new ComponentVersionTest(),
                 new CustomHttpRequestRetryStrategyTest(),
+                new CveVulnerabilityActivityTest(),
                 new CveVulnerabilityTest(),
                 new Cvss2ScoreTest(),
                 new Cvss2TemporalMetricsTest(),
@@ -85,6 +94,7 @@ public class KbHttpClientTestFactory {
                 new LicenseDefinitionItemTest(),
                 new LicenseDefinitionTest(),
                 new ListHolderTest(),
+                new LicenseActivityTest(),
                 new LicenseTest(),
                 new LinkTest(),
                 new LogoTest(),

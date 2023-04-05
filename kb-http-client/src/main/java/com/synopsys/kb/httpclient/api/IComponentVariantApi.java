@@ -107,6 +107,15 @@ public interface IComponentVariantApi {
     /**
      * Finds transitive upgrade guidance for the given component variant.
      * 
+     * The provided component variant should be the direct component variant that is directly relevant to the transitive
+     * upgrade guidance.
+     * 
+     * For example, if ComponentVariant1 depends on ComponentVariant2, it is relevant to fetch transitive upgrade
+     * guidance for ComponentVariant1 as transitive upgrade guidance for ComponentVariant1 and all of its dependency
+     * child components. As a result, from the perspective of a transitively identified component variant, it is
+     * possible that it has multiple transitive upgrade guidance representations if that component variant was
+     * identified via multiple direct component variants.
+     * 
      * - Response codes of 402 Payment Required and 403 Forbidden are recommended to be gracefully handled as an absent
      * result. These response codes can occur if a KB request is made without the BDSA feature enabled within product
      * licensing.

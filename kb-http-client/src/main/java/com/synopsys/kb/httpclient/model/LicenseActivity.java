@@ -20,51 +20,51 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Component activity representation.
+ * License activity representation.
  * 
  * @author skatzman
  */
-public class ComponentActivity extends AbstractActivity {
-    private final String component;
+public class LicenseActivity extends AbstractActivity {
+    private final String license;
 
     @JsonCreator
-    public ComponentActivity(@JsonProperty("component") String component,
+    public LicenseActivity(@JsonProperty("license") String license,
             @JsonProperty("updatedDate") OffsetDateTime updatedDate) {
         super(updatedDate);
 
-        this.component = component;
+        this.license = license;
     }
 
     /**
-     * Gets the component id.
+     * Gets the license id.
      * 
-     * @return Returns the component id.
+     * @return Returns the license id.
      */
     @JsonIgnore
-    public UUID getComponentId() {
-        return extractId(getComponent(), "components")
+    public UUID getLicenseId() {
+        return extractId(getLicense(), "licenses")
                 .map(UUID::fromString)
-                .orElseThrow(() -> new IllegalStateException("Unable to get component id because it is absent."));
+                .orElseThrow(() -> new IllegalStateException("Unable to get license id because it is absent."));
     }
 
-    public String getComponent() {
-        return component;
+    public String getLicense() {
+        return license;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getComponent(), getUpdatedDate());
+        return Objects.hash(getLicense(), getUpdatedDate());
     }
 
     @Override
     public boolean equals(Object otherObject) {
         if (this == otherObject) {
             return true;
-        } else if (otherObject instanceof ComponentActivity) {
-            ComponentActivity otherComponentActivity = (ComponentActivity) otherObject;
+        } else if (otherObject instanceof LicenseActivity) {
+            LicenseActivity otherLicenseActivity = (LicenseActivity) otherObject;
 
-            return Objects.equals(getComponent(), otherComponentActivity.getComponent())
-                    && Objects.equals(getUpdatedDate(), otherComponentActivity.getUpdatedDate());
+            return Objects.equals(getLicense(), otherLicenseActivity.getLicense())
+                    && Objects.equals(getUpdatedDate(), otherLicenseActivity.getUpdatedDate());
         }
 
         return false;

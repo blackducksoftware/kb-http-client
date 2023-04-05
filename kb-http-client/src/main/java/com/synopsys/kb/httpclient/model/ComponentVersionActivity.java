@@ -20,51 +20,51 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Component activity representation.
+ * Component version activity representation.
  * 
  * @author skatzman
  */
-public class ComponentActivity extends AbstractActivity {
-    private final String component;
+public class ComponentVersionActivity extends AbstractActivity {
+    private final String version;
 
     @JsonCreator
-    public ComponentActivity(@JsonProperty("component") String component,
+    public ComponentVersionActivity(@JsonProperty("version") String version,
             @JsonProperty("updatedDate") OffsetDateTime updatedDate) {
         super(updatedDate);
 
-        this.component = component;
+        this.version = version;
     }
 
     /**
-     * Gets the component id.
+     * Gets the component version id.
      * 
-     * @return Returns the component id.
+     * @return Returns the component version id.
      */
     @JsonIgnore
-    public UUID getComponentId() {
-        return extractId(getComponent(), "components")
+    public UUID getComponentVersionId() {
+        return extractId(getVersion(), "versions")
                 .map(UUID::fromString)
-                .orElseThrow(() -> new IllegalStateException("Unable to get component id because it is absent."));
+                .orElseThrow(() -> new IllegalStateException("Unable to get component version id because it is absent."));
     }
 
-    public String getComponent() {
-        return component;
+    public String getVersion() {
+        return version;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getComponent(), getUpdatedDate());
+        return Objects.hash(getVersion(), getUpdatedDate());
     }
 
     @Override
     public boolean equals(Object otherObject) {
         if (this == otherObject) {
             return true;
-        } else if (otherObject instanceof ComponentActivity) {
-            ComponentActivity otherComponentActivity = (ComponentActivity) otherObject;
+        } else if (otherObject instanceof ComponentVersionActivity) {
+            ComponentVersionActivity otherComponentVersionActivity = (ComponentVersionActivity) otherObject;
 
-            return Objects.equals(getComponent(), otherComponentActivity.getComponent())
-                    && Objects.equals(getUpdatedDate(), otherComponentActivity.getUpdatedDate());
+            return Objects.equals(getVersion(), otherComponentVersionActivity.getVersion())
+                    && Objects.equals(getUpdatedDate(), otherComponentVersionActivity.getUpdatedDate());
         }
 
         return false;
