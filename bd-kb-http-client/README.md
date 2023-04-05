@@ -51,7 +51,7 @@ The Black Duck-centric KB HTTP client makes certain assumptions in favor of conv
 
 Quick-start for using the Black Duck-centric KB HTTP client library with an emphasis on using defaults and access to the production KnowledgeBase.  
 
----java
+```java
 // Initializtion
 HttpClientConfiguration httpClientConfiguration = HttpClientConfigurationBuilder.create().userAgent("MyApplication/1.0").build();
 KbConfiguration kbConfiguration = new KbConfiguration("my_license_key");
@@ -61,4 +61,4 @@ IBdLicenseApi bdLicenseApi = bdKbHttpApi.getBdLicenseApi();
 Result<BdLicense> result = bdLicenseApi.findBd(licenseId);
 // HTTP response contains response code, expected response codes, message body if available, and migration metadata if available.
 Optional<HttpResponse<BdLicense>> httpResponse = result.getHttpResponse();
----
+```
