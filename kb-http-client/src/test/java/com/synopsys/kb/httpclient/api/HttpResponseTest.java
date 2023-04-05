@@ -34,13 +34,13 @@ public class HttpResponseTest extends AbstractTest {
 
     private static final String MESSAGE_BODY = "This is a value.";
 
-    private static final Meta MERGE_MIGRATED_META = new Meta("https://kbtest.blackducksoftware.com/api/components/" + UUID.randomUUID(),
-            List.of(new Link("moved", "https://kbtest.blackducksoftware.com/api/components/" + UUID.randomUUID())));
+    private static final Meta MERGE_MIGRATED_META = new Meta(BASE_HREF + "/api/components/" + UUID.randomUUID(),
+            List.of(new Link("moved", BASE_HREF + "/api/components/" + UUID.randomUUID())));
 
-    private static final Meta SPLIT_MIGRATED_META = new Meta("https://kbtest.blackducksoftware.com/api/components/" + UUID.randomUUID(),
-            List.of(new Link("moved", "https://kbtest.blackducksoftware.com/api/components/" + UUID.randomUUID()),
-                    new Link("moved", "https://kbtest.blackducksoftware.com/api/components/" + UUID.randomUUID()),
-                    new Link("moved", "https://kbtest.blackducksoftware.com/api/components/" + UUID.randomUUID())));
+    private static final Meta SPLIT_MIGRATED_META = new Meta(BASE_HREF + "/api/components/" + UUID.randomUUID(),
+            List.of(new Link("moved", BASE_HREF + "/api/components/" + UUID.randomUUID()),
+                    new Link("moved", BASE_HREF + "/api/components/" + UUID.randomUUID()),
+                    new Link("moved", BASE_HREF + "/api/components/" + UUID.randomUUID())));
 
     @Test
     public void testConstructor() {

@@ -29,15 +29,15 @@ public class ComponentSearchResultTest extends AbstractTest {
 
     private static final UUID COMPONENT_ID = UUID.randomUUID();
 
-    private static final String COMPONENT_HREF = "https://kbtest.blackducksoftware.com/api/components/" + COMPONENT_ID;
+    private static final String COMPONENT_HREF = BASE_HREF + "/api/components/" + COMPONENT_ID;
 
     private static final UUID VERSION_ID = UUID.randomUUID();
 
-    private static final String VERSION_HREF = "https://kbtest.blackducksoftware.com/api/versions/" + VERSION_ID;
+    private static final String VERSION_HREF = BASE_HREF + "/api/versions/" + VERSION_ID;
 
     private static final UUID VARIANT_ID = UUID.randomUUID();
 
-    private static final String VARIANT_HREF = "https://kbtest.blackducksoftware.com/api/variants/" + VARIANT_ID;
+    private static final String VARIANT_HREF = BASE_HREF + "/api/variants/" + VARIANT_ID;
 
     private static final Meta META = new Meta(null, List.of(new Link("upgrade-guidance", VARIANT_HREF + "/upgrade-guidance"),
             new Link("transitive-upgrade-guidance", VARIANT_HREF + "/transitive-upgrade-guidance"),

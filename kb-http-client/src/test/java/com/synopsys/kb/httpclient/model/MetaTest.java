@@ -30,7 +30,7 @@ import com.synopsys.kb.httpclient.AbstractTest;
 public class MetaTest extends AbstractTest {
     private static final UUID LICENSE_ID = UUID.randomUUID();
 
-    private static final String HREF = "https://kbtest.blackducksoftware.com/api/licenses/" + LICENSE_ID;
+    private static final String HREF = BASE_HREF + "/api/licenses/" + LICENSE_ID;
 
     private static final List<Link> LINKS = List.of(new Link("text", HREF + "/text"),
             new Link("license-terms", HREF + "/license-terms"));
@@ -63,7 +63,7 @@ public class MetaTest extends AbstractTest {
 
     @Test
     public void testFindNumberOfLinksWhenAbsent() {
-        Link link = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + UUID.randomUUID());
+        Link link = new Link("apples", BASE_HREF + "/api/apples/" + UUID.randomUUID());
         List<Link> links = List.of(link);
         Meta meta = new Meta(HREF, links);
 
@@ -74,7 +74,7 @@ public class MetaTest extends AbstractTest {
 
     @Test
     public void testFindNumberOfLinksWithSinglePresentLink() {
-        Link link = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + UUID.randomUUID());
+        Link link = new Link("apples", BASE_HREF + "/api/apples/" + UUID.randomUUID());
         List<Link> links = List.of(link);
         Meta meta = new Meta(HREF, links);
 
@@ -85,9 +85,9 @@ public class MetaTest extends AbstractTest {
 
     @Test
     public void testFindNumberOfLinksWithMultiplePresentLinks() {
-        Link link1 = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + UUID.randomUUID());
-        Link link2 = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + UUID.randomUUID());
-        Link link3 = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + UUID.randomUUID());
+        Link link1 = new Link("apples", BASE_HREF + "/api/apples/" + UUID.randomUUID());
+        Link link2 = new Link("apples", BASE_HREF + "/api/apples/" + UUID.randomUUID());
+        Link link3 = new Link("apples", BASE_HREF + "/api/apples/" + UUID.randomUUID());
         List<Link> links = List.of(link1, link2, link3);
         Meta meta = new Meta(HREF, links);
 
@@ -98,7 +98,7 @@ public class MetaTest extends AbstractTest {
 
     @Test
     public void testIsLinkPresentWhenAbsent() {
-        Link link = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + UUID.randomUUID());
+        Link link = new Link("apples", BASE_HREF + "/api/apples/" + UUID.randomUUID());
         List<Link> links = List.of(link);
         Meta meta = new Meta(HREF, links);
 
@@ -107,7 +107,7 @@ public class MetaTest extends AbstractTest {
 
     @Test
     public void testIsLinkPresentWithSinglePresentLink() {
-        Link link = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + UUID.randomUUID());
+        Link link = new Link("apples", BASE_HREF + "/api/apples/" + UUID.randomUUID());
         List<Link> links = List.of(link);
         Meta meta = new Meta(HREF, links);
 
@@ -116,9 +116,9 @@ public class MetaTest extends AbstractTest {
 
     @Test
     public void testIsLinkPresentWithMultiplePresentLinks() {
-        Link link1 = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + UUID.randomUUID());
-        Link link2 = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + UUID.randomUUID());
-        Link link3 = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + UUID.randomUUID());
+        Link link1 = new Link("apples", BASE_HREF + "/api/apples/" + UUID.randomUUID());
+        Link link2 = new Link("apples", BASE_HREF + "/api/apples/" + UUID.randomUUID());
+        Link link3 = new Link("apples", BASE_HREF + "/api/apples/" + UUID.randomUUID());
         List<Link> links = List.of(link1, link2, link3);
         Meta meta = new Meta(HREF, links);
 
@@ -127,7 +127,7 @@ public class MetaTest extends AbstractTest {
 
     @Test
     public void testFindLinksWhenAbsent() {
-        Link link = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + UUID.randomUUID());
+        Link link = new Link("apples", BASE_HREF + "/api/apples/" + UUID.randomUUID());
         List<Link> links = List.of(link);
         Meta meta = new Meta(HREF, links);
 
@@ -138,7 +138,7 @@ public class MetaTest extends AbstractTest {
 
     @Test
     public void testFindLinksWithSinglePresentLink() {
-        Link link = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + UUID.randomUUID());
+        Link link = new Link("apples", BASE_HREF + "/api/apples/" + UUID.randomUUID());
         List<Link> links = List.of(link);
         Meta meta = new Meta(HREF, links);
 
@@ -150,9 +150,9 @@ public class MetaTest extends AbstractTest {
 
     @Test
     public void testFindLinksWithMultiplePresentLinks() {
-        Link link1 = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + UUID.randomUUID());
-        Link link2 = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + UUID.randomUUID());
-        Link link3 = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + UUID.randomUUID());
+        Link link1 = new Link("apples", BASE_HREF + "/api/apples/" + UUID.randomUUID());
+        Link link2 = new Link("apples", BASE_HREF + "/api/apples/" + UUID.randomUUID());
+        Link link3 = new Link("apples", BASE_HREF + "/api/apples/" + UUID.randomUUID());
         List<Link> links = List.of(link1, link2, link3);
         Meta meta = new Meta(HREF, links);
 
@@ -166,7 +166,7 @@ public class MetaTest extends AbstractTest {
 
     @Test
     public void testFindLinkIdsWhenAbsent() {
-        Link link = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + UUID.randomUUID());
+        Link link = new Link("apples", BASE_HREF + "/api/apples/" + UUID.randomUUID());
         List<Link> links = List.of(link);
         Meta meta = new Meta(HREF, links);
 
@@ -178,7 +178,7 @@ public class MetaTest extends AbstractTest {
     @Test
     public void testFindLinkIdsWithSinglePresentLink() {
         UUID id = UUID.randomUUID();
-        Link link = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + id);
+        Link link = new Link("apples", BASE_HREF + "/api/apples/" + id);
         List<Link> links = List.of(link);
         Meta meta = new Meta(HREF, links);
 
@@ -193,9 +193,9 @@ public class MetaTest extends AbstractTest {
         UUID id1 = UUID.randomUUID();
         UUID id2 = UUID.randomUUID();
         UUID id3 = UUID.randomUUID();
-        Link link1 = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + id1);
-        Link link2 = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + id2);
-        Link link3 = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + id3);
+        Link link1 = new Link("apples", BASE_HREF + "/api/apples/" + id1);
+        Link link2 = new Link("apples", BASE_HREF + "/api/apples/" + id2);
+        Link link3 = new Link("apples", BASE_HREF + "/api/apples/" + id3);
         List<Link> links = List.of(link1, link2, link3);
         Meta meta = new Meta(HREF, links);
 
@@ -209,7 +209,7 @@ public class MetaTest extends AbstractTest {
 
     @Test
     public void testFindUniqueLinkWhenAbsent() {
-        Link link = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + UUID.randomUUID());
+        Link link = new Link("apples", BASE_HREF + "/api/apples/" + UUID.randomUUID());
         List<Link> links = List.of(link);
         Meta meta = new Meta(HREF, links);
 
@@ -220,7 +220,7 @@ public class MetaTest extends AbstractTest {
 
     @Test
     public void testFindUniqueLinkWithSinglePresentLink() {
-        Link link = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + UUID.randomUUID());
+        Link link = new Link("apples", BASE_HREF + "/api/apples/" + UUID.randomUUID());
         List<Link> links = List.of(link);
         Meta meta = new Meta(HREF, links);
 
@@ -231,9 +231,9 @@ public class MetaTest extends AbstractTest {
 
     @Test
     public void testFindUniqueLinkWithMultiplePresentLinks() {
-        Link link1 = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + UUID.randomUUID());
-        Link link2 = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + UUID.randomUUID());
-        Link link3 = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + UUID.randomUUID());
+        Link link1 = new Link("apples", BASE_HREF + "/api/apples/" + UUID.randomUUID());
+        Link link2 = new Link("apples", BASE_HREF + "/api/apples/" + UUID.randomUUID());
+        Link link3 = new Link("apples", BASE_HREF + "/api/apples/" + UUID.randomUUID());
         List<Link> links = List.of(link1, link2, link3);
         Meta meta = new Meta(HREF, links);
 
@@ -244,7 +244,7 @@ public class MetaTest extends AbstractTest {
 
     @Test
     public void testFindUniqueLinkIdWhenAbsent() {
-        Link link = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + UUID.randomUUID());
+        Link link = new Link("apples", BASE_HREF + "/api/apples/" + UUID.randomUUID());
         List<Link> links = List.of(link);
         Meta meta = new Meta(HREF, links);
 
@@ -256,7 +256,7 @@ public class MetaTest extends AbstractTest {
     @Test
     public void testFindUniqueLinkIdWithSinglePresentLink() {
         UUID id = UUID.randomUUID();
-        Link link = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + id);
+        Link link = new Link("apples", BASE_HREF + "/api/apples/" + id);
         List<Link> links = List.of(link);
         Meta meta = new Meta(HREF, links);
 
@@ -271,9 +271,9 @@ public class MetaTest extends AbstractTest {
         UUID id1 = UUID.randomUUID();
         UUID id2 = UUID.randomUUID();
         UUID id3 = UUID.randomUUID();
-        Link link1 = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + id1);
-        Link link2 = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + id2);
-        Link link3 = new Link("apples", "https://kbtest.blackducksoftware.com/api/apples/" + id3);
+        Link link1 = new Link("apples", BASE_HREF + "/api/apples/" + id1);
+        Link link2 = new Link("apples", BASE_HREF + "/api/apples/" + id2);
+        Link link3 = new Link("apples", BASE_HREF + "/api/apples/" + id3);
         List<Link> links = List.of(link1, link2, link3);
         Meta meta = new Meta(HREF, links);
 

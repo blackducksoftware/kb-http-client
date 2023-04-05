@@ -11,34 +11,26 @@
  */
 package com.synopsys.kb.httpclient.model;
 
-import java.util.Collection;
-
-import javax.annotation.Nullable;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.collect.ImmutableSet;
 
 /**
- * Page.
+ * Id holder representation.
  * 
  * @author skatzman
- *
- * @param <T>
- *            The item type.
  */
-public class Page<T> extends ListHolder<T> {
-    private final int totalCount;
+public class IdHolder<T> {
+    private final Set<T> ids;
 
     @JsonCreator
-    public Page(@JsonProperty("totalCount") @Nullable Integer totalCount,
-            @JsonProperty("items") @Nullable Collection<T> items,
-            @JsonProperty("_meta") Meta meta) {
-        super(items, meta);
-
-        this.totalCount = (totalCount != null) ? totalCount.intValue() : 0;
+    public IdHolder(@JsonProperty("ids") Set<T> ids) {
+        this.ids = (ids != null) ? ImmutableSet.copyOf(ids) : ImmutableSet.of();
     }
 
-    public int getTotalCount() {
-        return totalCount;
+    public Set<T> getIds() {
+        return ids;
     }
 }

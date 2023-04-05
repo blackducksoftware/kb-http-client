@@ -27,6 +27,7 @@ import com.synopsys.kb.httpclient.api.SortExpressionTest;
 import com.synopsys.kb.httpclient.api.StaticLicenseKeySupplierTest;
 import com.synopsys.kb.httpclient.model.AuthenticationTest;
 import com.synopsys.kb.httpclient.model.BdsaVulnerabilityTest;
+import com.synopsys.kb.httpclient.model.ComponentActivityTest;
 import com.synopsys.kb.httpclient.model.ComponentSearchResultTest;
 import com.synopsys.kb.httpclient.model.ComponentTest;
 import com.synopsys.kb.httpclient.model.ComponentVariantTest;
@@ -36,10 +37,12 @@ import com.synopsys.kb.httpclient.model.Cvss2ScoreTest;
 import com.synopsys.kb.httpclient.model.Cvss2TemporalMetricsTest;
 import com.synopsys.kb.httpclient.model.Cvss3ScoreTest;
 import com.synopsys.kb.httpclient.model.Cvss3TemporalMetricsTest;
+import com.synopsys.kb.httpclient.model.IdHolderTest;
 import com.synopsys.kb.httpclient.model.LicenseDefinitionItemTest;
 import com.synopsys.kb.httpclient.model.LicenseDefinitionTest;
 import com.synopsys.kb.httpclient.model.LicenseTest;
 import com.synopsys.kb.httpclient.model.LinkTest;
+import com.synopsys.kb.httpclient.model.ListHolderTest;
 import com.synopsys.kb.httpclient.model.LogoTest;
 import com.synopsys.kb.httpclient.model.MetaTest;
 import com.synopsys.kb.httpclient.model.MetaWrapperTest;
@@ -64,6 +67,7 @@ public class KbHttpClientTestFactory {
                 new AuthorizationHttpRequestInterceptorTest(),
                 new AuthorizationProviderTest(),
                 new BdsaVulnerabilityTest(),
+                new ComponentActivityTest(),
                 new ComponentSearchResultTest(),
                 new ComponentTest(),
                 new ComponentVariantTest(),
@@ -76,9 +80,11 @@ public class KbHttpClientTestFactory {
                 new Cvss3TemporalMetricsTest(),
                 new FiniteConnectionKeepAliveStrategyTest(),
                 new HttpResponseTest(),
+                new IdHolderTest(),
                 new KbConfigurationTest(),
                 new LicenseDefinitionItemTest(),
                 new LicenseDefinitionTest(),
+                new ListHolderTest(),
                 new LicenseTest(),
                 new LinkTest(),
                 new LogoTest(),

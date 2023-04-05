@@ -44,6 +44,7 @@ import org.apache.hc.core5.util.Timeout;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.ListMultimap;
+import com.synopsys.kb.httpclient.client.KbActivityHttpClient;
 import com.synopsys.kb.httpclient.client.KbAuthenticationHttpClient;
 import com.synopsys.kb.httpclient.client.KbComponentHttpClient;
 import com.synopsys.kb.httpclient.client.KbComponentVariantHttpClient;
@@ -86,8 +87,9 @@ public class KbHttpClientFactory {
         IComponentVariantApi componentVariantApi = new KbComponentVariantHttpClient(kbConfiguration, JsonUtil.objectMapper, authorizedHttpClient,
                 authorizationProvider);
         ILicenseApi licenseApi = new KbLicenseHttpClient(kbConfiguration, JsonUtil.objectMapper, authorizedHttpClient, authorizationProvider);
+        IActivityApi activityApi = new KbActivityHttpClient(kbConfiguration, JsonUtil.objectMapper, authorizedHttpClient, authorizationProvider);
 
-        return new KbHttpApi(authenticationApi, componentApi, componentVersionApi, componentVariantApi, licenseApi);
+        return new KbHttpApi(authenticationApi, componentApi, componentVersionApi, componentVariantApi, licenseApi, activityApi);
     }
 
     private CloseableHttpClient constructUnauthorizedHttpClient(HttpClientConfiguration httpClientConfiguration) {

@@ -41,6 +41,8 @@ The KB HTTP client makes certain assumptions in favor of convention...
     - Find component variant transitive upgrade guidance
 + License APIs
     - Find license
++ Activity APIs
+    - Find component activities
 
 ## TODOs
 

@@ -36,7 +36,7 @@ public class ComponentVersionTest extends AbstractTest {
     private static final OffsetDateTime RELEASED_ON = OffsetDateTime.now();
 
     private static final LicenseDefinition LICENSE_DEFINITION = new LicenseDefinition(LicenseDefinitionType.CONJUNCTIVE,
-            List.of(new LicenseDefinitionItem("https://kbtest.blackducksoftware.com/api/licenses/" + UUID.randomUUID(), null)));
+            List.of(new LicenseDefinitionItem(BASE_HREF + "/api/licenses/" + UUID.randomUUID(), null)));
 
     private static final RiskProfile RISK_PROFILE = new RiskProfile(5, 4, 3, 2, 1);
 
@@ -44,8 +44,8 @@ public class ComponentVersionTest extends AbstractTest {
 
     private static final Boolean COMPONENT_INTELLIGENCE = Boolean.TRUE;
 
-    private static final Meta META = new Meta("https://kbtest.blackducksoftware.com/api/versions/" + ID,
-            List.of(new Link("component", "https://kbtest.blackducksoftware.com/api/components/" + COMPONENT_ID)));
+    private static final Meta META = new Meta(BASE_HREF + "/api/versions/" + ID,
+            List.of(new Link("component", BASE_HREF + "/api/components/" + COMPONENT_ID)));
 
     @Test
     public void testConstructor() {

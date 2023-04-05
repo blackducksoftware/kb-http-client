@@ -27,13 +27,13 @@ import com.synopsys.kb.httpclient.AbstractTest;
 public class UpgradeGuidanceSuggestionTest extends AbstractTest {
     private static final UUID VERSION_ID = UUID.randomUUID();
 
-    private static final String VERSION = "https://kbtest.blackducksoftware.com/api/versions/" + VERSION_ID;
+    private static final String VERSION = BASE_HREF + "/api/versions/" + VERSION_ID;
 
     private static final String VERSION_NAME = "1.0";
 
     private static final UUID VARIANT_ID = UUID.randomUUID();
 
-    private static final String VARIANT = "https://kbtest.blackducksoftware.com/api/variants/" + VARIANT_ID;
+    private static final String VARIANT = BASE_HREF + "/api/variants/" + VARIANT_ID;
 
     private static final String VARIANT_NAME = "1.0";
 

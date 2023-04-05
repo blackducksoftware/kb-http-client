@@ -172,28 +172,3 @@ public class Component extends AbstractEntity {
         return false;
     }
 }
-
-/*
- * MIGRATIONS
- * 
- * 
- * {
- * "_meta": {
- * "href": "https://kbtest.blackducksoftware.com/api/components/ba35fed7-b8a2-4d09-80c3-ce8fca1e2827",
- * "links": [
- * {
- * "rel": "moved",
- * "href": "https://kbtest.blackducksoftware.com/api/components/4405258f-3f38-4905-bb26-ada6b57eeac5"
- * },
- * {
- * "rel": "moved",
- * "href": "https://kbtest.blackducksoftware.com/api/components/dea06a84-d6f2-41ca-b712-aee45fe918fd"
- * },
- * {
- * "rel": "moved",
- * "href": "https://kbtest.blackducksoftware.com/api/components/edf3fe9d-f9c9-4871-a01a-bf2febe95fa5"
- * }
- * ]
- * }
- * }
- */

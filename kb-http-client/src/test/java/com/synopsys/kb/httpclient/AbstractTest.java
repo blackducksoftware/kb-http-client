@@ -22,6 +22,8 @@ import com.synopsys.kb.httpclient.util.JsonUtil;
  * @author skatzman
  */
 public abstract class AbstractTest {
+    protected static final String BASE_HREF = "https://kbtest.blackducksoftware.com";
+
     /**
      * Serialize the given object to a JSON string.
      * 

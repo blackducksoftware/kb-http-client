@@ -26,10 +26,10 @@ import com.synopsys.kb.httpclient.AbstractTest;
  * @author skatzman
  */
 public class MetaWrapperTest extends AbstractTest {
-    private static final Meta META = new Meta("https://kbtest.blackducksoftware.com/api/components/" + UUID.randomUUID(),
-            List.of(new Link("moved", "https://kbtest.blackducksoftware.com/api/components/" + UUID.randomUUID()),
-                    new Link("moved", "https://kbtest.blackducksoftware.com/api/components/" + UUID.randomUUID()),
-                    new Link("moved", "https://kbtest.blackducksoftware.com/api/components/" + UUID.randomUUID())));
+    private static final Meta META = new Meta(BASE_HREF + "/api/components/" + UUID.randomUUID(),
+            List.of(new Link("moved", BASE_HREF + "/api/components/" + UUID.randomUUID()),
+                    new Link("moved", BASE_HREF + "/api/components/" + UUID.randomUUID()),
+                    new Link("moved", BASE_HREF + "/api/components/" + UUID.randomUUID())));
 
     @Test
     public void testConstructor() {

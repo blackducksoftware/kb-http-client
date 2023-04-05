@@ -44,7 +44,7 @@ public class ComponentTest extends AbstractTest {
 
     private static final Boolean DELETED = Boolean.FALSE;
 
-    private static final String HREF = "https://kbtest.blackducksoftware.com/api/components/" + ID;
+    private static final String HREF = BASE_HREF + "/api/components/" + ID;
 
     private static final Meta META = new Meta(HREF, Collections.emptyList());
 

@@ -30,7 +30,7 @@ public class LinkTest extends AbstractTest {
 
     private static final UUID ID = UUID.randomUUID();
 
-    private static final String HREF = "https://kbtest.blackducksoftware.com/api/licenses/" + ID + "/text";
+    private static final String HREF = BASE_HREF + "/api/licenses/" + ID + "/text";
 
     @Test
     public void testConstructor() {

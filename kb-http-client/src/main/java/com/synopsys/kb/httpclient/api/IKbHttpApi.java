@@ -61,4 +61,13 @@ public interface IKbHttpApi {
      * @return Returns the license API.
      */
     ILicenseApi getLicenseApi();
+
+    /**
+     * Gets the activity API.
+     * 
+     * The activity API contains operations relating to activities.
+     * 
+     * @return Returns the activity API.
+     */
+    IActivityApi getActivityApi();
 }

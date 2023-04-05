@@ -28,17 +28,21 @@ import javax.annotation.Nullable;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.core5.http.ClassicHttpRequest;
 import org.apache.hc.core5.http.ClassicHttpResponse;
+import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.Header;
 import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.HttpStatus;
+import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.http.io.support.ClassicRequestBuilder;
 import org.apache.hc.core5.net.URIBuilder;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.synopsys.kb.httpclient.api.AuthorizationProvider;
@@ -60,7 +64,7 @@ import com.synopsys.kb.httpclient.util.ClassTypeReference;
 public abstract class AbstractKbHttpClient {
     protected static final Set<Integer> DEFAULT_SUCCESS_CODES = ImmutableSet.of(HttpStatus.SC_OK);
 
-    protected static final Set<Integer> DEFAULT_EXPECTED_CODES = ImmutableSet.of(HttpStatus.SC_OK, HttpStatus.SC_BAD_REQUEST);
+    protected static final Set<Integer> DEFAULT_EXPECTED_CODES = ImmutableSet.of(HttpStatus.SC_OK, HttpStatus.SC_NOT_FOUND);
 
     private static final Set<Integer> MIGRATION_CODES = ImmutableSet.of(HttpStatus.SC_MULTIPLE_CHOICES, HttpStatus.SC_MOVED_PERMANENTLY);
 
@@ -128,6 +132,32 @@ public abstract class AbstractKbHttpClient {
         }
 
         return builder.build();
+    }
+
+    /**
+     * Constructs the HTTP entity.
+     * 
+     * Throws IllegalArgumentException if the given object cannot be serialized.
+     * 
+     * @param <T>
+     *            The object type.
+     * @param object
+     *            The object.
+     * @param contentType
+     *            The content type.
+     * @return Returns the HTTP entity.
+     */
+    protected <T> HttpEntity constructHttpEntity(T object, String contentType) {
+        Objects.requireNonNull(object, "Object must be initialized.");
+        Preconditions.checkArgument(!Strings.isNullOrEmpty(contentType), "Content type must not be null or empty.");
+
+        try {
+            String value = writeValueAsString(object);
+
+            return new StringEntity(value, ContentType.create(contentType));
+        } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException("Unable to serialize object.", e);
+        }
     }
 
     /**
@@ -341,6 +371,10 @@ public abstract class AbstractKbHttpClient {
         } catch (IOException e) {
             return new Result<>(method, requestUri, e);
         }
+    }
+
+    private String writeValueAsString(Object value) throws JsonProcessingException {
+        return objectMapper.writeValueAsString(value);
     }
 
     @Nullable

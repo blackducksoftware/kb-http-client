@@ -27,11 +27,11 @@ public class LicenseDefinitionItemTest extends AbstractTest {
 
     private static final UUID LICENSE_ID_3 = UUID.randomUUID();
 
-    private static final String BASE_HREF = "https://kbtest.blackducksoftware.com/api/licenses/";
+    private static final String LICENSES_BASE_HREF = BASE_HREF + "/api/licenses/";
 
     @Test
     public void testConstructorForSingleLicense() {
-        String href = BASE_HREF + LICENSE_ID_1;
+        String href = LICENSES_BASE_HREF + LICENSE_ID_1;
         LicenseDefinitionItem licenseDefinitionItem = new LicenseDefinitionItem(href, null);
 
         Assert.assertEquals(licenseDefinitionItem.getHref().orElse(null), href, "HREFs should be equal.");
@@ -42,9 +42,9 @@ public class LicenseDefinitionItemTest extends AbstractTest {
 
     @Test
     public void testConstructorForManyLicenses() {
-        String href1 = BASE_HREF + LICENSE_ID_1;
-        String href2 = BASE_HREF + LICENSE_ID_2;
-        String href3 = BASE_HREF + LICENSE_ID_3;
+        String href1 = LICENSES_BASE_HREF + LICENSE_ID_1;
+        String href2 = LICENSES_BASE_HREF + LICENSE_ID_2;
+        String href3 = LICENSES_BASE_HREF + LICENSE_ID_3;
         LicenseDefinitionItem licenseDefinitionItem1 = new LicenseDefinitionItem(href1, null);
         LicenseDefinitionItem licenseDefinitionItem2 = new LicenseDefinitionItem(href2, null);
         LicenseDefinitionItem licenseDefinitionItem3 = new LicenseDefinitionItem(href3, null);
@@ -58,7 +58,7 @@ public class LicenseDefinitionItemTest extends AbstractTest {
 
     @Test
     public void testDeserializationForSingleLicense() throws JsonProcessingException {
-        String href = BASE_HREF + LICENSE_ID_1;
+        String href = LICENSES_BASE_HREF + LICENSE_ID_1;
         LicenseDefinitionItem licenseDefinitionItem = new LicenseDefinitionItem(href, null);
 
         String json = serialize(licenseDefinitionItem);
@@ -70,9 +70,9 @@ public class LicenseDefinitionItemTest extends AbstractTest {
 
     @Test
     public void testDeserializationForManyLicenses() throws JsonProcessingException {
-        String href1 = BASE_HREF + LICENSE_ID_1;
-        String href2 = BASE_HREF + LICENSE_ID_2;
-        String href3 = BASE_HREF + LICENSE_ID_3;
+        String href1 = LICENSES_BASE_HREF + LICENSE_ID_1;
+        String href2 = LICENSES_BASE_HREF + LICENSE_ID_2;
+        String href3 = LICENSES_BASE_HREF + LICENSE_ID_3;
         LicenseDefinitionItem childLicenseDefinitionItem1 = new LicenseDefinitionItem(href1, null);
         LicenseDefinitionItem childLicenseDefinitionItem2 = new LicenseDefinitionItem(href2, null);
         LicenseDefinitionItem childLicenseDefinitionItem3 = new LicenseDefinitionItem(href3, null);

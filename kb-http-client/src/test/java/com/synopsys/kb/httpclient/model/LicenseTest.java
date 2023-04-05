@@ -43,7 +43,7 @@ public class LicenseTest extends AbstractTest {
 
     private static final LicenseRestriction RESTRICTION = LicenseRestriction.UNRESTRICTED;
 
-    private static final String HREF = "https://kbtest.blackducksoftware.com/api/licenses/" + ID;
+    private static final String HREF = BASE_HREF + "/api/licenses/" + ID;
 
     private static final Meta META = new Meta(HREF,
             List.of(new Link("text", HREF + "/text"),

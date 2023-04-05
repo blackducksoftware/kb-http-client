@@ -11,6 +11,7 @@
  */
 package com.synopsys.kb.httpclient.model;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,40 +23,35 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.synopsys.kb.httpclient.AbstractTest;
 
 /**
- * Page test.
+ * List holder test.
  * 
  * @author skatzman
  */
-public class PageTest extends AbstractTest {
-    private static final int TOTAL_COUNT = 10;
-
+public class ListHolderTest extends AbstractTest {
     private static final List<String> ITEMS = List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
 
-    private static final UUID ID = UUID.randomUUID();
+    private static final UUID COMPONENT_ID = UUID.randomUUID();
 
-    private static final String HREF = BASE_HREF + "/api/components/" + ID;
+    private static final String HREF = BASE_HREF + "/api/activity/components/" + COMPONENT_ID;
 
-    private static final Meta META = new Meta(HREF,
-            List.of(new Link("versions", HREF + "/versions")));
+    private static final Meta META = new Meta(HREF, Collections.emptyList());
 
     @Test
     public void testConstructor() {
-        Page<String> page = new Page<>(TOTAL_COUNT, ITEMS, META);
+        ListHolder<String> listHolder = new ListHolder<>(ITEMS, META);
 
-        Assert.assertEquals(page.getTotalCount(), TOTAL_COUNT, "Total counts should be equal.");
-        Assert.assertEquals(page.getItems(), ITEMS, "Items should be equal.");
-        Assert.assertEquals(page.getMeta(), META, "Metas should be equal.");
+        Assert.assertEquals(listHolder.getItems(), ITEMS, "Items should be equal.");
+        Assert.assertEquals(listHolder.getMeta(), META, "Metas should be equal.");
     }
 
     @Test
     public void testDeserialization() throws JsonProcessingException {
-        Page<String> page = new Page<>(TOTAL_COUNT, ITEMS, META);
+        ListHolder<String> listHolder = new ListHolder<>(ITEMS, META);
 
-        String json = serialize(page);
-        Page<String> result = deserialize(json, new TypeReference<Page<String>>() {
+        String json = serialize(listHolder);
+        ListHolder<String> result = deserialize(json, new TypeReference<ListHolder<String>>() {
         });
 
-        Assert.assertEquals(result.getTotalCount(), TOTAL_COUNT, "Total counts should be equal.");
         Assert.assertEquals(result.getItems(), ITEMS, "Items should be equal.");
         Assert.assertEquals(result.getMeta(), META, "Metas should be equal.");
     }

@@ -17,6 +17,11 @@ import org.testng.annotations.Test;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.synopsys.kb.httpclient.AbstractTest;
 
+/**
+ * CVSS3 temporal metrics test.
+ * 
+ * @author skatzman
+ */
 public class Cvss3TemporalMetricsTest extends AbstractTest {
     private static final Double SCORE = Double.valueOf(5.0d);
 

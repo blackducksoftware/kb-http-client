@@ -45,17 +45,17 @@ public class ComponentVariantTest extends AbstractTest {
     private static final String TYPE = "versioned_download";
 
     private static final LicenseDefinition LICENSE_DEFINITION = new LicenseDefinition(LicenseDefinitionType.CONJUNCTIVE,
-            List.of(new LicenseDefinitionItem("https://kbtest.blackducksoftware.com/api/licenses/" + UUID.randomUUID(), null)));
+            List.of(new LicenseDefinitionItem(BASE_HREF + "/api/licenses/" + UUID.randomUUID(), null)));
 
     private static final Boolean DELETED = Boolean.FALSE;
 
     private static final Boolean COMPONENT_INTELLIGENCE = Boolean.FALSE;
 
-    private static final String HREF = "https://kbtest.blackducksoftware.com/api/variants/" + ID;
+    private static final String HREF = BASE_HREF + "/api/variants/" + ID;
 
     private static final Meta META = new Meta(HREF,
-            List.of(new Link("component", "https://kbtest.blackducksoftware.com/api/components/" + COMPONENT_ID),
-                    new Link("version", "https://kbtest.blackducksoftware.com/api/versions/" + COMPONENT_VERSION_ID)));
+            List.of(new Link("component", BASE_HREF + "/api/components/" + COMPONENT_ID),
+                    new Link("version", BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID)));
 
     @Test
     public void testConstructor() {

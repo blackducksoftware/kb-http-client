@@ -28,15 +28,15 @@ import com.synopsys.kb.httpclient.AbstractTest;
 public class UpgradeGuidanceTest extends AbstractTest {
     private static final UUID COMPONENT_ID = UUID.randomUUID();
 
-    private static final String COMPONENT = "https://kbtest.blackducksoftware.com/api/components/" + COMPONENT_ID;
+    private static final String COMPONENT = BASE_HREF + "/api/components/" + COMPONENT_ID;
 
     private static final UUID VERSION_ID = UUID.randomUUID();
 
-    private static final String VERSION = "https://kbtest.blackducksoftware.com/api/versions/" + VERSION_ID;
+    private static final String VERSION = BASE_HREF + "/api/versions/" + VERSION_ID;
 
     private static final UUID VARIANT_ID = UUID.randomUUID();
 
-    private static final String VARIANT = "https://kbtest.blackducksoftware.com/api/variants/" + VARIANT_ID;
+    private static final String VARIANT = BASE_HREF + "/api/variants/" + VARIANT_ID;
 
     private static final String COMPONENT_NAME = "FooComponent";
 
@@ -49,13 +49,13 @@ public class UpgradeGuidanceTest extends AbstractTest {
     private static final String VARIANT_EXTERNAL_ID = "foo:foo:1.0";
 
     private static final UpgradeGuidanceSuggestion SHORT_TERM_SUGGESTION = new UpgradeGuidanceSuggestion(
-            "https://kbtest.blackducksoftware.com/api/versions/" + UUID.randomUUID(), "2.0",
-            "https://kbtest.blackducksoftware.com/api/versions/" + UUID.randomUUID(),
+            BASE_HREF + "/api/versions/" + UUID.randomUUID(), "2.0",
+            BASE_HREF + "/api/versions/" + UUID.randomUUID(),
             "2.0", "maven", "foo:foo:2.0", new RiskProfile(0, 0, 0, 0, 0));
 
     private static final UpgradeGuidanceSuggestion LONG_TERM_SUGGESTION = new UpgradeGuidanceSuggestion(
-            "https://kbtest.blackducksoftware.com/api/versions/" + UUID.randomUUID(), "3.0",
-            "https://kbtest.blackducksoftware.com/api/versions/" + UUID.randomUUID(),
+            BASE_HREF + "/api/versions/" + UUID.randomUUID(), "3.0",
+            BASE_HREF + "/api/versions/" + UUID.randomUUID(),
             "2.0", "maven", "foo:foo:2.0", new RiskProfile(0, 0, 0, 0, 0));
 
     private static final Meta META = new Meta(VARIANT + "/upgrade-guidance", Collections.emptyList());
