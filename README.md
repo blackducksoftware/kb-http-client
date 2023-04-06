@@ -4,5 +4,7 @@ The KB HTTP client repository.
 
 ## Projects
 
-* kb-http-client - KnowledgeBase (KB) HTTP client library.
-* bd-kb-http-client - Black Duck-centric KnowledgeBase (KB) HTTP client library.
++ [kb-http-client](https://github.com/blackducksoftware/kb-http-client/tree/main/kb-http-client)
+    - KnowledgeBase (KB) HTTP client library for raw representations of KnowledgeBase data.
++ [bd-kb-http-client](https://github.com/blackducksoftware/kb-http-client/tree/main/bd-kb-http-client)
+    - Black Duck KnowledgeBase (KB) HTTP client library for Black Duck-centric translations of KnowledgeBase data.
