@@ -37,4 +37,29 @@ public class ProxyConfigurationTest extends AbstractTest {
         Assert.assertEquals(proxyConfiguration.getUserName().orElse(null), USER_NAME, "User names should be equal.");
         Assert.assertEquals(proxyConfiguration.getPassword().orElse(null), PASSWORD, "Passwords should be equal.");
     }
+
+    @Test(expectedExceptions = { IllegalArgumentException.class })
+    public void testConstructorWithNullScheme() {
+        new ProxyConfiguration(null, HOST, PORT, USER_NAME, PASSWORD);
+    }
+
+    @Test(expectedExceptions = { IllegalArgumentException.class })
+    public void testConstructorWithEmptyScheme() {
+        new ProxyConfiguration("", HOST, PORT, USER_NAME, PASSWORD);
+    }
+
+    @Test(expectedExceptions = { IllegalArgumentException.class })
+    public void testConstructorWithNullHost() {
+        new ProxyConfiguration(SCHEME, null, PORT, USER_NAME, PASSWORD);
+    }
+
+    @Test(expectedExceptions = { IllegalArgumentException.class })
+    public void testConstructorWithEmptyHost() {
+        new ProxyConfiguration(SCHEME, "", PORT, USER_NAME, PASSWORD);
+    }
+
+    @Test(expectedExceptions = { IllegalArgumentException.class })
+    public void testConstructorWithPortBelowMinimum() {
+        new ProxyConfiguration(SCHEME, HOST, -1, USER_NAME, PASSWORD);
+    }
 }

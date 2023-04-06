@@ -30,6 +30,8 @@ public class PageRequest {
 
     public static final int DEFAULT_LIMIT = 10;
 
+    public static final int MAX_LIMIT = 1000;
+
     private final int offset;
 
     private final int limit;
@@ -40,9 +42,20 @@ public class PageRequest {
         this(DEFAULT_OFFSET, DEFAULT_LIMIT, Collections.emptyList());
     }
 
+    /**
+     * Constructs a page request.
+     * 
+     * @param offset
+     *            The offset. Must be greater than or equal to 0.
+     * @param limit
+     *            The limit. Must be greater than or equal to 0 AND less than or equal to 1000.
+     * @param sortExpressions
+     *            The sort expressions.
+     */
     public PageRequest(int offset, int limit, List<SortExpression> sortExpressions) {
         Preconditions.checkArgument(offset >= 0, "Offset must be greater than or equal to 0.");
         Preconditions.checkArgument(limit >= 0, "Limit must be greater than or equal to 0.");
+        Preconditions.checkArgument(limit <= MAX_LIMIT, "Limit must be less than or equal to " + MAX_LIMIT + '.');
 
         this.offset = offset;
         this.limit = limit;

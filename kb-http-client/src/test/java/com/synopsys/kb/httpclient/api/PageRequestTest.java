@@ -43,6 +43,21 @@ public class PageRequestTest extends AbstractTest {
         Assert.assertEquals(pageRequest.getSortExpressions(), sortExpressions, "Sort expressions should be equal.");
     }
 
+    @Test(expectedExceptions = { IllegalArgumentException.class })
+    public void testConstructorWithOffsetBelowMinimum() {
+        new PageRequest(-1, LIMIT, Collections.emptyList());
+    }
+
+    @Test(expectedExceptions = { IllegalArgumentException.class })
+    public void testConstructorWithLimitBelowMinimum() {
+        new PageRequest(0, -1, Collections.emptyList());
+    }
+
+    @Test(expectedExceptions = { IllegalArgumentException.class })
+    public void testConstructorWithLimitAboveMaximum() {
+        new PageRequest(0, Integer.MAX_VALUE, Collections.emptyList());
+    }
+
     @Test
     public void testGetSortExpressionsStringWithoutSortExpressions() {
         PageRequest pageRequest = new PageRequest(OFFSET, LIMIT, Collections.emptyList());

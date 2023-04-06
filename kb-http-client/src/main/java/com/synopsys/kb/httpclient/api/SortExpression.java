@@ -13,6 +13,9 @@ package com.synopsys.kb.httpclient.api;
 
 import java.util.Objects;
 
+import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
+
 /**
  * Sort expression.
  * 
@@ -24,7 +27,9 @@ public class SortExpression {
     private final boolean isAscending;
 
     public SortExpression(String field, boolean isAscending) {
-        this.field = Objects.requireNonNull(field, "Field must be initialized.");
+        Preconditions.checkArgument(!Strings.isNullOrEmpty(field), "Field must not be null or empty.");
+
+        this.field = field;
         this.isAscending = isAscending;
     }
 

@@ -38,6 +38,36 @@ public class KbConfigurationTest extends AbstractTest {
         Assert.assertEquals(kbConfiguration.getLicenseKeySupplier(), LICENSE_KEY_SUPPLIER, "License keys should be equal.");
     }
 
+    @Test(expectedExceptions = { IllegalArgumentException.class })
+    public void testConstructorWithNullScheme() {
+        new KbConfiguration(null, HOST, KbConfiguration.DEFAULT_PORT, LICENSE_KEY_SUPPLIER);
+    }
+
+    @Test(expectedExceptions = { IllegalArgumentException.class })
+    public void testConstructorWithEmptyScheme() {
+        new KbConfiguration("", HOST, KbConfiguration.DEFAULT_PORT, LICENSE_KEY_SUPPLIER);
+    }
+
+    @Test(expectedExceptions = { IllegalArgumentException.class })
+    public void testConstructorWithNullHost() {
+        new KbConfiguration(KbConfiguration.DEFAULT_SCHEME, null, KbConfiguration.DEFAULT_PORT, LICENSE_KEY_SUPPLIER);
+    }
+
+    @Test(expectedExceptions = { IllegalArgumentException.class })
+    public void testConstructorWithEmptyHost() {
+        new KbConfiguration(KbConfiguration.DEFAULT_SCHEME, "", KbConfiguration.DEFAULT_PORT, LICENSE_KEY_SUPPLIER);
+    }
+
+    @Test(expectedExceptions = { IllegalArgumentException.class })
+    public void testConstructorWithPortBelowMinimum() {
+        new KbConfiguration(KbConfiguration.DEFAULT_SCHEME, HOST, -1, LICENSE_KEY_SUPPLIER);
+    }
+
+    @Test(expectedExceptions = { NullPointerException.class })
+    public void testConstructorWithNullLicenseKeySupplier() {
+        new KbConfiguration(KbConfiguration.DEFAULT_SCHEME, HOST, KbConfiguration.DEFAULT_PORT, (Supplier<String>) null);
+    }
+
     @Test
     public void testGetHref() {
         KbConfiguration kbConfiguration = new KbConfiguration(KbConfiguration.DEFAULT_SCHEME, HOST, KbConfiguration.DEFAULT_PORT, LICENSE_KEY_SUPPLIER);

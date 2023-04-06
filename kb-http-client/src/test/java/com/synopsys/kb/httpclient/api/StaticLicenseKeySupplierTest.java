@@ -34,6 +34,16 @@ public class StaticLicenseKeySupplierTest extends AbstractTest {
         supplier = new StaticLicenseKeySupplier(LICENSE_KEY);
     }
 
+    @Test(expectedExceptions = { IllegalArgumentException.class })
+    public void testConstructorWithNullLicenseKey() {
+        new StaticLicenseKeySupplier(null);
+    }
+
+    @Test(expectedExceptions = { IllegalArgumentException.class })
+    public void testConstructorWithEmptyLicenseKey() {
+        new StaticLicenseKeySupplier("");
+    }
+
     @Test
     public void testGet() {
         String licenseKey = supplier.get();

@@ -31,4 +31,14 @@ public class SortExpressionTest extends AbstractTest {
         Assert.assertEquals(sortExpression.getField(), FIELD, "Fields should be equal.");
         Assert.assertFalse(sortExpression.isAscending(), "Sort expression should not be ascending.");
     }
+
+    @Test(expectedExceptions = { IllegalArgumentException.class })
+    public void testConstructorWithNullField() {
+        new SortExpression(null, false);
+    }
+
+    @Test(expectedExceptions = { IllegalArgumentException.class })
+    public void testConstructorWithEmptyField() {
+        new SortExpression("", false);
+    }
 }
