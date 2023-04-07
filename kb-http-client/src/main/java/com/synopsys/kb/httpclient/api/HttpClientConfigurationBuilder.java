@@ -125,7 +125,7 @@ public class HttpClientConfigurationBuilder {
     /**
      * Defines default request header values.
      * 
-     * Headers will null or empty names or values will automatically be ignored.
+     * Headers with null or empty names or values will automatically be ignored.
      * 
      * No default headers are added by default.
      * 
@@ -174,11 +174,15 @@ public class HttpClientConfigurationBuilder {
      * 
      * Maximum total connections value is 256 by default if undefined.
      * 
+     * Must be greater than 0.
+     * 
      * @param maxConnTotal
      *            The maximum total connections value.
      * @return Returns the builder.
      */
     public HttpClientConfigurationBuilder maxConnTotal(int maxConnTotal) {
+        Preconditions.checkArgument(maxConnTotal > 0, "Maximum total connections must be greater than 0.");
+
         this.maxConnTotal = maxConnTotal;
 
         return this;
@@ -189,11 +193,15 @@ public class HttpClientConfigurationBuilder {
      * 
      * Maximum connections per route value is 20 by default if undefined.
      * 
+     * Must be greater than 0.
+     * 
      * @param maxConnPerRoute
      *            The maximum connections per route value.
      * @return Returns the builder.
      */
     public HttpClientConfigurationBuilder maxConnPerRoute(int maxConnPerRoute) {
+        Preconditions.checkArgument(maxConnPerRoute > 0, "Maximum connections per route must be greater than 0.");
+
         this.maxConnPerRoute = maxConnPerRoute;
 
         return this;
@@ -208,11 +216,15 @@ public class HttpClientConfigurationBuilder {
      * 
      * Max idle time seconds is 60 seconds by default if undefined.
      * 
+     * Must be greater than 0.
+     * 
      * @param maxIdleTimeSeconds
      *            The max idle time in seconds.
      * @return Returns the builder.
      */
     public HttpClientConfigurationBuilder maxIdleTimeSeconds(long maxIdleTimeSeconds) {
+        Preconditions.checkArgument(maxIdleTimeSeconds > 0, "Maximum idle time must be greater than 0.");
+
         this.maxIdleTimeSeconds = maxIdleTimeSeconds;
 
         return this;
@@ -227,11 +239,15 @@ public class HttpClientConfigurationBuilder {
      * 
      * Socket timeout is 3 minutes by default if undefined.
      * 
+     * Must be greater than or equal to 0.
+     * 
      * @param socketTimeoutMinutes
      *            The socket timeout in minutes.
      * @return Returns the builder.
      */
     public HttpClientConfigurationBuilder socketTimeoutMinutes(long socketTimeoutMinutes) {
+        Preconditions.checkArgument(socketTimeoutMinutes >= 0L, "Socket timeout in minutes must be greater than or equal to 0.");
+
         this.socketTimeoutMinutes = socketTimeoutMinutes;
 
         return this;
@@ -244,11 +260,15 @@ public class HttpClientConfigurationBuilder {
      * 
      * Connect timeout is 5 seconds by default if undefined.
      * 
+     * Must be greater than or equal to 0.
+     * 
      * @param connectTimeoutSeconds
      *            The connect timeout in seconds.
      * @return Returns the builder.
      */
     public HttpClientConfigurationBuilder connectTimeoutSeconds(long connectTimeoutSeconds) {
+        Preconditions.checkArgument(connectTimeoutSeconds >= 0L, "Connect timeout in seconds must be greater than or equal to 0.");
+
         this.connectTimeoutSeconds = connectTimeoutSeconds;
 
         return this;
@@ -259,11 +279,15 @@ public class HttpClientConfigurationBuilder {
      * 
      * Connection time-to-live is 300 seconds (5 minutes) by default if undefined.
      * 
+     * Must be greater than or equal to 0.
+     * 
      * @param timeToLiveSeconds
      *            The time to live in seconds.
      * @return Returns the builder.
      */
     public HttpClientConfigurationBuilder timeToLiveSeconds(long timeToLiveSeconds) {
+        Preconditions.checkArgument(timeToLiveSeconds >= 0L, "Time-to-live in seconds must be greater than or equal to 0.");
+        
         this.timeToLiveSeconds = timeToLiveSeconds;
 
         return this;
