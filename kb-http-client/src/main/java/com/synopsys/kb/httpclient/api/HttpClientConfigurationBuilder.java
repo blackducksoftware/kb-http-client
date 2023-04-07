@@ -63,7 +63,7 @@ public class HttpClientConfigurationBuilder {
             HttpStatus.SC_SERVICE_UNAVAILABLE,
             HttpStatus.SC_GATEWAY_TIMEOUT);
 
-    private long defaultRetryIntervalMs = TimeUnit.MILLISECONDS.toMillis(1000L);
+    private IRetryIntervalStrategy retryIntervalStrategy;
 
     private HttpClientConfigurationBuilder() {
     }
@@ -287,7 +287,7 @@ public class HttpClientConfigurationBuilder {
      */
     public HttpClientConfigurationBuilder timeToLiveSeconds(long timeToLiveSeconds) {
         Preconditions.checkArgument(timeToLiveSeconds >= 0L, "Time-to-live in seconds must be greater than or equal to 0.");
-        
+
         this.timeToLiveSeconds = timeToLiveSeconds;
 
         return this;
@@ -344,20 +344,19 @@ public class HttpClientConfigurationBuilder {
     }
 
     /**
-     * Defines the default retry interval in milliseconds.
+     * Defines the retry interval strategy.
      * 
-     * Default retry interval in milliseconds is 1000 milliseconds by default if undefined.
+     * Default retry interval strategy is a fixed retry interval strategy with delay of 1 second.
      * 
-     * Must be greater than or equal to 0.
+     * See FixedRetryIntervalStrategy, FibonacciRetryIntervalStrategy, and ExponentialBackoffRetryIntervalStrategy for
+     * customization or alternative strategy usage.
      * 
-     * @param defaultRetryIntervalMs
-     *            The default retry interval in milliseconds.
+     * @param retryIntervalStrategy
+     *            The retry interval strategy.
      * @return Returns the builder.
      */
-    public HttpClientConfigurationBuilder defaultRetryIntervalMs(long defaultRetryIntervalMs) {
-        Preconditions.checkArgument(defaultRetryIntervalMs >= 0L, "Default retry interval must be greater than or equal to 0.");
-
-        this.defaultRetryIntervalMs = defaultRetryIntervalMs;
+    public HttpClientConfigurationBuilder retryIntervalStrategy(IRetryIntervalStrategy retryIntervalStrategy) {
+        this.retryIntervalStrategy = retryIntervalStrategy;
 
         return this;
     }
@@ -371,7 +370,7 @@ public class HttpClientConfigurationBuilder {
         HttpClientConfiguration httpClientConfiguration = new HttpClientConfiguration(this.userAgent, this.isRedirectHandlingEnabled,
                 this.isContentCompressionEnabled, this.defaultHeaders, this.isEvictingExpiredConnections, this.isEvictingIdleConnections,
                 this.maxConnTotal, this.maxConnPerRoute, this.maxIdleTimeSeconds, this.socketTimeoutMinutes, this.connectTimeoutSeconds, this.timeToLiveSeconds,
-                this.proxyConfiguration, this.maxRetries, this.retriableCodes, this.defaultRetryIntervalMs);
+                this.proxyConfiguration, this.maxRetries, this.retriableCodes, this.retryIntervalStrategy);
 
         return httpClientConfiguration;
     }

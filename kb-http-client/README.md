@@ -62,7 +62,6 @@ The KB HTTP client makes certain assumptions in favor of convention...
 ## TODOs
 
 * Add SLF4J API to support debug logging.
-* Add configuration for retry policy backoff (linear, exponential, etc.).
 * Add support for more KB endpoints.
 
 ## Quick Start (code example)

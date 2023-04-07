@@ -54,7 +54,7 @@ public class HttpClientConfiguration {
 
     private final Set<Integer> retriableCodes;
 
-    private final long defaultRetryIntervalMs;
+    private final IRetryIntervalStrategy retryIntervalStrategy;
 
     /*
      * Package protected.
@@ -74,7 +74,7 @@ public class HttpClientConfiguration {
             ProxyConfiguration proxyConfiguration,
             int maxRetries,
             Set<Integer> retriableCodes,
-            long defaultRetryIntervalMs) {
+            IRetryIntervalStrategy retryIntervalStrategy) {
         this.userAgent = userAgent;
         this.isRedirectHandlingEnabled = isRedirectHandlingEnabled;
         this.isContentCompressionEnabled = isContentCompressionEnabled;
@@ -90,7 +90,7 @@ public class HttpClientConfiguration {
         this.proxyConfiguration = proxyConfiguration;
         this.maxRetries = maxRetries;
         this.retriableCodes = (retriableCodes != null) ? retriableCodes : Collections.emptySet();
-        this.defaultRetryIntervalMs = defaultRetryIntervalMs;
+        this.retryIntervalStrategy = retryIntervalStrategy;
     }
 
     public Optional<String> getUserAgent() {
@@ -153,7 +153,7 @@ public class HttpClientConfiguration {
         return retriableCodes;
     }
 
-    public long getDefaultRetryIntervalMs() {
-        return defaultRetryIntervalMs;
+    public Optional<IRetryIntervalStrategy> getRetryIntervalStrategy() {
+        return Optional.ofNullable(retryIntervalStrategy);
     }
 }

@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.hc.client5.http.HttpRequestRetryStrategy;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
@@ -41,7 +42,7 @@ import com.synopsys.kb.httpclient.AbstractTest;
  * @author skatzman
  */
 public class CustomHttpRequestRetryStrategyTest extends AbstractTest {
-    private static final TimeValue RETRY_INTERVAL = TimeValue.ofSeconds(1L);
+    private static final long RETRY_INTERVAL_MS = TimeUnit.MILLISECONDS.toMillis(1000L);
 
     private HttpContext context;
 
@@ -50,7 +51,9 @@ public class CustomHttpRequestRetryStrategyTest extends AbstractTest {
     @BeforeMethod
     public void beforeMethod() {
         context = new BasicHttpContext();
-        strategy = new CustomHttpRequestRetryStrategy(3, Set.of(HttpStatus.SC_TOO_MANY_REQUESTS), RETRY_INTERVAL);
+
+        IRetryIntervalStrategy retryIntervalStrategy = new FixedRetryIntervalStrategy(TimeUnit.MILLISECONDS.toMillis(RETRY_INTERVAL_MS));
+        strategy = new CustomHttpRequestRetryStrategy(3, Set.of(HttpStatus.SC_TOO_MANY_REQUESTS), retryIntervalStrategy);
     }
 
     @Test
@@ -129,7 +132,7 @@ public class CustomHttpRequestRetryStrategyTest extends AbstractTest {
         IOException exception = new IOException("This is an exception.");
         TimeValue retryInterval = strategy.getRetryInterval(request, exception, 0, context);
 
-        Assert.assertEquals(retryInterval, RETRY_INTERVAL, "Retry intervals should be equal.");
+        Assert.assertEquals(retryInterval, TimeValue.ofMilliseconds(RETRY_INTERVAL_MS), "Retry intervals should be equal.");
     }
 
     @Test
@@ -137,7 +140,7 @@ public class CustomHttpRequestRetryStrategyTest extends AbstractTest {
         HttpResponse response = new BasicHttpResponse(HttpStatus.SC_TOO_MANY_REQUESTS);
         TimeValue retryInterval = strategy.getRetryInterval(response, 0, context);
 
-        Assert.assertEquals(retryInterval, RETRY_INTERVAL, "Retry intervals should be equal.");
+        Assert.assertEquals(retryInterval, TimeValue.ofMilliseconds(RETRY_INTERVAL_MS), "Retry intervals should be equal.");
     }
 
     @Test
@@ -146,7 +149,7 @@ public class CustomHttpRequestRetryStrategyTest extends AbstractTest {
         response.addHeader(new BasicHeader(HttpHeaders.RETRY_AFTER, "invalid_header_value"));
         TimeValue retryInterval = strategy.getRetryInterval(response, 0, context);
 
-        Assert.assertEquals(retryInterval, RETRY_INTERVAL, "Retry intervals should be equal.");
+        Assert.assertEquals(retryInterval, TimeValue.ofMilliseconds(RETRY_INTERVAL_MS), "Retry intervals should be equal.");
     }
 
     @Test
@@ -155,7 +158,7 @@ public class CustomHttpRequestRetryStrategyTest extends AbstractTest {
         response.addHeader(new BasicHeader(HttpHeaders.RETRY_AFTER, "-100"));
         TimeValue retryInterval = strategy.getRetryInterval(response, 0, context);
 
-        Assert.assertEquals(retryInterval, RETRY_INTERVAL, "Retry intervals should be equal.");
+        Assert.assertEquals(retryInterval, TimeValue.ofMilliseconds(RETRY_INTERVAL_MS), "Retry intervals should be equal.");
     }
 
     @Test

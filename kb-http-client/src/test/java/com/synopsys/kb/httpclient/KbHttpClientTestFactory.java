@@ -18,7 +18,10 @@ import com.synopsys.kb.httpclient.api.AuthenticationExceptionTest;
 import com.synopsys.kb.httpclient.api.AuthorizationHttpRequestInterceptorTest;
 import com.synopsys.kb.httpclient.api.AuthorizationProviderTest;
 import com.synopsys.kb.httpclient.api.CustomHttpRequestRetryStrategyTest;
+import com.synopsys.kb.httpclient.api.ExponentialBackoffRetryIntervalStrategyTest;
+import com.synopsys.kb.httpclient.api.FibonacciRetryIntervalStrategyTest;
 import com.synopsys.kb.httpclient.api.FiniteConnectionKeepAliveStrategyTest;
+import com.synopsys.kb.httpclient.api.FixedRetryIntervalStrategyTest;
 import com.synopsys.kb.httpclient.api.HttpResponseTest;
 import com.synopsys.kb.httpclient.api.KbConfigurationTest;
 import com.synopsys.kb.httpclient.api.PageRequestTest;
@@ -87,7 +90,10 @@ public class KbHttpClientTestFactory {
                 new Cvss2TemporalMetricsTest(),
                 new Cvss3ScoreTest(),
                 new Cvss3TemporalMetricsTest(),
+                new ExponentialBackoffRetryIntervalStrategyTest(),
+                new FibonacciRetryIntervalStrategyTest(),
                 new FiniteConnectionKeepAliveStrategyTest(),
+                new FixedRetryIntervalStrategyTest(),
                 new HttpResponseTest(),
                 new IdHolderTest(),
                 new KbConfigurationTest(),

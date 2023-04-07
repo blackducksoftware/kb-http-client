@@ -53,12 +53,14 @@ class CustomHttpRequestRetryStrategy implements HttpRequestRetryStrategy {
 
     private final Set<Class<? extends IOException>> nonRetriableIOExceptionClasses;
 
-    private final TimeValue defaultRetryInterval;
+    private final IRetryIntervalStrategy retryIntervalStrategy;
 
-    public CustomHttpRequestRetryStrategy(int maxRetries, Set<Integer> retriableCodes, TimeValue defaultRetryInterval) {
+    public CustomHttpRequestRetryStrategy(int maxRetries,
+            Set<Integer> retriableCodes,
+            IRetryIntervalStrategy retryIntervalStrategy) {
         this(maxRetries,
                 retriableCodes,
-                defaultRetryInterval,
+                retryIntervalStrategy,
                 Set.<Class<? extends IOException>> of(AuthenticationException.class,
                         InterruptedIOException.class,
                         UnknownHostException.class,
@@ -70,7 +72,7 @@ class CustomHttpRequestRetryStrategy implements HttpRequestRetryStrategy {
 
     CustomHttpRequestRetryStrategy(int maxRetries,
             Set<Integer> retriableCodes,
-            TimeValue defaultRetryInterval,
+            IRetryIntervalStrategy retryIntervalStrategy,
             Set<Class<? extends IOException>> nonRetriableIOExceptionClasses) {
         Preconditions.checkArgument(maxRetries >= 0, "Maximum retries must be greater than or equal to 0.");
 
@@ -81,7 +83,7 @@ class CustomHttpRequestRetryStrategy implements HttpRequestRetryStrategy {
 
         this.maxRetries = maxRetries;
         this.retriableCodes = (retriableCodes != null) ? retriableCodes : Collections.emptySet();
-        this.defaultRetryInterval = Objects.requireNonNull(defaultRetryInterval, "Default retry interval must be initialized.");
+        this.retryIntervalStrategy = Objects.requireNonNull(retryIntervalStrategy, "Retry interval strategy must be initialized.");
         this.nonRetriableIOExceptionClasses = nonRetriableIOExceptionClasses;
     }
 
@@ -139,7 +141,7 @@ class CustomHttpRequestRetryStrategy implements HttpRequestRetryStrategy {
     @Override
     public TimeValue getRetryInterval(HttpRequest request, IOException exception, int execCount, HttpContext context) {
         // Utilize the default retry interval.
-        return defaultRetryInterval;
+        return retryIntervalStrategy.determineRetryInterval(execCount);
     }
 
     // Determines the retry interval between subsequent retries gien the response from the target server.
@@ -147,7 +149,7 @@ class CustomHttpRequestRetryStrategy implements HttpRequestRetryStrategy {
     public TimeValue getRetryInterval(HttpResponse response, int execCount, HttpContext context) {
         // Attempt to honor the Retry-After HTTP response header is available and valid.
         // Otherwise, utilize the default retry interval.
-        return readRetryAfter(response).orElse(defaultRetryInterval);
+        return readRetryAfter(response).orElseGet(() -> retryIntervalStrategy.determineRetryInterval(execCount));
     }
 
     private boolean isRetriable(IOException exception) {

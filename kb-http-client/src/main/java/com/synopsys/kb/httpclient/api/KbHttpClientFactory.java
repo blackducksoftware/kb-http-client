@@ -213,9 +213,9 @@ public class KbHttpClientFactory {
         // Retry strategy for subsets of unexpected errors and unexpected HTTP response codes.
         int maxRetries = httpClientConfiguration.getMaxRetries();
         Set<Integer> retriableCodes = httpClientConfiguration.getRetriableCodes();
-        long defaultRetryIntervalMs = httpClientConfiguration.getDefaultRetryIntervalMs();
-        TimeValue defaultRetryInterval = TimeValue.ofMilliseconds(defaultRetryIntervalMs);
-        HttpRequestRetryStrategy httpRequestRetryStrategy = new CustomHttpRequestRetryStrategy(maxRetries, retriableCodes, defaultRetryInterval);
+        IRetryIntervalStrategy retryStrategyInterval = httpClientConfiguration.getRetryIntervalStrategy()
+                .orElseGet(() -> new FixedRetryIntervalStrategy(1000L));
+        HttpRequestRetryStrategy httpRequestRetryStrategy = new CustomHttpRequestRetryStrategy(maxRetries, retriableCodes, retryStrategyInterval);
         builder = builder.setRetryStrategy(httpRequestRetryStrategy);
 
         return builder;
