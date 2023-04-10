@@ -35,7 +35,7 @@ public interface IBdLicenseApi {
      *            The license id.
      * @return Returns the Black Duck-centric license result.
      */
-    Result<BdLicense> find(UUID licenseId);
+    Result<BdLicense> findLicense(UUID licenseId);
 
     /**
      * Finds many Black Duck-centric licenses.
@@ -47,5 +47,5 @@ public interface IBdLicenseApi {
      *            The page request.
      * @return Returns the Black Duck-centric license page result.
      */
-    Result<Page<BdLicense>> findMany(PageRequest pageRequest);
+    Result<Page<BdLicense>> findManyLicenses(PageRequest pageRequest);
 }

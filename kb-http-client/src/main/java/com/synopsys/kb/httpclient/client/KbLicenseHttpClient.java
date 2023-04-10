@@ -33,6 +33,7 @@ import com.synopsys.kb.httpclient.api.KbConfiguration;
 import com.synopsys.kb.httpclient.api.PageRequest;
 import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.License;
+import com.synopsys.kb.httpclient.model.LicenseTerm;
 import com.synopsys.kb.httpclient.model.Page;
 
 /**
@@ -51,7 +52,7 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
     }
 
     @Override
-    public Result<License> find(UUID licenseId) {
+    public Result<License> findLicense(UUID licenseId) {
         Objects.requireNonNull(licenseId, "License id must be initialized.");
 
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_COMPONENT_DETAILS_V4_JSON);
@@ -65,7 +66,7 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
     }
 
     @Override
-    public Result<String> findText(UUID licenseId) {
+    public Result<String> findLicenseText(UUID licenseId) {
         Objects.requireNonNull(licenseId, "License id must be initialized.");
 
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_LICENSE_TEXT_ORIGINAL_V1);
@@ -80,7 +81,7 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
     }
 
     @Override
-    public Result<Page<License>> findMany(PageRequest pageRequest) {
+    public Result<Page<License>> findManyLicenses(PageRequest pageRequest) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
 
         Map<String, String> pageRequestParameters = constructPageRequestParameters(pageRequest);
@@ -95,5 +96,19 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
                 false, // Request does not trigger migrated response.
                 new TypeReference<Page<License>>() {
                 });
+    }
+
+    @Override
+    public Result<LicenseTerm> findLicenseTerm(UUID licenseTermId) {
+        Objects.requireNonNull(licenseTermId, "License term id must be initialized.");
+
+        Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_COMPONENT_DETAILS_V4_JSON);
+        Collection<Header> headers = List.of(acceptHeader);
+        ClassicHttpRequest request = constructGetHttpRequest("/api/license-terms/" + licenseTermId, null, headers);
+
+        return execute(request,
+                DEFAULT_SUCCESS_CODES,
+                DEFAULT_EXPECTED_CODES,
+                LicenseTerm.class);
     }
 }

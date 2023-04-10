@@ -41,6 +41,12 @@ public final class Relationship {
     // Designates the external homepage URI for a given entity such as an OSS component.
     public static final String HOMEPAGE = "homepage";
 
+    // Designates the internal API for an incompatible license term.
+    public static final String INCOMPATIBLE_LICENSE_TERM = "incompatible-license-term";
+
+    // Designates the internal API for a license term's licenses.
+    public static final String LICENSE_TERM_LICENSES = "license-term-licenses";
+
     // Designates an internal migration of a source entity to a destination entity.
     public static final String MOVED = "moved";
 

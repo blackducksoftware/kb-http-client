@@ -43,10 +43,10 @@ public class BdLicenseApi extends AbstractBdApi implements IBdLicenseApi {
     }
 
     @Override
-    public Result<BdLicense> find(UUID licenseId) {
+    public Result<BdLicense> findLicense(UUID licenseId) {
         Objects.requireNonNull(licenseId, "License id must be initialized.");
 
-        Result<License> result = licenseApi.find(licenseId);
+        Result<License> result = licenseApi.findLicense(licenseId);
 
         // Convert a license to a BD license.
         Function<License, BdLicense> conversionFunction = (license) -> {
@@ -57,10 +57,10 @@ public class BdLicenseApi extends AbstractBdApi implements IBdLicenseApi {
     }
 
     @Override
-    public Result<Page<BdLicense>> findMany(PageRequest pageRequest) {
+    public Result<Page<BdLicense>> findManyLicenses(PageRequest pageRequest) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
 
-        Result<Page<License>> result = licenseApi.findMany(pageRequest);
+        Result<Page<License>> result = licenseApi.findManyLicenses(pageRequest);
 
         Function<Page<License>, Page<BdLicense>> conversionFunction = (licensePage) -> {
             int totalCount = licensePage.getTotalCount();
