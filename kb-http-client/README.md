@@ -14,6 +14,12 @@ The KB HTTP client library requires Java 11 or later.
 * [Jackson](https://github.com/FasterXML/jackson)
 * [Apache HTTP Client](https://hc.apache.org/httpcomponents-client-5.2.x)
 
+## License
+
+## License
+
+The kb-http-client is licensed under the MIT License.
+
 ## Notes and caveats
 
 The KB HTTP client makes certain assumptions in favor of convention...

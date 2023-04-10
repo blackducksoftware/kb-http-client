@@ -13,6 +13,10 @@ The Black Duck-centric KB HTTP client library requires Java 11 or later.
 
 * KB HTTP client
 
+## License
+
+The bd-kb-http-client is licensed under the MIT License.
+
 ## Notes and caveats
 
 The Black Duck-centric KB HTTP client makes certain assumptions in favor of convention...
