@@ -14,12 +14,10 @@ package com.synopsys.kb.httpclient.model;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.synopsys.kb.httpclient.api.Relationship;
 
 /**
  * Component version representation.
@@ -30,20 +28,12 @@ import com.synopsys.kb.httpclient.api.Relationship;
  * 
  * @author skatzman
  */
-public class ComponentVersion extends AbstractEntity {
-    private final String version;
-
-    private final OffsetDateTime releasedOn;
-
+public class ComponentVersion extends ComponentVersionSummary {
     private final LicenseDefinition licenseDefinition;
 
     private final RiskProfile riskProfile;
 
-    private final boolean isDeleted;
-
     private final boolean isComponentIntelligencePresent;
-
-    private final Meta meta;
 
     @JsonCreator
     public ComponentVersion(@JsonProperty("version") String version,
@@ -53,60 +43,19 @@ public class ComponentVersion extends AbstractEntity {
             @JsonProperty("deleted") Boolean deleted,
             @JsonProperty("hasComponentIntelligence") Boolean componentIntelligence,
             @JsonProperty("_meta") Meta meta) {
-        this.version = version;
-        this.releasedOn = releasedOn;
+        super(version, releasedOn, deleted, meta);
+
         this.licenseDefinition = licenseDefinition;
         this.riskProfile = (riskProfile != null) ? riskProfile : new RiskProfile();
-        this.isDeleted = (deleted != null) ? deleted.booleanValue() : false;
         this.isComponentIntelligencePresent = (componentIntelligence != null) ? componentIntelligence.booleanValue() : false;
-        this.meta = meta;
     }
 
     public ComponentVersion(ComponentVersion componentVersion) {
-        Objects.requireNonNull(componentVersion, "Component version must be initialized.");
+        super(componentVersion);
 
-        this.version = componentVersion.getVersion().orElse(null);
-        this.releasedOn = componentVersion.getReleasedOn().orElse(null);
         this.licenseDefinition = componentVersion.getLicenseDefinition().orElse(null);
         this.riskProfile = componentVersion.getRiskProfile();
-        this.isDeleted = componentVersion.isDeleted();
         this.isComponentIntelligencePresent = componentVersion.isComponentIntelligencePresent();
-        this.meta = componentVersion.getMeta();
-    }
-
-    /**
-     * Gets the id.
-     *
-     * @return UUID Returns the id.
-     * @throws IllegalArgumentException
-     *             Throws if the id is absent or not a valid UUID.
-     */
-    @JsonIgnore
-    public final UUID getId() {
-        Meta meta = getMeta();
-
-        return meta.getHrefId("versions")
-                .map(UUID::fromString)
-                .orElseThrow(() -> new IllegalArgumentException("Unable to get id because it is absent."));
-    }
-
-    @JsonIgnore
-    public final UUID getComponentId() {
-        Meta meta = getMeta();
-
-        return meta.findUniqueLink(Relationship.COMPONENT)
-                .map(Link::getHref)
-                .map((componentHref) -> extractId(componentHref, "components").orElse(null))
-                .map(UUID::fromString)
-                .orElseThrow(() -> new IllegalArgumentException("Unable to get component id because it is absent."));
-    }
-
-    public Optional<String> getVersion() {
-        return Optional.ofNullable(version);
-    }
-
-    public Optional<OffsetDateTime> getReleasedOn() {
-        return Optional.ofNullable(releasedOn);
     }
 
     public Optional<LicenseDefinition> getLicenseDefinition() {
@@ -115,10 +64,6 @@ public class ComponentVersion extends AbstractEntity {
 
     public RiskProfile getRiskProfile() {
         return riskProfile;
-    }
-
-    public boolean isDeleted() {
-        return isDeleted;
     }
 
     @JsonIgnore
@@ -131,13 +76,11 @@ public class ComponentVersion extends AbstractEntity {
         return isComponentIntelligencePresent();
     }
 
-    public Meta getMeta() {
-        return meta;
-    }
-
     @Override
     public int hashCode() {
-        return Objects.hash(getVersion(), getReleasedOn(), getLicenseDefinition(), getRiskProfile(), isDeleted(), isComponentIntelligencePresent(), getMeta());
+        int superHashCode = super.hashCode();
+
+        return Objects.hash(superHashCode, getLicenseDefinition(), getRiskProfile(), isComponentIntelligencePresent());
     }
 
     @Override
@@ -147,13 +90,10 @@ public class ComponentVersion extends AbstractEntity {
         } else if (otherObject instanceof ComponentVersion) {
             ComponentVersion otherComponentVersion = (ComponentVersion) otherObject;
 
-            return Objects.equals(getVersion(), otherComponentVersion.getVersion())
-                    && Objects.equals(getReleasedOn(), otherComponentVersion.getReleasedOn())
+            return super.equals(otherObject)
                     && Objects.equals(getLicenseDefinition(), otherComponentVersion.getLicenseDefinition())
                     && Objects.equals(getRiskProfile(), otherComponentVersion.getRiskProfile())
-                    && Objects.equals(isDeleted(), otherComponentVersion.isDeleted())
-                    && Objects.equals(isComponentIntelligencePresent(), otherComponentVersion.isComponentIntelligencePresent())
-                    && Objects.equals(getMeta(), otherComponentVersion.getMeta());
+                    && Objects.equals(isComponentIntelligencePresent(), otherComponentVersion.isComponentIntelligencePresent());
         }
 
         return false;

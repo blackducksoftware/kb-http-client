@@ -37,6 +37,7 @@ import com.synopsys.kb.httpclient.model.ComponentTest;
 import com.synopsys.kb.httpclient.model.ComponentVariantActivityTest;
 import com.synopsys.kb.httpclient.model.ComponentVariantTest;
 import com.synopsys.kb.httpclient.model.ComponentVersionActivityTest;
+import com.synopsys.kb.httpclient.model.ComponentVersionSummaryTest;
 import com.synopsys.kb.httpclient.model.ComponentVersionTest;
 import com.synopsys.kb.httpclient.model.CveVulnerabilityActivityTest;
 import com.synopsys.kb.httpclient.model.CveVulnerabilityTest;
@@ -82,6 +83,7 @@ public class KbHttpClientTestFactory {
                 new ComponentVariantActivityTest(),
                 new ComponentVariantTest(),
                 new ComponentVersionActivityTest(),
+                new ComponentVersionSummaryTest(),
                 new ComponentVersionTest(),
                 new CustomHttpRequestRetryStrategyTest(),
                 new CveVulnerabilityActivityTest(),

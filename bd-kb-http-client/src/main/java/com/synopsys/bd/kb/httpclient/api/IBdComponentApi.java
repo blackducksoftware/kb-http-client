@@ -16,6 +16,7 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.synopsys.bd.kb.httpclient.model.BdComponentVersion;
+import com.synopsys.bd.kb.httpclient.model.BdComponentVersionSummary;
 import com.synopsys.kb.httpclient.api.PageRequest;
 import com.synopsys.kb.httpclient.model.Component;
 import com.synopsys.kb.httpclient.model.Page;
@@ -53,8 +54,6 @@ public interface IBdComponentApi {
     /**
      * Finds component versions for a given component.
      * 
-     * This operation explicitly does NOT follow migration links.
-     * 
      * - This API will attempt to follow migration links when present to return the final destination component version
      * page. In the case of a split migration, the first split moved link will be followed.
      * - As a defensive measure, this API will attempt to follow up to maximum ceiling of requests for migration
@@ -90,4 +89,34 @@ public interface IBdComponentApi {
             @Nullable String searchTermFilter,
             VulnerabilitySourcePriority vulnerabilitySourcePriority,
             VulnerabilityScorePriority vulnerabilityScorePriority);
+
+    /**
+     * Finds component versions for a given component.
+     * 
+     * - This API will attempt to follow migration links when present to return the final destination component version
+     * page. In the case of a split migration, the first split moved link will be followed.
+     * - As a defensive measure, this API will attempt to follow up to maximum ceiling of requests for migration
+     * handling.
+     * - Take precaution for differing migration responses when making multiple requests for different pages for the
+     * same component id.
+     * 
+     * Expected response codes
+     * 200 OK
+     * 404 Not Found
+     * 
+     * Migration response codes
+     * 300 Multiple Choices
+     * 301 Moved Permanently
+     * 
+     * @param pageRequest
+     *            The page request.
+     * @param componentId
+     *            The component id.
+     * @param searchTermFilter
+     *            The search term filter. Optional.
+     * @return Returns the component version summary page result.
+     */
+    MigratableResult<Page<BdComponentVersionSummary>> findComponentVersionSummaries(PageRequest pageRequest,
+            UUID componentId,
+            @Nullable String searchTermFilter);
 }

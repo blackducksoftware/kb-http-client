@@ -28,6 +28,7 @@ The KB HTTP client makes certain assumptions in favor of convention...
 + Component APIs
     - Find component
     - Find component versions
+    - Find component version summaries.
     - Search component (package identifier component matching)
 + Component version APIs
     - Find component version

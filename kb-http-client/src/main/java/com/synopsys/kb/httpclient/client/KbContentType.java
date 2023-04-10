@@ -29,6 +29,8 @@ final class KbContentType {
 
     public static final String KB_LICENSE_TEXT_ORIGINAL_V1 = "application/vnd.blackducksoftware.license-text-original-1";
 
+    public static final String KB_SUMMARY_V2_JSON = "application/vnd.blackducksoftware.kb.summary-2+json";
+
     public static final String KB_VULNERABILITY_V7_JSON = "application/vnd.blackducksoftware.kb.vulnerability-7+json";
 
     private KbContentType() {

@@ -20,6 +20,7 @@ import com.synopsys.bd.kb.httpclient.impl.BdComponentVersionApiTest;
 import com.synopsys.bd.kb.httpclient.impl.BdLicenseApiTest;
 import com.synopsys.bd.kb.httpclient.impl.BdVulnerabilityMergerTest;
 import com.synopsys.bd.kb.httpclient.model.BdComponentVariantTest;
+import com.synopsys.bd.kb.httpclient.model.BdComponentVersionSummaryTest;
 import com.synopsys.bd.kb.httpclient.model.BdComponentVersionTest;
 import com.synopsys.bd.kb.httpclient.model.BdLicenseTest;
 import com.synopsys.bd.kb.httpclient.model.OverallScoreTest;
@@ -40,6 +41,7 @@ public class BdKbHttpClientTestFactory {
                 new BdComponentVariantApiTest(),
                 new BdComponentVariantTest(),
                 new BdComponentVersionApiTest(),
+                new BdComponentVersionSummaryTest(),
                 new BdComponentVersionTest(),
                 new BdLicenseApiTest(),
                 new BdLicenseTest(),

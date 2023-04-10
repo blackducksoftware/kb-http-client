@@ -18,6 +18,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.core5.http.ClassicHttpRequest;
 import org.apache.hc.core5.http.Header;
@@ -38,6 +40,7 @@ import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.Component;
 import com.synopsys.kb.httpclient.model.ComponentSearchResult;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
+import com.synopsys.kb.httpclient.model.ComponentVersionSummary;
 import com.synopsys.kb.httpclient.model.Page;
 import com.synopsys.kb.httpclient.model.VulnerabilityScorePriority;
 import com.synopsys.kb.httpclient.model.VulnerabilitySourcePriority;
@@ -76,7 +79,7 @@ public class KbComponentHttpClient extends AbstractKbHttpClient implements IComp
     @Override
     public Result<Page<ComponentVersion>> findComponentVersions(PageRequest pageRequest,
             UUID componentId,
-            String searchTermFilter,
+            @Nullable String searchTermFilter,
             VulnerabilitySourcePriority vulnerabilitySourcePriority,
             VulnerabilityScorePriority vulnerabilityScorePriority) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
@@ -103,6 +106,33 @@ public class KbComponentHttpClient extends AbstractKbHttpClient implements IComp
                 true, // Reauthenticate on Unauthorized response.
                 true, // Request can trigger migrated response.
                 new TypeReference<Page<ComponentVersion>>() {
+                });
+    }
+
+    @Override
+    public Result<Page<ComponentVersionSummary>> findComponentVersionSummaries(PageRequest pageRequest,
+            UUID componentId,
+            @Nullable String searchTermFilter) {
+        Objects.requireNonNull(pageRequest, "Page request must be initialized.");
+        Objects.requireNonNull(componentId, "Component id must be initialized.");
+
+        ImmutableMap.Builder<String, String> builder = ImmutableMap.<String, String> builder();
+        Map<String, String> pageRequestParameters = constructPageRequestParameters(pageRequest);
+        builder = builder.putAll(pageRequestParameters);
+        if (!Strings.isNullOrEmpty(searchTermFilter)) {
+            builder = builder.put("q", "version:" + searchTermFilter);
+        }
+        Map<String, String> parameters = builder.build();
+        Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_SUMMARY_V2_JSON);
+        Collection<Header> headers = List.of(acceptHeader);
+        ClassicHttpRequest request = constructGetHttpRequest("/api/components/" + componentId + "/versions", parameters, headers);
+
+        return execute(request,
+                DEFAULT_SUCCESS_CODES,
+                DEFAULT_EXPECTED_CODES,
+                true, // Reauthenticate on Unauthorized response.
+                true, // Request can trigger migrated response.
+                new TypeReference<Page<ComponentVersionSummary>>() {
                 });
     }
 

@@ -24,11 +24,13 @@ import com.google.common.base.Strings;
 import com.synopsys.bd.kb.httpclient.api.IBdComponentApi;
 import com.synopsys.bd.kb.httpclient.api.MigratableResult;
 import com.synopsys.bd.kb.httpclient.model.BdComponentVersion;
+import com.synopsys.bd.kb.httpclient.model.BdComponentVersionSummary;
 import com.synopsys.kb.httpclient.api.IComponentApi;
 import com.synopsys.kb.httpclient.api.PageRequest;
 import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.Component;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
+import com.synopsys.kb.httpclient.model.ComponentVersionSummary;
 import com.synopsys.kb.httpclient.model.Meta;
 import com.synopsys.kb.httpclient.model.Page;
 import com.synopsys.kb.httpclient.model.VulnerabilityScorePriority;
@@ -94,13 +96,38 @@ public class BdComponentApi extends AbstractMigratableBdApi implements IBdCompon
         Function<UUID, Result<Page<ComponentVersion>>> resultFunction = (sourceComponentId) -> componentApi.findComponentVersions(pageRequest,
                 sourceComponentId, searchTermFilter, vulnerabilitySourcePriority, vulnerabilityScorePriority);
 
-        // No conversion is required.
+        // Convert from a component version page to a Black Duck-centric component version page.
         Function<Page<ComponentVersion>, Page<BdComponentVersion>> conversionFunction = (sourceComponentVersionPage) -> {
             int sourceTotalCount = sourceComponentVersionPage.getTotalCount();
             List<BdComponentVersion> destinationItems = sourceComponentVersionPage.getItems().stream()
                     .map((sourceComponentVersion) -> new BdComponentVersion(sourceComponentVersion, baseHref))
                     .collect(Collectors.toList());
             Meta sourceMeta = sourceComponentVersionPage.getMeta();
+
+            return new Page<>(sourceTotalCount, destinationItems, sourceMeta);
+        };
+
+        return findMigratableResult(componentId, resultFunction, conversionFunction, "components");
+    }
+
+    @Override
+    public MigratableResult<Page<BdComponentVersionSummary>> findComponentVersionSummaries(final PageRequest pageRequest,
+            UUID componentId,
+            @Nullable final String searchTermFilter) {
+        Objects.requireNonNull(pageRequest, "Page request must be initialized.");
+        Objects.requireNonNull(componentId, "Component id must be initialized.");
+
+        // Find a component version summary page result given a dynamic component id.
+        Function<UUID, Result<Page<ComponentVersionSummary>>> resultFunction = (sourceComponentId) -> componentApi.findComponentVersionSummaries(pageRequest,
+                sourceComponentId, searchTermFilter);
+
+        // Convert from a component version summary page to a Black Duck-centric component version summary page.
+        Function<Page<ComponentVersionSummary>, Page<BdComponentVersionSummary>> conversionFunction = (sourceComponentVersionSummaryPage) -> {
+            int sourceTotalCount = sourceComponentVersionSummaryPage.getTotalCount();
+            List<BdComponentVersionSummary> destinationItems = sourceComponentVersionSummaryPage.getItems().stream()
+                    .map((sourceComponentVersionSummary) -> new BdComponentVersionSummary(sourceComponentVersionSummary))
+                    .collect(Collectors.toList());
+            Meta sourceMeta = sourceComponentVersionSummaryPage.getMeta();
 
             return new Page<>(sourceTotalCount, destinationItems, sourceMeta);
         };

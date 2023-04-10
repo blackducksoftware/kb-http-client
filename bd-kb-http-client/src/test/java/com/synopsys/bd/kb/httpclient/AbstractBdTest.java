@@ -29,6 +29,7 @@ import com.synopsys.kb.httpclient.api.Relationship;
 import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.BdsaVulnerability;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
+import com.synopsys.kb.httpclient.model.ComponentVersionSummary;
 import com.synopsys.kb.httpclient.model.CveVulnerability;
 import com.synopsys.kb.httpclient.model.Cvss2AccessComplexity;
 import com.synopsys.kb.httpclient.model.Cvss2AccessVector;
@@ -195,6 +196,13 @@ public abstract class AbstractBdTest {
                 List.of(new Link(Relationship.COMPONENT, BASE_HREF + "/api/components/" + componentId)));
 
         return new ComponentVersion(version, OffsetDateTime.now(), licenseDefinition, riskProfile, Boolean.FALSE, Boolean.FALSE, meta);
+    }
+
+    protected ComponentVersionSummary constructComponentVersionSummary(UUID componentId, UUID componentVersionId, String version) {
+        Meta meta = new Meta(BASE_HREF + "/api/versions/" + componentVersionId,
+                List.of(new Link(Relationship.COMPONENT, BASE_HREF + "/api/components/" + componentId)));
+
+        return new ComponentVersionSummary(version, OffsetDateTime.now(), Boolean.FALSE, meta);
     }
 
     protected CveVulnerability constructCveVulnerability(String id, VulnerabilityStatus status) {

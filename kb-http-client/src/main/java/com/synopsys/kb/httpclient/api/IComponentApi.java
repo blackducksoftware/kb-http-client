@@ -18,6 +18,7 @@ import javax.annotation.Nullable;
 import com.synopsys.kb.httpclient.model.Component;
 import com.synopsys.kb.httpclient.model.ComponentSearchResult;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
+import com.synopsys.kb.httpclient.model.ComponentVersionSummary;
 import com.synopsys.kb.httpclient.model.Page;
 import com.synopsys.kb.httpclient.model.VulnerabilityScorePriority;
 import com.synopsys.kb.httpclient.model.VulnerabilitySourcePriority;
@@ -89,6 +90,34 @@ public interface IComponentApi {
             @Nullable String searchTermFilter,
             VulnerabilitySourcePriority vulnerabilitySourcePriority,
             VulnerabilityScorePriority vulnerabilityScorePriority);
+
+    /**
+     * Finds component version summaries for a given component.
+     * 
+     * This operation explicitly does NOT follow migration links.
+     * 
+     * - Take precaution for differing migration responses when making multiple requests for different pages for the
+     * same component id.
+     * 
+     * Expected response codes
+     * 200 OK
+     * 404 Not Found
+     * 
+     * Migration response codes
+     * 300 Multiple Choices
+     * 301 Moved Permanently
+     * 
+     * @param pageRequest
+     *            The page request.
+     * @param componentId
+     *            The component id.
+     * @param searchTermFilter
+     *            The search term filter. Optional.
+     * @return Returns the component version summary page result.
+     */
+    Result<Page<ComponentVersionSummary>> findComponentVersionSummaries(PageRequest pageRequest,
+            UUID componentId,
+            @Nullable String searchTermFilter);
 
     /**
      * Search for components.
