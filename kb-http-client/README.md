@@ -63,6 +63,7 @@ The KB HTTP client makes certain assumptions in favor of convention...
 
 * Add SLF4J API to support debug logging.
 * Add support for more KB endpoints.
+* Add parameters to conditionally add Cache-Control header of 'no-cache' to request up-to-date contents for migration responses and relationships. 
 
 ## Quick Start (code example)
 
