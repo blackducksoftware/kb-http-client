@@ -57,7 +57,8 @@ public class KbComponentVersionHttpClient extends AbstractKbHttpClient implement
     }
 
     @Override
-    public Result<ComponentVersion> find(UUID componentVersionId, VulnerabilitySourcePriority vulnerabilitySourcePriority,
+    public Result<ComponentVersion> find(UUID componentVersionId,
+            VulnerabilitySourcePriority vulnerabilitySourcePriority,
             VulnerabilityScorePriority vulnerabilityScorePriority) {
         Objects.requireNonNull(componentVersionId, "Component version id must be initialized.");
         Objects.requireNonNull(vulnerabilitySourcePriority, "Vulnerability source priority must be initialized.");

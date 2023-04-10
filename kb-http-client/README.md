@@ -27,8 +27,8 @@ The KB HTTP client makes certain assumptions in favor of convention...
 
 + Component APIs
     - Find component
-    - Find component versions
-    - Find component version summaries.
+    - Find component versions by component.
+    - Find component version summaries by component.
     - Search component (package identifier component matching)
 + Component version APIs
     - Find component version
@@ -46,6 +46,7 @@ The KB HTTP client makes certain assumptions in favor of convention...
     - Find license text    
     - Find many licenses
     - Find license term
+    - Find license terms by license
 + Vulnerability APIs
     - Find CVE vulnerability
     - Find BDSA vulnerability    

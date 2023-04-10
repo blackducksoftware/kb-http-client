@@ -83,4 +83,15 @@ public interface ILicenseApi {
      * @return Returns the license term result.
      */
     Result<LicenseTerm> findLicenseTerm(UUID licenseTermId);
+
+    /**
+     * Finds license terms for a given license.
+     * 
+     * @param pageRequest
+     *            The page request.
+     * @param licenseId
+     *            The license id.
+     * @return Returns the license term page result.
+     */
+    Result<Page<LicenseTerm>> findLicenseTermsByLicense(PageRequest pageRequest, UUID licenseId);
 }
