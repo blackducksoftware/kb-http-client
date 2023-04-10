@@ -63,6 +63,15 @@ public interface IKbHttpApi {
     ILicenseApi getLicenseApi();
 
     /**
+     * Gets the vulnerability API.
+     * 
+     * The vulnerability API contains operations relating to vulnerabilities.
+     * 
+     * @return Returns the vulnerability API.
+     */
+    IVulnerabilityApi getVulnerabilityApi();
+
+    /**
      * Gets the activity API.
      * 
      * The activity API contains operations relating to activities.

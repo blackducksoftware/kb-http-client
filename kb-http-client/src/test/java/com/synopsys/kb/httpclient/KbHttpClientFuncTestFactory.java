@@ -19,6 +19,7 @@ import com.synopsys.kb.httpclient.client.KbComponentHttpClientFuncTest;
 import com.synopsys.kb.httpclient.client.KbComponentVariantHttpClientFuncTest;
 import com.synopsys.kb.httpclient.client.KbComponentVersionHttpClientFuncTest;
 import com.synopsys.kb.httpclient.client.KbLicenseHttpClientFuncTest;
+import com.synopsys.kb.httpclient.client.KbVulnerabilityHttpClientFuncTest;
 
 /**
  * KB HTTP client functional test factory.
@@ -35,6 +36,7 @@ public class KbHttpClientFuncTestFactory {
                 new KbComponentVersionHttpClientFuncTest(),
                 new KbComponentVariantHttpClientFuncTest(),
                 new KbLicenseHttpClientFuncTest(),
+                new KbVulnerabilityHttpClientFuncTest(),
         };
     }
 }

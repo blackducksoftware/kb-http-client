@@ -50,6 +50,7 @@ import com.synopsys.kb.httpclient.client.KbComponentHttpClient;
 import com.synopsys.kb.httpclient.client.KbComponentVariantHttpClient;
 import com.synopsys.kb.httpclient.client.KbComponentVersionHttpClient;
 import com.synopsys.kb.httpclient.client.KbLicenseHttpClient;
+import com.synopsys.kb.httpclient.client.KbVulnerabilityHttpClient;
 import com.synopsys.kb.httpclient.util.JsonUtil;
 
 /**
@@ -87,9 +88,10 @@ public class KbHttpClientFactory {
         IComponentVariantApi componentVariantApi = new KbComponentVariantHttpClient(kbConfiguration, JsonUtil.objectMapper, authorizedHttpClient,
                 authorizationProvider);
         ILicenseApi licenseApi = new KbLicenseHttpClient(kbConfiguration, JsonUtil.objectMapper, authorizedHttpClient, authorizationProvider);
+        IVulnerabilityApi vulnerabilityApi = new KbVulnerabilityHttpClient(kbConfiguration, JsonUtil.objectMapper, authorizedHttpClient, authorizationProvider);
         IActivityApi activityApi = new KbActivityHttpClient(kbConfiguration, JsonUtil.objectMapper, authorizedHttpClient, authorizationProvider);
 
-        return new KbHttpApi(authenticationApi, componentApi, componentVersionApi, componentVariantApi, licenseApi, activityApi);
+        return new KbHttpApi(authenticationApi, componentApi, componentVersionApi, componentVariantApi, licenseApi, vulnerabilityApi, activityApi);
     }
 
     private CloseableHttpClient constructUnauthorizedHttpClient(HttpClientConfiguration httpClientConfiguration) {

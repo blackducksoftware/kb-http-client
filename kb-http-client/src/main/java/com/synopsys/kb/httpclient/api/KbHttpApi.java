@@ -31,6 +31,8 @@ class KbHttpApi implements IKbHttpApi {
 
     private final ILicenseApi licenseApi;
 
+    private final IVulnerabilityApi vulnerabilityApi;
+
     private final IActivityApi activityApi;
 
     public KbHttpApi(IAuthenticationApi authenticationApi,
@@ -38,12 +40,14 @@ class KbHttpApi implements IKbHttpApi {
             IComponentVersionApi componentVersionApi,
             IComponentVariantApi componentVariantApi,
             ILicenseApi licenseApi,
+            IVulnerabilityApi vulnerabilityApi,
             IActivityApi activityApi) {
         this.authenticationApi = Objects.requireNonNull(authenticationApi, "Authentication API must be initialized.");
         this.componentApi = Objects.requireNonNull(componentApi, "Component API must be initialized.");
         this.componentVersionApi = Objects.requireNonNull(componentVersionApi, "Component version API must be initialized.");
         this.componentVariantApi = Objects.requireNonNull(componentVariantApi, "Component variant API must be initialized.");
         this.licenseApi = Objects.requireNonNull(licenseApi, "License API must be initialized.");
+        this.vulnerabilityApi = Objects.requireNonNull(vulnerabilityApi, "Vulnerability API must be initialized.");
         this.activityApi = Objects.requireNonNull(activityApi, "Activity API must be initialized.");
     }
 
@@ -70,6 +74,11 @@ class KbHttpApi implements IKbHttpApi {
     @Override
     public ILicenseApi getLicenseApi() {
         return licenseApi;
+    }
+
+    @Override
+    public IVulnerabilityApi getVulnerabilityApi() {
+        return vulnerabilityApi;
     }
 
     @Override
