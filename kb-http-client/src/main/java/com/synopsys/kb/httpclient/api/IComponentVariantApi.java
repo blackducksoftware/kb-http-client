@@ -30,6 +30,8 @@ public interface IComponentVariantApi {
     /**
      * Finds a component variant by its id.
      * 
+     * Version: 4
+     * 
      * Expected response codes
      * 200 OK
      * 404 Not Found
@@ -44,6 +46,8 @@ public interface IComponentVariantApi {
      * Finds the CVE vulnerabilities associated to the given component variant.
      *
      * - Raw unfiltered CVE vulnerability representations are returned.
+     * 
+     * Version: 7
      * 
      * Expected response codes
      * 200 OK
@@ -64,6 +68,8 @@ public interface IComponentVariantApi {
      * - Response codes of 402 Payment Required and 403 Forbidden are recommended to be gracefully handled as an absent
      * result. These response codes can occur if a KB request is made without the BDSA feature enabled within product
      * licensing.
+     * 
+     * Version: 7
      * 
      * Expected response codes
      * 200 OK
@@ -86,6 +92,8 @@ public interface IComponentVariantApi {
      * result. These response codes can occur if a KB request is made without the BDSA feature enabled within product
      * licensing.
      *
+     * Version: 4
+     * 
      * Expected response codes
      * 200 OK
      * 402 Payment Required
@@ -119,6 +127,8 @@ public interface IComponentVariantApi {
      * - Response codes of 402 Payment Required and 403 Forbidden are recommended to be gracefully handled as an absent
      * result. These response codes can occur if a KB request is made without the BDSA feature enabled within product
      * licensing.
+     * 
+     * Version: 4
      * 
      * Expected response codes
      * 200 OK

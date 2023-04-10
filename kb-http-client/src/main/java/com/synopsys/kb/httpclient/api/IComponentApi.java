@@ -34,6 +34,8 @@ public interface IComponentApi {
      * 
      * This operation explicitly does NOT follow migration links.
      * 
+     * Version: 4
+     * 
      * Expected response codes
      * 200 OK
      * 404 Not Found
@@ -61,6 +63,8 @@ public interface IComponentApi {
      * licensing.
      * - Take precaution for differing migration responses when making multiple requests for different pages for the
      * same component id.
+     * 
+     * Version: 4
      * 
      * Expected response codes
      * 200 OK
@@ -99,6 +103,8 @@ public interface IComponentApi {
      * - Take precaution for differing migration responses when making multiple requests for different pages for the
      * same component id.
      * 
+     * Version: 2
+     * 
      * Expected response codes
      * 200 OK
      * 404 Not Found
@@ -126,6 +132,8 @@ public interface IComponentApi {
      * 
      * - Response codes of 400 Bad Request, 404 Not Found, and 410 Gone should be gracefully handled as an absent search
      * result.
+     * 
+     * Version: 3
      * 
      * Expected response codes
      * 200 OK

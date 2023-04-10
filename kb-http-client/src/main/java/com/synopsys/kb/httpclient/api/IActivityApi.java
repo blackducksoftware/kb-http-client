@@ -38,6 +38,8 @@ public interface IActivityApi {
      * Migrated and soft deleted component ids will always return an associated activity regardless of provided
      * timestamp.
      * 
+     * Version: 3
+     * 
      * Expected response codes
      * 200 OK
      * 
@@ -52,14 +54,16 @@ public interface IActivityApi {
     /**
      * Finds component version activities.
      * 
-     * Expected response codes
-     * 200 OK
-     * 
      * Determines if one or more of the provided component versions has an associated update for component version
      * metadata since the given timestamp.
      * 
      * Migrated and soft deleted component version ids will always return an associated activity regardless of provided
      * timestamp.
+     *
+     * Version: 3
+     * 
+     * Expected response codes
+     * 200 OK
      * 
      * @param componentVersionIds
      *            The set of component version ids. Must be not null, not empty, and less than or equal to 1000 ids.
@@ -77,6 +81,8 @@ public interface IActivityApi {
      * 
      * Migrated and soft deleted component version ids will always return an associated activity regardless of provided
      * timestamp.
+     * 
+     * Version: 3
      * 
      * Expected response codes
      * 200 OK
@@ -99,6 +105,8 @@ public interface IActivityApi {
      * Migrated and soft deleted component version ids will always return an associated activity regardless of provided
      * timestamp.
      * 
+     * Version: 3
+     * 
      * Expected response codes
      * 200 OK
      * 
@@ -119,6 +127,8 @@ public interface IActivityApi {
      * 
      * Migrated and soft deleted component version ids will always return an associated activity regardless of provided
      * timestamp.
+     * 
+     * Version: 3
      * 
      * Expected response codes
      * 200 OK
@@ -142,6 +152,8 @@ public interface IActivityApi {
      * Migrated and soft deleted component version ids will always return an associated activity regardless of provided
      * timestamp.
      * 
+     * Version: 3
+     * 
      * Expected response codes
      * 200 OK
      * 
@@ -160,6 +172,8 @@ public interface IActivityApi {
      * metadata since the given timestamp.
      * 
      * Soft deleted component variant ids will always return an associated activity regardless of provided timestamp.
+     * 
+     * Version: 3
      * 
      * Expected response codes
      * 200 OK
@@ -181,6 +195,8 @@ public interface IActivityApi {
      * 
      * Soft deleted component variant ids will always return an associated activity regardless of provided timestamp.
      * 
+     * Version: 3
+     * 
      * Expected response codes
      * 200 OK
      * 
@@ -200,6 +216,8 @@ public interface IActivityApi {
      * component variant.
      * 
      * Soft deleted component variant ids will always return an associated activity regardless of provided timestamp.
+     * 
+     * Version: 3
      * 
      * Expected response codes
      * 200 OK
@@ -222,6 +240,8 @@ public interface IActivityApi {
      * 
      * Soft deleted component variant ids will always return an associated activity regardless of provided timestamp.
      * 
+     * Version: 3
+     * 
      * Expected response codes
      * 200 OK
      * 
@@ -242,6 +262,8 @@ public interface IActivityApi {
      * 
      * Soft deleted component variant ids will always return an associated activity regardless of provided timestamp.
      * 
+     * Version: 3
+     * 
      * Expected response codes
      * 200 OK
      * 
@@ -260,6 +282,8 @@ public interface IActivityApi {
      * Determines if one or more of the provided licenses has an associated update for license metadata since the given
      * timestamp.
      * 
+     * Version: 3
+     * 
      * Expected response codes
      * 200 OK
      * 
@@ -277,6 +301,8 @@ public interface IActivityApi {
      * Determines if one or more of the provided CVE vulnerabilities has an associated update for CVE vulnerability
      * metadata since the given timestamp.
      * 
+     * Version: 3
+     * 
      * Expected response codes
      * 200 OK
      * 
@@ -293,6 +319,8 @@ public interface IActivityApi {
      * 
      * Determines if one or more of the provided BDSA vulnerabilities has an associated update for BDSA vulnerability
      * metadata since the given timestamp.
+     * 
+     * Version: 3
      * 
      * Expected response codes
      * 200 OK

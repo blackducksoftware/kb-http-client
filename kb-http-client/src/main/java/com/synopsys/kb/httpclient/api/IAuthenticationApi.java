@@ -24,6 +24,8 @@ public interface IAuthenticationApi {
     /**
      * Authenticate given the license key.
      * 
+     * Version: 1
+     * 
      * Expected response codes
      * 200 OK
      * 

@@ -36,6 +36,8 @@ public interface IComponentVersionApi {
      * result. These response codes can occur if a KB request is made without the BDSA feature enabled within product
      * licensing.
      * 
+     * Version: 4
+     * 
      * Expected response codes
      * 200 OK
      * 402 Payment Required
@@ -67,6 +69,8 @@ public interface IComponentVersionApi {
      * - Take precaution for differing migration responses when making multiple requests for different pages for the
      * same component version id.
      * 
+     * Version: 7
+     * 
      * Expected response codes
      * 200 OK
      * 404 Not Found
@@ -96,6 +100,8 @@ public interface IComponentVersionApi {
      * result. These response codes can occur if a KB request is made without the BDSA feature enabled within product
      * licensing.
      * 
+     * Version: 7
+     * 
      * Expected response codes
      * 200 OK
      * 402 Payment Required
@@ -123,6 +129,8 @@ public interface IComponentVersionApi {
      * result. These response codes can occur if a KB request is made without the BDSA feature enabled within product
      * licensing.
      *
+     * Version: 4
+     * 
      * Expected response codes
      * 200 OK
      * 402 Payment Required

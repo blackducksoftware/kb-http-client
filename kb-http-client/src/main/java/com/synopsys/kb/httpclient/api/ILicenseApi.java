@@ -27,6 +27,8 @@ public interface ILicenseApi {
      * 
      * - Response codes of 404 Not Found should be gracefully handled as an absent result.
      * 
+     * Version: 4
+     * 
      * Expected response codes
      * 200 OK
      * 404 Not Found
@@ -40,6 +42,8 @@ public interface ILicenseApi {
     /**
      * Finds a license's original license text by its id.
      * 
+     * Version: 1
+     * 
      * Expected response codes
      * 200 OK
      * 404 Not Found
@@ -52,6 +56,8 @@ public interface ILicenseApi {
 
     /**
      * Finds many licenses.
+     * 
+     * Version: 4
      * 
      * Expected response codes
      * 200 OK
