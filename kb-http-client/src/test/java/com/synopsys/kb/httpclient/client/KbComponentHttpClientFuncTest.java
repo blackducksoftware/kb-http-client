@@ -28,7 +28,10 @@ import com.synopsys.kb.httpclient.api.PageRequest;
 import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.Component;
 import com.synopsys.kb.httpclient.model.ComponentSearchResult;
+import com.synopsys.kb.httpclient.model.ComponentVersion;
 import com.synopsys.kb.httpclient.model.Page;
+import com.synopsys.kb.httpclient.model.VulnerabilityScorePriority;
+import com.synopsys.kb.httpclient.model.VulnerabilitySourcePriority;
 
 /**
  * 
@@ -89,6 +92,71 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
         Result<Component> result = componentApi.find(splitComponentId);
 
         HttpResponse<Component> httpResponse = result.getHttpResponse().orElse(null);
+
+        Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
+        Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MULTIPLE_CHOICES, "Codes should be equal.");
+        Assert.assertFalse(httpResponse.isMessageBodyPresent(), "Message body should not be present.");
+        Assert.assertTrue(httpResponse.isMigratedMetaPresent(), "Migrated meta should be present.");
+        Assert.assertTrue(httpResponse.isMigrated(), "Entity should be migrated.");
+        Assert.assertFalse(httpResponse.isMergeMigrated(), "Entity should not be merge migrated.");
+        Assert.assertTrue(httpResponse.isSplitMigrated(), "Entity should be split migrated.");
+    }
+
+    @Test(enabled = false)
+    public void testFindComponentVersions() {
+        PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
+        UUID componentId = UUID.fromString("b75f622a-30da-46e4-a9c9-56f4ab75e22e");
+
+        Result<Page<ComponentVersion>> result = componentApi.findComponentVersions(pageRequest, componentId, null, VulnerabilitySourcePriority.BDSA,
+                VulnerabilityScorePriority.CVSS_3);
+
+        HttpResponse<Page<ComponentVersion>> httpResponse = result.getHttpResponse().orElse(null);
+
+        Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
+
+        if (httpResponse.isMigrated()) {
+            Assert.fail("This functional test method was written using a non-migrated component id.  "
+                    + "Since then, this component id has been migrated by the KnowledgeBase.  "
+                    + "Update this test with a new non-migrated component id.");
+        }
+
+        Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
+        Assert.assertTrue(httpResponse.isMessageBodyPresent(), "Message body should be present.");
+        Page<ComponentVersion> page = httpResponse.getMessageBody().orElse(null);
+        Assert.assertNotNull(page, "Page should be initialized.");
+        List<ComponentVersion> items = page.getItems();
+        Assert.assertNotNull(items, "Items should be initialized.");
+        Assert.assertFalse(items.isEmpty(), "Items should not be empty.");
+    }
+
+    @Test(enabled = false)
+    public void testFindComponentVersionsWhenMergeMigrated() {
+        PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
+        UUID mergeComponentId = UUID.fromString("d82fb719-977c-49aa-b799-3953356aa15c");
+
+        Result<Page<ComponentVersion>> result = componentApi.findComponentVersions(pageRequest, mergeComponentId, null, VulnerabilitySourcePriority.BDSA,
+                VulnerabilityScorePriority.CVSS_3);
+
+        HttpResponse<Page<ComponentVersion>> httpResponse = result.getHttpResponse().orElse(null);
+
+        Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
+        Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MOVED_PERMANENTLY, "Codes should be equal.");
+        Assert.assertFalse(httpResponse.isMessageBodyPresent(), "Message body should not be present.");
+        Assert.assertTrue(httpResponse.isMigratedMetaPresent(), "Migrated meta should be present.");
+        Assert.assertTrue(httpResponse.isMigrated(), "Entity should be migrated.");
+        Assert.assertTrue(httpResponse.isMergeMigrated(), "Entity should be merge migrated.");
+        Assert.assertFalse(httpResponse.isSplitMigrated(), "Entity should not be split migrated.");
+    }
+
+    @Test(enabled = false)
+    public void testFindComponentVersionsWhenSplitMigrated() {
+        PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
+        UUID splitComponentId = UUID.fromString("2510dcac-ef8a-4088-a60c-ae6605054c3c");
+
+        Result<Page<ComponentVersion>> result = componentApi.findComponentVersions(pageRequest, splitComponentId, null, VulnerabilitySourcePriority.BDSA,
+                VulnerabilityScorePriority.CVSS_3);
+
+        HttpResponse<Page<ComponentVersion>> httpResponse = result.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MULTIPLE_CHOICES, "Codes should be equal.");

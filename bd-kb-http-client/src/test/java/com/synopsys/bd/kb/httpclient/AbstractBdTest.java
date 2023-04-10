@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.annotation.Nullable;
 
@@ -27,6 +28,7 @@ import com.synopsys.kb.httpclient.api.HttpResponse;
 import com.synopsys.kb.httpclient.api.Relationship;
 import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.BdsaVulnerability;
+import com.synopsys.kb.httpclient.model.ComponentVersion;
 import com.synopsys.kb.httpclient.model.CveVulnerability;
 import com.synopsys.kb.httpclient.model.Cvss2AccessComplexity;
 import com.synopsys.kb.httpclient.model.Cvss2AccessVector;
@@ -52,8 +54,12 @@ import com.synopsys.kb.httpclient.model.Cvss3Scope;
 import com.synopsys.kb.httpclient.model.Cvss3Score;
 import com.synopsys.kb.httpclient.model.Cvss3TemporalMetrics;
 import com.synopsys.kb.httpclient.model.Cvss3UserInteraction;
+import com.synopsys.kb.httpclient.model.LicenseDefinition;
+import com.synopsys.kb.httpclient.model.LicenseDefinitionItem;
+import com.synopsys.kb.httpclient.model.LicenseDefinitionType;
 import com.synopsys.kb.httpclient.model.Link;
 import com.synopsys.kb.httpclient.model.Meta;
+import com.synopsys.kb.httpclient.model.RiskProfile;
 import com.synopsys.kb.httpclient.model.VulnerabilitySeverity;
 import com.synopsys.kb.httpclient.model.VulnerabilitySource;
 import com.synopsys.kb.httpclient.model.VulnerabilityStatus;
@@ -179,6 +185,16 @@ public abstract class AbstractBdTest {
         } else {
             Assert.assertNull(actualMigratableHttpResponse, "Actual migratable HTTP response should be null.");
         }
+    }
+
+    protected ComponentVersion constructComponentVersion(UUID componentId, UUID componentVersionId, String version) {
+        LicenseDefinition licenseDefinition = new LicenseDefinition(LicenseDefinitionType.CONJUNCTIVE,
+                List.of(new LicenseDefinitionItem(BASE_HREF + "/api/licenses/" + UUID.randomUUID(), null)));
+        RiskProfile riskProfile = new RiskProfile(0, 0, 0, 0, 0);
+        Meta meta = new Meta(BASE_HREF + "/api/versions/" + componentVersionId,
+                List.of(new Link(Relationship.COMPONENT, BASE_HREF + "/api/components/" + componentId)));
+
+        return new ComponentVersion(version, OffsetDateTime.now(), licenseDefinition, riskProfile, Boolean.FALSE, Boolean.FALSE, meta);
     }
 
     protected CveVulnerability constructCveVulnerability(String id, VulnerabilityStatus status) {

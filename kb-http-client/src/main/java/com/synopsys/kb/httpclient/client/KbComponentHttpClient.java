@@ -37,7 +37,10 @@ import com.synopsys.kb.httpclient.api.PageRequest;
 import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.Component;
 import com.synopsys.kb.httpclient.model.ComponentSearchResult;
+import com.synopsys.kb.httpclient.model.ComponentVersion;
 import com.synopsys.kb.httpclient.model.Page;
+import com.synopsys.kb.httpclient.model.VulnerabilityScorePriority;
+import com.synopsys.kb.httpclient.model.VulnerabilitySourcePriority;
 
 /**
  * Component HTTP client implementation.
@@ -71,15 +74,48 @@ public class KbComponentHttpClient extends AbstractKbHttpClient implements IComp
     }
 
     @Override
+    public Result<Page<ComponentVersion>> findComponentVersions(PageRequest pageRequest,
+            UUID componentId,
+            String searchTermFilter,
+            VulnerabilitySourcePriority vulnerabilitySourcePriority,
+            VulnerabilityScorePriority vulnerabilityScorePriority) {
+        Objects.requireNonNull(pageRequest, "Page request must be initialized.");
+        Objects.requireNonNull(componentId, "Component id must be initialized.");
+        Objects.requireNonNull(vulnerabilitySourcePriority, "Vulnerability source priority must be initialized.");
+        Objects.requireNonNull(vulnerabilityScorePriority, "Vulnerability score priority must be initialized.");
+
+        ImmutableMap.Builder<String, String> builder = ImmutableMap.<String, String> builder()
+                .put("source_priority", vulnerabilitySourcePriority.getValue())
+                .put("score_priority", vulnerabilityScorePriority.getValue());
+        Map<String, String> pageRequestParameters = constructPageRequestParameters(pageRequest);
+        builder = builder.putAll(pageRequestParameters);
+        if (!Strings.isNullOrEmpty(searchTermFilter)) {
+            builder = builder.put("q", "version:" + searchTermFilter);
+        }
+        Map<String, String> parameters = builder.build();
+        Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_COMPONENT_DETAILS_V4_JSON);
+        Collection<Header> headers = List.of(acceptHeader);
+        ClassicHttpRequest request = constructGetHttpRequest("/api/components/" + componentId + "/versions", parameters, headers);
+
+        return execute(request,
+                DEFAULT_SUCCESS_CODES,
+                Set.of(HttpStatus.SC_OK, HttpStatus.SC_PAYMENT_REQUIRED, HttpStatus.SC_FORBIDDEN, HttpStatus.SC_NOT_FOUND, HttpStatus.SC_INTERNAL_SERVER_ERROR),
+                true, // Reauthenticate on Unauthorized response.
+                true, // Request can trigger migrated response.
+                new TypeReference<Page<ComponentVersion>>() {
+                });
+    }
+
+    @Override
     public Result<Page<ComponentSearchResult>> search(PageRequest pageRequest, String searchTermFilter, boolean allowPartialMatches) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
         Preconditions.checkArgument(!Strings.isNullOrEmpty(searchTermFilter), "Search term filter must not be null or empty");
 
         Map<String, String> pageRequestParameters = constructPageRequestParameters(pageRequest);
         Map<String, String> parameters = ImmutableMap.<String, String> builder()
+                .putAll(pageRequestParameters)
                 .put("q", searchTermFilter)
-                .put("allowPartialMatches", Boolean.toString(allowPartialMatches))
-                .putAll(pageRequestParameters).build();
+                .put("allowPartialMatches", Boolean.toString(allowPartialMatches)).build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_COMPONENT_DETAILS_V3_JSON);
         Collection<Header> headers = List.of(acceptHeader);
         ClassicHttpRequest request = constructGetHttpRequest("/api/components", parameters, headers);

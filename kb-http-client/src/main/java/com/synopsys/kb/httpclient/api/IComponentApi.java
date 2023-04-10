@@ -13,9 +13,14 @@ package com.synopsys.kb.httpclient.api;
 
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+
 import com.synopsys.kb.httpclient.model.Component;
 import com.synopsys.kb.httpclient.model.ComponentSearchResult;
+import com.synopsys.kb.httpclient.model.ComponentVersion;
 import com.synopsys.kb.httpclient.model.Page;
+import com.synopsys.kb.httpclient.model.VulnerabilityScorePriority;
+import com.synopsys.kb.httpclient.model.VulnerabilitySourcePriority;
 
 /**
  * Component API interface.
@@ -41,6 +46,49 @@ public interface IComponentApi {
      * @return Returns the component result.
      */
     Result<Component> find(UUID componentId);
+
+    /**
+     * Finds component versions for a given component.
+     * 
+     * This operation explicitly does NOT follow migration links.
+     * 
+     * - This operation considers HTTP 500 Internal Server Error responses as an expected response code to reliably
+     * accommodate an existing KB query timeout performance problem in requesting component versions for a component
+     * with a very large number of associated component versions.
+     * - Response codes of 402 Payment Required and 403 Forbidden are recommended to be gracefully handled as an absent
+     * result. These response codes can occur if a KB request is made without the BDSA feature enabled within product
+     * licensing.
+     * - Take precaution for differing migration responses when making multiple requests for different pages for the
+     * same component id.
+     * 
+     * Expected response codes
+     * 200 OK
+     * 402 Payment Required
+     * 403 Forbidden
+     * 404 Not Found
+     * 500 Internal Server Error
+     * 
+     * Migration response codes
+     * 300 Multiple Choices
+     * 301 Moved Permanently
+     * 
+     * @param pageRequest
+     *            The page request.
+     * @param componentId
+     *            The component id.
+     * @param searchTermFilter
+     *            The search term filter. Optional.
+     * @param vulnerabilitySourcePriority
+     *            The vulnerability source priority.
+     * @param vulnerabilityScorePriority
+     *            The vulnerability score priority.
+     * @return Returns the component version page result.
+     */
+    Result<Page<ComponentVersion>> findComponentVersions(PageRequest pageRequest,
+            UUID componentId,
+            @Nullable String searchTermFilter,
+            VulnerabilitySourcePriority vulnerabilitySourcePriority,
+            VulnerabilityScorePriority vulnerabilityScorePriority);
 
     /**
      * Search for components.

@@ -11,15 +11,28 @@
  */
 package com.synopsys.bd.kb.httpclient.impl;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
+import javax.annotation.Nullable;
+
+import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.synopsys.bd.kb.httpclient.api.IBdComponentApi;
 import com.synopsys.bd.kb.httpclient.api.MigratableResult;
+import com.synopsys.bd.kb.httpclient.model.BdComponentVersion;
 import com.synopsys.kb.httpclient.api.IComponentApi;
+import com.synopsys.kb.httpclient.api.PageRequest;
 import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.Component;
+import com.synopsys.kb.httpclient.model.ComponentVersion;
+import com.synopsys.kb.httpclient.model.Meta;
+import com.synopsys.kb.httpclient.model.Page;
+import com.synopsys.kb.httpclient.model.VulnerabilityScorePriority;
+import com.synopsys.kb.httpclient.model.VulnerabilitySourcePriority;
 
 /**
  * Black Duck-centric component API implementation.
@@ -31,16 +44,26 @@ import com.synopsys.kb.httpclient.model.Component;
 public class BdComponentApi extends AbstractMigratableBdApi implements IBdComponentApi {
     private final IComponentApi componentApi;
 
-    public BdComponentApi(IComponentApi componentApi) {
+    private final String baseHref;
+
+    public BdComponentApi(IComponentApi componentApi, String baseHref) {
         super();
 
-        this.componentApi = Objects.requireNonNull(componentApi, "Component API must be initialized.");
+        Objects.requireNonNull(componentApi, "Component API must be initialized.");
+        Preconditions.checkArgument(!Strings.isNullOrEmpty(baseHref), "Base HREF must not be null or empty.");
+
+        this.componentApi = componentApi;
+        this.baseHref = baseHref;
     }
 
-    BdComponentApi(IComponentApi componentApi, int maximumAttemptNumber) {
+    BdComponentApi(IComponentApi componentApi, String baseHref, int maximumAttemptNumber) {
         super(maximumAttemptNumber);
 
-        this.componentApi = Objects.requireNonNull(componentApi, "Component API must be initialized.");
+        Objects.requireNonNull(componentApi, "Component API must be initialized.");
+        Preconditions.checkArgument(!Strings.isNullOrEmpty(baseHref), "Base HREF must not be null or empty.");
+
+        this.componentApi = componentApi;
+        this.baseHref = baseHref;
     }
 
     @Override
@@ -52,6 +75,35 @@ public class BdComponentApi extends AbstractMigratableBdApi implements IBdCompon
 
         // No conversion is required.
         Function<Component, Component> conversionFunction = Function.identity();
+
+        return findMigratableResult(componentId, resultFunction, conversionFunction, "components");
+    }
+
+    @Override
+    public MigratableResult<Page<BdComponentVersion>> findComponentVersions(final PageRequest pageRequest,
+            UUID componentId,
+            @Nullable final String searchTermFilter,
+            final VulnerabilitySourcePriority vulnerabilitySourcePriority,
+            final VulnerabilityScorePriority vulnerabilityScorePriority) {
+        Objects.requireNonNull(pageRequest, "Page request must be initialized.");
+        Objects.requireNonNull(componentId, "Component id must be initialized.");
+        Objects.requireNonNull(vulnerabilitySourcePriority, "Vulnerability source priority must be initialized.");
+        Objects.requireNonNull(vulnerabilityScorePriority, "Vulnerabilty score priority must be prioritized.");
+
+        // Find a component version page result given a dynamic component id.
+        Function<UUID, Result<Page<ComponentVersion>>> resultFunction = (sourceComponentId) -> componentApi.findComponentVersions(pageRequest,
+                sourceComponentId, searchTermFilter, vulnerabilitySourcePriority, vulnerabilityScorePriority);
+
+        // No conversion is required.
+        Function<Page<ComponentVersion>, Page<BdComponentVersion>> conversionFunction = (sourceComponentVersionPage) -> {
+            int sourceTotalCount = sourceComponentVersionPage.getTotalCount();
+            List<BdComponentVersion> destinationItems = sourceComponentVersionPage.getItems().stream()
+                    .map((sourceComponentVersion) -> new BdComponentVersion(sourceComponentVersion, baseHref))
+                    .collect(Collectors.toList());
+            Meta sourceMeta = sourceComponentVersionPage.getMeta();
+
+            return new Page<>(sourceTotalCount, destinationItems, sourceMeta);
+        };
 
         return findMigratableResult(componentId, resultFunction, conversionFunction, "components");
     }

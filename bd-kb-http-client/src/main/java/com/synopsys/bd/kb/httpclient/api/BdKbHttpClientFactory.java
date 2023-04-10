@@ -55,11 +55,12 @@ class BdKbHttpClientFactory {
 
         IKbHttpApi kbHttpApi = new KbHttpClientFactory().create(httpClientConfiguration, kbConfiguration);
 
+        String baseHref = kbConfiguration.getHref();
+
         IComponentApi componentApi = kbHttpApi.getComponentApi();
-        IBdComponentApi bdComponentApi = new BdComponentApi(componentApi);
+        IBdComponentApi bdComponentApi = new BdComponentApi(componentApi, baseHref);
 
         IComponentVersionApi componentVersionApi = kbHttpApi.getComponentVersionApi();
-        String baseHref = kbConfiguration.getHref();
         IBdComponentVersionApi bdComponentVersionApi = new BdComponentVersionApi(componentVersionApi, baseHref);
 
         IComponentVariantApi componentVariantApi = kbHttpApi.getComponentVariantApi();
