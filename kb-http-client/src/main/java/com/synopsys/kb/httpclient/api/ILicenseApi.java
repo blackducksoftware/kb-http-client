@@ -13,6 +13,8 @@ package com.synopsys.kb.httpclient.api;
 
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+
 import com.synopsys.kb.httpclient.model.License;
 import com.synopsys.kb.httpclient.model.LicenseTerm;
 import com.synopsys.kb.httpclient.model.Page;
@@ -65,9 +67,12 @@ public interface ILicenseApi {
      * 
      * @param pageRequest
      *            The page request.
+     * @param searchTermFilter
+     *            The search term filter. Optional.
      * @return Returns the license page result.
      */
-    Result<Page<License>> findManyLicenses(PageRequest pageRequest);
+    Result<Page<License>> findManyLicenses(PageRequest pageRequest,
+            @Nullable String searchTermFilter);
 
     /**
      * Finds a license term by its id.

@@ -18,6 +18,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.core5.http.ClassicHttpRequest;
 import org.apache.hc.core5.http.Header;
@@ -27,6 +29,8 @@ import org.apache.hc.core5.http.message.BasicHeader;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableMap;
 import com.synopsys.kb.httpclient.api.AuthorizationProvider;
 import com.synopsys.kb.httpclient.api.ILicenseApi;
 import com.synopsys.kb.httpclient.api.KbConfiguration;
@@ -81,13 +85,20 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
     }
 
     @Override
-    public Result<Page<License>> findManyLicenses(PageRequest pageRequest) {
+    public Result<Page<License>> findManyLicenses(PageRequest pageRequest,
+            @Nullable String searchTermFilter) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
 
+        ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
         Map<String, String> pageRequestParameters = constructPageRequestParameters(pageRequest);
+        builder = builder.putAll(pageRequestParameters);
+        if (!Strings.isNullOrEmpty(searchTermFilter)) {
+            builder = builder.put("q", searchTermFilter);
+        }
+        Map<String, String> parameters = builder.build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_COMPONENT_DETAILS_V4_JSON);
         Collection<Header> headers = List.of(acceptHeader);
-        ClassicHttpRequest request = constructGetHttpRequest("/api/licenses", pageRequestParameters, headers);
+        ClassicHttpRequest request = constructGetHttpRequest("/api/licenses", parameters, headers);
 
         return execute(request,
                 DEFAULT_SUCCESS_CODES,

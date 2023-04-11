@@ -13,6 +13,8 @@ package com.synopsys.bd.kb.httpclient.api;
 
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+
 import com.synopsys.bd.kb.httpclient.model.BdLicense;
 import com.synopsys.kb.httpclient.api.PageRequest;
 import com.synopsys.kb.httpclient.api.Result;
@@ -45,7 +47,10 @@ public interface IBdLicenseApi {
      * 
      * @param pageRequest
      *            The page request.
+     * @param searchTermFilter
+     *            The search term filter. Optional.
      * @return Returns the Black Duck-centric license page result.
      */
-    Result<Page<BdLicense>> findManyLicenses(PageRequest pageRequest);
+    Result<Page<BdLicense>> findManyLicenses(PageRequest pageRequest,
+            @Nullable String searchTermFilter);
 }
