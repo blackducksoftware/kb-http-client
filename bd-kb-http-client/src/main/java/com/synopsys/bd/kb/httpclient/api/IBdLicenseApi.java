@@ -48,7 +48,9 @@ public interface IBdLicenseApi {
      * @param pageRequest
      *            The page request.
      * @param searchTermFilter
-     *            The search term filter. Optional.
+     *            The search term filter. Expected to be in the format bdsuite:suite-identifier or spdx:spdx-identifier.
+     *            Searching is done as a case-sensitive prefix search, so a search query of spdx:Apache will match
+     *            licenses with SPDX identifiers of Apache-1.0, Apache-1.1, and Apache-2.0. Optional.
      * @return Returns the Black Duck-centric license page result.
      */
     Result<Page<BdLicense>> findManyLicenses(PageRequest pageRequest,

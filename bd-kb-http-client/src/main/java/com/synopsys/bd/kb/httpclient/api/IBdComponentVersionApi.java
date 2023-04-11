@@ -84,7 +84,8 @@ public interface IBdComponentVersionApi {
      * @param componentVersionId
      *            The component version id.
      * @param searchTermFilter
-     *            The search term filter. Optional.
+     *            The search term filter. Expected to be in the format field:value. Searching is case-insensitive.
+     *            Supported fields are id and description. Optional.
      * @return Returns the CVE vulnerability page result.
      */
     MigratableResult<Page<CveVulnerability>> findCveVulnerabilities(PageRequest pageRequest,
@@ -117,7 +118,8 @@ public interface IBdComponentVersionApi {
      * @param componentVersionId
      *            The component version id.
      * @param searchTermFilter
-     *            The search term filter. Optional.
+     *            The search term filter. Expected to be in the format field:value. Searching is case-insensitive.
+     *            Supported fields are id and description. Optional.
      * @return Returns the BDSA vulnerability page result.
      */
     MigratableResult<Page<BdsaVulnerability>> findBdsaVulnerabilities(PageRequest pageRequest,

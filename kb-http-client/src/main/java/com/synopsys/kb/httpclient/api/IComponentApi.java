@@ -82,7 +82,8 @@ public interface IComponentApi {
      * @param componentId
      *            The component id.
      * @param searchTermFilter
-     *            The search term filter. Optional.
+     *            The search term filter. Expected to be in the format field:value. Searching is case-insensitive.
+     *            Supported fields are version and releasedOn. Optional.
      * @param vulnerabilitySourcePriority
      *            The vulnerability source priority.
      * @param vulnerabilityScorePriority
@@ -122,7 +123,8 @@ public interface IComponentApi {
      * @param componentId
      *            The component id.
      * @param searchTermFilter
-     *            The search term filter. Optional.
+     *            The search term filter. Expected to be in the format field:value. Searching is case-insensitive.
+     *            Supported fields are version and releasedOn. Optional.
      * @param excludeDeleted
      *            Excludes results that have been intentionally removed from the KnowledgeBase. Does not exclude by
      *            default. Optional.
@@ -152,7 +154,8 @@ public interface IComponentApi {
      * @param pageRequest
      *            The page request.
      * @param searchTermFilter
-     *            The search term filter.
+     *            The search term filter. Expected to be in the format id:forge|(group|)artifact|version or
+     *            forge:external-id.
      * @param allowPartialMatches
      *            The allow partial matches flag. If enabled, fuzzy component results are supported. If disabled, only
      *            exact component results are supported.

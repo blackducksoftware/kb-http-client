@@ -60,7 +60,8 @@ public interface IComponentVariantApi {
      * @param componentVariantId
      *            The component variant id.
      * @param searchTermFilter
-     *            The search term filter. Optional.
+     *            The search term filter. Expected to be in the format field:value. Searching is case-insensitive.
+     *            Supported fields are id and description. Optional.
      * @return Returns the CVE vulnerability page result.
      */
     Result<Page<CveVulnerability>> findCveVulnerabilities(PageRequest pageRequest,
@@ -88,7 +89,8 @@ public interface IComponentVariantApi {
      * @param componentVariantId
      *            The component variant id.
      * @param searchTermFilter
-     *            The search term filter. Optional.
+     *            The search term filter. Expected to be in the format field:value. Searching is case-insensitive.
+     *            Supported fields are id and description. Optional.
      * @return Returns the BDSA vulnerability page result.
      */
     Result<Page<BdsaVulnerability>> findBdsaVulnerabilities(PageRequest pageRequest,

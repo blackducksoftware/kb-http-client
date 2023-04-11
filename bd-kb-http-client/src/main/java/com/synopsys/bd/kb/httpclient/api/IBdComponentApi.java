@@ -77,7 +77,8 @@ public interface IBdComponentApi {
      * @param componentId
      *            The component id.
      * @param searchTermFilter
-     *            The search term filter. Optional.
+     *            The search term filter. Expected to be in the format field:value. Searching is case-insensitive.
+     *            Supported fields are version and releasedOn. Optional.
      * @param vulnerabilitySourcePriority
      *            The vulnerability source priority.
      * @param vulnerabilityScorePriority
@@ -117,7 +118,8 @@ public interface IBdComponentApi {
      * @param componentId
      *            The component id.
      * @param searchTermFilter
-     *            The search term filter. Optional.
+     *            The search term filter. Expected to be in the format field:value. Searching is case-insensitive.
+     *            Supported fields are version and releasedOn. Optional.
      * @param excludeDeleted
      *            Excludes results that have been intentionally removed from the KnowledgeBase. Does not exclude by
      *            default. Optional.
