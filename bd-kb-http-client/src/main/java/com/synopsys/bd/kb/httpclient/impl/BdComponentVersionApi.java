@@ -15,6 +15,8 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Function;
 
+import javax.annotation.Nullable;
+
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.synopsys.bd.kb.httpclient.api.IBdComponentVersionApi;
@@ -86,14 +88,15 @@ public class BdComponentVersionApi extends AbstractMigratableBdApi implements IB
 
     @Override
     public MigratableResult<Page<CveVulnerability>> findCveVulnerabilities(final PageRequest pageRequest,
-            UUID componentVersionId) {
+            UUID componentVersionId,
+            @Nullable final String searchTermFilter) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
         Objects.requireNonNull(componentVersionId, "Component version id must be initialized.");
 
         // Find a CVE vulnerability page result given a dynamic component version id.
         // Page request should remain consistent across multiple requests.
         Function<UUID, Result<Page<CveVulnerability>>> resultFunction = (sourceComponentVersionId) -> componentVersionApi
-                .findCveVulnerabilities(pageRequest, sourceComponentVersionId);
+                .findCveVulnerabilities(pageRequest, sourceComponentVersionId, searchTermFilter);
 
         // No conversion is required.
         Function<Page<CveVulnerability>, Page<CveVulnerability>> conversionFunction = Function.identity();
@@ -103,14 +106,15 @@ public class BdComponentVersionApi extends AbstractMigratableBdApi implements IB
 
     @Override
     public MigratableResult<Page<BdsaVulnerability>> findBdsaVulnerabilities(final PageRequest pageRequest,
-            UUID componentVersionId) {
+            UUID componentVersionId,
+            @Nullable final String searchTermFilter) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
         Objects.requireNonNull(componentVersionId, "Component version id must be initialized.");
 
         // Find a BDSA vulnerability page result given a dynamic component version id.
         // Page request should remain consistent across multiple requests.
         Function<UUID, Result<Page<BdsaVulnerability>>> resultFunction = (sourceComponentVersionId) -> componentVersionApi
-                .findBdsaVulnerabilities(pageRequest, sourceComponentVersionId);
+                .findBdsaVulnerabilities(pageRequest, sourceComponentVersionId, searchTermFilter);
 
         // No conversion is required.
         Function<Page<BdsaVulnerability>, Page<BdsaVulnerability>> conversionFunction = Function.identity();

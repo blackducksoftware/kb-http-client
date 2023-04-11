@@ -13,6 +13,8 @@ package com.synopsys.kb.httpclient.api;
 
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+
 import com.synopsys.kb.httpclient.model.BdsaVulnerability;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
 import com.synopsys.kb.httpclient.model.CveVulnerability;
@@ -83,9 +85,13 @@ public interface IComponentVersionApi {
      *            The page request.
      * @param componentVersionId
      *            The component version id.
+     * @param searchTermFilter
+     *            The search term filter. Optional.
      * @return Returns the CVE vulnerability page result.
      */
-    Result<Page<CveVulnerability>> findCveVulnerabilities(PageRequest pageRequest, UUID componentVersionId);
+    Result<Page<CveVulnerability>> findCveVulnerabilities(PageRequest pageRequest,
+            UUID componentVersionId,
+            @Nullable String searchTermFilter);
 
     /**
      * Finds the BDSA vulnerabilities associated to the given component version.
@@ -116,9 +122,13 @@ public interface IComponentVersionApi {
      *            The page request.
      * @param componentVersionId
      *            The component version id.
+     * @param searchTermFilter
+     *            The search term filter. Optional.
      * @return Returns the BDSA vulnerability page result.
      */
-    Result<Page<BdsaVulnerability>> findBdsaVulnerabilities(PageRequest pageRequest, UUID componentVersionId);
+    Result<Page<BdsaVulnerability>> findBdsaVulnerabilities(PageRequest pageRequest,
+            UUID componentVersionId,
+            @Nullable String searchTermFilter);
 
     /**
      * Finds upgrade guidance for the given component version.

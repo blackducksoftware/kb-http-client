@@ -18,6 +18,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.core5.http.ClassicHttpRequest;
 import org.apache.hc.core5.http.Header;
@@ -27,6 +29,7 @@ import org.apache.hc.core5.http.message.BasicHeader;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import com.synopsys.kb.httpclient.api.AuthorizationProvider;
 import com.synopsys.kb.httpclient.api.IComponentVersionApi;
@@ -81,14 +84,22 @@ public class KbComponentVersionHttpClient extends AbstractKbHttpClient implement
     }
 
     @Override
-    public Result<Page<CveVulnerability>> findCveVulnerabilities(PageRequest pageRequest, UUID componentVersionId) {
+    public Result<Page<CveVulnerability>> findCveVulnerabilities(PageRequest pageRequest,
+            UUID componentVersionId,
+            @Nullable String searchTermFilter) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
         Objects.requireNonNull(componentVersionId, "Component version id must be initialized.");
 
+        ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
         Map<String, String> pageRequestParameters = constructPageRequestParameters(pageRequest);
+        builder = builder.putAll(pageRequestParameters);
+        if (!Strings.isNullOrEmpty(searchTermFilter)) {
+            builder = builder.put("q", searchTermFilter);
+        }
+        Map<String, String> parameters = builder.build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_VULNERABILITY_V7_JSON);
         Collection<Header> headers = List.of(acceptHeader);
-        ClassicHttpRequest request = constructGetHttpRequest("/api/versions/" + componentVersionId + "/vulnerabilities-cve", pageRequestParameters, headers);
+        ClassicHttpRequest request = constructGetHttpRequest("/api/versions/" + componentVersionId + "/vulnerabilities-cve", parameters, headers);
 
         return execute(request,
                 DEFAULT_SUCCESS_CODES,
@@ -100,14 +111,22 @@ public class KbComponentVersionHttpClient extends AbstractKbHttpClient implement
     }
 
     @Override
-    public Result<Page<BdsaVulnerability>> findBdsaVulnerabilities(PageRequest pageRequest, UUID componentVersionId) {
+    public Result<Page<BdsaVulnerability>> findBdsaVulnerabilities(PageRequest pageRequest,
+            UUID componentVersionId,
+            @Nullable String searchTermFilter) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
         Objects.requireNonNull(componentVersionId, "Component version id must be initialized.");
 
+        ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
         Map<String, String> pageRequestParameters = constructPageRequestParameters(pageRequest);
+        builder = builder.putAll(pageRequestParameters);
+        if (!Strings.isNullOrEmpty(searchTermFilter)) {
+            builder = builder.put("q", searchTermFilter);
+        }
+        Map<String, String> parameters = builder.build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_VULNERABILITY_V7_JSON);
         Collection<Header> headers = List.of(acceptHeader);
-        ClassicHttpRequest request = constructGetHttpRequest("/api/versions/" + componentVersionId + "/vulnerabilities-bdsa", pageRequestParameters, headers);
+        ClassicHttpRequest request = constructGetHttpRequest("/api/versions/" + componentVersionId + "/vulnerabilities-bdsa", parameters, headers);
 
         return execute(request,
                 DEFAULT_SUCCESS_CODES,
