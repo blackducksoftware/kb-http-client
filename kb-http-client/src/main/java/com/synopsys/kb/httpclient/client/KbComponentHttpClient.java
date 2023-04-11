@@ -77,11 +77,12 @@ public class KbComponentHttpClient extends AbstractKbHttpClient implements IComp
     }
 
     @Override
-    public Result<Page<ComponentVersion>> findComponentVersions(PageRequest pageRequest,
+    public Result<Page<ComponentVersion>> findComponentVersionsByComponent(PageRequest pageRequest,
             UUID componentId,
             @Nullable String searchTermFilter,
             VulnerabilitySourcePriority vulnerabilitySourcePriority,
-            VulnerabilityScorePriority vulnerabilityScorePriority) {
+            VulnerabilityScorePriority vulnerabilityScorePriority,
+            @Nullable Boolean excludeDeleted) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
         Objects.requireNonNull(componentId, "Component id must be initialized.");
         Objects.requireNonNull(vulnerabilitySourcePriority, "Vulnerability source priority must be initialized.");
@@ -94,6 +95,9 @@ public class KbComponentHttpClient extends AbstractKbHttpClient implements IComp
         builder = builder.putAll(pageRequestParameters);
         if (!Strings.isNullOrEmpty(searchTermFilter)) {
             builder = builder.put("q", "version:" + searchTermFilter);
+        }
+        if (excludeDeleted != null) {
+            builder = builder.put("excludeDeleted", excludeDeleted.toString());
         }
         Map<String, String> parameters = builder.build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_COMPONENT_DETAILS_V4_JSON);
@@ -110,9 +114,10 @@ public class KbComponentHttpClient extends AbstractKbHttpClient implements IComp
     }
 
     @Override
-    public Result<Page<ComponentVersionSummary>> findComponentVersionSummaries(PageRequest pageRequest,
+    public Result<Page<ComponentVersionSummary>> findComponentVersionSummariesByComponent(PageRequest pageRequest,
             UUID componentId,
-            @Nullable String searchTermFilter) {
+            @Nullable String searchTermFilter,
+            @Nullable Boolean excludeDeleted) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
         Objects.requireNonNull(componentId, "Component id must be initialized.");
 
@@ -121,6 +126,9 @@ public class KbComponentHttpClient extends AbstractKbHttpClient implements IComp
         builder = builder.putAll(pageRequestParameters);
         if (!Strings.isNullOrEmpty(searchTermFilter)) {
             builder = builder.put("q", "version:" + searchTermFilter);
+        }
+        if (excludeDeleted != null) {
+            builder = builder.put("excludeDeleted", excludeDeleted.toString());
         }
         Map<String, String> parameters = builder.build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_SUMMARY_V2_JSON);

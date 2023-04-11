@@ -82,19 +82,20 @@ public class BdComponentApi extends AbstractMigratableBdApi implements IBdCompon
     }
 
     @Override
-    public MigratableResult<Page<BdComponentVersion>> findComponentVersions(final PageRequest pageRequest,
+    public MigratableResult<Page<BdComponentVersion>> findComponentVersionsByComponent(final PageRequest pageRequest,
             UUID componentId,
             @Nullable final String searchTermFilter,
             final VulnerabilitySourcePriority vulnerabilitySourcePriority,
-            final VulnerabilityScorePriority vulnerabilityScorePriority) {
+            final VulnerabilityScorePriority vulnerabilityScorePriority,
+            @Nullable final Boolean excludeDeleted) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
         Objects.requireNonNull(componentId, "Component id must be initialized.");
         Objects.requireNonNull(vulnerabilitySourcePriority, "Vulnerability source priority must be initialized.");
         Objects.requireNonNull(vulnerabilityScorePriority, "Vulnerabilty score priority must be prioritized.");
 
         // Find a component version page result given a dynamic component id.
-        Function<UUID, Result<Page<ComponentVersion>>> resultFunction = (sourceComponentId) -> componentApi.findComponentVersions(pageRequest,
-                sourceComponentId, searchTermFilter, vulnerabilitySourcePriority, vulnerabilityScorePriority);
+        Function<UUID, Result<Page<ComponentVersion>>> resultFunction = (sourceComponentId) -> componentApi.findComponentVersionsByComponent(pageRequest,
+                sourceComponentId, searchTermFilter, vulnerabilitySourcePriority, vulnerabilityScorePriority, excludeDeleted);
 
         // Convert from a component version page to a Black Duck-centric component version page.
         Function<Page<ComponentVersion>, Page<BdComponentVersion>> conversionFunction = (sourceComponentVersionPage) -> {
@@ -111,15 +112,16 @@ public class BdComponentApi extends AbstractMigratableBdApi implements IBdCompon
     }
 
     @Override
-    public MigratableResult<Page<BdComponentVersionSummary>> findComponentVersionSummaries(final PageRequest pageRequest,
+    public MigratableResult<Page<BdComponentVersionSummary>> findComponentVersionSummariesByComponent(final PageRequest pageRequest,
             UUID componentId,
-            @Nullable final String searchTermFilter) {
+            @Nullable final String searchTermFilter,
+            @Nullable final Boolean excludeDeleted) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
         Objects.requireNonNull(componentId, "Component id must be initialized.");
 
         // Find a component version summary page result given a dynamic component id.
-        Function<UUID, Result<Page<ComponentVersionSummary>>> resultFunction = (sourceComponentId) -> componentApi.findComponentVersionSummaries(pageRequest,
-                sourceComponentId, searchTermFilter);
+        Function<UUID, Result<Page<ComponentVersionSummary>>> resultFunction = (sourceComponentId) -> componentApi.findComponentVersionSummariesByComponent(
+                pageRequest, sourceComponentId, searchTermFilter, excludeDeleted);
 
         // Convert from a component version summary page to a Black Duck-centric component version summary page.
         Function<Page<ComponentVersionSummary>, Page<BdComponentVersionSummary>> conversionFunction = (sourceComponentVersionSummaryPage) -> {

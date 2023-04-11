@@ -82,13 +82,17 @@ public interface IBdComponentApi {
      *            The vulnerability source priority.
      * @param vulnerabilityScorePriority
      *            The vulnerability score priority.
+     * @param excludeDeleted
+     *            Excludes results that have been intentionally removed from the KnowledgeBase. Does not exclude by
+     *            default. Optional.
      * @return Returns the component version page result.
      */
-    MigratableResult<Page<BdComponentVersion>> findComponentVersions(PageRequest pageRequest,
+    MigratableResult<Page<BdComponentVersion>> findComponentVersionsByComponent(PageRequest pageRequest,
             UUID componentId,
             @Nullable String searchTermFilter,
             VulnerabilitySourcePriority vulnerabilitySourcePriority,
-            VulnerabilityScorePriority vulnerabilityScorePriority);
+            VulnerabilityScorePriority vulnerabilityScorePriority,
+            @Nullable Boolean excludeDeleted);
 
     /**
      * Finds component versions for a given component.
@@ -114,9 +118,13 @@ public interface IBdComponentApi {
      *            The component id.
      * @param searchTermFilter
      *            The search term filter. Optional.
+     * @param excludeDeleted
+     *            Excludes results that have been intentionally removed from the KnowledgeBase. Does not exclude by
+     *            default. Optional.
      * @return Returns the component version summary page result.
      */
-    MigratableResult<Page<BdComponentVersionSummary>> findComponentVersionSummaries(PageRequest pageRequest,
+    MigratableResult<Page<BdComponentVersionSummary>> findComponentVersionSummariesByComponent(PageRequest pageRequest,
             UUID componentId,
-            @Nullable String searchTermFilter);
+            @Nullable String searchTermFilter,
+            @Nullable Boolean excludeDeleted);
 }

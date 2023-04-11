@@ -87,13 +87,17 @@ public interface IComponentApi {
      *            The vulnerability source priority.
      * @param vulnerabilityScorePriority
      *            The vulnerability score priority.
+     * @param excludeDeleted
+     *            Excludes results that have been intentionally removed from the KnowledgeBase. Does not exclude by
+     *            default. Optional.
      * @return Returns the component version page result.
      */
-    Result<Page<ComponentVersion>> findComponentVersions(PageRequest pageRequest,
+    Result<Page<ComponentVersion>> findComponentVersionsByComponent(PageRequest pageRequest,
             UUID componentId,
             @Nullable String searchTermFilter,
             VulnerabilitySourcePriority vulnerabilitySourcePriority,
-            VulnerabilityScorePriority vulnerabilityScorePriority);
+            VulnerabilityScorePriority vulnerabilityScorePriority,
+            @Nullable Boolean excludeDeleted);
 
     /**
      * Finds component version summaries for a given component.
@@ -119,11 +123,15 @@ public interface IComponentApi {
      *            The component id.
      * @param searchTermFilter
      *            The search term filter. Optional.
+     * @param excludeDeleted
+     *            Excludes results that have been intentionally removed from the KnowledgeBase. Does not exclude by
+     *            default. Optional.
      * @return Returns the component version summary page result.
      */
-    Result<Page<ComponentVersionSummary>> findComponentVersionSummaries(PageRequest pageRequest,
+    Result<Page<ComponentVersionSummary>> findComponentVersionSummariesByComponent(PageRequest pageRequest,
             UUID componentId,
-            @Nullable String searchTermFilter);
+            @Nullable String searchTermFilter,
+            @Nullable Boolean excludeDeleted);
 
     /**
      * Search for components.
