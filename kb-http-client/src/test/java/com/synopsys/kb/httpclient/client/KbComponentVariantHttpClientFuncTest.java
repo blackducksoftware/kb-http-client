@@ -68,7 +68,7 @@ public class KbComponentVariantHttpClientFuncTest extends AbstractFuncTest {
         PageRequest pageRequest = new PageRequest(0, 100, Collections.emptyList());
         UUID componentVariantId = UUID.fromString("400db080-9a5b-4819-83a8-48ec7c050447");
 
-        Result<Page<CveVulnerability>> result = componentVariantApi.findCveVulnerabilities(pageRequest, componentVariantId);
+        Result<Page<CveVulnerability>> result = componentVariantApi.findCveVulnerabilities(pageRequest, componentVariantId, null);
 
         HttpResponse<Page<CveVulnerability>> httpResponse = result.getHttpResponse().orElse(null);
 
@@ -87,7 +87,7 @@ public class KbComponentVariantHttpClientFuncTest extends AbstractFuncTest {
         PageRequest pageRequest = new PageRequest(0, 100, Collections.emptyList());
         UUID componentVariantId = UUID.fromString("a8254896-a7a5-4495-a6eb-a8977d67639d");
 
-        Result<Page<BdsaVulnerability>> result = componentVariantApi.findBdsaVulnerabilities(pageRequest, componentVariantId);
+        Result<Page<BdsaVulnerability>> result = componentVariantApi.findBdsaVulnerabilities(pageRequest, componentVariantId, null);
 
         HttpResponse<Page<BdsaVulnerability>> httpResponse = result.getHttpResponse().orElse(null);
 
