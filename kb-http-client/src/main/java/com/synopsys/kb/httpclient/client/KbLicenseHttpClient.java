@@ -30,7 +30,8 @@ import org.apache.hc.core5.http.message.BasicHeader;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableListMultimap;
+import com.google.common.collect.ListMultimap;
 import com.synopsys.kb.httpclient.api.AuthorizationProvider;
 import com.synopsys.kb.httpclient.api.ILicenseApi;
 import com.synopsys.kb.httpclient.api.KbConfiguration;
@@ -86,16 +87,20 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
 
     @Override
     public Result<Page<License>> findManyLicenses(PageRequest pageRequest,
-            @Nullable String searchTermFilter) {
+            @Nullable String searchTermFilter,
+            @Nullable Map<String, String> filters) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
 
-        ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
+        ImmutableListMultimap.Builder<String, String> builder = ImmutableListMultimap.builder();
         Map<String, String> pageRequestParameters = constructPageRequestParameters(pageRequest);
-        builder = builder.putAll(pageRequestParameters);
+        builder = builder.putAll(pageRequestParameters.entrySet());
         if (!Strings.isNullOrEmpty(searchTermFilter)) {
             builder = builder.put("q", searchTermFilter);
         }
-        Map<String, String> parameters = builder.build();
+        if (filters != null && !filters.isEmpty()) {
+            builder = builder.putAll(filters.entrySet());
+        }
+        ListMultimap<String, String> parameters = builder.build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_COMPONENT_DETAILS_V4_JSON);
         Collection<Header> headers = List.of(acceptHeader);
         ClassicHttpRequest request = constructGetHttpRequest("/api/licenses", parameters, headers);
@@ -128,10 +133,12 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
         Objects.requireNonNull(licenseId, "License id must be initialized.");
 
+        ImmutableListMultimap.Builder<String, String> builder = ImmutableListMultimap.builder();
         Map<String, String> pageRequestParameters = constructPageRequestParameters(pageRequest);
+        ListMultimap<String, String> parameters = builder.putAll(pageRequestParameters.entrySet()).build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_COMPONENT_DETAILS_V4_JSON);
         Collection<Header> headers = List.of(acceptHeader);
-        ClassicHttpRequest request = constructGetHttpRequest("/api/licenses/" + licenseId + "/license-terms", pageRequestParameters, headers);
+        ClassicHttpRequest request = constructGetHttpRequest("/api/licenses/" + licenseId + "/license-terms", parameters, headers);
 
         return execute(request,
                 DEFAULT_SUCCESS_CODES,

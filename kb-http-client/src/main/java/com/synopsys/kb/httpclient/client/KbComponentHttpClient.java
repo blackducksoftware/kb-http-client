@@ -31,7 +31,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableListMultimap;
+import com.google.common.collect.ListMultimap;
 import com.synopsys.kb.httpclient.api.AuthorizationProvider;
 import com.synopsys.kb.httpclient.api.IComponentApi;
 import com.synopsys.kb.httpclient.api.KbConfiguration;
@@ -88,18 +89,18 @@ public class KbComponentHttpClient extends AbstractKbHttpClient implements IComp
         Objects.requireNonNull(vulnerabilitySourcePriority, "Vulnerability source priority must be initialized.");
         Objects.requireNonNull(vulnerabilityScorePriority, "Vulnerability score priority must be initialized.");
 
-        ImmutableMap.Builder<String, String> builder = ImmutableMap.<String, String> builder()
+        Map<String, String> pageRequestParameters = constructPageRequestParameters(pageRequest);
+        ImmutableListMultimap.Builder<String, String> builder = ImmutableListMultimap.<String, String> builder()
+                .putAll(pageRequestParameters.entrySet())
                 .put("source_priority", vulnerabilitySourcePriority.getValue())
                 .put("score_priority", vulnerabilityScorePriority.getValue());
-        Map<String, String> pageRequestParameters = constructPageRequestParameters(pageRequest);
-        builder = builder.putAll(pageRequestParameters);
         if (!Strings.isNullOrEmpty(searchTermFilter)) {
             builder = builder.put("q", "version:" + searchTermFilter);
         }
         if (excludeDeleted != null) {
             builder = builder.put("excludeDeleted", excludeDeleted.toString());
         }
-        Map<String, String> parameters = builder.build();
+        ListMultimap<String, String> parameters = builder.build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_COMPONENT_DETAILS_V4_JSON);
         Collection<Header> headers = List.of(acceptHeader);
         ClassicHttpRequest request = constructGetHttpRequest("/api/components/" + componentId + "/versions", parameters, headers);
@@ -121,16 +122,16 @@ public class KbComponentHttpClient extends AbstractKbHttpClient implements IComp
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
         Objects.requireNonNull(componentId, "Component id must be initialized.");
 
-        ImmutableMap.Builder<String, String> builder = ImmutableMap.<String, String> builder();
         Map<String, String> pageRequestParameters = constructPageRequestParameters(pageRequest);
-        builder = builder.putAll(pageRequestParameters);
+        ImmutableListMultimap.Builder<String, String> builder = ImmutableListMultimap.<String, String> builder()
+                .putAll(pageRequestParameters.entrySet());
         if (!Strings.isNullOrEmpty(searchTermFilter)) {
             builder = builder.put("q", "version:" + searchTermFilter);
         }
         if (excludeDeleted != null) {
             builder = builder.put("excludeDeleted", excludeDeleted.toString());
         }
-        Map<String, String> parameters = builder.build();
+        ListMultimap<String, String> parameters = builder.build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_SUMMARY_V2_JSON);
         Collection<Header> headers = List.of(acceptHeader);
         ClassicHttpRequest request = constructGetHttpRequest("/api/components/" + componentId + "/versions", parameters, headers);
@@ -150,8 +151,8 @@ public class KbComponentHttpClient extends AbstractKbHttpClient implements IComp
         Preconditions.checkArgument(!Strings.isNullOrEmpty(searchTermFilter), "Search term filter must not be null or empty");
 
         Map<String, String> pageRequestParameters = constructPageRequestParameters(pageRequest);
-        Map<String, String> parameters = ImmutableMap.<String, String> builder()
-                .putAll(pageRequestParameters)
+        ListMultimap<String, String> parameters = ImmutableListMultimap.<String, String> builder()
+                .putAll(pageRequestParameters.entrySet())
                 .put("q", searchTermFilter)
                 .put("allowPartialMatches", Boolean.toString(allowPartialMatches)).build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_COMPONENT_DETAILS_V3_JSON);

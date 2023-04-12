@@ -46,6 +46,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ListMultimap;
 import com.synopsys.kb.httpclient.api.AuthorizationProvider;
 import com.synopsys.kb.httpclient.api.HttpResponse;
 import com.synopsys.kb.httpclient.api.KbConfiguration;
@@ -175,7 +176,7 @@ public abstract class AbstractKbHttpClient {
      * @return Returns the classic HTTP request.
      */
     protected ClassicHttpRequest constructPostHttpRequest(String path,
-            @Nullable Map<String, String> parameters,
+            @Nullable ListMultimap<String, String> parameters,
             @Nullable Collection<Header> headers,
             HttpEntity entity) {
         return constructHttpRequest(path, parameters, (uri) -> ClassicRequestBuilder.post(uri), headers, entity);
@@ -193,7 +194,7 @@ public abstract class AbstractKbHttpClient {
      * @return Returns the classic HTTP request.
      */
     protected ClassicHttpRequest constructGetHttpRequest(String path,
-            @Nullable Map<String, String> parameters,
+            @Nullable ListMultimap<String, String> parameters,
             @Nullable Collection<Header> headers) {
         return constructHttpRequest(path, parameters, (uri) -> ClassicRequestBuilder.get(uri), headers, null);
     }
@@ -491,14 +492,14 @@ public abstract class AbstractKbHttpClient {
         return null;
     }
 
-    private URI constructUri(String path, Map<String, String> parameters) {
+    private URI constructUri(String path, ListMultimap<String, String> parameters) {
         String fullPath = kbConfiguration.getHref() + path;
 
         try {
             URIBuilder builder = new URIBuilder(fullPath);
 
             if (parameters != null && !parameters.isEmpty()) {
-                for (Entry<String, String> entry : parameters.entrySet()) {
+                for (Entry<String, String> entry : parameters.entries()) {
                     String parameterName = entry.getKey();
                     String parameterValue = entry.getValue();
                     builder = builder.addParameter(parameterName, parameterValue);
@@ -512,7 +513,7 @@ public abstract class AbstractKbHttpClient {
     }
 
     private ClassicHttpRequest constructHttpRequest(String path,
-            Map<String, String> parameters,
+            ListMultimap<String, String> parameters,
             Function<URI, ClassicRequestBuilder> classicRequestBuilderFunction,
             Collection<Header> headers,
             HttpEntity entity) {

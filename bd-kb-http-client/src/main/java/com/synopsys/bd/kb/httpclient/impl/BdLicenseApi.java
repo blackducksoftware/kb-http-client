@@ -12,6 +12,7 @@
 package com.synopsys.bd.kb.httpclient.impl;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Function;
@@ -60,10 +61,11 @@ public class BdLicenseApi extends AbstractBdApi implements IBdLicenseApi {
 
     @Override
     public Result<Page<BdLicense>> findManyLicenses(PageRequest pageRequest,
-            @Nullable String searchTermFilter) {
+            @Nullable String searchTermFilter,
+            @Nullable Map<String, String> filters) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
 
-        Result<Page<License>> result = licenseApi.findManyLicenses(pageRequest, searchTermFilter);
+        Result<Page<License>> result = licenseApi.findManyLicenses(pageRequest, searchTermFilter, filters);
 
         Function<Page<License>, Page<BdLicense>> conversionFunction = (licensePage) -> {
             int totalCount = licensePage.getTotalCount();

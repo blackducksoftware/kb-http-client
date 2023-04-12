@@ -30,7 +30,8 @@ import org.apache.hc.core5.http.message.BasicHeader;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableListMultimap;
+import com.google.common.collect.ListMultimap;
 import com.synopsys.kb.httpclient.api.AuthorizationProvider;
 import com.synopsys.kb.httpclient.api.IComponentVariantApi;
 import com.synopsys.kb.httpclient.api.KbConfiguration;
@@ -80,13 +81,13 @@ public class KbComponentVariantHttpClient extends AbstractKbHttpClient implement
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
         Objects.requireNonNull(componentVariantId, "Component variant id must be initialized.");
 
-        ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
         Map<String, String> pageRequestParameters = constructPageRequestParameters(pageRequest);
-        builder = builder.putAll(pageRequestParameters);
+        ImmutableListMultimap.Builder<String, String> builder = ImmutableListMultimap.<String, String> builder()
+                .putAll(pageRequestParameters.entrySet());
         if (!Strings.isNullOrEmpty(searchTermFilter)) {
             builder = builder.put("q", searchTermFilter);
         }
-        Map<String, String> parameters = builder.build();
+        ListMultimap<String, String> parameters = builder.build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_VULNERABILITY_V7_JSON);
         Collection<Header> headers = List.of(acceptHeader);
         ClassicHttpRequest request = constructGetHttpRequest("/api/variants/" + componentVariantId + "/vulnerabilities-cve", parameters, headers);
@@ -105,13 +106,13 @@ public class KbComponentVariantHttpClient extends AbstractKbHttpClient implement
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
         Objects.requireNonNull(componentVariantId, "Component variant id must be initialized.");
 
-        ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
         Map<String, String> pageRequestParameters = constructPageRequestParameters(pageRequest);
-        builder = builder.putAll(pageRequestParameters);
+        ImmutableListMultimap.Builder<String, String> builder = ImmutableListMultimap.<String, String> builder()
+                .putAll(pageRequestParameters.entrySet());
         if (!Strings.isNullOrEmpty(searchTermFilter)) {
             builder = builder.put("q", searchTermFilter);
         }
-        Map<String, String> parameters = builder.build();
+        ListMultimap<String, String> parameters = builder.build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_VULNERABILITY_V7_JSON);
         Collection<Header> headers = List.of(acceptHeader);
         ClassicHttpRequest request = constructGetHttpRequest("/api/variants/" + componentVariantId + "/vulnerabilities-bdsa", parameters, headers);
@@ -131,7 +132,7 @@ public class KbComponentVariantHttpClient extends AbstractKbHttpClient implement
         Objects.requireNonNull(vulnerabilitySourcePriority, "Vulnerability source priority must be initialized.");
         Objects.requireNonNull(vulnerabilityScorePriority, "Vulnerability score priority must be initialized.");
 
-        Map<String, String> parameters = ImmutableMap.<String, String> builder()
+        ListMultimap<String, String> parameters = ImmutableListMultimap.<String, String> builder()
                 .put("source_priority", vulnerabilitySourcePriority.getValue())
                 .put("score_priority", vulnerabilityScorePriority.getValue())
                 .build();
@@ -153,7 +154,7 @@ public class KbComponentVariantHttpClient extends AbstractKbHttpClient implement
         Objects.requireNonNull(vulnerabilitySourcePriority, "Vulnerability source priority must be initialized.");
         Objects.requireNonNull(vulnerabilityScorePriority, "Vulnerability score priority must be initialized.");
 
-        Map<String, String> parameters = ImmutableMap.<String, String> builder()
+        ListMultimap<String, String> parameters = ImmutableListMultimap.<String, String> builder()
                 .put("source_priority", vulnerabilitySourcePriority.getValue())
                 .put("score_priority", vulnerabilityScorePriority.getValue())
                 .build();

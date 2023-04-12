@@ -15,7 +15,6 @@ import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -31,7 +30,8 @@ import org.apache.hc.core5.http.message.BasicHeader;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableListMultimap;
+import com.google.common.collect.ListMultimap;
 import com.synopsys.kb.httpclient.api.AuthorizationProvider;
 import com.synopsys.kb.httpclient.api.IActivityApi;
 import com.synopsys.kb.httpclient.api.KbConfiguration;
@@ -70,7 +70,7 @@ public class KbActivityHttpClient extends AbstractKbHttpClient implements IActiv
         Objects.requireNonNull(activitySince, "Activity since must be initialized.");
 
         String activitySinceString = activitySince.format(DateTimeFormatter.ISO_INSTANT);
-        Map<String, String> parameters = ImmutableMap.<String, String> builder()
+        ListMultimap<String, String> parameters = ImmutableListMultimap.<String, String> builder()
                 .put("activitySince", activitySinceString).build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_ACTIVITY_V3_JSON);
         Header contentTypeHeader = new BasicHeader(HttpHeaders.CONTENT_TYPE, KbContentType.KB_ACTIVITY_V3_JSON);
@@ -94,7 +94,7 @@ public class KbActivityHttpClient extends AbstractKbHttpClient implements IActiv
         Objects.requireNonNull(activitySince, "Activity since must be initialized.");
 
         String activitySinceString = activitySince.format(DateTimeFormatter.ISO_INSTANT);
-        Map<String, String> parameters = ImmutableMap.<String, String> builder()
+        ListMultimap<String, String> parameters = ImmutableListMultimap.<String, String> builder()
                 .put("activitySince", activitySinceString).build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_ACTIVITY_V3_JSON);
         Header contentTypeHeader = new BasicHeader(HttpHeaders.CONTENT_TYPE, KbContentType.KB_ACTIVITY_V3_JSON);
@@ -118,7 +118,7 @@ public class KbActivityHttpClient extends AbstractKbHttpClient implements IActiv
         Objects.requireNonNull(activitySince, "Activity since must be initialized.");
 
         String activitySinceString = activitySince.format(DateTimeFormatter.ISO_INSTANT);
-        Map<String, String> parameters = ImmutableMap.<String, String> builder()
+        ListMultimap<String, String> parameters = ImmutableListMultimap.<String, String> builder()
                 .put("activitySince", activitySinceString).build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_ACTIVITY_V3_JSON);
         Header contentTypeHeader = new BasicHeader(HttpHeaders.CONTENT_TYPE, KbContentType.KB_ACTIVITY_V3_JSON);
@@ -143,7 +143,7 @@ public class KbActivityHttpClient extends AbstractKbHttpClient implements IActiv
         Objects.requireNonNull(activitySince, "Activity since must be initialized.");
 
         String activitySinceString = activitySince.format(DateTimeFormatter.ISO_INSTANT);
-        Map<String, String> parameters = ImmutableMap.<String, String> builder()
+        ListMultimap<String, String> parameters = ImmutableListMultimap.<String, String> builder()
                 .put("activitySince", activitySinceString).build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_ACTIVITY_V3_JSON);
         Header contentTypeHeader = new BasicHeader(HttpHeaders.CONTENT_TYPE, KbContentType.KB_ACTIVITY_V3_JSON);
@@ -168,7 +168,7 @@ public class KbActivityHttpClient extends AbstractKbHttpClient implements IActiv
         Objects.requireNonNull(activitySince, "Activity since must be initialized.");
 
         String activitySinceString = activitySince.format(DateTimeFormatter.ISO_INSTANT);
-        Map<String, String> parameters = ImmutableMap.<String, String> builder()
+        ListMultimap<String, String> parameters = ImmutableListMultimap.<String, String> builder()
                 .put("activitySince", activitySinceString).build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_ACTIVITY_V3_JSON);
         Header contentTypeHeader = new BasicHeader(HttpHeaders.CONTENT_TYPE, KbContentType.KB_ACTIVITY_V3_JSON);
@@ -193,7 +193,7 @@ public class KbActivityHttpClient extends AbstractKbHttpClient implements IActiv
         Objects.requireNonNull(activitySince, "Activity since must be initialized.");
 
         String activitySinceString = activitySince.format(DateTimeFormatter.ISO_INSTANT);
-        Map<String, String> parameters = ImmutableMap.<String, String> builder()
+        ListMultimap<String, String> parameters = ImmutableListMultimap.<String, String> builder()
                 .put("activitySince", activitySinceString).build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_ACTIVITY_V3_JSON);
         Header contentTypeHeader = new BasicHeader(HttpHeaders.CONTENT_TYPE, KbContentType.KB_ACTIVITY_V3_JSON);
@@ -217,7 +217,7 @@ public class KbActivityHttpClient extends AbstractKbHttpClient implements IActiv
         Objects.requireNonNull(activitySince, "Activity since must be initialized.");
 
         String activitySinceString = activitySince.format(DateTimeFormatter.ISO_INSTANT);
-        Map<String, String> parameters = ImmutableMap.<String, String> builder()
+        ListMultimap<String, String> parameters = ImmutableListMultimap.<String, String> builder()
                 .put("activitySince", activitySinceString).build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_ACTIVITY_V3_JSON);
         Header contentTypeHeader = new BasicHeader(HttpHeaders.CONTENT_TYPE, KbContentType.KB_ACTIVITY_V3_JSON);
@@ -242,7 +242,7 @@ public class KbActivityHttpClient extends AbstractKbHttpClient implements IActiv
         Objects.requireNonNull(activitySince, "Activity since must be initialized.");
 
         String activitySinceString = activitySince.format(DateTimeFormatter.ISO_INSTANT);
-        Map<String, String> parameters = ImmutableMap.<String, String> builder()
+        ListMultimap<String, String> parameters = ImmutableListMultimap.<String, String> builder()
                 .put("activitySince", activitySinceString).build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_ACTIVITY_V3_JSON);
         Header contentTypeHeader = new BasicHeader(HttpHeaders.CONTENT_TYPE, KbContentType.KB_ACTIVITY_V3_JSON);
@@ -267,7 +267,7 @@ public class KbActivityHttpClient extends AbstractKbHttpClient implements IActiv
         Objects.requireNonNull(activitySince, "Activity since must be initialized.");
 
         String activitySinceString = activitySince.format(DateTimeFormatter.ISO_INSTANT);
-        Map<String, String> parameters = ImmutableMap.<String, String> builder()
+        ListMultimap<String, String> parameters = ImmutableListMultimap.<String, String> builder()
                 .put("activitySince", activitySinceString).build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_ACTIVITY_V3_JSON);
         Header contentTypeHeader = new BasicHeader(HttpHeaders.CONTENT_TYPE, KbContentType.KB_ACTIVITY_V3_JSON);
@@ -292,7 +292,7 @@ public class KbActivityHttpClient extends AbstractKbHttpClient implements IActiv
         Objects.requireNonNull(activitySince, "Activity since must be initialized.");
 
         String activitySinceString = activitySince.format(DateTimeFormatter.ISO_INSTANT);
-        Map<String, String> parameters = ImmutableMap.<String, String> builder()
+        ListMultimap<String, String> parameters = ImmutableListMultimap.<String, String> builder()
                 .put("activitySince", activitySinceString).build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_ACTIVITY_V3_JSON);
         Header contentTypeHeader = new BasicHeader(HttpHeaders.CONTENT_TYPE, KbContentType.KB_ACTIVITY_V3_JSON);
@@ -317,7 +317,7 @@ public class KbActivityHttpClient extends AbstractKbHttpClient implements IActiv
         Objects.requireNonNull(activitySince, "Activity since must be initialized.");
 
         String activitySinceString = activitySince.format(DateTimeFormatter.ISO_INSTANT);
-        Map<String, String> parameters = ImmutableMap.<String, String> builder()
+        ListMultimap<String, String> parameters = ImmutableListMultimap.<String, String> builder()
                 .put("activitySince", activitySinceString).build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_ACTIVITY_V3_JSON);
         Header contentTypeHeader = new BasicHeader(HttpHeaders.CONTENT_TYPE, KbContentType.KB_ACTIVITY_V3_JSON);
@@ -341,7 +341,7 @@ public class KbActivityHttpClient extends AbstractKbHttpClient implements IActiv
         Objects.requireNonNull(activitySince, "Activity since must be initialized.");
 
         String activitySinceString = activitySince.format(DateTimeFormatter.ISO_INSTANT);
-        Map<String, String> parameters = ImmutableMap.<String, String> builder()
+        ListMultimap<String, String> parameters = ImmutableListMultimap.<String, String> builder()
                 .put("activitySince", activitySinceString).build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_ACTIVITY_V3_JSON);
         Header contentTypeHeader = new BasicHeader(HttpHeaders.CONTENT_TYPE, KbContentType.KB_ACTIVITY_V3_JSON);
@@ -365,7 +365,7 @@ public class KbActivityHttpClient extends AbstractKbHttpClient implements IActiv
         Objects.requireNonNull(activitySince, "Activity since must be initialized.");
 
         String activitySinceString = activitySince.format(DateTimeFormatter.ISO_INSTANT);
-        Map<String, String> parameters = ImmutableMap.<String, String> builder()
+        ListMultimap<String, String> parameters = ImmutableListMultimap.<String, String> builder()
                 .put("activitySince", activitySinceString).build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_ACTIVITY_V3_JSON);
         Header contentTypeHeader = new BasicHeader(HttpHeaders.CONTENT_TYPE, KbContentType.KB_ACTIVITY_V3_JSON);
@@ -389,7 +389,7 @@ public class KbActivityHttpClient extends AbstractKbHttpClient implements IActiv
         Objects.requireNonNull(activitySince, "Activity since must be initialized.");
 
         String activitySinceString = activitySince.format(DateTimeFormatter.ISO_INSTANT);
-        Map<String, String> parameters = ImmutableMap.<String, String> builder()
+        ListMultimap<String, String> parameters = ImmutableListMultimap.<String, String> builder()
                 .put("activitySince", activitySinceString).build();
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_ACTIVITY_V3_JSON);
         Header contentTypeHeader = new BasicHeader(HttpHeaders.CONTENT_TYPE, KbContentType.KB_ACTIVITY_V3_JSON);

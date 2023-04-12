@@ -125,9 +125,9 @@ public class BdLicenseApiTest extends AbstractBdTest {
 
         Result<Page<License>> sourceResult = new Result<>(REQUEST_METHOD, LICENSE_REQUEST_URI, CAUSE);
 
-        Mockito.when(licenseApi.findManyLicenses(pageRequest, null)).thenReturn(sourceResult);
+        Mockito.when(licenseApi.findManyLicenses(pageRequest, null, null)).thenReturn(sourceResult);
 
-        Result<Page<BdLicense>> result = bdLicenseApi.findManyLicenses(pageRequest, null);
+        Result<Page<BdLicense>> result = bdLicenseApi.findManyLicenses(pageRequest, null, null);
 
         assertResult(sourceResult, result);
     }
@@ -139,9 +139,9 @@ public class BdLicenseApiTest extends AbstractBdTest {
         HttpResponse<Page<License>> sourceHttpResponse = new HttpResponse<>(422, Set.of(200), null, null);
         Result<Page<License>> sourceResult = new Result<>(REQUEST_METHOD, LICENSE_REQUEST_URI, sourceHttpResponse);
 
-        Mockito.when(licenseApi.findManyLicenses(pageRequest, null)).thenReturn(sourceResult);
+        Mockito.when(licenseApi.findManyLicenses(pageRequest, null, null)).thenReturn(sourceResult);
 
-        Result<Page<BdLicense>> result = bdLicenseApi.findManyLicenses(pageRequest, null);
+        Result<Page<BdLicense>> result = bdLicenseApi.findManyLicenses(pageRequest, null, null);
 
         assertResult(sourceResult, result);
     }
@@ -156,9 +156,9 @@ public class BdLicenseApiTest extends AbstractBdTest {
         HttpResponse<Page<License>> sourceHttpResponse = new HttpResponse<>(200, Set.of(200), licensePage, null);
         Result<Page<License>> sourceResult = new Result<>(REQUEST_METHOD, LICENSE_REQUEST_URI, sourceHttpResponse);
 
-        Mockito.when(licenseApi.findManyLicenses(pageRequest, null)).thenReturn(sourceResult);
+        Mockito.when(licenseApi.findManyLicenses(pageRequest, null, null)).thenReturn(sourceResult);
 
-        Result<Page<BdLicense>> result = bdLicenseApi.findManyLicenses(pageRequest, null);
+        Result<Page<BdLicense>> result = bdLicenseApi.findManyLicenses(pageRequest, null, null);
 
         assertResult(sourceResult, result);
     }

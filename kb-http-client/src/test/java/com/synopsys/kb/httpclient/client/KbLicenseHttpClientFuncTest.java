@@ -88,7 +88,7 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
     public void testFindManyLicenses() {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
 
-        Result<Page<License>> result = licenseApi.findManyLicenses(pageRequest, null);
+        Result<Page<License>> result = licenseApi.findManyLicenses(pageRequest, null, null);
 
         HttpResponse<Page<License>> httpResponse = result.getHttpResponse().orElse(null);
 

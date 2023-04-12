@@ -11,6 +11,7 @@
  */
 package com.synopsys.kb.httpclient.api;
 
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
@@ -71,10 +72,14 @@ public interface ILicenseApi {
      *            The search term filter. Expected to be in the format bdsuite:suite-identifier or spdx:spdx-identifier.
      *            Searching is done as a case-sensitive prefix search, so a search query of spdx:Apache will match
      *            licenses with SPDX identifiers of Apache-1.0, Apache-1.1, and Apache-2.0. Optional.
+     * @param filters
+     *            The filters. Expected to be in the format field:value. Possible fields are codeSharing, ownership,
+     *            restriction. Optional.
      * @return Returns the license page result.
      */
     Result<Page<License>> findManyLicenses(PageRequest pageRequest,
-            @Nullable String searchTermFilter);
+            @Nullable String searchTermFilter,
+            @Nullable Map<String, String> filters);
 
     /**
      * Finds a license term by its id.
