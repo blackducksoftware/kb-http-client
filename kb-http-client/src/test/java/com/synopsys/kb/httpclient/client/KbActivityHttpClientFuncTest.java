@@ -78,6 +78,31 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test(enabled = false)
+    public void testFindComponentOngoingVersionActivities() {
+        UUID componentId = UUID.fromString("9f74f66e-5c27-48d0-9083-e31e3563b7b2");
+        Set<UUID> componentIds = Set.of(componentId);
+
+        // Assign to far past date for results.
+        OffsetDateTime activitySince = OffsetDateTime.now().minusYears(20L);
+
+        Result<ListHolder<ComponentActivity>> result = activityApi.findComponentOngoingVersionActivities(componentIds, activitySince);
+
+        HttpResponse<ListHolder<ComponentActivity>> httpResponse = result.getHttpResponse().orElse(null);
+
+        Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
+        Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
+        Assert.assertTrue(httpResponse.isMessageBodyPresent(), "Message body should be present.");
+        ListHolder<ComponentActivity> listHolder = httpResponse.getMessageBody().orElse(null);
+        Assert.assertNotNull(listHolder, "List holder should be initialized.");
+        List<ComponentActivity> componentActivities = listHolder.getItems();
+        Assert.assertNotNull(componentActivities, "Component activities should be initialized.");
+        Assert.assertEquals(componentActivities.size(), componentIds.size(), "Number of component activities should be equal.");
+        Set<UUID> actualComponentIds = componentActivities.stream().map(ComponentActivity::getComponentId).collect(Collectors.toSet());
+        Assert.assertEquals(actualComponentIds.size(), componentIds.size(), "Number of component activities should be equal.");
+        Assert.assertTrue(actualComponentIds.containsAll(componentIds), "Component ids should be present.");
+    }
+
+    @Test(enabled = false)
     public void testFindComponentVersionActivities() {
         UUID componentVersionId1 = UUID.fromString("0bca7263-1033-4731-9985-809eb87ecfb7");
         Set<UUID> componentVersionIds = Set.of(componentVersionId1);

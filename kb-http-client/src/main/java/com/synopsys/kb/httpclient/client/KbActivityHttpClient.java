@@ -87,6 +87,30 @@ public class KbActivityHttpClient extends AbstractKbHttpClient implements IActiv
     }
 
     @Override
+    public Result<ListHolder<ComponentActivity>> findComponentOngoingVersionActivities(Set<UUID> componentIds, OffsetDateTime activitySince) {
+        Objects.requireNonNull(componentIds, "Component ids must be initialized.");
+        Preconditions.checkArgument(!componentIds.isEmpty(), "Component ids must not be empty.");
+        Preconditions.checkArgument(componentIds.size() <= ID_LIMIT, "Number of component ids must be less than or equal to " + ID_LIMIT);
+        Objects.requireNonNull(activitySince, "Activity since must be initialized.");
+
+        String activitySinceString = activitySince.format(DateTimeFormatter.ISO_INSTANT);
+        ListMultimap<String, String> parameters = ImmutableListMultimap.<String, String> builder()
+                .put("activitySince", activitySinceString).build();
+        Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_ACTIVITY_V3_JSON);
+        Header contentTypeHeader = new BasicHeader(HttpHeaders.CONTENT_TYPE, KbContentType.KB_ACTIVITY_V3_JSON);
+        Collection<Header> headers = List.of(acceptHeader, contentTypeHeader);
+        IdHolder<UUID> idHolder = new IdHolder<>(componentIds);
+        HttpEntity httpEntity = constructHttpEntity(idHolder, KbContentType.KB_ACTIVITY_V3_JSON);
+        ClassicHttpRequest request = constructPostHttpRequest("/api/activity/ongoing-version", parameters, headers, httpEntity);
+
+        return execute(request,
+                DEFAULT_SUCCESS_CODES,
+                Set.of(HttpStatus.SC_OK),
+                new TypeReference<ListHolder<ComponentActivity>>() {
+                });
+    }
+
+    @Override
     public Result<ListHolder<ComponentVersionActivity>> findComponentVersionActivities(Set<UUID> componentVersionIds, OffsetDateTime activitySince) {
         Objects.requireNonNull(componentVersionIds, "Component version ids must be initialized.");
         Preconditions.checkArgument(!componentVersionIds.isEmpty(), "Component version ids must not be empty.");
