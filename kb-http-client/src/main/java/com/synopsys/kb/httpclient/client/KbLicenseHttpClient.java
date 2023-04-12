@@ -91,9 +91,9 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
             @Nullable Map<String, String> filters) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
 
-        ImmutableListMultimap.Builder<String, String> builder = ImmutableListMultimap.builder();
         Map<String, String> pageRequestParameters = constructPageRequestParameters(pageRequest);
-        builder = builder.putAll(pageRequestParameters.entrySet());
+        ImmutableListMultimap.Builder<String, String> builder = ImmutableListMultimap.<String, String> builder()
+                .putAll(pageRequestParameters.entrySet());
         if (!Strings.isNullOrEmpty(searchTermFilter)) {
             builder = builder.put("q", searchTermFilter);
         }
@@ -126,6 +126,26 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
                 DEFAULT_SUCCESS_CODES,
                 DEFAULT_EXPECTED_CODES,
                 LicenseTerm.class);
+    }
+
+    @Override
+    public Result<Page<LicenseTerm>> findManyLicenseTerms(PageRequest pageRequest) {
+        Objects.requireNonNull(pageRequest, "Page request must be initialized.");
+
+        Map<String, String> pageRequestParameters = constructPageRequestParameters(pageRequest);
+        ListMultimap<String, String> parameters = ImmutableListMultimap.<String, String> builder()
+                .putAll(pageRequestParameters.entrySet()).build();
+        Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_COMPONENT_DETAILS_V4_JSON);
+        Collection<Header> headers = List.of(acceptHeader);
+        ClassicHttpRequest request = constructGetHttpRequest("/api/license-terms", parameters, headers);
+
+        return execute(request,
+                DEFAULT_SUCCESS_CODES,
+                Set.of(HttpStatus.SC_OK),
+                true, // Reauthenticate on Unauthorized response.
+                false, // Request does not trigger migrated response.
+                new TypeReference<Page<LicenseTerm>>() {
+                });
     }
 
     @Override
