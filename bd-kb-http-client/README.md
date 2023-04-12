@@ -51,6 +51,7 @@ The Black Duck-centric KB HTTP client makes certain assumptions in favor of conv
 + License
    - Find license (converts to BD-centric license result).  
    - Find many licenses (converts to BD-centric license page result). 
+   - Find licenses by license term (converts to BD-centric license page result).
    
 ## TODOs   
 

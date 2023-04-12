@@ -103,6 +103,25 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test(enabled = false)
+    public void testFindLicensesByLicenseTerm() {
+        PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
+        UUID licenseTermId = UUID.fromString("052a4876-67d7-4f72-959f-e56914ecbb33");
+
+        Result<Page<License>> result = licenseApi.findLicensesByLicenseTerm(pageRequest, licenseTermId);
+
+        HttpResponse<Page<License>> httpResponse = result.getHttpResponse().orElse(null);
+
+        Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
+        Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
+        Assert.assertTrue(httpResponse.isMessageBodyPresent(), "Message body should be present.");
+        Page<License> page = httpResponse.getMessageBody().orElse(null);
+        Assert.assertNotNull(page, "Page should be initialized.");
+        List<License> items = page.getItems();
+        Assert.assertNotNull(items, "Items should be initialized.");
+        Assert.assertFalse(items.isEmpty(), "Items should not be empty.");
+    }
+
+    @Test(enabled = false)
     public void testFindLicenseTerm() {
         UUID licenseTermId = UUID.fromString("04625083-2bc6-407c-ba9f-f461152859de");
 

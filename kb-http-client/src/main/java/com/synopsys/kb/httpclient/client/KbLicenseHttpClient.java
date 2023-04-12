@@ -115,6 +115,27 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
     }
 
     @Override
+    public Result<Page<License>> findLicensesByLicenseTerm(PageRequest pageRequest, UUID licenseTermId) {
+        Objects.requireNonNull(pageRequest, "Page request must be initialized.");
+        Objects.requireNonNull(licenseTermId, "License term id must be initialized.");
+
+        Map<String, String> pageRequestParameters = constructPageRequestParameters(pageRequest);
+        ListMultimap<String, String> parameters = ImmutableListMultimap.<String, String> builder()
+                .putAll(pageRequestParameters.entrySet()).build();
+        Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_COMPONENT_DETAILS_V4_JSON);
+        Collection<Header> headers = List.of(acceptHeader);
+        ClassicHttpRequest request = constructGetHttpRequest("/api/license-terms/" + licenseTermId + "/licenses", parameters, headers);
+
+        return execute(request,
+                DEFAULT_SUCCESS_CODES,
+                DEFAULT_EXPECTED_CODES,
+                true, // Reauthenticate on Unauthorized response.
+                false, // Request does not trigger migrated response.
+                new TypeReference<Page<License>>() {
+                });
+    }
+
+    @Override
     public Result<LicenseTerm> findLicenseTerm(UUID licenseTermId) {
         Objects.requireNonNull(licenseTermId, "License term id must be initialized.");
 

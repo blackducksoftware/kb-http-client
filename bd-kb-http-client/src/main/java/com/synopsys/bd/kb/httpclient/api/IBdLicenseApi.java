@@ -60,4 +60,19 @@ public interface IBdLicenseApi {
     Result<Page<BdLicense>> findManyLicenses(PageRequest pageRequest,
             @Nullable String searchTermFilter,
             @Nullable Map<String, String> filters);
+
+    /**
+     * Finds Black Duck-centric licenses that are associated to the given license term.
+     * 
+     * Expected response codes
+     * 200 OK
+     * 404 Not Found
+     * 
+     * @param pageRequest
+     *            The page request.
+     * @param licenseTermId
+     *            The license term id.
+     * @return Returns the license page result.
+     */
+    Result<Page<BdLicense>> findLicensesByLicenseTerm(PageRequest pageRequest, UUID licenseTermId);
 }

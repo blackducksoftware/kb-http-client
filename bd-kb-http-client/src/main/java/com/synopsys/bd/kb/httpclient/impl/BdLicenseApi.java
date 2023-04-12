@@ -77,4 +77,22 @@ public class BdLicenseApi extends AbstractBdApi implements IBdLicenseApi {
 
         return convert(result, conversionFunction);
     }
+
+    @Override
+    public Result<Page<BdLicense>> findLicensesByLicenseTerm(PageRequest pageRequest, UUID licenseTermId) {
+        Objects.requireNonNull(pageRequest, "Page request must be initialized.");
+        Objects.requireNonNull(licenseTermId, "License term id must be initialized.");
+
+        Result<Page<License>> result = licenseApi.findLicensesByLicenseTerm(pageRequest, licenseTermId);
+
+        Function<Page<License>, Page<BdLicense>> conversionFunction = (licensePage) -> {
+            int totalCount = licensePage.getTotalCount();
+            List<BdLicense> bdLicenses = licensePage.getItems().stream().map(BdLicense::new).collect(Collectors.toList());
+            Meta meta = licensePage.getMeta();
+
+            return new Page<>(totalCount, bdLicenses, meta);
+        };
+
+        return convert(result, conversionFunction);
+    }
 }

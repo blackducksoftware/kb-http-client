@@ -82,6 +82,23 @@ public interface ILicenseApi {
             @Nullable Map<String, String> filters);
 
     /**
+     * Finds licenses that are associated to the given license term.
+     * 
+     * Version: 4
+     * 
+     * Expected response codes
+     * 200 OK
+     * 404 Not Found
+     * 
+     * @param pageRequest
+     *            The page request.
+     * @param licenseTermId
+     *            The license term id.
+     * @return Returns the license page result.
+     */
+    Result<Page<License>> findLicensesByLicenseTerm(PageRequest pageRequest, UUID licenseTermId);
+
+    /**
      * Finds a license term by its id.
      * 
      * Version: 4
