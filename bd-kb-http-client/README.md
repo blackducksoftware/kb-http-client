@@ -38,9 +38,10 @@ The Black Duck-centric KB HTTP client makes certain assumptions in favor of conv
 ## Supported operations
 
 + Component
-   - Find component (automatically follows migrations and converts to BD-centric component result).
+   - Find component (automatically follows migrations).
    - Find component versions by component (automatically follows migrations and converts to BD-centric component version page result).
    - Find component version summaries by component (automatically follows migrations and converts to BD-centric component version summary page result).
+   - Find ongoing version by component (automatically follows migrations).
 + Component version
    - Find component version (automatically follows migrations and converts to BD-centric component version result).
    - Find component version CVE vulnerabilities (automatically follows migrations).

@@ -16,6 +16,7 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.synopsys.kb.httpclient.model.Component;
+import com.synopsys.kb.httpclient.model.ComponentOngoingVersion;
 import com.synopsys.kb.httpclient.model.ComponentSearchResult;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
 import com.synopsys.kb.httpclient.model.ComponentVersionSummary;
@@ -48,7 +49,7 @@ public interface IComponentApi {
      *            The component id.
      * @return Returns the component result.
      */
-    Result<Component> find(UUID componentId);
+    Result<Component> findComponent(UUID componentId);
 
     /**
      * Finds component versions for a given component.
@@ -134,6 +135,27 @@ public interface IComponentApi {
             UUID componentId,
             @Nullable String searchTermFilter,
             @Nullable Boolean excludeDeleted);
+
+    /**
+     * Finds the ongoing version for the given component.
+     * 
+     * This operation explicitly does NOT follow migration links.
+     * 
+     * Version: 3
+     * 
+     * Expected response codes
+     * 200 OK
+     * 404 Not Found
+     * 
+     * Migration response codes
+     * 300 Multiple Choices
+     * 301 Moved Permanently
+     * 
+     * @param componentId
+     *            The component id.
+     * @return Returns the component ongoing version result.
+     */
+    Result<ComponentOngoingVersion> findOngoingVersionByComponent(UUID componentId);
 
     /**
      * Search for components.

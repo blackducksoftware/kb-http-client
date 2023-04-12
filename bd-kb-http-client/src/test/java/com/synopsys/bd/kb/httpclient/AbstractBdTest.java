@@ -27,7 +27,10 @@ import com.synopsys.bd.kb.httpclient.api.MigratableResult;
 import com.synopsys.kb.httpclient.api.HttpResponse;
 import com.synopsys.kb.httpclient.api.Relationship;
 import com.synopsys.kb.httpclient.api.Result;
+import com.synopsys.kb.httpclient.model.ActivityTrend;
 import com.synopsys.kb.httpclient.model.BdsaVulnerability;
+import com.synopsys.kb.httpclient.model.CodeBaseMaturity;
+import com.synopsys.kb.httpclient.model.ComponentOngoingVersion;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
 import com.synopsys.kb.httpclient.model.ComponentVersionSummary;
 import com.synopsys.kb.httpclient.model.CveVulnerability;
@@ -59,8 +62,10 @@ import com.synopsys.kb.httpclient.model.LicenseDefinition;
 import com.synopsys.kb.httpclient.model.LicenseDefinitionItem;
 import com.synopsys.kb.httpclient.model.LicenseDefinitionType;
 import com.synopsys.kb.httpclient.model.Link;
+import com.synopsys.kb.httpclient.model.MainLanguage;
 import com.synopsys.kb.httpclient.model.Meta;
 import com.synopsys.kb.httpclient.model.RiskProfile;
+import com.synopsys.kb.httpclient.model.TeamSize;
 import com.synopsys.kb.httpclient.model.VulnerabilitySeverity;
 import com.synopsys.kb.httpclient.model.VulnerabilitySource;
 import com.synopsys.kb.httpclient.model.VulnerabilityStatus;
@@ -203,6 +208,14 @@ public abstract class AbstractBdTest {
                 List.of(new Link(Relationship.COMPONENT, BASE_HREF + "/api/components/" + componentId)));
 
         return new ComponentVersionSummary(version, OffsetDateTime.now(), Boolean.FALSE, meta);
+    }
+
+    protected ComponentOngoingVersion constuctComponentOngoingVersion(UUID componentId) {
+        MainLanguage mainLanguage = new MainLanguage("Java");
+        Meta meta = new Meta(BASE_HREF + "/api/components/" + componentId + "/ongoing-version", Collections.emptyList());
+
+        return new ComponentOngoingVersion(ActivityTrend.DECREASING, TeamSize.AVERAGE_SIZE_DEVELOPMENT_TEAM, CodeBaseMaturity.MATURE, mainLanguage,
+                OffsetDateTime.now(), 1000, 90, 5, 100, 200, 10, 20, 5, meta);
     }
 
     protected CveVulnerability constructCveVulnerability(String id, VulnerabilityStatus status) {

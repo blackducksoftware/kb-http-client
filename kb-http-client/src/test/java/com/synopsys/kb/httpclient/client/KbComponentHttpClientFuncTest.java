@@ -27,6 +27,7 @@ import com.synopsys.kb.httpclient.api.IKbHttpApi;
 import com.synopsys.kb.httpclient.api.PageRequest;
 import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.Component;
+import com.synopsys.kb.httpclient.model.ComponentOngoingVersion;
 import com.synopsys.kb.httpclient.model.ComponentSearchResult;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
 import com.synopsys.kb.httpclient.model.ComponentVersionSummary;
@@ -50,9 +51,9 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test(enabled = false)
-    public void testFind() {
+    public void testFindComponent() {
         UUID componentId = UUID.fromString("b75f622a-30da-46e4-a9c9-56f4ab75e22e");
-        Result<Component> result = componentApi.find(componentId);
+        Result<Component> result = componentApi.findComponent(componentId);
 
         HttpResponse<Component> httpResponse = result.getHttpResponse().orElse(null);
 
@@ -72,9 +73,9 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test(enabled = false)
-    public void testFindWhenMergeMigrated() {
+    public void testFindComponentWhenMergeMigrated() {
         UUID mergeComponentId = UUID.fromString("d82fb719-977c-49aa-b799-3953356aa15c");
-        Result<Component> result = componentApi.find(mergeComponentId);
+        Result<Component> result = componentApi.findComponent(mergeComponentId);
 
         HttpResponse<Component> httpResponse = result.getHttpResponse().orElse(null);
 
@@ -88,9 +89,9 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test(enabled = false)
-    public void testFindWhenSplitMigrated() {
+    public void testFindComponentWhenSplitMigrated() {
         UUID splitComponentId = UUID.fromString("2510dcac-ef8a-4088-a60c-ae6605054c3c");
-        Result<Component> result = componentApi.find(splitComponentId);
+        Result<Component> result = componentApi.findComponent(splitComponentId);
 
         HttpResponse<Component> httpResponse = result.getHttpResponse().orElse(null);
 
@@ -222,6 +223,63 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
                 Boolean.FALSE);
 
         HttpResponse<Page<ComponentVersionSummary>> httpResponse = result.getHttpResponse().orElse(null);
+
+        Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
+        Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MULTIPLE_CHOICES, "Codes should be equal.");
+        Assert.assertFalse(httpResponse.isMessageBodyPresent(), "Message body should not be present.");
+        Assert.assertTrue(httpResponse.isMigratedMetaPresent(), "Migrated meta should be present.");
+        Assert.assertTrue(httpResponse.isMigrated(), "Entity should be migrated.");
+        Assert.assertFalse(httpResponse.isMergeMigrated(), "Entity should not be merge migrated.");
+        Assert.assertTrue(httpResponse.isSplitMigrated(), "Entity should be split migrated.");
+    }
+
+    @Test(enabled = false)
+    public void testFindOngoingVersionByComponent() {
+        UUID componentId = UUID.fromString("9f74f66e-5c27-48d0-9083-e31e3563b7b2");
+
+        Result<ComponentOngoingVersion> result = componentApi.findOngoingVersionByComponent(componentId);
+
+        HttpResponse<ComponentOngoingVersion> httpResponse = result.getHttpResponse().orElse(null);
+
+        Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
+
+        if (httpResponse.isMigrated()) {
+            Assert.fail("This functional test method was written using a non-migrated component id.  "
+                    + "Since then, this component id has been migrated by the KnowledgeBase.  "
+                    + "Update this test with a new non-migrated component id.");
+        }
+
+        Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
+        Assert.assertTrue(httpResponse.isMessageBodyPresent(), "Message body should be present.");
+        ComponentOngoingVersion componentOngoingVersion = httpResponse.getMessageBody().orElse(null);
+        Assert.assertNotNull(componentOngoingVersion, "Component ongoing version should be initialized.");
+        Assert.assertEquals(componentOngoingVersion.getComponentId(), componentId, "Component ids should be equal.");
+    }
+
+    @Test(enabled = false)
+    public void testFindOngoingVersionByComponentWhenMergeMigrated() {
+        UUID mergeComponentId = UUID.fromString("d82fb719-977c-49aa-b799-3953356aa15c");
+
+        Result<ComponentOngoingVersion> result = componentApi.findOngoingVersionByComponent(mergeComponentId);
+
+        HttpResponse<ComponentOngoingVersion> httpResponse = result.getHttpResponse().orElse(null);
+
+        Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
+        Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MOVED_PERMANENTLY, "Codes should be equal.");
+        Assert.assertFalse(httpResponse.isMessageBodyPresent(), "Message body should not be present.");
+        Assert.assertTrue(httpResponse.isMigratedMetaPresent(), "Migrated meta should be present.");
+        Assert.assertTrue(httpResponse.isMigrated(), "Entity should be migrated.");
+        Assert.assertTrue(httpResponse.isMergeMigrated(), "Entity should be merge migrated.");
+        Assert.assertFalse(httpResponse.isSplitMigrated(), "Entity should not be split migrated.");
+    }
+
+    @Test(enabled = false)
+    public void testFindOngoingVersionByComponentWhenSplitMigrated() {
+        UUID splitComponentId = UUID.fromString("2510dcac-ef8a-4088-a60c-ae6605054c3c");
+
+        Result<ComponentOngoingVersion> result = componentApi.findOngoingVersionByComponent(splitComponentId);
+
+        HttpResponse<ComponentOngoingVersion> httpResponse = result.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MULTIPLE_CHOICES, "Codes should be equal.");

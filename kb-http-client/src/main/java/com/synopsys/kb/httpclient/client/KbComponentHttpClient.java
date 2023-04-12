@@ -39,6 +39,7 @@ import com.synopsys.kb.httpclient.api.KbConfiguration;
 import com.synopsys.kb.httpclient.api.PageRequest;
 import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.Component;
+import com.synopsys.kb.httpclient.model.ComponentOngoingVersion;
 import com.synopsys.kb.httpclient.model.ComponentSearchResult;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
 import com.synopsys.kb.httpclient.model.ComponentVersionSummary;
@@ -62,7 +63,7 @@ public class KbComponentHttpClient extends AbstractKbHttpClient implements IComp
     }
 
     @Override
-    public Result<Component> find(UUID componentId) {
+    public Result<Component> findComponent(UUID componentId) {
         Objects.requireNonNull(componentId, "Component id must be initialized.");
 
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_COMPONENT_DETAILS_V4_JSON);
@@ -143,6 +144,22 @@ public class KbComponentHttpClient extends AbstractKbHttpClient implements IComp
                 true, // Request can trigger migrated response.
                 new TypeReference<Page<ComponentVersionSummary>>() {
                 });
+    }
+
+    @Override
+    public Result<ComponentOngoingVersion> findOngoingVersionByComponent(UUID componentId) {
+        Objects.requireNonNull(componentId, "Component id must be initialized.");
+
+        Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_COMPONENT_DETAILS_V3_JSON);
+        Collection<Header> headers = List.of(acceptHeader);
+        ClassicHttpRequest request = constructGetHttpRequest("/api/components/" + componentId + "/ongoing-version", null, headers);
+
+        return execute(request,
+                DEFAULT_SUCCESS_CODES,
+                DEFAULT_EXPECTED_CODES,
+                true, // Reauthenticate on Unauthorized response.
+                true, // Request can trigger migrated response.
+                ComponentOngoingVersion.class);
     }
 
     @Override
