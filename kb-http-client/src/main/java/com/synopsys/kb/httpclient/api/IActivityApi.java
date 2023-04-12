@@ -298,6 +298,11 @@ public interface IActivityApi {
     /**
      * Finds license's license term activities.
      * 
+     * Determines if one or more of the provided licenses has an associated update for its license term metadata since
+     * the given timestamp.
+     * 
+     * Version: 3
+     * 
      * @param licenseIds
      *            The set of license ids. Must be not null, not empty, and less than or equal to 1000 ids.
      * @param activitySince
