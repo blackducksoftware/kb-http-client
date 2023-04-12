@@ -71,6 +71,7 @@ The KB HTTP client makes certain assumptions in favor of convention...
     - Find component variant upgrade guidance activities
     - Find component variant transitive upgrade guidance activities
     - Find license activities
+    - Find license license term activities
     - Find CVE vulnerability activities
     - Find BDSA vulnerability activities
                             

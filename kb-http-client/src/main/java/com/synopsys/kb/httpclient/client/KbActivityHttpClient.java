@@ -358,6 +358,30 @@ public class KbActivityHttpClient extends AbstractKbHttpClient implements IActiv
     }
 
     @Override
+    public Result<ListHolder<LicenseActivity>> findLicenseLicenseTermActivities(Set<UUID> licenseIds, OffsetDateTime activitySince) {
+        Objects.requireNonNull(licenseIds, "License ids must be initialized.");
+        Preconditions.checkArgument(!licenseIds.isEmpty(), "License ids must not be empty.");
+        Preconditions.checkArgument(licenseIds.size() <= ID_LIMIT, "Number of license ids must be less than or equal to " + ID_LIMIT);
+        Objects.requireNonNull(activitySince, "Activity since must be initialized.");
+
+        String activitySinceString = activitySince.format(DateTimeFormatter.ISO_INSTANT);
+        ListMultimap<String, String> parameters = ImmutableListMultimap.<String, String> builder()
+                .put("activitySince", activitySinceString).build();
+        Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_ACTIVITY_V3_JSON);
+        Header contentTypeHeader = new BasicHeader(HttpHeaders.CONTENT_TYPE, KbContentType.KB_ACTIVITY_V3_JSON);
+        Collection<Header> headers = List.of(acceptHeader, contentTypeHeader);
+        IdHolder<UUID> idHolder = new IdHolder<>(licenseIds);
+        HttpEntity httpEntity = constructHttpEntity(idHolder, KbContentType.KB_ACTIVITY_V3_JSON);
+        ClassicHttpRequest request = constructPostHttpRequest("/api/activity/licenses/license-terms", parameters, headers, httpEntity);
+
+        return execute(request,
+                DEFAULT_SUCCESS_CODES,
+                Set.of(HttpStatus.SC_OK),
+                new TypeReference<ListHolder<LicenseActivity>>() {
+                });
+    }
+
+    @Override
     public Result<ListHolder<CveVulnerabilityActivity>> findCveVulnerabilityActivities(Set<String> cveVulnerabilityIds, OffsetDateTime activitySince) {
         Objects.requireNonNull(cveVulnerabilityIds, "CVE vulnerability ids must be initialized.");
         Preconditions.checkArgument(!cveVulnerabilityIds.isEmpty(), "CVE vulnerability ids must not be empty.");

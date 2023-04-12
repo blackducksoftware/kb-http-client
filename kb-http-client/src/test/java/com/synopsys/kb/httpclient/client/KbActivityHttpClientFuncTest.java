@@ -378,6 +378,31 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test(enabled = false)
+    public void testFindLicenseLicenseTermActivities() {
+        UUID licenseId1 = UUID.fromString("7cae335f-1193-421e-92f1-8802b4243e93");
+        Set<UUID> licenseIds = Set.of(licenseId1);
+
+        // Assign to far past date for results.
+        OffsetDateTime activitySince = OffsetDateTime.now().minusYears(20L);
+
+        Result<ListHolder<LicenseActivity>> result = activityApi.findLicenseLicenseTermActivities(licenseIds, activitySince);
+
+        HttpResponse<ListHolder<LicenseActivity>> httpResponse = result.getHttpResponse().orElse(null);
+
+        Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
+        Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
+        Assert.assertTrue(httpResponse.isMessageBodyPresent(), "Message body should be present.");
+        ListHolder<LicenseActivity> listHolder = httpResponse.getMessageBody().orElse(null);
+        Assert.assertNotNull(listHolder, "List holder should be initialized.");
+        List<LicenseActivity> licenseActivities = listHolder.getItems();
+        Assert.assertNotNull(licenseActivities, "License activities should be initialized.");
+        Assert.assertEquals(licenseActivities.size(), licenseIds.size(), "Number of license activities should be equal.");
+        Set<UUID> actualLicenseIds = licenseActivities.stream().map(LicenseActivity::getLicenseId).collect(Collectors.toSet());
+        Assert.assertEquals(actualLicenseIds.size(), licenseIds.size(), "Number of license activities should be equal.");
+        Assert.assertTrue(actualLicenseIds.containsAll(licenseIds), "License ids should be present.");
+    }
+
+    @Test(enabled = false)
     public void testFindCveVulnerabilityActivities() {
         String cveVulnerabilityId1 = "CVE-2014-0160";
         Set<String> cveVulnerabilityIds = Set.of(cveVulnerabilityId1);

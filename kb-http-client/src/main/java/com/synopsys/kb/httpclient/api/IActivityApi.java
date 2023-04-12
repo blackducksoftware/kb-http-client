@@ -296,6 +296,17 @@ public interface IActivityApi {
     Result<ListHolder<LicenseActivity>> findLicenseActivities(Set<UUID> licenseIds, OffsetDateTime activitySince);
 
     /**
+     * Finds license's license term activities.
+     * 
+     * @param licenseIds
+     *            The set of license ids. Must be not null, not empty, and less than or equal to 1000 ids.
+     * @param activitySince
+     *            The activity since date. Must be not null.
+     * @return Returns the license activity result.
+     */
+    Result<ListHolder<LicenseActivity>> findLicenseLicenseTermActivities(Set<UUID> licenseIds, OffsetDateTime activitySince);
+
+    /**
      * Finds CVE vulnerability activities.
      * 
      * Determines if one or more of the provided CVE vulnerabilities has an associated update for CVE vulnerability
