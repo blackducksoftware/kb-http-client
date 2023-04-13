@@ -39,6 +39,7 @@ The KB HTTP client makes certain assumptions in favor of convention...
     - Search component (package identifier component matching)
 + Component version APIs
     - Find component version
+    - Find next version by component version
     - Find component version CVE vulnerabilities
     - Find component version BDSA vulnerabilities
     - Find component version upgrade guidance

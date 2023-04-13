@@ -86,11 +86,11 @@ public class OngoingVersion extends AbstractEntity {
     }
 
     /**
-     * Gets the id.
+     * Gets the component id.
      *
-     * @return UUID Returns the id.
+     * @return UUID Returns the component id.
      * @throws IllegalArgumentException
-     *             Throws if the id is absent or not a valid UUID.
+     *             Throws if the component id is absent or not a valid UUID.
      */
     @JsonIgnore
     public final UUID getComponentId() {

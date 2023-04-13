@@ -39,6 +39,7 @@ import com.synopsys.kb.httpclient.model.ComponentVersion;
 import com.synopsys.kb.httpclient.model.CveVulnerability;
 import com.synopsys.kb.httpclient.model.Link;
 import com.synopsys.kb.httpclient.model.Meta;
+import com.synopsys.kb.httpclient.model.NextVersion;
 import com.synopsys.kb.httpclient.model.Page;
 import com.synopsys.kb.httpclient.model.RiskProfile;
 import com.synopsys.kb.httpclient.model.UpgradeGuidance;
@@ -236,6 +237,164 @@ public class BdComponentVersionApiTest extends AbstractBdTest {
 
         MigratableResult<BdComponentVersion> migratableResult = bdComponentVersionApi.find(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA,
                 VulnerabilityScorePriority.CVSS_3);
+
+        // Initial request
+        // First migrated request
+        // Second migrated request
+        // Retries exhausted and return 'second migrated response'.
+        List<Meta> expectedMigratedMetaHistory = ImmutableList.<Meta> builder()
+                .add(httpResponse1.getMigratedMeta().orElse(null))
+                .add(httpResponse2.getMigratedMeta().orElse(null)).build();
+        assertResult(result3, migratableResult, expectedMigratedMetaHistory);
+    }
+
+    @Test
+    public void testFindNextVersionWhenAbsent() {
+        // HTTP 404 Not Found response
+        String requestUri = constructNextVersionHref(COMPONENT_VERSION_ID);
+        HttpResponse<NextVersion> httpResponse = new HttpResponse<>(404, Set.of(200, 404), null, null);
+        Result<NextVersion> result = constructResult(REQUEST_METHOD, requestUri, httpResponse);
+
+        Mockito.when(componentVersionApi.findNextVersion(COMPONENT_VERSION_ID)).thenReturn(result);
+
+        MigratableResult<NextVersion> migratableResult = bdComponentVersionApi.findNextVersion(COMPONENT_VERSION_ID);
+
+        assertResult(result, migratableResult, Collections.emptyList());
+    }
+
+    @Test
+    public void testFindNextVersionWhenPresentAndNotMigrated() {
+        // HTTP 200 OK response
+        String requestUri = constructNextVersionHref(COMPONENT_VERSION_ID);
+        NextVersion nextVersion = constructNextVersion(COMPONENT_VERSION_ID);
+        HttpResponse<NextVersion> httpResponse = constructHttpResponse(nextVersion);
+        Result<NextVersion> result = constructResult(REQUEST_METHOD, requestUri, httpResponse);
+
+        Mockito.when(componentVersionApi.findNextVersion(COMPONENT_VERSION_ID)).thenReturn(result);
+
+        MigratableResult<NextVersion> migratableResult = bdComponentVersionApi.findNextVersion(COMPONENT_VERSION_ID);
+
+        assertResult(result, migratableResult, Collections.emptyList());
+    }
+
+    @Test
+    public void testFindNextVersionWhenPresentAndMergeMigrated() {
+        String requestUri1 = constructNextVersionHref(COMPONENT_VERSION_ID);
+        UUID destinationComponentVersionId2 = UUID.randomUUID();
+        String requestUri2 = constructNextVersionHref(destinationComponentVersionId2);
+
+        // HTTP 301 Moved Permanently response (merge migration)
+        HttpResponse<NextVersion> httpResponse1 = constructMergeMigratedHttpResponse(requestUri1, requestUri2);
+        Result<NextVersion> result1 = constructResult(REQUEST_METHOD, requestUri1, httpResponse1);
+
+        // HTTP 200 OK response
+        NextVersion nextVersion2 = constructNextVersion(destinationComponentVersionId2);
+        HttpResponse<NextVersion> httpResponse2 = constructHttpResponse(nextVersion2);
+        Result<NextVersion> result2 = constructResult(REQUEST_METHOD, requestUri2, httpResponse2);
+
+        Mockito.when(componentVersionApi.findNextVersion(COMPONENT_VERSION_ID)).thenReturn(result1);
+        Mockito.when(componentVersionApi.findNextVersion(destinationComponentVersionId2)).thenReturn(result2);
+
+        MigratableResult<NextVersion> migratableResult = bdComponentVersionApi.findNextVersion(COMPONENT_VERSION_ID);
+
+        List<Meta> expectedMigratedMetaHistory = ImmutableList.<Meta> builder()
+                .add(httpResponse1.getMigratedMeta().orElse(null)).build();
+        assertResult(result2, migratableResult, expectedMigratedMetaHistory);
+    }
+
+    @Test
+    public void testFindNextVersionWhenPresentAndSplitMigrated() {
+        String requestUri1 = constructNextVersionHref(COMPONENT_VERSION_ID);
+        UUID destinationComponentVersionId2a = UUID.randomUUID();
+        UUID destinationComponentVersionId2b = UUID.randomUUID();
+        UUID destinationComponentVersionId2c = UUID.randomUUID();
+        String requestUri2a = constructNextVersionHref(destinationComponentVersionId2a);
+        String requestUri2b = constructNextVersionHref(destinationComponentVersionId2b);
+        String requestUri2c = constructNextVersionHref(destinationComponentVersionId2c);
+
+        // HTTP 300 Multiple Choices response (split migration)
+        HttpResponse<NextVersion> httpResponse1 = constructSplitMigratedHttpResponse(requestUri1, List.of(requestUri2a, requestUri2b, requestUri2c));
+        Result<NextVersion> result1 = constructResult(REQUEST_METHOD, requestUri1, httpResponse1);
+
+        // HTTP 200 OK response
+        NextVersion nextVersion2 = constructNextVersion(destinationComponentVersionId2a);
+        HttpResponse<NextVersion> httpResponse2 = constructHttpResponse(nextVersion2);
+        Result<NextVersion> result2 = constructResult(REQUEST_METHOD, requestUri2a, httpResponse2);
+
+        Mockito.when(componentVersionApi.findNextVersion(COMPONENT_VERSION_ID)).thenReturn(result1);
+        Mockito.when(componentVersionApi.findNextVersion(destinationComponentVersionId2a)).thenReturn(result2);
+
+        MigratableResult<NextVersion> migratableResult = bdComponentVersionApi.findNextVersion(COMPONENT_VERSION_ID);
+
+        List<Meta> expectedMigratedMetaHistory = ImmutableList.<Meta> builder()
+                .add(httpResponse1.getMigratedMeta().orElse(null)).build();
+        assertResult(result2, migratableResult, expectedMigratedMetaHistory);
+    }
+
+    @Test
+    public void testFindNextVersionWhenPresentAndMigratedWithMultipleMigrations() {
+        String requestUri1 = constructNextVersionHref(COMPONENT_VERSION_ID);
+        UUID destinationComponentVersionId2a = UUID.randomUUID();
+        UUID destinationComponentVersionId2b = UUID.randomUUID();
+        UUID destinationComponentVersionId2c = UUID.randomUUID();
+        String requestUri2a = constructNextVersionHref(destinationComponentVersionId2a);
+        String requestUri2b = constructNextVersionHref(destinationComponentVersionId2b);
+        String requestUri2c = constructNextVersionHref(destinationComponentVersionId2c);
+        UUID destinationComponentVersionId3 = UUID.randomUUID();
+        String requestUri3 = constructNextVersionHref(destinationComponentVersionId3);
+
+        // HTTP 300 Multiple Choices response (split migration)
+        HttpResponse<NextVersion> httpResponse1 = constructSplitMigratedHttpResponse(requestUri1, List.of(requestUri2a, requestUri2b, requestUri2c));
+        Result<NextVersion> result1 = constructResult(REQUEST_METHOD, requestUri1, httpResponse1);
+
+        // HTTP 301 Moved Permanently response (merge migration)
+        HttpResponse<NextVersion> httpResponse2 = constructMergeMigratedHttpResponse(requestUri2a, requestUri3);
+        Result<NextVersion> result2 = constructResult(REQUEST_METHOD, requestUri2a, httpResponse2);
+
+        // HTTP 200 OK response
+        NextVersion nextVersion3 = constructNextVersion(destinationComponentVersionId3);
+        HttpResponse<NextVersion> httpResponse3 = constructHttpResponse(nextVersion3);
+        Result<NextVersion> result3 = constructResult(REQUEST_METHOD, requestUri3, httpResponse3);
+
+        Mockito.when(componentVersionApi.findNextVersion(COMPONENT_VERSION_ID)).thenReturn(result1);
+        Mockito.when(componentVersionApi.findNextVersion(destinationComponentVersionId2a)).thenReturn(result2);
+        Mockito.when(componentVersionApi.findNextVersion(destinationComponentVersionId3)).thenReturn(result3);
+
+        MigratableResult<NextVersion> migratableResult = bdComponentVersionApi.findNextVersion(COMPONENT_VERSION_ID);
+
+        List<Meta> expectedMigratedMetaHistory = ImmutableList.<Meta> builder()
+                .add(httpResponse1.getMigratedMeta().orElse(null))
+                .add(httpResponse2.getMigratedMeta().orElse(null)).build();
+        assertResult(result3, migratableResult, expectedMigratedMetaHistory);
+    }
+
+    @Test
+    public void testFindNextVersionWhenPresentAndRetriesExhausted() {
+        String requestUri1 = constructNextVersionHref(COMPONENT_VERSION_ID);
+        UUID destinationComponentVersionId2 = UUID.randomUUID();
+        UUID destinationComponentVersionId3 = UUID.randomUUID();
+        UUID destinationComponentVersionId4 = UUID.randomUUID();
+        String requestUri2 = constructNextVersionHref(destinationComponentVersionId2);
+        String requestUri3 = constructNextVersionHref(destinationComponentVersionId3);
+        String requestUri4 = constructNextVersionHref(destinationComponentVersionId4);
+
+        // HTTP 301 Moved Permanently response (merge migration)
+        HttpResponse<NextVersion> httpResponse1 = constructMergeMigratedHttpResponse(requestUri1, requestUri2);
+        Result<NextVersion> result1 = constructResult(REQUEST_METHOD, requestUri1, httpResponse1);
+
+        // HTTP 301 Moved Permanently response (merge migration)
+        HttpResponse<NextVersion> httpResponse2 = constructMergeMigratedHttpResponse(requestUri2, requestUri3);
+        Result<NextVersion> result2 = constructResult(REQUEST_METHOD, requestUri2, httpResponse2);
+
+        // HTTP 301 Moved Permanently response (merge migration)
+        HttpResponse<NextVersion> httpResponse3 = constructMergeMigratedHttpResponse(requestUri3, requestUri4);
+        Result<NextVersion> result3 = constructResult(REQUEST_METHOD, requestUri3, httpResponse3);
+
+        Mockito.when(componentVersionApi.findNextVersion(COMPONENT_VERSION_ID)).thenReturn(result1);
+        Mockito.when(componentVersionApi.findNextVersion(destinationComponentVersionId2)).thenReturn(result2);
+        Mockito.when(componentVersionApi.findNextVersion(destinationComponentVersionId3)).thenReturn(result3);
+
+        MigratableResult<NextVersion> migratableResult = bdComponentVersionApi.findNextVersion(COMPONENT_VERSION_ID);
 
         // Initial request
         // First migrated request
@@ -809,6 +968,10 @@ public class BdComponentVersionApiTest extends AbstractBdTest {
 
     private String constructVersionHref(UUID componentVersionId) {
         return constructVersionHref(componentVersionId, null);
+    }
+
+    private String constructNextVersionHref(UUID componentVersionId) {
+        return constructVersionHref(componentVersionId, "/next");
     }
 
     private String constructVersionHref(UUID componentVersionId, @Nullable String pathSuffix) {

@@ -18,6 +18,7 @@ import javax.annotation.Nullable;
 import com.synopsys.kb.httpclient.model.BdsaVulnerability;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
 import com.synopsys.kb.httpclient.model.CveVulnerability;
+import com.synopsys.kb.httpclient.model.NextVersion;
 import com.synopsys.kb.httpclient.model.Page;
 import com.synopsys.kb.httpclient.model.UpgradeGuidance;
 import com.synopsys.kb.httpclient.model.VulnerabilityScorePriority;
@@ -61,6 +62,27 @@ public interface IComponentVersionApi {
     Result<ComponentVersion> find(UUID componentVersionId,
             VulnerabilitySourcePriority vulnerabilitySourcePriority,
             VulnerabilityScorePriority vulnerabilityScorePriority);
+
+    /**
+     * Finds the next version metadata for the given component version.
+     * 
+     * This operation explicitly does NOT follow migration links.
+     * 
+     * Version: 4
+     * 
+     * Expected response codes
+     * 200 OK
+     * 404 Not Found
+     * 
+     * Migration response codes
+     * 300 Multiple Choices
+     * 301 Moved Permanently
+     * 
+     * @param componentVersionId
+     *            The component version id.
+     * @return Returns the next version result.
+     */
+    Result<NextVersion> findNextVersion(UUID componentVersionId);
 
     /**
      * Finds the CVE vulnerabilities associated to the given component version.

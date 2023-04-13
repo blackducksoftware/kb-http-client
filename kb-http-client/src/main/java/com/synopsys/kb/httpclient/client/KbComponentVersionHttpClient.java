@@ -40,6 +40,7 @@ import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.BdsaVulnerability;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
 import com.synopsys.kb.httpclient.model.CveVulnerability;
+import com.synopsys.kb.httpclient.model.NextVersion;
 import com.synopsys.kb.httpclient.model.Page;
 import com.synopsys.kb.httpclient.model.UpgradeGuidance;
 import com.synopsys.kb.httpclient.model.VulnerabilityScorePriority;
@@ -82,6 +83,22 @@ public class KbComponentVersionHttpClient extends AbstractKbHttpClient implement
                 true, // Reauthenticate on Unauthorized response.
                 true, // Request can trigger migrated response.
                 ComponentVersion.class);
+    }
+
+    @Override
+    public Result<NextVersion> findNextVersion(UUID componentVersionId) {
+        Objects.requireNonNull(componentVersionId, "Component version id must be initialized.");
+
+        Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_COMPONENT_DETAILS_V4_JSON);
+        Collection<Header> headers = List.of(acceptHeader);
+        ClassicHttpRequest request = constructGetHttpRequest("/api/versions/" + componentVersionId + "/next", null, headers);
+
+        return execute(request,
+                DEFAULT_SUCCESS_CODES,
+                DEFAULT_EXPECTED_CODES,
+                true, // Reauthenticate on Unauthorized response.
+                true, // Request can trigger migrated response.
+                NextVersion.class);
     }
 
     @Override

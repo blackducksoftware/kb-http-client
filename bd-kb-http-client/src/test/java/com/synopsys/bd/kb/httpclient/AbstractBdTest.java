@@ -30,7 +30,6 @@ import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.ActivityTrend;
 import com.synopsys.kb.httpclient.model.BdsaVulnerability;
 import com.synopsys.kb.httpclient.model.CodeBaseMaturity;
-import com.synopsys.kb.httpclient.model.OngoingVersion;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
 import com.synopsys.kb.httpclient.model.ComponentVersionSummary;
 import com.synopsys.kb.httpclient.model.CveVulnerability;
@@ -64,6 +63,8 @@ import com.synopsys.kb.httpclient.model.LicenseDefinitionType;
 import com.synopsys.kb.httpclient.model.Link;
 import com.synopsys.kb.httpclient.model.MainLanguage;
 import com.synopsys.kb.httpclient.model.Meta;
+import com.synopsys.kb.httpclient.model.NextVersion;
+import com.synopsys.kb.httpclient.model.OngoingVersion;
 import com.synopsys.kb.httpclient.model.RiskProfile;
 import com.synopsys.kb.httpclient.model.TeamSize;
 import com.synopsys.kb.httpclient.model.VulnerabilitySeverity;
@@ -216,6 +217,12 @@ public abstract class AbstractBdTest {
 
         return new OngoingVersion(ActivityTrend.DECREASING, TeamSize.AVERAGE_SIZE_DEVELOPMENT_TEAM, CodeBaseMaturity.MATURE, mainLanguage,
                 OffsetDateTime.now(), 1000, 90, 5, 100, 200, 10, 20, 5, meta);
+    }
+
+    protected NextVersion constructNextVersion(UUID componentVersionId) {
+        Meta meta = new Meta(BASE_HREF + "/api/versions/" + componentVersionId + "/next", Collections.emptyList());
+
+        return new NextVersion(100, 90, meta);
     }
 
     protected CveVulnerability constructCveVulnerability(String id, VulnerabilityStatus status) {

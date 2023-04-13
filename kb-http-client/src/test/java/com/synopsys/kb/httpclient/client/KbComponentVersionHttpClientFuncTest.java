@@ -29,6 +29,7 @@ import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.BdsaVulnerability;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
 import com.synopsys.kb.httpclient.model.CveVulnerability;
+import com.synopsys.kb.httpclient.model.NextVersion;
 import com.synopsys.kb.httpclient.model.Page;
 import com.synopsys.kb.httpclient.model.UpgradeGuidance;
 import com.synopsys.kb.httpclient.model.VulnerabilityScorePriority;
@@ -97,6 +98,62 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
                 VulnerabilityScorePriority.CVSS_2);
 
         HttpResponse<ComponentVersion> httpResponse = result.getHttpResponse().orElse(null);
+
+        Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
+        Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MULTIPLE_CHOICES, "Codes should be equal.");
+        Assert.assertFalse(httpResponse.isMessageBodyPresent(), "Message body should not be present.");
+        Assert.assertTrue(httpResponse.isMigratedMetaPresent(), "Migrated meta should be present.");
+        Assert.assertTrue(httpResponse.isMigrated(), "Entity should be migrated.");
+        Assert.assertFalse(httpResponse.isMergeMigrated(), "Entity should not be merge migrated.");
+        Assert.assertTrue(httpResponse.isSplitMigrated(), "Entity should be split migrated.");
+    }
+
+    @Test(enabled = false)
+    public void testFindNextVersion() {
+        UUID componentVersionId = UUID.fromString("d10c3ded-9e0e-468e-909e-637d81ecc554");
+
+        Result<NextVersion> result = componentVersionApi.findNextVersion(componentVersionId);
+
+        HttpResponse<NextVersion> httpResponse = result.getHttpResponse().orElse(null);
+
+        Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
+
+        if (httpResponse.isMigrated()) {
+            Assert.fail("This functional test method was written using a non-migrated component version id.  "
+                    + "Since then, this component version id has been migrated by the KnowledgeBase.  "
+                    + "Update this test with a new non-migrated component version id.");
+        }
+
+        Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
+        Assert.assertTrue(httpResponse.isMessageBodyPresent(), "Message body should be present.");
+        NextVersion nextVersion = httpResponse.getMessageBody().orElse(null);
+        Assert.assertNotNull(nextVersion, "Next version should be initialized.");
+    }
+
+    @Test(enabled = false)
+    public void testFindNextVersionWhenMergeMigrated() {
+        UUID componentVersionId = UUID.fromString("0bca7263-1033-4731-9985-809eb87ecfb7");
+
+        Result<NextVersion> result = componentVersionApi.findNextVersion(componentVersionId);
+
+        HttpResponse<NextVersion> httpResponse = result.getHttpResponse().orElse(null);
+
+        Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
+        Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MOVED_PERMANENTLY, "Codes should be equal.");
+        Assert.assertFalse(httpResponse.isMessageBodyPresent(), "Message body should not be present.");
+        Assert.assertTrue(httpResponse.isMigratedMetaPresent(), "Migrated meta should be present.");
+        Assert.assertTrue(httpResponse.isMigrated(), "Entity should be migrated.");
+        Assert.assertTrue(httpResponse.isMergeMigrated(), "Entity should be merge migrated.");
+        Assert.assertFalse(httpResponse.isSplitMigrated(), "Entity should not be split migrated.");
+    }
+
+    @Test(enabled = false)
+    public void testFindNextVersionWhenSplitMigrated() {
+        UUID componentVersionId = UUID.fromString("1623f022-fb37-428a-a491-ab1ce1918d16");
+
+        Result<NextVersion> result = componentVersionApi.findNextVersion(componentVersionId);
+
+        HttpResponse<NextVersion> httpResponse = result.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MULTIPLE_CHOICES, "Codes should be equal.");

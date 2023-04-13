@@ -28,6 +28,7 @@ import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.BdsaVulnerability;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
 import com.synopsys.kb.httpclient.model.CveVulnerability;
+import com.synopsys.kb.httpclient.model.NextVersion;
 import com.synopsys.kb.httpclient.model.Page;
 import com.synopsys.kb.httpclient.model.UpgradeGuidance;
 import com.synopsys.kb.httpclient.model.VulnerabilityScorePriority;
@@ -82,6 +83,20 @@ public class BdComponentVersionApi extends AbstractMigratableBdApi implements IB
         Function<ComponentVersion, BdComponentVersion> conversionFunction = (componentVersion) -> {
             return new BdComponentVersion(componentVersion, baseHref);
         };
+
+        return findMigratableResult(componentVersionId, resultFunction, conversionFunction, "versions");
+    }
+
+    @Override
+    public MigratableResult<NextVersion> findNextVersion(UUID componentVersionId) {
+        Objects.requireNonNull(componentVersionId, "Component version id must be initialized.");
+
+        // Find a next version result given a dynamic component version id.
+        // Source priority and score priority should remain consistent across multiple requests.
+        Function<UUID, Result<NextVersion>> resultFunction = (sourceComponentVersionId) -> componentVersionApi.findNextVersion(sourceComponentVersionId);
+
+        // No conversion is required.
+        Function<NextVersion, NextVersion> conversionFunction = Function.identity();
 
         return findMigratableResult(componentVersionId, resultFunction, conversionFunction, "versions");
     }

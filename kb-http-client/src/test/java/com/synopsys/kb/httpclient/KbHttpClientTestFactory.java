@@ -57,6 +57,7 @@ import com.synopsys.kb.httpclient.model.LogoTest;
 import com.synopsys.kb.httpclient.model.MainLanguageTest;
 import com.synopsys.kb.httpclient.model.MetaTest;
 import com.synopsys.kb.httpclient.model.MetaWrapperTest;
+import com.synopsys.kb.httpclient.model.NextVersionTest;
 import com.synopsys.kb.httpclient.model.OngoingVersionTest;
 import com.synopsys.kb.httpclient.model.PageTest;
 import com.synopsys.kb.httpclient.model.RiskProfileTest;
@@ -113,6 +114,7 @@ public class KbHttpClientTestFactory {
                 new MainLanguageTest(),
                 new MetaTest(),
                 new MetaWrapperTest(),
+                new NextVersionTest(),
                 new OngoingVersionTest(),
                 new PageRequestTest(),
                 new PageTest(),

@@ -19,6 +19,7 @@ import com.synopsys.bd.kb.httpclient.model.BdComponentVersion;
 import com.synopsys.kb.httpclient.api.PageRequest;
 import com.synopsys.kb.httpclient.model.BdsaVulnerability;
 import com.synopsys.kb.httpclient.model.CveVulnerability;
+import com.synopsys.kb.httpclient.model.NextVersion;
 import com.synopsys.kb.httpclient.model.Page;
 import com.synopsys.kb.httpclient.model.UpgradeGuidance;
 import com.synopsys.kb.httpclient.model.VulnerabilityScorePriority;
@@ -59,6 +60,28 @@ public interface IBdComponentVersionApi {
     MigratableResult<BdComponentVersion> find(UUID componentVersionId,
             VulnerabilitySourcePriority vulnerabilitySourcePriority,
             VulnerabilityScorePriority vulnerabilityScorePriority);
+
+    /**
+     * Finds a next version for the given component version and follows migration links.
+     * 
+     * - This API will attempt to follow migration links when present to return the final destination next version. In
+     * the case of a split migration, the first split moved link will be followed.
+     * - As a defensive measure, this API will attempt to follow up to maximum ceiling of requests for migration
+     * handling.
+     * 
+     * Expected response codes
+     * 200 OK
+     * 404 Not Found
+     * 
+     * Migration response codes
+     * 300 Multiple Choices
+     * 301 Moved Permanently
+     * 
+     * @param componentVersionId
+     *            The component version id.
+     * @return Returns the next version result.
+     */
+    MigratableResult<NextVersion> findNextVersion(UUID componentVersionId);
 
     /**
      * Finds the CVE vulnerabilities associated to the given component version and follows migration links.
