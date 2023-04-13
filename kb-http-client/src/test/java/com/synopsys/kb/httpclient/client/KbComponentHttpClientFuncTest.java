@@ -27,10 +27,10 @@ import com.synopsys.kb.httpclient.api.IKbHttpApi;
 import com.synopsys.kb.httpclient.api.PageRequest;
 import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.Component;
-import com.synopsys.kb.httpclient.model.ComponentOngoingVersion;
 import com.synopsys.kb.httpclient.model.ComponentSearchResult;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
 import com.synopsys.kb.httpclient.model.ComponentVersionSummary;
+import com.synopsys.kb.httpclient.model.OngoingVersion;
 import com.synopsys.kb.httpclient.model.Page;
 import com.synopsys.kb.httpclient.model.VulnerabilityScorePriority;
 import com.synopsys.kb.httpclient.model.VulnerabilitySourcePriority;
@@ -237,9 +237,9 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
     public void testFindOngoingVersionByComponent() {
         UUID componentId = UUID.fromString("9f74f66e-5c27-48d0-9083-e31e3563b7b2");
 
-        Result<ComponentOngoingVersion> result = componentApi.findOngoingVersionByComponent(componentId);
+        Result<OngoingVersion> result = componentApi.findOngoingVersionByComponent(componentId);
 
-        HttpResponse<ComponentOngoingVersion> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<OngoingVersion> httpResponse = result.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
 
@@ -251,18 +251,18 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
 
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
         Assert.assertTrue(httpResponse.isMessageBodyPresent(), "Message body should be present.");
-        ComponentOngoingVersion componentOngoingVersion = httpResponse.getMessageBody().orElse(null);
-        Assert.assertNotNull(componentOngoingVersion, "Component ongoing version should be initialized.");
-        Assert.assertEquals(componentOngoingVersion.getComponentId(), componentId, "Component ids should be equal.");
+        OngoingVersion ongoingVersion = httpResponse.getMessageBody().orElse(null);
+        Assert.assertNotNull(ongoingVersion, "Ongoing version should be initialized.");
+        Assert.assertEquals(ongoingVersion.getComponentId(), componentId, "Component ids should be equal.");
     }
 
     @Test(enabled = false)
     public void testFindOngoingVersionByComponentWhenMergeMigrated() {
         UUID mergeComponentId = UUID.fromString("d82fb719-977c-49aa-b799-3953356aa15c");
 
-        Result<ComponentOngoingVersion> result = componentApi.findOngoingVersionByComponent(mergeComponentId);
+        Result<OngoingVersion> result = componentApi.findOngoingVersionByComponent(mergeComponentId);
 
-        HttpResponse<ComponentOngoingVersion> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<OngoingVersion> httpResponse = result.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MOVED_PERMANENTLY, "Codes should be equal.");
@@ -277,9 +277,9 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
     public void testFindOngoingVersionByComponentWhenSplitMigrated() {
         UUID splitComponentId = UUID.fromString("2510dcac-ef8a-4088-a60c-ae6605054c3c");
 
-        Result<ComponentOngoingVersion> result = componentApi.findOngoingVersionByComponent(splitComponentId);
+        Result<OngoingVersion> result = componentApi.findOngoingVersionByComponent(splitComponentId);
 
-        HttpResponse<ComponentOngoingVersion> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<OngoingVersion> httpResponse = result.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MULTIPLE_CHOICES, "Codes should be equal.");

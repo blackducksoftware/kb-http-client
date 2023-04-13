@@ -30,7 +30,7 @@ import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.ActivityTrend;
 import com.synopsys.kb.httpclient.model.BdsaVulnerability;
 import com.synopsys.kb.httpclient.model.CodeBaseMaturity;
-import com.synopsys.kb.httpclient.model.ComponentOngoingVersion;
+import com.synopsys.kb.httpclient.model.OngoingVersion;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
 import com.synopsys.kb.httpclient.model.ComponentVersionSummary;
 import com.synopsys.kb.httpclient.model.CveVulnerability;
@@ -210,11 +210,11 @@ public abstract class AbstractBdTest {
         return new ComponentVersionSummary(version, OffsetDateTime.now(), Boolean.FALSE, meta);
     }
 
-    protected ComponentOngoingVersion constuctComponentOngoingVersion(UUID componentId) {
+    protected OngoingVersion constructOngoingVersion(UUID componentId) {
         MainLanguage mainLanguage = new MainLanguage("Java");
         Meta meta = new Meta(BASE_HREF + "/api/components/" + componentId + "/ongoing-version", Collections.emptyList());
 
-        return new ComponentOngoingVersion(ActivityTrend.DECREASING, TeamSize.AVERAGE_SIZE_DEVELOPMENT_TEAM, CodeBaseMaturity.MATURE, mainLanguage,
+        return new OngoingVersion(ActivityTrend.DECREASING, TeamSize.AVERAGE_SIZE_DEVELOPMENT_TEAM, CodeBaseMaturity.MATURE, mainLanguage,
                 OffsetDateTime.now(), 1000, 90, 5, 100, 200, 10, 20, 5, meta);
     }
 

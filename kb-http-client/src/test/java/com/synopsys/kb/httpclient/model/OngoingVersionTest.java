@@ -23,11 +23,11 @@ import com.synopsys.kb.httpclient.AbstractTest;
 import com.synopsys.kb.httpclient.api.Relationship;
 
 /**
- * Component ongoing version test.
+ * Ongoing version test.
  * 
  * @author skatzman
  */
-public class ComponentOngoingVersionTest extends AbstractTest {
+public class OngoingVersionTest extends AbstractTest {
     private static final UUID COMPONENT_ID = UUID.randomUUID();
 
     private static final ActivityTrend ACTIVITY_TREND = ActivityTrend.STABLE;
@@ -61,38 +61,38 @@ public class ComponentOngoingVersionTest extends AbstractTest {
 
     @Test
     public void testConstructor() {
-        ComponentOngoingVersion componentOngoingVersion = new ComponentOngoingVersion(ACTIVITY_TREND, TEAM_SIZE, CODE_BASE_MATURITY, MAIN_LANGUAGE, LAST_COMMIT,
+        OngoingVersion ongoingVersion = new OngoingVersion(ACTIVITY_TREND, TEAM_SIZE, CODE_BASE_MATURITY, MAIN_LANGUAGE, LAST_COMMIT,
                 LINES_OF_CODE, RATING_AVERAGE, RATING_COUNT, COMMIT_COUNT_12_MONTH, COMMIT_COUNT_TOTAL, COMMITTER_COUNT_12_MONTH, COMMITTER_COUNT_TOTAL,
                 REVIEW_COUNT, META);
 
-        Assert.assertEquals(componentOngoingVersion.getActivityTrend().orElse(null), ACTIVITY_TREND, "Activity trends should be equal.");
-        Assert.assertEquals(componentOngoingVersion.getTeamSize().orElse(null), TEAM_SIZE, "Team sizes should be equal.");
-        Assert.assertEquals(componentOngoingVersion.getCodeBaseMaturity().orElse(null), CODE_BASE_MATURITY, "Code base maturity counts should be equal.");
-        Assert.assertEquals(componentOngoingVersion.getMainLanguage().orElse(null), MAIN_LANGUAGE, "Main languages should be equal.");
-        Assert.assertEquals(componentOngoingVersion.getLastCommit().orElse(null), LAST_COMMIT, "Last commits should be equal.");
-        Assert.assertEquals(componentOngoingVersion.getLinesOfCode().orElse(null), LINES_OF_CODE, "Lines of code should be equal.");
-        Assert.assertEquals(componentOngoingVersion.getRatingAverage().orElse(null), RATING_AVERAGE, "Rating averages should be equal.");
-        Assert.assertEquals(componentOngoingVersion.getRatingCount(), RATING_COUNT.intValue(), "Rating counts should be equal.");
-        Assert.assertEquals(componentOngoingVersion.getCommitCount12Month().orElse(null), COMMIT_COUNT_12_MONTH,
+        Assert.assertEquals(ongoingVersion.getActivityTrend().orElse(null), ACTIVITY_TREND, "Activity trends should be equal.");
+        Assert.assertEquals(ongoingVersion.getTeamSize().orElse(null), TEAM_SIZE, "Team sizes should be equal.");
+        Assert.assertEquals(ongoingVersion.getCodeBaseMaturity().orElse(null), CODE_BASE_MATURITY, "Code base maturity counts should be equal.");
+        Assert.assertEquals(ongoingVersion.getMainLanguage().orElse(null), MAIN_LANGUAGE, "Main languages should be equal.");
+        Assert.assertEquals(ongoingVersion.getLastCommit().orElse(null), LAST_COMMIT, "Last commits should be equal.");
+        Assert.assertEquals(ongoingVersion.getLinesOfCode().orElse(null), LINES_OF_CODE, "Lines of code should be equal.");
+        Assert.assertEquals(ongoingVersion.getRatingAverage().orElse(null), RATING_AVERAGE, "Rating averages should be equal.");
+        Assert.assertEquals(ongoingVersion.getRatingCount(), RATING_COUNT.intValue(), "Rating counts should be equal.");
+        Assert.assertEquals(ongoingVersion.getCommitCount12Month().orElse(null), COMMIT_COUNT_12_MONTH,
                 "Commit counts over 12 months should be equal.");
-        Assert.assertEquals(componentOngoingVersion.getCommitCountTotal().orElse(null), COMMIT_COUNT_TOTAL, "Commit counts in total should be equal.");
-        Assert.assertEquals(componentOngoingVersion.getCommitterCount12Month().orElse(null), COMMITTER_COUNT_12_MONTH,
+        Assert.assertEquals(ongoingVersion.getCommitCountTotal().orElse(null), COMMIT_COUNT_TOTAL, "Commit counts in total should be equal.");
+        Assert.assertEquals(ongoingVersion.getCommitterCount12Month().orElse(null), COMMITTER_COUNT_12_MONTH,
                 "Committer counts over 12 months should be equal.");
-        Assert.assertEquals(componentOngoingVersion.getCommitterCountTotal().orElse(null), COMMITTER_COUNT_TOTAL,
+        Assert.assertEquals(ongoingVersion.getCommitterCountTotal().orElse(null), COMMITTER_COUNT_TOTAL,
                 "Committer counts in total should be equal.");
-        Assert.assertEquals(componentOngoingVersion.getMeta(), META, "Metas should be equal.");
+        Assert.assertEquals(ongoingVersion.getMeta(), META, "Metas should be equal.");
 
-        Assert.assertEquals(componentOngoingVersion.getComponentId(), COMPONENT_ID, "Component ids should be equal.");
+        Assert.assertEquals(ongoingVersion.getComponentId(), COMPONENT_ID, "Component ids should be equal.");
     }
 
     @Test
     public void testDeserialization() throws JsonProcessingException {
-        ComponentOngoingVersion componentOngoingVersion = new ComponentOngoingVersion(ACTIVITY_TREND, TEAM_SIZE, CODE_BASE_MATURITY, MAIN_LANGUAGE, LAST_COMMIT,
+        OngoingVersion ongoingVersion = new OngoingVersion(ACTIVITY_TREND, TEAM_SIZE, CODE_BASE_MATURITY, MAIN_LANGUAGE, LAST_COMMIT,
                 LINES_OF_CODE, RATING_AVERAGE, RATING_COUNT, COMMIT_COUNT_12_MONTH, COMMIT_COUNT_TOTAL, COMMITTER_COUNT_12_MONTH, COMMITTER_COUNT_TOTAL,
                 REVIEW_COUNT, META);
 
-        String json = serialize(componentOngoingVersion);
-        ComponentOngoingVersion result = deserialize(json, ComponentOngoingVersion.class);
+        String json = serialize(ongoingVersion);
+        OngoingVersion result = deserialize(json, OngoingVersion.class);
 
         Assert.assertEquals(result.getActivityTrend().orElse(null), ACTIVITY_TREND, "Activity trends should be equal.");
         Assert.assertEquals(result.getTeamSize().orElse(null), TEAM_SIZE, "Team sizes should be equal.");

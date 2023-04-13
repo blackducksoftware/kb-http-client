@@ -33,11 +33,11 @@ import com.synopsys.kb.httpclient.api.IComponentApi;
 import com.synopsys.kb.httpclient.api.PageRequest;
 import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.Component;
-import com.synopsys.kb.httpclient.model.ComponentOngoingVersion;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
 import com.synopsys.kb.httpclient.model.ComponentVersionSummary;
 import com.synopsys.kb.httpclient.model.Logo;
 import com.synopsys.kb.httpclient.model.Meta;
+import com.synopsys.kb.httpclient.model.OngoingVersion;
 import com.synopsys.kb.httpclient.model.Page;
 import com.synopsys.kb.httpclient.model.VulnerabilityScorePriority;
 import com.synopsys.kb.httpclient.model.VulnerabilitySourcePriority;
@@ -609,13 +609,13 @@ public class BdComponentApiTest extends AbstractBdTest {
     @Test
     public void testFindOngoingVersionByComponentWhenAbsent() {
         // HTTP 404 Not Found response
-        String requestUri = constructComponentOngoingVersionHref(COMPONENT_ID);
-        HttpResponse<ComponentOngoingVersion> httpResponse = new HttpResponse<>(404, Set.of(200, 404), null, null);
-        Result<ComponentOngoingVersion> result = constructResult(REQUEST_METHOD, requestUri, httpResponse);
+        String requestUri = constructOngoingVersionHref(COMPONENT_ID);
+        HttpResponse<OngoingVersion> httpResponse = new HttpResponse<>(404, Set.of(200, 404), null, null);
+        Result<OngoingVersion> result = constructResult(REQUEST_METHOD, requestUri, httpResponse);
 
         Mockito.when(componentApi.findOngoingVersionByComponent(COMPONENT_ID)).thenReturn(result);
 
-        MigratableResult<ComponentOngoingVersion> migratableResult = bdComponentApi.findOngoingVersionByComponent(COMPONENT_ID);
+        MigratableResult<OngoingVersion> migratableResult = bdComponentApi.findOngoingVersionByComponent(COMPONENT_ID);
 
         assertResult(result, migratableResult, Collections.emptyList());
     }
@@ -624,13 +624,13 @@ public class BdComponentApiTest extends AbstractBdTest {
     public void testFindOngoingVersionByComponentWhenPresentAndNotMigrated() {
         // HTTP 200 OK response
         String requestUri = constructComponentHref(COMPONENT_ID);
-        ComponentOngoingVersion componentOngoingVersion = constuctComponentOngoingVersion(COMPONENT_ID);
-        HttpResponse<ComponentOngoingVersion> httpResponse = constructHttpResponse(componentOngoingVersion);
-        Result<ComponentOngoingVersion> result = constructResult(REQUEST_METHOD, requestUri, httpResponse);
+        OngoingVersion ongoingVersion = constructOngoingVersion(COMPONENT_ID);
+        HttpResponse<OngoingVersion> httpResponse = constructHttpResponse(ongoingVersion);
+        Result<OngoingVersion> result = constructResult(REQUEST_METHOD, requestUri, httpResponse);
 
         Mockito.when(componentApi.findOngoingVersionByComponent(COMPONENT_ID)).thenReturn(result);
 
-        MigratableResult<ComponentOngoingVersion> migratableResult = bdComponentApi.findOngoingVersionByComponent(COMPONENT_ID);
+        MigratableResult<OngoingVersion> migratableResult = bdComponentApi.findOngoingVersionByComponent(COMPONENT_ID);
 
         assertResult(result, migratableResult, Collections.emptyList());
     }
@@ -642,18 +642,18 @@ public class BdComponentApiTest extends AbstractBdTest {
         String requestUri2 = constructComponentHref(destinationComponentId2);
 
         // HTTP 301 Moved Permanently response (merge migration)
-        HttpResponse<ComponentOngoingVersion> httpResponse1 = constructMergeMigratedHttpResponse(requestUri1, requestUri2);
-        Result<ComponentOngoingVersion> result1 = constructResult(REQUEST_METHOD, requestUri1, httpResponse1);
+        HttpResponse<OngoingVersion> httpResponse1 = constructMergeMigratedHttpResponse(requestUri1, requestUri2);
+        Result<OngoingVersion> result1 = constructResult(REQUEST_METHOD, requestUri1, httpResponse1);
 
         // HTTP 200 OK response
-        ComponentOngoingVersion componentOngoingVersion = constuctComponentOngoingVersion(destinationComponentId2);
-        HttpResponse<ComponentOngoingVersion> httpResponse2 = constructHttpResponse(componentOngoingVersion);
-        Result<ComponentOngoingVersion> result2 = constructResult(REQUEST_METHOD, requestUri2, httpResponse2);
+        OngoingVersion ongoingVersion = constructOngoingVersion(destinationComponentId2);
+        HttpResponse<OngoingVersion> httpResponse2 = constructHttpResponse(ongoingVersion);
+        Result<OngoingVersion> result2 = constructResult(REQUEST_METHOD, requestUri2, httpResponse2);
 
         Mockito.when(componentApi.findOngoingVersionByComponent(COMPONENT_ID)).thenReturn(result1);
         Mockito.when(componentApi.findOngoingVersionByComponent(destinationComponentId2)).thenReturn(result2);
 
-        MigratableResult<ComponentOngoingVersion> migratableResult = bdComponentApi.findOngoingVersionByComponent(COMPONENT_ID);
+        MigratableResult<OngoingVersion> migratableResult = bdComponentApi.findOngoingVersionByComponent(COMPONENT_ID);
 
         List<Meta> expectedMigratedMetaHistory = ImmutableList.<Meta> builder()
                 .add(httpResponse1.getMigratedMeta().orElse(null)).build();
@@ -671,19 +671,19 @@ public class BdComponentApiTest extends AbstractBdTest {
         String requestUri2c = constructComponentHref(destinationComponentId2c);
 
         // HTTP 300 Multiple Choices response (split migration)
-        HttpResponse<ComponentOngoingVersion> httpResponse1 = constructSplitMigratedHttpResponse(requestUri1,
+        HttpResponse<OngoingVersion> httpResponse1 = constructSplitMigratedHttpResponse(requestUri1,
                 List.of(requestUri2a, requestUri2b, requestUri2c));
-        Result<ComponentOngoingVersion> result1 = constructResult(REQUEST_METHOD, requestUri1, httpResponse1);
+        Result<OngoingVersion> result1 = constructResult(REQUEST_METHOD, requestUri1, httpResponse1);
 
         // HTTP 200 OK response
-        ComponentOngoingVersion componentOngoingVersion2 = constuctComponentOngoingVersion(destinationComponentId2a);
-        HttpResponse<ComponentOngoingVersion> httpResponse2 = constructHttpResponse(componentOngoingVersion2);
-        Result<ComponentOngoingVersion> result2 = constructResult(REQUEST_METHOD, requestUri2a, httpResponse2);
+        OngoingVersion ongoingVersion2 = constructOngoingVersion(destinationComponentId2a);
+        HttpResponse<OngoingVersion> httpResponse2 = constructHttpResponse(ongoingVersion2);
+        Result<OngoingVersion> result2 = constructResult(REQUEST_METHOD, requestUri2a, httpResponse2);
 
         Mockito.when(componentApi.findOngoingVersionByComponent(COMPONENT_ID)).thenReturn(result1);
         Mockito.when(componentApi.findOngoingVersionByComponent(destinationComponentId2a)).thenReturn(result2);
 
-        MigratableResult<ComponentOngoingVersion> migratableResult = bdComponentApi.findOngoingVersionByComponent(COMPONENT_ID);
+        MigratableResult<OngoingVersion> migratableResult = bdComponentApi.findOngoingVersionByComponent(COMPONENT_ID);
 
         List<Meta> expectedMigratedMetaHistory = ImmutableList.<Meta> builder()
                 .add(httpResponse1.getMigratedMeta().orElse(null)).build();
@@ -703,24 +703,24 @@ public class BdComponentApiTest extends AbstractBdTest {
         String requestUri3 = constructComponentHref(destinationComponentId3);
 
         // HTTP 300 Multiple Choices response (split migration)
-        HttpResponse<ComponentOngoingVersion> httpResponse1 = constructSplitMigratedHttpResponse(requestUri1,
+        HttpResponse<OngoingVersion> httpResponse1 = constructSplitMigratedHttpResponse(requestUri1,
                 List.of(requestUri2a, requestUri2b, requestUri2c));
-        Result<ComponentOngoingVersion> result1 = constructResult(REQUEST_METHOD, requestUri1, httpResponse1);
+        Result<OngoingVersion> result1 = constructResult(REQUEST_METHOD, requestUri1, httpResponse1);
 
         // HTTP 301 Moved Permanently response (merge migration)
-        HttpResponse<ComponentOngoingVersion> httpResponse2 = constructMergeMigratedHttpResponse(requestUri2a, requestUri3);
-        Result<ComponentOngoingVersion> result2 = constructResult(REQUEST_METHOD, requestUri2a, httpResponse2);
+        HttpResponse<OngoingVersion> httpResponse2 = constructMergeMigratedHttpResponse(requestUri2a, requestUri3);
+        Result<OngoingVersion> result2 = constructResult(REQUEST_METHOD, requestUri2a, httpResponse2);
 
         // HTTP 200 OK response
-        ComponentOngoingVersion componentOngoingVersion3 = constuctComponentOngoingVersion(destinationComponentId3);
-        HttpResponse<ComponentOngoingVersion> httpResponse3 = constructHttpResponse(componentOngoingVersion3);
-        Result<ComponentOngoingVersion> result3 = constructResult(REQUEST_METHOD, requestUri3, httpResponse3);
+        OngoingVersion ongoingVersion3 = constructOngoingVersion(destinationComponentId3);
+        HttpResponse<OngoingVersion> httpResponse3 = constructHttpResponse(ongoingVersion3);
+        Result<OngoingVersion> result3 = constructResult(REQUEST_METHOD, requestUri3, httpResponse3);
 
         Mockito.when(componentApi.findOngoingVersionByComponent(COMPONENT_ID)).thenReturn(result1);
         Mockito.when(componentApi.findOngoingVersionByComponent(destinationComponentId2a)).thenReturn(result2);
         Mockito.when(componentApi.findOngoingVersionByComponent(destinationComponentId3)).thenReturn(result3);
 
-        MigratableResult<ComponentOngoingVersion> migratableResult = bdComponentApi.findOngoingVersionByComponent(COMPONENT_ID);
+        MigratableResult<OngoingVersion> migratableResult = bdComponentApi.findOngoingVersionByComponent(COMPONENT_ID);
 
         List<Meta> expectedMigratedMetaHistory = ImmutableList.<Meta> builder()
                 .add(httpResponse1.getMigratedMeta().orElse(null))
@@ -739,22 +739,22 @@ public class BdComponentApiTest extends AbstractBdTest {
         String requestUri4 = constructComponentHref(destinationComponentId4);
 
         // HTTP 301 Moved Permanently response (merge migration)
-        HttpResponse<ComponentOngoingVersion> httpResponse1 = constructMergeMigratedHttpResponse(requestUri1, requestUri2);
-        Result<ComponentOngoingVersion> result1 = constructResult(REQUEST_METHOD, requestUri1, httpResponse1);
+        HttpResponse<OngoingVersion> httpResponse1 = constructMergeMigratedHttpResponse(requestUri1, requestUri2);
+        Result<OngoingVersion> result1 = constructResult(REQUEST_METHOD, requestUri1, httpResponse1);
 
         // HTTP 301 Moved Permanently response (merge migration)
-        HttpResponse<ComponentOngoingVersion> httpResponse2 = constructMergeMigratedHttpResponse(requestUri2, requestUri3);
-        Result<ComponentOngoingVersion> result2 = constructResult(REQUEST_METHOD, requestUri2, httpResponse2);
+        HttpResponse<OngoingVersion> httpResponse2 = constructMergeMigratedHttpResponse(requestUri2, requestUri3);
+        Result<OngoingVersion> result2 = constructResult(REQUEST_METHOD, requestUri2, httpResponse2);
 
         // HTTP 301 Moved Permanently response (merge migration)
-        HttpResponse<ComponentOngoingVersion> httpResponse3 = constructMergeMigratedHttpResponse(requestUri3, requestUri4);
-        Result<ComponentOngoingVersion> result3 = constructResult(REQUEST_METHOD, requestUri3, httpResponse3);
+        HttpResponse<OngoingVersion> httpResponse3 = constructMergeMigratedHttpResponse(requestUri3, requestUri4);
+        Result<OngoingVersion> result3 = constructResult(REQUEST_METHOD, requestUri3, httpResponse3);
 
         Mockito.when(componentApi.findOngoingVersionByComponent(COMPONENT_ID)).thenReturn(result1);
         Mockito.when(componentApi.findOngoingVersionByComponent(destinationComponentId2)).thenReturn(result2);
         Mockito.when(componentApi.findOngoingVersionByComponent(destinationComponentId3)).thenReturn(result3);
 
-        MigratableResult<ComponentOngoingVersion> migratableResult = bdComponentApi.findOngoingVersionByComponent(COMPONENT_ID);
+        MigratableResult<OngoingVersion> migratableResult = bdComponentApi.findOngoingVersionByComponent(COMPONENT_ID);
 
         // Initial request
         // First migrated request
@@ -796,7 +796,7 @@ public class BdComponentApiTest extends AbstractBdTest {
         return BASE_HREF + "/api/components/" + componentId + "/versions";
     }
 
-    private String constructComponentOngoingVersionHref(UUID componentId) {
+    private String constructOngoingVersionHref(UUID componentId) {
         return BASE_HREF + "/api/components/" + componentId + "/ongoing-version";
     }
 }

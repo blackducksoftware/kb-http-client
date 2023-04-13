@@ -29,7 +29,7 @@ import com.synopsys.kb.httpclient.api.IComponentApi;
 import com.synopsys.kb.httpclient.api.PageRequest;
 import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.Component;
-import com.synopsys.kb.httpclient.model.ComponentOngoingVersion;
+import com.synopsys.kb.httpclient.model.OngoingVersion;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
 import com.synopsys.kb.httpclient.model.ComponentVersionSummary;
 import com.synopsys.kb.httpclient.model.Meta;
@@ -139,14 +139,14 @@ public class BdComponentApi extends AbstractMigratableBdApi implements IBdCompon
     }
 
     @Override
-    public MigratableResult<ComponentOngoingVersion> findOngoingVersionByComponent(UUID componentId) {
+    public MigratableResult<OngoingVersion> findOngoingVersionByComponent(UUID componentId) {
         Objects.requireNonNull(componentId, "Component id must be initialized.");
 
         // Find an ongoing version result given a dynamic component id.
-        Function<UUID, Result<ComponentOngoingVersion>> resultFunction = (sourceComponentId) -> componentApi.findOngoingVersionByComponent(sourceComponentId);
+        Function<UUID, Result<OngoingVersion>> resultFunction = (sourceComponentId) -> componentApi.findOngoingVersionByComponent(sourceComponentId);
 
         // No conversion is required.
-        Function<ComponentOngoingVersion, ComponentOngoingVersion> conversionFunction = Function.identity();
+        Function<OngoingVersion, OngoingVersion> conversionFunction = Function.identity();
 
         return findMigratableResult(componentId, resultFunction, conversionFunction, "components");
     }

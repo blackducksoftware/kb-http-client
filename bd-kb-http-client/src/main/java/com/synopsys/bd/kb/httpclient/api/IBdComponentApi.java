@@ -19,7 +19,7 @@ import com.synopsys.bd.kb.httpclient.model.BdComponentVersion;
 import com.synopsys.bd.kb.httpclient.model.BdComponentVersionSummary;
 import com.synopsys.kb.httpclient.api.PageRequest;
 import com.synopsys.kb.httpclient.model.Component;
-import com.synopsys.kb.httpclient.model.ComponentOngoingVersion;
+import com.synopsys.kb.httpclient.model.OngoingVersion;
 import com.synopsys.kb.httpclient.model.Page;
 import com.synopsys.kb.httpclient.model.VulnerabilityScorePriority;
 import com.synopsys.kb.httpclient.model.VulnerabilitySourcePriority;
@@ -149,7 +149,7 @@ public interface IBdComponentApi {
      * 
      * @param componentId
      *            The component id.
-     * @return Returns the component ongoing version result.
+     * @return Returns the ongoing version result.
      */
-    MigratableResult<ComponentOngoingVersion> findOngoingVersionByComponent(UUID componentId);
+    MigratableResult<OngoingVersion> findOngoingVersionByComponent(UUID componentId);
 }

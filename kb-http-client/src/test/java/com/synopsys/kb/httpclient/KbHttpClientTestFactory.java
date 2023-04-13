@@ -32,7 +32,6 @@ import com.synopsys.kb.httpclient.model.AuthenticationTest;
 import com.synopsys.kb.httpclient.model.BdsaVulnerabilityActivityTest;
 import com.synopsys.kb.httpclient.model.BdsaVulnerabilityTest;
 import com.synopsys.kb.httpclient.model.ComponentActivityTest;
-import com.synopsys.kb.httpclient.model.ComponentOngoingVersionTest;
 import com.synopsys.kb.httpclient.model.ComponentSearchResultTest;
 import com.synopsys.kb.httpclient.model.ComponentTest;
 import com.synopsys.kb.httpclient.model.ComponentVariantActivityTest;
@@ -58,6 +57,7 @@ import com.synopsys.kb.httpclient.model.LogoTest;
 import com.synopsys.kb.httpclient.model.MainLanguageTest;
 import com.synopsys.kb.httpclient.model.MetaTest;
 import com.synopsys.kb.httpclient.model.MetaWrapperTest;
+import com.synopsys.kb.httpclient.model.OngoingVersionTest;
 import com.synopsys.kb.httpclient.model.PageTest;
 import com.synopsys.kb.httpclient.model.RiskProfileTest;
 import com.synopsys.kb.httpclient.model.UpgradeGuidanceSuggestionTest;
@@ -81,7 +81,6 @@ public class KbHttpClientTestFactory {
                 new BdsaVulnerabilityActivityTest(),
                 new BdsaVulnerabilityTest(),
                 new ComponentActivityTest(),
-                new ComponentOngoingVersionTest(),
                 new ComponentSearchResultTest(),
                 new ComponentTest(),
                 new ComponentVariantActivityTest(),
@@ -114,6 +113,7 @@ public class KbHttpClientTestFactory {
                 new MainLanguageTest(),
                 new MetaTest(),
                 new MetaWrapperTest(),
+                new OngoingVersionTest(),
                 new PageRequestTest(),
                 new PageTest(),
                 new ProxyConfigurationTest(),

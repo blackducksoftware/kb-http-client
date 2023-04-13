@@ -52,7 +52,7 @@ public interface IActivityApi {
     Result<ListHolder<ComponentActivity>> findComponentActivities(Set<UUID> componentIds, OffsetDateTime activitySince);
 
     /**
-     * Finds component ongoing version activities.
+     * Finds ongoing version for a component activities.
      * 
      * Determines if one or more of the provided components has an associated update for ongoing version metadata since
      * the given timestamp.
@@ -71,7 +71,7 @@ public interface IActivityApi {
      *            The activity since date. Must be not null.
      * @return Returns the component activity result.
      */
-    Result<ListHolder<ComponentActivity>> findComponentOngoingVersionActivities(Set<UUID> componentIds, OffsetDateTime activitySince);
+    Result<ListHolder<ComponentActivity>> findOngoingVersionActivities(Set<UUID> componentIds, OffsetDateTime activitySince);
 
     /**
      * Finds component version activities.

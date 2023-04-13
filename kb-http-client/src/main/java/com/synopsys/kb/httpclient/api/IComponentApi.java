@@ -16,10 +16,10 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.synopsys.kb.httpclient.model.Component;
-import com.synopsys.kb.httpclient.model.ComponentOngoingVersion;
 import com.synopsys.kb.httpclient.model.ComponentSearchResult;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
 import com.synopsys.kb.httpclient.model.ComponentVersionSummary;
+import com.synopsys.kb.httpclient.model.OngoingVersion;
 import com.synopsys.kb.httpclient.model.Page;
 import com.synopsys.kb.httpclient.model.VulnerabilityScorePriority;
 import com.synopsys.kb.httpclient.model.VulnerabilitySourcePriority;
@@ -153,9 +153,9 @@ public interface IComponentApi {
      * 
      * @param componentId
      *            The component id.
-     * @return Returns the component ongoing version result.
+     * @return Returns the ongoing version result.
      */
-    Result<ComponentOngoingVersion> findOngoingVersionByComponent(UUID componentId);
+    Result<OngoingVersion> findOngoingVersionByComponent(UUID componentId);
 
     /**
      * Search for components.

@@ -87,7 +87,7 @@ public class KbActivityHttpClient extends AbstractKbHttpClient implements IActiv
     }
 
     @Override
-    public Result<ListHolder<ComponentActivity>> findComponentOngoingVersionActivities(Set<UUID> componentIds, OffsetDateTime activitySince) {
+    public Result<ListHolder<ComponentActivity>> findOngoingVersionActivities(Set<UUID> componentIds, OffsetDateTime activitySince) {
         Objects.requireNonNull(componentIds, "Component ids must be initialized.");
         Preconditions.checkArgument(!componentIds.isEmpty(), "Component ids must not be empty.");
         Preconditions.checkArgument(componentIds.size() <= ID_LIMIT, "Number of component ids must be less than or equal to " + ID_LIMIT);

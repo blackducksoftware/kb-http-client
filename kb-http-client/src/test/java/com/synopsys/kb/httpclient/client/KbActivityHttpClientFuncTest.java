@@ -78,14 +78,14 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test(enabled = false)
-    public void testFindComponentOngoingVersionActivities() {
+    public void testFindOngoingVersionActivities() {
         UUID componentId = UUID.fromString("9f74f66e-5c27-48d0-9083-e31e3563b7b2");
         Set<UUID> componentIds = Set.of(componentId);
 
         // Assign to far past date for results.
         OffsetDateTime activitySince = OffsetDateTime.now().minusYears(20L);
 
-        Result<ListHolder<ComponentActivity>> result = activityApi.findComponentOngoingVersionActivities(componentIds, activitySince);
+        Result<ListHolder<ComponentActivity>> result = activityApi.findOngoingVersionActivities(componentIds, activitySince);
 
         HttpResponse<ListHolder<ComponentActivity>> httpResponse = result.getHttpResponse().orElse(null);
 

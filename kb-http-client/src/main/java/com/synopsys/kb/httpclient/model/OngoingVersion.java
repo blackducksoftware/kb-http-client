@@ -21,11 +21,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Component ongoing version representation.
+ * Ongoing version representation for a component.
  * 
  * @author skatzman
  */
-public class ComponentOngoingVersion extends AbstractEntity {
+public class OngoingVersion extends AbstractEntity {
     private final ActivityTrend activityTrend;
 
     private final TeamSize teamSize;
@@ -55,7 +55,7 @@ public class ComponentOngoingVersion extends AbstractEntity {
     private final Meta meta;
 
     @JsonCreator
-    public ComponentOngoingVersion(@JsonProperty("activityTrend") ActivityTrend activityTrend,
+    public OngoingVersion(@JsonProperty("activityTrend") ActivityTrend activityTrend,
             @JsonProperty("teamSize") TeamSize teamSize,
             @JsonProperty("codeBaseMaturity") CodeBaseMaturity codeBaseMaturity,
             @JsonProperty("mainLanguage") MainLanguage mainLanguage,
@@ -168,23 +168,23 @@ public class ComponentOngoingVersion extends AbstractEntity {
     public boolean equals(Object otherObject) {
         if (this == otherObject) {
             return true;
-        } else if (otherObject instanceof ComponentOngoingVersion) {
-            ComponentOngoingVersion otherComponentOngoingVersion = (ComponentOngoingVersion) otherObject;
+        } else if (otherObject instanceof OngoingVersion) {
+            OngoingVersion otherOngoingVersion = (OngoingVersion) otherObject;
 
-            return Objects.equals(getActivityTrend(), otherComponentOngoingVersion.getActivityTrend())
-                    && Objects.equals(getTeamSize(), otherComponentOngoingVersion.getTeamSize())
-                    && Objects.equals(getCodeBaseMaturity(), otherComponentOngoingVersion.getCodeBaseMaturity())
-                    && Objects.equals(getMainLanguage(), otherComponentOngoingVersion.getMainLanguage())
-                    && Objects.equals(getLastCommit(), otherComponentOngoingVersion.getLastCommit())
-                    && Objects.equals(getLinesOfCode(), otherComponentOngoingVersion.getLinesOfCode())
-                    && Objects.equals(getRatingAverage(), otherComponentOngoingVersion.getRatingAverage())
-                    && Objects.equals(getRatingCount(), otherComponentOngoingVersion.getRatingCount())
-                    && Objects.equals(getCommitCount12Month(), otherComponentOngoingVersion.getCommitCount12Month())
-                    && Objects.equals(getCommitCountTotal(), otherComponentOngoingVersion.getCommitCountTotal())
-                    && Objects.equals(getCommitterCount12Month(), otherComponentOngoingVersion.getCommitterCount12Month())
-                    && Objects.equals(getCommitterCountTotal(), otherComponentOngoingVersion.getCommitterCountTotal())
-                    && Objects.equals(getReviewCount(), otherComponentOngoingVersion.getReviewCount())
-                    && Objects.equals(getMeta(), otherComponentOngoingVersion.getMeta());
+            return Objects.equals(getActivityTrend(), otherOngoingVersion.getActivityTrend())
+                    && Objects.equals(getTeamSize(), otherOngoingVersion.getTeamSize())
+                    && Objects.equals(getCodeBaseMaturity(), otherOngoingVersion.getCodeBaseMaturity())
+                    && Objects.equals(getMainLanguage(), otherOngoingVersion.getMainLanguage())
+                    && Objects.equals(getLastCommit(), otherOngoingVersion.getLastCommit())
+                    && Objects.equals(getLinesOfCode(), otherOngoingVersion.getLinesOfCode())
+                    && Objects.equals(getRatingAverage(), otherOngoingVersion.getRatingAverage())
+                    && Objects.equals(getRatingCount(), otherOngoingVersion.getRatingCount())
+                    && Objects.equals(getCommitCount12Month(), otherOngoingVersion.getCommitCount12Month())
+                    && Objects.equals(getCommitCountTotal(), otherOngoingVersion.getCommitCountTotal())
+                    && Objects.equals(getCommitterCount12Month(), otherOngoingVersion.getCommitterCount12Month())
+                    && Objects.equals(getCommitterCountTotal(), otherOngoingVersion.getCommitterCountTotal())
+                    && Objects.equals(getReviewCount(), otherOngoingVersion.getReviewCount())
+                    && Objects.equals(getMeta(), otherOngoingVersion.getMeta());
         }
 
         return false;
