@@ -11,6 +11,7 @@
  */
 package com.synopsys.bd.kb.httpclient.api;
 
+import com.synopsys.bd.kb.httpclient.impl.BdComponentFinder;
 import com.synopsys.bd.kb.httpclient.impl.BdVulnerabilityMerger;
 import com.synopsys.kb.httpclient.api.IKbHttpApi;
 
@@ -57,12 +58,23 @@ public interface IBdKbHttpApi {
     IBdLicenseApi getBdLicenseApi();
 
     /**
-     * Gets the BD vulnerability merger.
+     * Gets the Black Duck-centric component finder.
      * 
-     * The BD vulnerability merger contains utility methods for merging collections of NVD and BDSA vulnerabilities
-     * together (presumably for the same component version or component variant).
+     * The Black Duck-centric component finder contains utility methods for finding hierarchies of component version or
+     * component variant entities. This is useful for finding tuples of related entities and managing migration handling
+     * consistency across related entities.
      * 
-     * @return Returns the BD vulnerability merger.
+     * @return Returns the Black Duck-centric component finder.
+     */
+    BdComponentFinder getBdComponentFinder();
+
+    /**
+     * Gets the Black Duck-centric vulnerability merger.
+     * 
+     * The Black Duck-centric vulnerability merger contains utility methods for merging collections of NVD and BDSA
+     * vulnerabilities together (presumably for the same component version or component variant).
+     * 
+     * @return Returns the Black Duck-centric vulnerability merger.
      */
     BdVulnerabilityMerger getBdVulnerabilityMerger();
 

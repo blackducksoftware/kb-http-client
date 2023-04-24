@@ -30,6 +30,8 @@ import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.ActivityTrend;
 import com.synopsys.kb.httpclient.model.BdsaVulnerability;
 import com.synopsys.kb.httpclient.model.CodeBaseMaturity;
+import com.synopsys.kb.httpclient.model.Component;
+import com.synopsys.kb.httpclient.model.ComponentVariant;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
 import com.synopsys.kb.httpclient.model.ComponentVersionSummary;
 import com.synopsys.kb.httpclient.model.CveVulnerability;
@@ -194,6 +196,12 @@ public abstract class AbstractBdTest {
         }
     }
 
+    protected Component constructComponent(UUID componentId, String name) {
+        Meta meta = new Meta(BASE_HREF + "/api/components/" + componentId, null);
+
+        return new Component(name, "This is a description.", null, Collections.emptySet(), Collections.emptyList(), Boolean.FALSE, meta);
+    }
+
     protected ComponentVersion constructComponentVersion(UUID componentId, UUID componentVersionId, String version) {
         LicenseDefinition licenseDefinition = new LicenseDefinition(LicenseDefinitionType.CONJUNCTIVE,
                 List.of(new LicenseDefinitionItem(BASE_HREF + "/api/licenses/" + UUID.randomUUID(), null)));
@@ -209,6 +217,22 @@ public abstract class AbstractBdTest {
                 List.of(new Link(Relationship.COMPONENT, BASE_HREF + "/api/components/" + componentId)));
 
         return new ComponentVersionSummary(version, OffsetDateTime.now(), Boolean.FALSE, meta);
+    }
+
+    protected ComponentVariant constructComponentVariant(UUID componentId,
+            UUID componentVersionId,
+            UUID componentVariantId,
+            String version,
+            String externalNamespace,
+            String externalId) {
+        LicenseDefinition licenseDefinition = new LicenseDefinition(LicenseDefinitionType.CONJUNCTIVE,
+                List.of(new LicenseDefinitionItem(BASE_HREF + "/api/licenses/" + UUID.randomUUID(), null)));
+        Meta meta = new Meta(BASE_HREF + "/api/variants/" + componentVariantId,
+                List.of(new Link(Relationship.COMPONENT, BASE_HREF + "/api/components/" + componentId),
+                        new Link(Relationship.VERSION, BASE_HREF + "/api/versions/" + componentVersionId)));
+
+        return new ComponentVariant(version, externalNamespace, externalId, Boolean.FALSE, externalNamespace, externalId, licenseDefinition, Boolean.FALSE,
+                Boolean.FALSE, meta);
     }
 
     protected OngoingVersion constructOngoingVersion(UUID componentId) {

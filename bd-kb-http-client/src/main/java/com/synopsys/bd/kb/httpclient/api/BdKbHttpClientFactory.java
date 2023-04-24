@@ -14,6 +14,7 @@ package com.synopsys.bd.kb.httpclient.api;
 import java.util.Objects;
 
 import com.synopsys.bd.kb.httpclient.impl.BdComponentApi;
+import com.synopsys.bd.kb.httpclient.impl.BdComponentFinder;
 import com.synopsys.bd.kb.httpclient.impl.BdComponentVariantApi;
 import com.synopsys.bd.kb.httpclient.impl.BdComponentVersionApi;
 import com.synopsys.bd.kb.httpclient.impl.BdKbHttpApi;
@@ -69,8 +70,9 @@ class BdKbHttpClientFactory {
         ILicenseApi licenseApi = kbHttpApi.getLicenseApi();
         IBdLicenseApi bdLicenseApi = new BdLicenseApi(licenseApi);
 
+        BdComponentFinder bdComponentFinder = new BdComponentFinder(bdComponentApi, bdComponentVersionApi, bdComponentVariantApi);
         BdVulnerabilityMerger bdVulnerabilityMerger = new BdVulnerabilityMerger();
 
-        return new BdKbHttpApi(bdComponentApi, bdComponentVersionApi, bdComponentVariantApi, bdLicenseApi, bdVulnerabilityMerger, kbHttpApi);
+        return new BdKbHttpApi(bdComponentApi, bdComponentVersionApi, bdComponentVariantApi, bdLicenseApi, bdComponentFinder, bdVulnerabilityMerger, kbHttpApi);
     }
 }

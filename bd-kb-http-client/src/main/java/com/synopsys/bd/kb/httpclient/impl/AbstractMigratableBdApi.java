@@ -39,6 +39,7 @@ import com.synopsys.kb.httpclient.model.Meta;
  * @author skatzman
  */
 abstract class AbstractMigratableBdApi extends AbstractBdApi {
+    // The maximum number of times that a chosen migration moved link should be followed before giving up.
     private static final int MAXIMUM_ATTEMPT_NUMBER = 5;
 
     private final int maximumAttemptNumber;

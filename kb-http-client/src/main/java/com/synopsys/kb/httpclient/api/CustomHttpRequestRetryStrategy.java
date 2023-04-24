@@ -17,7 +17,6 @@ import java.net.ConnectException;
 import java.net.NoRouteToHostException;
 import java.net.UnknownHostException;
 import java.time.Instant;
-import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -38,6 +37,7 @@ import org.apache.hc.core5.http.protocol.HttpContext;
 import org.apache.hc.core5.util.TimeValue;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
 
 /**
  * Custom HTTP request retry strategy.
@@ -82,9 +82,10 @@ class CustomHttpRequestRetryStrategy implements HttpRequestRetryStrategy {
         }
 
         this.maxRetries = maxRetries;
-        this.retriableCodes = (retriableCodes != null) ? retriableCodes : Collections.emptySet();
+        this.retriableCodes = (retriableCodes != null) ? ImmutableSet.copyOf(retriableCodes) : ImmutableSet.of();
         this.retryIntervalStrategy = Objects.requireNonNull(retryIntervalStrategy, "Retry interval strategy must be initialized.");
-        this.nonRetriableIOExceptionClasses = nonRetriableIOExceptionClasses;
+        this.nonRetriableIOExceptionClasses = (nonRetriableIOExceptionClasses != null) ? ImmutableSet.copyOf(nonRetriableIOExceptionClasses)
+                : ImmutableSet.of();
     }
 
     // Determines if a method should be retried after an I/O exception occurred during execution.

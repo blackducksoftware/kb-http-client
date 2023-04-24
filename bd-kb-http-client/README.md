@@ -33,7 +33,8 @@ The Black Duck-centric KB HTTP client makes certain assumptions in favor of conv
 + License
    - Adds a license family field that enables support of the RESTRICTED_PROPRIETARY license family.
    
-* VulnerabilityMerger merges collections of vulnerabilities from different sources into a common format.
+* The vulnerability merger merges collections of vulnerabilities from different sources into a common format.
+* The component finder aggregates collections of component version or component variant hierarchies in a consistent manner.
    
 ## Supported operations
 
@@ -62,7 +63,7 @@ The Black Duck-centric KB HTTP client makes certain assumptions in favor of conv
 Quick-start for using the Black Duck-centric KB HTTP client library with an emphasis on using defaults and access to the production KnowledgeBase.  
 
 ```java
-// Initializtion
+// Initialization
 HttpClientConfiguration httpClientConfiguration = HttpClientConfigurationBuilder.create().userAgent("MyApplication/1.0").build();
 KbConfiguration kbConfiguration = new KbConfiguration("my_license_key");
 IBdKbHttpApi bdKbHttpApi = new BdKbHttpClientFactory().create(httpClientConfiguration, kbConfiguration);

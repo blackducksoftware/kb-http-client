@@ -36,6 +36,8 @@ public class BdKbHttpApi implements IBdKbHttpApi {
 
     private final IBdLicenseApi bdLicenseApi;
 
+    private final BdComponentFinder bdComponentFinder;
+
     private final BdVulnerabilityMerger bdVulnerabilityMerger;
 
     private final IKbHttpApi kbHttpApi;
@@ -44,12 +46,14 @@ public class BdKbHttpApi implements IBdKbHttpApi {
             IBdComponentVersionApi bdComponentVersionApi,
             IBdComponentVariantApi bdComponentVariantApi,
             IBdLicenseApi bdLicenseApi,
+            BdComponentFinder bdComponentFinder,
             BdVulnerabilityMerger bdVulnerabilityMerger,
             IKbHttpApi kbHttpApi) {
         this.bdComponentApi = Objects.requireNonNull(bdComponentApi, "BD component API must be initialized.");
         this.bdComponentVersionApi = Objects.requireNonNull(bdComponentVersionApi, "BD component version API must be initialized.");
         this.bdComponentVariantApi = Objects.requireNonNull(bdComponentVariantApi, "BD component variant API must be initialized.");
         this.bdLicenseApi = Objects.requireNonNull(bdLicenseApi, "BD license API must be initialized.");
+        this.bdComponentFinder = Objects.requireNonNull(bdComponentFinder, "BD component finder must be initialized.");
         this.bdVulnerabilityMerger = Objects.requireNonNull(bdVulnerabilityMerger, "BD vulnerability merger must be initialized.");
         this.kbHttpApi = Objects.requireNonNull(kbHttpApi, "KB HTTP API must be initialized.");
     }
@@ -72,6 +76,11 @@ public class BdKbHttpApi implements IBdKbHttpApi {
     @Override
     public IBdLicenseApi getBdLicenseApi() {
         return bdLicenseApi;
+    }
+
+    @Override
+    public BdComponentFinder getBdComponentFinder() {
+        return bdComponentFinder;
     }
 
     @Override
