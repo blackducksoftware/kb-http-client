@@ -49,7 +49,7 @@ public interface IActivityApi {
      *            The activity since date. Must be not null.
      * @return Returns the component activity result.
      */
-    Result<ListHolder<ComponentActivity>> findComponentActivities(Set<UUID> componentIds, OffsetDateTime activitySince);
+    HttpResult<ListHolder<ComponentActivity>> findComponentActivities(Set<UUID> componentIds, OffsetDateTime activitySince);
 
     /**
      * Finds ongoing version for a component activities.
@@ -71,7 +71,7 @@ public interface IActivityApi {
      *            The activity since date. Must be not null.
      * @return Returns the component activity result.
      */
-    Result<ListHolder<ComponentActivity>> findOngoingVersionActivities(Set<UUID> componentIds, OffsetDateTime activitySince);
+    HttpResult<ListHolder<ComponentActivity>> findOngoingVersionActivities(Set<UUID> componentIds, OffsetDateTime activitySince);
 
     /**
      * Finds component version activities.
@@ -93,7 +93,7 @@ public interface IActivityApi {
      *            The activity since date. Must be not null.
      * @return Returns the component version activity result.
      */
-    Result<ListHolder<ComponentVersionActivity>> findComponentVersionActivities(Set<UUID> componentVersionIds, OffsetDateTime activitySince);
+    HttpResult<ListHolder<ComponentVersionActivity>> findComponentVersionActivities(Set<UUID> componentVersionIds, OffsetDateTime activitySince);
 
     /**
      * Finds component version license activities.
@@ -115,7 +115,7 @@ public interface IActivityApi {
      *            The activity since date. Must be not null.
      * @return Returns the component version activity result.
      */
-    Result<ListHolder<ComponentVersionActivity>> findComponentVersionLicenseActivities(Set<UUID> componentVersionIds, OffsetDateTime activitySince);
+    HttpResult<ListHolder<ComponentVersionActivity>> findComponentVersionLicenseActivities(Set<UUID> componentVersionIds, OffsetDateTime activitySince);
 
     /**
      * Finds component version CVE vulnerability activities.
@@ -138,7 +138,7 @@ public interface IActivityApi {
      *            The activity since date. Must be not null.
      * @return Returns the component version activity result.
      */
-    Result<ListHolder<ComponentVersionActivity>> findComponentVersionCveVulnerabilityActivities(Set<UUID> componentVersionIds, OffsetDateTime activitySince);
+    HttpResult<ListHolder<ComponentVersionActivity>> findComponentVersionCveVulnerabilityActivities(Set<UUID> componentVersionIds, OffsetDateTime activitySince);
 
     /**
      * Finds component version BDSA vulnerability activities.
@@ -163,7 +163,7 @@ public interface IActivityApi {
      *            The activity since date. Must be not null.
      * @return Returns the component version activity result.
      */
-    Result<ListHolder<ComponentVersionActivity>> findComponentVersionBdsaVulnerabilityActivities(Set<UUID> componentVersionIds, OffsetDateTime activitySince);
+    HttpResult<ListHolder<ComponentVersionActivity>> findComponentVersionBdsaVulnerabilityActivities(Set<UUID> componentVersionIds, OffsetDateTime activitySince);
 
     /**
      * Finds component version upgrade guidance activities.
@@ -185,7 +185,7 @@ public interface IActivityApi {
      *            The activity since date. Must be not null.
      * @return Returns the component version activity result.
      */
-    Result<ListHolder<ComponentVersionActivity>> findComponentVersionUpgradeGuidanceActivities(Set<UUID> componentVersionIds, OffsetDateTime activitySince);
+    HttpResult<ListHolder<ComponentVersionActivity>> findComponentVersionUpgradeGuidanceActivities(Set<UUID> componentVersionIds, OffsetDateTime activitySince);
 
     /**
      * Finds component variant activities.
@@ -206,7 +206,7 @@ public interface IActivityApi {
      *            The activity since date. Must be not null.
      * @return Returns the component variant activity result.
      */
-    Result<ListHolder<ComponentVariantActivity>> findComponentVariantActivities(Set<UUID> componentVariantIds, OffsetDateTime activitySince);
+    HttpResult<ListHolder<ComponentVariantActivity>> findComponentVariantActivities(Set<UUID> componentVariantIds, OffsetDateTime activitySince);
 
     /**
      * Finds component variant CVE vulnerability activities.
@@ -228,7 +228,7 @@ public interface IActivityApi {
      *            The activity since date. Must be not null.
      * @return Returns the component variant activity result.
      */
-    Result<ListHolder<ComponentVariantActivity>> findComponentVariantCveVulnerabilityActivities(Set<UUID> componentVariantIds, OffsetDateTime activitySince);
+    HttpResult<ListHolder<ComponentVariantActivity>> findComponentVariantCveVulnerabilityActivities(Set<UUID> componentVariantIds, OffsetDateTime activitySince);
 
     /**
      * Finds component variant BDSA vulnerability activities.
@@ -252,7 +252,7 @@ public interface IActivityApi {
      *            The activity since date. Must be not null.
      * @return Returns the component variant activity result.
      */
-    Result<ListHolder<ComponentVariantActivity>> findComponentVariantBdsaVulnerabilityActivities(Set<UUID> componentVariantIds, OffsetDateTime activitySince);
+    HttpResult<ListHolder<ComponentVariantActivity>> findComponentVariantBdsaVulnerabilityActivities(Set<UUID> componentVariantIds, OffsetDateTime activitySince);
 
     /**
      * Finds component variant upgrade guidance activities.
@@ -273,7 +273,7 @@ public interface IActivityApi {
      *            The activity since date. Must be not null.
      * @return Returns the component variant activity result.
      */
-    Result<ListHolder<ComponentVariantActivity>> findComponentVariantUpgradeGuidanceActivities(Set<UUID> componentVariantIds,
+    HttpResult<ListHolder<ComponentVariantActivity>> findComponentVariantUpgradeGuidanceActivities(Set<UUID> componentVariantIds,
             OffsetDateTime activitySince);
 
     /**
@@ -295,7 +295,7 @@ public interface IActivityApi {
      *            The activity since date. Must be not null.
      * @return Returns the component variant activity result.
      */
-    Result<ListHolder<ComponentVariantActivity>> findComponentVariantTransitiveUpgradeGuidanceActivities(Set<UUID> componentVariantIds,
+    HttpResult<ListHolder<ComponentVariantActivity>> findComponentVariantTransitiveUpgradeGuidanceActivities(Set<UUID> componentVariantIds,
             OffsetDateTime activitySince);
 
     /**
@@ -315,7 +315,7 @@ public interface IActivityApi {
      *            The activity since date. Must be not null.
      * @return Returns the license activity result.
      */
-    Result<ListHolder<LicenseActivity>> findLicenseActivities(Set<UUID> licenseIds, OffsetDateTime activitySince);
+    HttpResult<ListHolder<LicenseActivity>> findLicenseActivities(Set<UUID> licenseIds, OffsetDateTime activitySince);
 
     /**
      * Finds license's license term activities.
@@ -331,7 +331,7 @@ public interface IActivityApi {
      *            The activity since date. Must be not null.
      * @return Returns the license activity result.
      */
-    Result<ListHolder<LicenseActivity>> findLicenseLicenseTermActivities(Set<UUID> licenseIds, OffsetDateTime activitySince);
+    HttpResult<ListHolder<LicenseActivity>> findLicenseLicenseTermActivities(Set<UUID> licenseIds, OffsetDateTime activitySince);
 
     /**
      * Finds CVE vulnerability activities.
@@ -350,7 +350,7 @@ public interface IActivityApi {
      *            The activity since date. Must be not null.
      * @return Returns the CVE vulnerability activity result.
      */
-    Result<ListHolder<CveVulnerabilityActivity>> findCveVulnerabilityActivities(Set<String> cveVulnerabilityIds, OffsetDateTime activitySince);
+    HttpResult<ListHolder<CveVulnerabilityActivity>> findCveVulnerabilityActivities(Set<String> cveVulnerabilityIds, OffsetDateTime activitySince);
 
     /**
      * Finds BDSA vulnerability activities.
@@ -371,5 +371,5 @@ public interface IActivityApi {
      *            The activity since date. Must be not null.
      * @return Returns the BDSA vulnerability activity result.
      */
-    Result<ListHolder<BdsaVulnerabilityActivity>> findBdsaVulnerabilityActivities(Set<String> bdsaVulnerabilityIds, OffsetDateTime activitySince);
+    HttpResult<ListHolder<BdsaVulnerabilityActivity>> findBdsaVulnerabilityActivities(Set<String> bdsaVulnerabilityIds, OffsetDateTime activitySince);
 }

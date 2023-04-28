@@ -30,7 +30,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.synopsys.kb.httpclient.api.IAuthenticationApi;
 import com.synopsys.kb.httpclient.api.KbConfiguration;
-import com.synopsys.kb.httpclient.api.Result;
+import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.model.Authentication;
 
 /**
@@ -50,7 +50,7 @@ public class KbAuthenticationHttpClient extends AbstractKbHttpClient implements 
     }
 
     @Override
-    public Result<Authentication> authenticate(String licenseKey) {
+    public HttpResult<Authentication> authenticate(String licenseKey) {
         Preconditions.checkArgument(!Strings.isNullOrEmpty(licenseKey), "License key must not be null or empty.");
 
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_AUTHENTICATE_V1_JSON);

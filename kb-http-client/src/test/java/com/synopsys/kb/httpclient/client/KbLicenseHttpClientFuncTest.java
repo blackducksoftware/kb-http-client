@@ -22,10 +22,10 @@ import org.testng.annotations.Test;
 
 import com.synopsys.kb.httpclient.AbstractFuncTest;
 import com.synopsys.kb.httpclient.api.HttpResponse;
+import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.api.IKbHttpApi;
 import com.synopsys.kb.httpclient.api.ILicenseApi;
 import com.synopsys.kb.httpclient.api.PageRequest;
-import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.License;
 import com.synopsys.kb.httpclient.model.LicenseTerm;
 import com.synopsys.kb.httpclient.model.Page;
@@ -46,9 +46,9 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
 
     @Test(enabled = false)
     public void testFindLicenseWhenAbsent() {
-        Result<License> result = licenseApi.findLicense(UUID.randomUUID());
+        HttpResult<License> httpResult = licenseApi.findLicense(UUID.randomUUID());
 
-        HttpResponse<License> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<License> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_NOT_FOUND, "Codes should be equal.");
@@ -58,9 +58,9 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
     @Test(enabled = false)
     public void testFindLicenseWhenPresent() {
         UUID apacheLicense20LicenseId = UUID.fromString("7cae335f-1193-421e-92f1-8802b4243e93");
-        Result<License> result = licenseApi.findLicense(apacheLicense20LicenseId);
+        HttpResult<License> httpResult = licenseApi.findLicense(apacheLicense20LicenseId);
 
-        HttpResponse<License> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<License> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
@@ -73,9 +73,9 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
     @Test(enabled = false)
     public void testFindLicenseText() {
         UUID apacheLicense20LicenseId = UUID.fromString("7cae335f-1193-421e-92f1-8802b4243e93");
-        Result<String> result = licenseApi.findLicenseText(apacheLicense20LicenseId);
+        HttpResult<String> httpResult = licenseApi.findLicenseText(apacheLicense20LicenseId);
 
-        HttpResponse<String> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<String> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
@@ -88,9 +88,9 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
     public void testFindManyLicenses() {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
 
-        Result<Page<License>> result = licenseApi.findManyLicenses(pageRequest, null, null);
+        HttpResult<Page<License>> httpResult = licenseApi.findManyLicenses(pageRequest, null, null);
 
-        HttpResponse<Page<License>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<Page<License>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
@@ -107,9 +107,9 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
         UUID licenseTermId = UUID.fromString("052a4876-67d7-4f72-959f-e56914ecbb33");
 
-        Result<Page<License>> result = licenseApi.findLicensesByLicenseTerm(pageRequest, licenseTermId);
+        HttpResult<Page<License>> httpResult = licenseApi.findLicensesByLicenseTerm(pageRequest, licenseTermId);
 
-        HttpResponse<Page<License>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<Page<License>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
@@ -125,9 +125,9 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
     public void testFindLicenseTerm() {
         UUID licenseTermId = UUID.fromString("04625083-2bc6-407c-ba9f-f461152859de");
 
-        Result<LicenseTerm> result = licenseApi.findLicenseTerm(licenseTermId);
+        HttpResult<LicenseTerm> httpResult = licenseApi.findLicenseTerm(licenseTermId);
 
-        HttpResponse<LicenseTerm> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<LicenseTerm> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
@@ -141,9 +141,9 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
     public void testFindManyLicenseTerms() {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
 
-        Result<Page<LicenseTerm>> result = licenseApi.findManyLicenseTerms(pageRequest);
+        HttpResult<Page<LicenseTerm>> httpResult = licenseApi.findManyLicenseTerms(pageRequest);
 
-        HttpResponse<Page<LicenseTerm>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<Page<LicenseTerm>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
@@ -160,9 +160,9 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
         UUID apacheLicense20LicenseId = UUID.fromString("7cae335f-1193-421e-92f1-8802b4243e93");
 
-        Result<Page<LicenseTerm>> result = licenseApi.findLicenseTermsByLicense(pageRequest, apacheLicense20LicenseId);
+        HttpResult<Page<LicenseTerm>> httpResult = licenseApi.findLicenseTermsByLicense(pageRequest, apacheLicense20LicenseId);
 
-        HttpResponse<Page<LicenseTerm>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<Page<LicenseTerm>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");

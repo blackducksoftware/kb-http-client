@@ -49,9 +49,9 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ListMultimap;
 import com.synopsys.kb.httpclient.api.AuthorizationProvider;
 import com.synopsys.kb.httpclient.api.HttpResponse;
+import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.api.KbConfiguration;
 import com.synopsys.kb.httpclient.api.PageRequest;
-import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.Meta;
 import com.synopsys.kb.httpclient.model.MetaWrapper;
 import com.synopsys.kb.httpclient.util.ClassTypeReference;
@@ -215,9 +215,9 @@ public abstract class AbstractKbHttpClient {
      *            The class.
      * @param <T>
      *            The result type.
-     * @return Returns the result.
+     * @return Returns the HTTP result.
      */
-    protected <T> Result<T> execute(ClassicHttpRequest request,
+    protected <T> HttpResult<T> execute(ClassicHttpRequest request,
             Set<Integer> successCodes,
             Set<Integer> expectedCodes,
             Class<T> clazz) {
@@ -242,9 +242,9 @@ public abstract class AbstractKbHttpClient {
      *            The type reference.
      * @param <T>
      *            The result type.
-     * @return Returns the result.
+     * @return Returns the HTTP result.
      */
-    protected <T> Result<T> execute(ClassicHttpRequest request,
+    protected <T> HttpResult<T> execute(ClassicHttpRequest request,
             Set<Integer> successCodes,
             Set<Integer> expectedCodes,
             TypeReference<T> typeReference) {
@@ -268,9 +268,9 @@ public abstract class AbstractKbHttpClient {
      *            The class.
      * @param <T>
      *            The result type.
-     * @return Returns the result.
+     * @return Returns the HTTP result.
      */
-    protected <T> Result<T> execute(ClassicHttpRequest request,
+    protected <T> HttpResult<T> execute(ClassicHttpRequest request,
             Set<Integer> successCodes,
             Set<Integer> expectedCodes,
             boolean isReauthenticationSupported,
@@ -298,9 +298,9 @@ public abstract class AbstractKbHttpClient {
      *            The type reference.
      * @param <T>
      *            The result type.
-     * @return Returns the result.
+     * @return Returns the HTTP result.
      */
-    protected <T> Result<T> execute(ClassicHttpRequest request,
+    protected <T> HttpResult<T> execute(ClassicHttpRequest request,
             Set<Integer> successCodes,
             Set<Integer> expectedCodes,
             boolean isReauthenticationSupported,
@@ -339,7 +339,7 @@ public abstract class AbstractKbHttpClient {
                             // request.
                             HttpResponse<T> httpResponse = new HttpResponse<>(code, expectedCodes, null, null);
 
-                            return new Result<>(method, requestUri, httpResponse);
+                            return new HttpResult<>(method, requestUri, httpResponse);
                         }
                     } else {
                         // Response codes other than HTTP 401 Unauthorized or HTTP client does not support authorization
@@ -362,14 +362,14 @@ public abstract class AbstractKbHttpClient {
 
                         HttpResponse<T> httpResponse = new HttpResponse<>(code, expectedCodes, messageBody, migratedMeta);
 
-                        return new Result<>(method, requestUri, httpResponse);
+                        return new HttpResult<>(method, requestUri, httpResponse);
                     }
                 } finally {
                     response.close();
                 }
             });
         } catch (IOException e) {
-            return new Result<>(method, requestUri, e);
+            return new HttpResult<>(method, requestUri, e);
         }
     }
 
@@ -388,9 +388,9 @@ public abstract class AbstractKbHttpClient {
      *            The given request supports reauthentication if an unauthorized response is returned.
      * @param isMigratable
      *            The given request can yield a migrated response when enabled and false otherwise.
-     * @return Returns the result.
+     * @return Returns the HTTP result.
      */
-    protected Result<String> execute(ClassicHttpRequest request,
+    protected HttpResult<String> execute(ClassicHttpRequest request,
             Set<Integer> successCodes,
             Set<Integer> expectedCodes,
             boolean isReauthenticationSupported,
@@ -427,7 +427,7 @@ public abstract class AbstractKbHttpClient {
                             // request.
                             HttpResponse<String> httpResponse = new HttpResponse<>(code, expectedCodes, null, null);
 
-                            return new Result<>(method, requestUri, httpResponse);
+                            return new HttpResult<>(method, requestUri, httpResponse);
                         }
                     } else {
                         // Response codes other than HTTP 401 Unauthorized or HTTP client does not support authorization
@@ -453,14 +453,14 @@ public abstract class AbstractKbHttpClient {
 
                         HttpResponse<String> httpResponse = new HttpResponse<>(code, expectedCodes, messageBody, migratedMeta);
 
-                        return new Result<>(method, requestUri, httpResponse);
+                        return new HttpResult<>(method, requestUri, httpResponse);
                     }
                 } finally {
                     response.close();
                 }
             });
         } catch (IOException e) {
-            return new Result<>(method, requestUri, e);
+            return new HttpResult<>(method, requestUri, e);
         }
     }
 

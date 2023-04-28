@@ -57,7 +57,7 @@ public interface IBdComponentVersionApi {
      *            The vulnerability score priority.
      * @return Returns the component version result.
      */
-    MigratableResult<BdComponentVersion> find(UUID componentVersionId,
+    MigratableHttpResult<BdComponentVersion> find(UUID componentVersionId,
             VulnerabilitySourcePriority vulnerabilitySourcePriority,
             VulnerabilityScorePriority vulnerabilityScorePriority);
 
@@ -81,7 +81,7 @@ public interface IBdComponentVersionApi {
      *            The component version id.
      * @return Returns the next version result.
      */
-    MigratableResult<NextVersion> findNextVersion(UUID componentVersionId);
+    MigratableHttpResult<NextVersion> findNextVersion(UUID componentVersionId);
 
     /**
      * Finds the CVE vulnerabilities associated to the given component version and follows migration links.
@@ -111,7 +111,7 @@ public interface IBdComponentVersionApi {
      *            Supported fields are id and description. Optional.
      * @return Returns the CVE vulnerability page result.
      */
-    MigratableResult<Page<CveVulnerability>> findCveVulnerabilities(PageRequest pageRequest,
+    MigratableHttpResult<Page<CveVulnerability>> findCveVulnerabilities(PageRequest pageRequest,
             UUID componentVersionId,
             @Nullable String searchTermFilter);
 
@@ -145,7 +145,7 @@ public interface IBdComponentVersionApi {
      *            Supported fields are id and description. Optional.
      * @return Returns the BDSA vulnerability page result.
      */
-    MigratableResult<Page<BdsaVulnerability>> findBdsaVulnerabilities(PageRequest pageRequest,
+    MigratableHttpResult<Page<BdsaVulnerability>> findBdsaVulnerabilities(PageRequest pageRequest,
             UUID componentVersionId,
             @Nullable String searchTermFilter);
 
@@ -175,7 +175,7 @@ public interface IBdComponentVersionApi {
      *            The vulnerability score priority.
      * @return Returns the upgrade guidance result.
      */
-    MigratableResult<UpgradeGuidance> findUpgradeGuidance(UUID componentVersionId,
+    MigratableHttpResult<UpgradeGuidance> findUpgradeGuidance(UUID componentVersionId,
             VulnerabilitySourcePriority vulnerabilitySourcePriority,
             VulnerabilityScorePriority vulnerabilityScorePriority);
 }

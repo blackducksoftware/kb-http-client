@@ -20,9 +20,9 @@ import org.testng.annotations.Test;
 
 import com.synopsys.kb.httpclient.AbstractFuncTest;
 import com.synopsys.kb.httpclient.api.HttpResponse;
+import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.api.IAuthenticationApi;
 import com.synopsys.kb.httpclient.api.IKbHttpApi;
-import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.Authentication;
 
 /**
@@ -41,9 +41,9 @@ public class KbAuthenticationHttpClientFuncTest extends AbstractFuncTest {
 
     @Test(enabled = false)
     public void testAuthenticateWithInvalidLicenseKey() {
-        Result<Authentication> result = authenticationApi.authenticate("this-is-an-invalid-bds-license-key");
+        HttpResult<Authentication> httpResult = authenticationApi.authenticate("this-is-an-invalid-bds-license-key");
 
-        HttpResponse<Authentication> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<Authentication> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_UNAUTHORIZED, "Codes should be equal.");
@@ -54,9 +54,9 @@ public class KbAuthenticationHttpClientFuncTest extends AbstractFuncTest {
     public void testAuthenticateWithValidLicenseKey() {
         // Requires KB test product registration key.
         String licenseKey = UUID.randomUUID().toString();
-        Result<Authentication> result = authenticationApi.authenticate(licenseKey);
+        HttpResult<Authentication> httpResult = authenticationApi.authenticate(licenseKey);
 
-        HttpResponse<Authentication> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<Authentication> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");

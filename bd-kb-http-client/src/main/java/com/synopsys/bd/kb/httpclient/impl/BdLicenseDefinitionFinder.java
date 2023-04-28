@@ -21,7 +21,7 @@ import com.google.common.collect.ImmutableList;
 import com.synopsys.bd.kb.httpclient.api.IBdLicenseApi;
 import com.synopsys.bd.kb.httpclient.model.BdLicense;
 import com.synopsys.bd.kb.httpclient.model.BdLicenseDefinition;
-import com.synopsys.kb.httpclient.api.Result;
+import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.model.LicenseDefinition;
 import com.synopsys.kb.httpclient.model.LicenseDefinitionItem;
 import com.synopsys.kb.httpclient.model.LicenseDefinitionType;
@@ -118,8 +118,8 @@ public class BdLicenseDefinitionFinder {
     private Optional<BdLicense> findBdLicense(UUID licenseId) {
         // License definition finder does not provide an explicit caching mechanism itself for duplicative finds of the
         // same license id.
-        Result<BdLicense> bdLicenseResult = bdLicenseApi.findLicense(licenseId);
+        HttpResult<BdLicense> bdLicenseHttpResult = bdLicenseApi.findLicense(licenseId);
 
-        return bdLicenseResult.getHttpResponse().map((httpResponse) -> httpResponse.getMessageBody().orElse(null));
+        return bdLicenseHttpResult.getHttpResponse().map((httpResponse) -> httpResponse.getMessageBody().orElse(null));
     }
 }

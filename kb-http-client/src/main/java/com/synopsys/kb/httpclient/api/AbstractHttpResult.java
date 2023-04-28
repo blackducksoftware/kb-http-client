@@ -17,11 +17,11 @@ import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
- * Abstract operation result
+ * Abstract HTTP result representation.
  * 
  * @author skatzman
  */
-public abstract class AbstractResult {
+public abstract class AbstractHttpResult {
     private final String requestMethod;
 
     private final String requestUri;
@@ -29,7 +29,7 @@ public abstract class AbstractResult {
     @Nullable
     private final Throwable cause;
 
-    protected AbstractResult(String requestMethod, String requestUri, @Nullable Throwable cause) {
+    protected AbstractHttpResult(String requestMethod, String requestUri, @Nullable Throwable cause) {
         this.requestMethod = Objects.requireNonNull(requestMethod, "The request method must be initialized.");
         this.requestUri = Objects.requireNonNull(requestUri, "The request URI must be initialized.");
         this.cause = cause;

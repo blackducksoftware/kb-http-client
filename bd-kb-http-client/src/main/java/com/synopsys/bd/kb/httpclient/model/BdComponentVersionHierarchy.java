@@ -13,7 +13,7 @@ package com.synopsys.bd.kb.httpclient.model;
 
 import java.util.Objects;
 
-import com.synopsys.bd.kb.httpclient.api.MigratableResult;
+import com.synopsys.bd.kb.httpclient.api.MigratableHttpResult;
 import com.synopsys.kb.httpclient.model.Component;
 
 /**
@@ -24,21 +24,21 @@ import com.synopsys.kb.httpclient.model.Component;
  * @author skatzman
  */
 public class BdComponentVersionHierarchy {
-    private final MigratableResult<Component> componentResult;
+    private final MigratableHttpResult<Component> componentResult;
 
-    private final MigratableResult<BdComponentVersion> componentVersionResult;
+    private final MigratableHttpResult<BdComponentVersion> componentVersionResult;
 
-    public BdComponentVersionHierarchy(MigratableResult<Component> componentResult,
-            MigratableResult<BdComponentVersion> componentVersionResult) {
+    public BdComponentVersionHierarchy(MigratableHttpResult<Component> componentResult,
+            MigratableHttpResult<BdComponentVersion> componentVersionResult) {
         this.componentResult = Objects.requireNonNull(componentResult, "Component result must be initialized.");
         this.componentVersionResult = Objects.requireNonNull(componentVersionResult, "Component version result must be initialized.");
     }
 
-    public MigratableResult<Component> getComponentResult() {
+    public MigratableHttpResult<Component> getComponentResult() {
         return componentResult;
     }
 
-    public MigratableResult<BdComponentVersion> getComponentVersionResult() {
+    public MigratableHttpResult<BdComponentVersion> getComponentVersionResult() {
         return componentVersionResult;
     }
 

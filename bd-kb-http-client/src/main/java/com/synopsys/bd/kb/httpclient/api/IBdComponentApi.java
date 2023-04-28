@@ -48,9 +48,9 @@ public interface IBdComponentApi {
      * 
      * @param componentId
      *            The component id.
-     * @return Returns the migratable component result.
+     * @return Returns the component result.
      */
-    MigratableResult<Component> findComponent(UUID componentId);
+    MigratableHttpResult<Component> findComponent(UUID componentId);
 
     /**
      * Finds component versions for a given component.
@@ -89,7 +89,7 @@ public interface IBdComponentApi {
      *            default. Optional.
      * @return Returns the component version page result.
      */
-    MigratableResult<Page<BdComponentVersion>> findComponentVersionsByComponent(PageRequest pageRequest,
+    MigratableHttpResult<Page<BdComponentVersion>> findComponentVersionsByComponent(PageRequest pageRequest,
             UUID componentId,
             @Nullable String searchTermFilter,
             VulnerabilitySourcePriority vulnerabilitySourcePriority,
@@ -126,7 +126,7 @@ public interface IBdComponentApi {
      *            default. Optional.
      * @return Returns the component version summary page result.
      */
-    MigratableResult<Page<BdComponentVersionSummary>> findComponentVersionSummariesByComponent(PageRequest pageRequest,
+    MigratableHttpResult<Page<BdComponentVersionSummary>> findComponentVersionSummariesByComponent(PageRequest pageRequest,
             UUID componentId,
             @Nullable String searchTermFilter,
             @Nullable Boolean excludeDeleted);
@@ -151,5 +151,5 @@ public interface IBdComponentApi {
      *            The component id.
      * @return Returns the ongoing version result.
      */
-    MigratableResult<OngoingVersion> findOngoingVersionByComponent(UUID componentId);
+    MigratableHttpResult<OngoingVersion> findOngoingVersionByComponent(UUID componentId);
 }

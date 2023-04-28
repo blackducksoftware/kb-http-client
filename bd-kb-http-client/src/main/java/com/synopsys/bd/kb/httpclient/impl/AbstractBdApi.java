@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 import com.synopsys.kb.httpclient.api.HttpResponse;
-import com.synopsys.kb.httpclient.api.Result;
+import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.model.Meta;
 
 /**
@@ -31,30 +31,31 @@ abstract class AbstractBdApi {
     }
 
     /**
-     * Converts the given source result to the destination result.
+     * Converts the given source HTTP result to the destination HTTP result.
      * 
      * @param <S>
      *            The source type.
      * @param <T>
      *            The destination type.
-     * @param sourceResult
-     *            The source result.
+     * @param sourceHttpResult
+     *            The source HTTP result.
      * @param conversionFunction
      *            The conversion function.
-     * @return Returns the destination result.
+     * @return Returns the destination HTTP result.
      */
-    protected <S, T> Result<T> convert(Result<S> sourceResult, Function<S, T> conversionFunction) {
-        Objects.requireNonNull(sourceResult, "Source result must be initialized.");
+    protected <S, T> HttpResult<T> convert(HttpResult<S> sourceHttpResult, Function<S, T> conversionFunction) {
+        Objects.requireNonNull(sourceHttpResult, "Source HTTP result must be initialized.");
         Objects.requireNonNull(conversionFunction, "Conversion function must be initialized.");
 
-        String sourceRequestMethod = sourceResult.getRequestMethod();
-        String sourceRequestUri = sourceResult.getRequestUri();
-        HttpResponse<S> sourceHttpResponse = sourceResult.getHttpResponse().orElse(null);
-        Throwable sourceCause = sourceResult.getCause().orElse(null);
+        String sourceRequestMethod = sourceHttpResult.getRequestMethod();
+        String sourceRequestUri = sourceHttpResult.getRequestUri();
+        HttpResponse<S> sourceHttpResponse = sourceHttpResult.getHttpResponse().orElse(null);
+        Throwable sourceCause = sourceHttpResult.getCause().orElse(null);
 
-        final Result<T> destinationResult;
+        final HttpResult<T> destinationHttpResult;
+
         if (sourceHttpResponse != null) {
-            // Source result contains a HTTP response.
+            // Source HTTP result contains a HTTP response.
             int sourceCode = sourceHttpResponse.getCode();
             Set<Integer> sourceExpectedCodes = sourceHttpResponse.getExpectedCodes();
             S sourceMessageBody = sourceHttpResponse.getMessageBody().orElse(null);
@@ -70,12 +71,12 @@ abstract class AbstractBdApi {
                 destinationHttpResponse = new HttpResponse<>(sourceCode, sourceExpectedCodes, null, sourceMigratedMeta);
             }
 
-            destinationResult = new Result<>(sourceRequestMethod, sourceRequestUri, destinationHttpResponse, sourceCause);
+            destinationHttpResult = new HttpResult<>(sourceRequestMethod, sourceRequestUri, destinationHttpResponse, sourceCause);
         } else {
-            // Source result does NOT contain a HTTP response.
-            destinationResult = new Result<>(sourceRequestMethod, sourceRequestUri, null, sourceCause);
+            // Source HTTP result does NOT contain a HTTP response.
+            destinationHttpResult = new HttpResult<>(sourceRequestMethod, sourceRequestUri, null, sourceCause);
         }
 
-        return destinationResult;
+        return destinationHttpResult;
     }
 }

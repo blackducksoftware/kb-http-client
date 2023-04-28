@@ -25,8 +25,8 @@ import com.synopsys.bd.kb.httpclient.AbstractBdTest;
 import com.synopsys.bd.kb.httpclient.api.IBdComponentVariantApi;
 import com.synopsys.bd.kb.httpclient.model.BdComponentVariant;
 import com.synopsys.kb.httpclient.api.HttpResponse;
+import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.api.IComponentVariantApi;
-import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.ComponentVariant;
 import com.synopsys.kb.httpclient.model.LicenseDefinition;
 import com.synopsys.kb.httpclient.model.LicenseDefinitionItem;
@@ -88,11 +88,11 @@ public class BdComponentVariantApiTest extends AbstractBdTest {
         ComponentVariant componentVariant = new ComponentVariant(VERSION, EXTERNAL_NAMESPACE, EXTERNAL_ID, EXTERNAL_NAMESPACE_DISTRIBUTION, PACKAGE_URL, TYPE,
                 LICENSE_DEFINITION, DELETED, COMPONENT_INTELLIGENCE, META);
         HttpResponse<ComponentVariant> sourceHttpResponse = new HttpResponse<>(200, Set.of(200, 404), componentVariant, null);
-        Result<ComponentVariant> sourceResult = new Result<>("GET", HREF, sourceHttpResponse);
+        HttpResult<ComponentVariant> sourceResult = new HttpResult<>("GET", HREF, sourceHttpResponse);
         Mockito.when(componentVariantApi.find(COMPONENT_VARIANT_ID)).thenReturn(sourceResult);
 
-        Result<BdComponentVariant> result = bdComponentVariantApi.find(COMPONENT_VARIANT_ID);
+        HttpResult<BdComponentVariant> httpResult = bdComponentVariantApi.find(COMPONENT_VARIANT_ID);
 
-        assertResult(sourceResult, result);
+        assertHttpResult(sourceResult, httpResult);
     }
 }

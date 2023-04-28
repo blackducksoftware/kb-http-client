@@ -20,7 +20,7 @@ import org.testng.annotations.Test;
 
 import com.synopsys.bd.kb.httpclient.AbstractBdTest;
 import com.synopsys.bd.kb.httpclient.api.MigratableHttpResponse;
-import com.synopsys.bd.kb.httpclient.api.MigratableResult;
+import com.synopsys.bd.kb.httpclient.api.MigratableHttpResult;
 import com.synopsys.kb.httpclient.model.Component;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
 
@@ -34,41 +34,42 @@ public class BdComponentVersionHierarchyTest extends AbstractBdTest {
 
     private static final UUID COMPONENT_VERSION_ID = UUID.randomUUID();
 
-    private MigratableResult<Component> componentResult;
+    private MigratableHttpResult<Component> componentHttpResult;
 
-    private MigratableResult<BdComponentVersion> componentVersionResult;
+    private MigratableHttpResult<BdComponentVersion> componentVersionHttpResult;
 
     @BeforeMethod
     public void beforeMethod() {
         Component component = constructComponent(COMPONENT_ID, "FooComponent");
         MigratableHttpResponse<Component> componentHttpResponse = new MigratableHttpResponse<>(200, Set.of(200, 404), component, null, null);
-        componentResult = new MigratableResult<>("GET", BASE_HREF + "/api/components/" + COMPONENT_ID, componentHttpResponse, null);
+        componentHttpResult = new MigratableHttpResult<>("GET", BASE_HREF + "/api/components/" + COMPONENT_ID, componentHttpResponse, null);
 
         ComponentVersion componentVersion = constructComponentVersion(COMPONENT_ID, COMPONENT_VERSION_ID, "1.0");
         BdComponentVersion bdComponentVersion = new BdComponentVersion(componentVersion, BASE_HREF);
         MigratableHttpResponse<BdComponentVersion> componentVersionHttpResponse = new MigratableHttpResponse<>(200, Set.of(200, 402, 403, 404),
                 bdComponentVersion, null, null);
-        componentVersionResult = new MigratableResult<>("GET", BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID,
+        componentVersionHttpResult = new MigratableHttpResult<>("GET", BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID,
                 componentVersionHttpResponse, null);
     }
 
     @Test
     public void testConstructor() {
-        BdComponentVersionHierarchy hierarchy = new BdComponentVersionHierarchy(componentResult, componentVersionResult);
+        BdComponentVersionHierarchy hierarchy = new BdComponentVersionHierarchy(componentHttpResult, componentVersionHttpResult);
 
-        Assert.assertEquals(hierarchy.getComponentResult(), componentResult, "Component results should be equal.");
-        Assert.assertEquals(hierarchy.getComponentVersionResult(), componentVersionResult, "Component version results should be equal.");
+        Assert.assertEquals(hierarchy.getComponentResult(), componentHttpResult, "Component results should be equal.");
+        Assert.assertEquals(hierarchy.getComponentVersionResult(), componentVersionHttpResult, "Component version results should be equal.");
     }
 
     @Test
     public void testIsHierarchyPresentWithBothAbsent() {
         MigratableHttpResponse<Component> absentComponentHttpResponse = new MigratableHttpResponse<>(404, Set.of(200, 404), null, null, null);
-        MigratableResult<Component> absentComponentResult = new MigratableResult<>("GET", BASE_HREF + "/api/components/" + COMPONENT_ID,
+        MigratableHttpResult<Component> absentComponentResult = new MigratableHttpResult<>("GET", BASE_HREF + "/api/components/" + COMPONENT_ID,
                 absentComponentHttpResponse, null);
 
         MigratableHttpResponse<BdComponentVersion> absentComponentVersionHttpResponse = new MigratableHttpResponse<>(404, Set.of(200, 402, 403, 404),
                 null, null, null);
-        MigratableResult<BdComponentVersion> absentComponentVersionResult = new MigratableResult<>("GET", BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID,
+        MigratableHttpResult<BdComponentVersion> absentComponentVersionResult = new MigratableHttpResult<>("GET",
+                BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID,
                 absentComponentVersionHttpResponse, null);
 
         BdComponentVersionHierarchy hierarchy = new BdComponentVersionHierarchy(absentComponentResult, absentComponentVersionResult);
@@ -80,10 +81,11 @@ public class BdComponentVersionHierarchyTest extends AbstractBdTest {
     public void testIsHierarchyPresentWithPresentComponent() {
         MigratableHttpResponse<BdComponentVersion> absentComponentVersionHttpResponse = new MigratableHttpResponse<>(404, Set.of(200, 402, 403, 404),
                 null, null, null);
-        MigratableResult<BdComponentVersion> absentComponentVersionResult = new MigratableResult<>("GET", BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID,
+        MigratableHttpResult<BdComponentVersion> absentComponentVersionResult = new MigratableHttpResult<>("GET",
+                BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID,
                 absentComponentVersionHttpResponse, null);
 
-        BdComponentVersionHierarchy hierarchy = new BdComponentVersionHierarchy(componentResult, absentComponentVersionResult);
+        BdComponentVersionHierarchy hierarchy = new BdComponentVersionHierarchy(componentHttpResult, absentComponentVersionResult);
 
         Assert.assertFalse(hierarchy.isHierarchyPresent(), "Component and component version should not be present.");
     }
@@ -91,17 +93,17 @@ public class BdComponentVersionHierarchyTest extends AbstractBdTest {
     @Test
     public void testIsHierarchyPresentWithComponentVersionPresent() {
         MigratableHttpResponse<Component> absentComponentHttpResponse = new MigratableHttpResponse<>(404, Set.of(200, 404), null, null, null);
-        MigratableResult<Component> absentComponentResult = new MigratableResult<>("GET", BASE_HREF + "/api/components/" + COMPONENT_ID,
+        MigratableHttpResult<Component> absentComponentHttpResult = new MigratableHttpResult<>("GET", BASE_HREF + "/api/components/" + COMPONENT_ID,
                 absentComponentHttpResponse, null);
 
-        BdComponentVersionHierarchy hierarchy = new BdComponentVersionHierarchy(absentComponentResult, componentVersionResult);
+        BdComponentVersionHierarchy hierarchy = new BdComponentVersionHierarchy(absentComponentHttpResult, componentVersionHttpResult);
 
         Assert.assertFalse(hierarchy.isHierarchyPresent(), "Component and component version should not be present.");
     }
 
     @Test
     public void testIsHierarchyPresentWithBothPresent() {
-        BdComponentVersionHierarchy hierarchy = new BdComponentVersionHierarchy(componentResult, componentVersionResult);
+        BdComponentVersionHierarchy hierarchy = new BdComponentVersionHierarchy(componentHttpResult, componentVersionHttpResult);
 
         Assert.assertTrue(hierarchy.isHierarchyPresent(), "Component and component version should be present.");
     }

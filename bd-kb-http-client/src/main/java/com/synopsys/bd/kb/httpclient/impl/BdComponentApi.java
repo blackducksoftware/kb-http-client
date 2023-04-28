@@ -22,17 +22,17 @@ import javax.annotation.Nullable;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.synopsys.bd.kb.httpclient.api.IBdComponentApi;
-import com.synopsys.bd.kb.httpclient.api.MigratableResult;
+import com.synopsys.bd.kb.httpclient.api.MigratableHttpResult;
 import com.synopsys.bd.kb.httpclient.model.BdComponentVersion;
 import com.synopsys.bd.kb.httpclient.model.BdComponentVersionSummary;
+import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.api.IComponentApi;
 import com.synopsys.kb.httpclient.api.PageRequest;
-import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.Component;
-import com.synopsys.kb.httpclient.model.OngoingVersion;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
 import com.synopsys.kb.httpclient.model.ComponentVersionSummary;
 import com.synopsys.kb.httpclient.model.Meta;
+import com.synopsys.kb.httpclient.model.OngoingVersion;
 import com.synopsys.kb.httpclient.model.Page;
 import com.synopsys.kb.httpclient.model.VulnerabilityScorePriority;
 import com.synopsys.kb.httpclient.model.VulnerabilitySourcePriority;
@@ -70,20 +70,20 @@ public class BdComponentApi extends AbstractMigratableBdApi implements IBdCompon
     }
 
     @Override
-    public MigratableResult<Component> findComponent(UUID componentId) {
+    public MigratableHttpResult<Component> findComponent(UUID componentId) {
         Objects.requireNonNull(componentId, "Component id must be initialized.");
 
         // Find a component result given a dynamic component id.
-        Function<UUID, Result<Component>> resultFunction = (sourceComponentId) -> componentApi.findComponent(sourceComponentId);
+        Function<UUID, HttpResult<Component>> resultFunction = (sourceComponentId) -> componentApi.findComponent(sourceComponentId);
 
         // No conversion is required.
         Function<Component, Component> conversionFunction = Function.identity();
 
-        return findMigratableResult(componentId, resultFunction, conversionFunction, "components");
+        return findMigratableHttpResult(componentId, resultFunction, conversionFunction, "components");
     }
 
     @Override
-    public MigratableResult<Page<BdComponentVersion>> findComponentVersionsByComponent(final PageRequest pageRequest,
+    public MigratableHttpResult<Page<BdComponentVersion>> findComponentVersionsByComponent(final PageRequest pageRequest,
             UUID componentId,
             @Nullable final String searchTermFilter,
             final VulnerabilitySourcePriority vulnerabilitySourcePriority,
@@ -95,7 +95,7 @@ public class BdComponentApi extends AbstractMigratableBdApi implements IBdCompon
         Objects.requireNonNull(vulnerabilityScorePriority, "Vulnerabilty score priority must be prioritized.");
 
         // Find a component version page result given a dynamic component id.
-        Function<UUID, Result<Page<ComponentVersion>>> resultFunction = (sourceComponentId) -> componentApi.findComponentVersionsByComponent(pageRequest,
+        Function<UUID, HttpResult<Page<ComponentVersion>>> resultFunction = (sourceComponentId) -> componentApi.findComponentVersionsByComponent(pageRequest,
                 sourceComponentId, searchTermFilter, vulnerabilitySourcePriority, vulnerabilityScorePriority, excludeDeleted);
 
         // Convert from a component version page to a Black Duck-centric component version page.
@@ -109,11 +109,11 @@ public class BdComponentApi extends AbstractMigratableBdApi implements IBdCompon
             return new Page<>(sourceTotalCount, destinationItems, sourceMeta);
         };
 
-        return findMigratableResult(componentId, resultFunction, conversionFunction, "components");
+        return findMigratableHttpResult(componentId, resultFunction, conversionFunction, "components");
     }
 
     @Override
-    public MigratableResult<Page<BdComponentVersionSummary>> findComponentVersionSummariesByComponent(final PageRequest pageRequest,
+    public MigratableHttpResult<Page<BdComponentVersionSummary>> findComponentVersionSummariesByComponent(final PageRequest pageRequest,
             UUID componentId,
             @Nullable final String searchTermFilter,
             @Nullable final Boolean excludeDeleted) {
@@ -121,7 +121,7 @@ public class BdComponentApi extends AbstractMigratableBdApi implements IBdCompon
         Objects.requireNonNull(componentId, "Component id must be initialized.");
 
         // Find a component version summary page result given a dynamic component id.
-        Function<UUID, Result<Page<ComponentVersionSummary>>> resultFunction = (sourceComponentId) -> componentApi.findComponentVersionSummariesByComponent(
+        Function<UUID, HttpResult<Page<ComponentVersionSummary>>> resultFunction = (sourceComponentId) -> componentApi.findComponentVersionSummariesByComponent(
                 pageRequest, sourceComponentId, searchTermFilter, excludeDeleted);
 
         // Convert from a component version summary page to a Black Duck-centric component version summary page.
@@ -135,19 +135,19 @@ public class BdComponentApi extends AbstractMigratableBdApi implements IBdCompon
             return new Page<>(sourceTotalCount, destinationItems, sourceMeta);
         };
 
-        return findMigratableResult(componentId, resultFunction, conversionFunction, "components");
+        return findMigratableHttpResult(componentId, resultFunction, conversionFunction, "components");
     }
 
     @Override
-    public MigratableResult<OngoingVersion> findOngoingVersionByComponent(UUID componentId) {
+    public MigratableHttpResult<OngoingVersion> findOngoingVersionByComponent(UUID componentId) {
         Objects.requireNonNull(componentId, "Component id must be initialized.");
 
         // Find an ongoing version result given a dynamic component id.
-        Function<UUID, Result<OngoingVersion>> resultFunction = (sourceComponentId) -> componentApi.findOngoingVersionByComponent(sourceComponentId);
+        Function<UUID, HttpResult<OngoingVersion>> resultFunction = (sourceComponentId) -> componentApi.findOngoingVersionByComponent(sourceComponentId);
 
         // No conversion is required.
         Function<OngoingVersion, OngoingVersion> conversionFunction = Function.identity();
 
-        return findMigratableResult(componentId, resultFunction, conversionFunction, "components");
+        return findMigratableHttpResult(componentId, resultFunction, conversionFunction, "components");
     }
 }

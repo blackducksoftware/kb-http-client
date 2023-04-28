@@ -16,26 +16,26 @@ import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
- * Operation result.
+ * HTTP result representation.
  * 
  * @author skatzman
  *
  * @param <T>
  *            The message body type.
  */
-public class Result<T> extends AbstractResult {
+public class HttpResult<T> extends AbstractHttpResult {
     @Nullable
     private final HttpResponse<T> httpResponse;
 
-    public Result(String requestMethod, String requestUri, @Nullable HttpResponse<T> httpResponse) {
+    public HttpResult(String requestMethod, String requestUri, @Nullable HttpResponse<T> httpResponse) {
         this(requestMethod, requestUri, httpResponse, null);
     }
 
-    public Result(String requestMethod, String requestUri, @Nullable Throwable cause) {
+    public HttpResult(String requestMethod, String requestUri, @Nullable Throwable cause) {
         this(requestMethod, requestUri, null, cause);
     }
 
-    public Result(String requestMethod, String requestUri, @Nullable HttpResponse<T> httpResponse, @Nullable Throwable cause) {
+    public HttpResult(String requestMethod, String requestUri, @Nullable HttpResponse<T> httpResponse, @Nullable Throwable cause) {
         super(requestMethod, requestUri, cause);
 
         this.httpResponse = httpResponse;

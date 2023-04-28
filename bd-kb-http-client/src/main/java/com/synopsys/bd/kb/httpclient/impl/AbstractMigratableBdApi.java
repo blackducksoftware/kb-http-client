@@ -24,10 +24,10 @@ import javax.annotation.Nullable;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.synopsys.bd.kb.httpclient.api.MigratableHttpResponse;
-import com.synopsys.bd.kb.httpclient.api.MigratableResult;
+import com.synopsys.bd.kb.httpclient.api.MigratableHttpResult;
 import com.synopsys.kb.httpclient.api.HttpResponse;
+import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.api.Relationship;
-import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.Link;
 import com.synopsys.kb.httpclient.model.Meta;
 
@@ -70,7 +70,7 @@ abstract class AbstractMigratableBdApi extends AbstractBdApi {
     }
 
     /**
-     * Finds a migratable result.
+     * Finds a migratable HTTP result.
      * 
      * @param <S>
      *            The source message body type.
@@ -78,41 +78,41 @@ abstract class AbstractMigratableBdApi extends AbstractBdApi {
      *            The destination message body type.
      * @param id
      *            The id.
-     * @param resultFunction
-     *            The result function.
+     * @param httpResultFunction
+     *            The HTTP result function.
      * @param conversionFunction
      *            the conversion function.
      * @param pathVariable
      *            The path variable to find moved migration ids.
-     * @return Returns the migratable result.
+     * @return Returns the migratable HTTP result.
      */
-    protected <S, T> MigratableResult<T> findMigratableResult(UUID id,
-            Function<UUID, Result<S>> resultFunction,
+    protected <S, T> MigratableHttpResult<T> findMigratableHttpResult(UUID id,
+            Function<UUID, HttpResult<S>> httpResultFunction,
             Function<S, T> conversionFunction,
             String pathVariable) {
         List<Meta> migratedMetaHistory = new ArrayList<>();
 
-        return findMigratableResult(id, resultFunction, conversionFunction, pathVariable, migratedMetaHistory, 1)
-                .orElseThrow(() -> new IllegalStateException("Migratable result must be present."));
+        return findMigratableHttpResult(id, httpResultFunction, conversionFunction, pathVariable, migratedMetaHistory, 1)
+                .orElseThrow(() -> new IllegalStateException("Migratable HTTP result must be present."));
     }
 
-    private <S, T> Optional<MigratableResult<T>> findMigratableResult(UUID id,
-            Function<UUID, Result<S>> resultFunction,
+    private <S, T> Optional<MigratableHttpResult<T>> findMigratableHttpResult(UUID id,
+            Function<UUID, HttpResult<S>> httpResultFunction,
             Function<S, T> conversionFunction,
             String pathVariable,
             List<Meta> sourceMigratedMetaHistory,
             int attemptNumber) {
         Objects.requireNonNull(id, "Id must be initialized.");
-        Objects.requireNonNull(resultFunction, "Result function must be initialized.");
+        Objects.requireNonNull(httpResultFunction, "HTTP result function must be initialized.");
         Objects.requireNonNull(conversionFunction, "Conversion function must be initialized.");
 
-        MigratableResult<T> migratableResult = null;
+        MigratableHttpResult<T> httpResult = null;
 
         if (attemptNumber <= maximumAttemptNumber) {
-            Result<S> sourceResult = resultFunction.apply(id);
-            HttpResponse<S> sourceHttpResponse = sourceResult.getHttpResponse().orElse(null);
+            HttpResult<S> sourceHttpResult = httpResultFunction.apply(id);
+            HttpResponse<S> sourceHttpResponse = sourceHttpResult.getHttpResponse().orElse(null);
             if (sourceHttpResponse != null) {
-                // Source result contains a HTTP response.
+                // Source HTTP result contains a HTTP response.
                 Optional<Meta> optionalSourceMigratedMeta = sourceHttpResponse.getMigratedMeta();
                 UUID destinationMigrationId = optionalSourceMigratedMeta
                         .map((migratedMeta) -> migratedMeta.findLinks(Relationship.MOVED))
@@ -129,20 +129,20 @@ abstract class AbstractMigratableBdApi extends AbstractBdApi {
 
                     // Follow the migration path and try again.
                     int nextAttemptNumber = attemptNumber + 1;
-                    migratableResult = findMigratableResult(destinationMigrationId, resultFunction, conversionFunction, pathVariable,
+                    httpResult = findMigratableHttpResult(destinationMigrationId, httpResultFunction, conversionFunction, pathVariable,
                             updatedMigratedMetaHistory, nextAttemptNumber)
-                                    .orElseGet(() -> convertToMigratableResult(sourceResult, conversionFunction, sourceMigratedMetaHistory));
+                                    .orElseGet(() -> convertToMigratableHttpResult(sourceHttpResult, conversionFunction, sourceMigratedMetaHistory));
                 } else {
                     // Source HTTP response is not migrated or has malformed migrated meta.
-                    migratableResult = convertToMigratableResult(sourceResult, conversionFunction, sourceMigratedMetaHistory);
+                    httpResult = convertToMigratableHttpResult(sourceHttpResult, conversionFunction, sourceMigratedMetaHistory);
                 }
             } else {
-                // Source result does NOT contain a HTTP response.
-                migratableResult = convertToMigratableResult(sourceResult, conversionFunction, sourceMigratedMetaHistory);
+                // Source HTTP result does NOT contain a HTTP response.
+                httpResult = convertToMigratableHttpResult(sourceHttpResult, conversionFunction, sourceMigratedMetaHistory);
             }
         } // No more retry attempts remain, return emptiness.
 
-        return Optional.ofNullable(migratableResult);
+        return Optional.ofNullable(httpResult);
     }
 
     @Nullable
@@ -158,20 +158,21 @@ abstract class AbstractMigratableBdApi extends AbstractBdApi {
         return destinationId;
     }
 
-    private <S, T> MigratableResult<T> convertToMigratableResult(Result<S> sourceResult,
+    private <S, T> MigratableHttpResult<T> convertToMigratableHttpResult(HttpResult<S> sourceHttpResult,
             Function<S, T> conversionFunction,
             List<Meta> migratedMetaHistory) {
-        Objects.requireNonNull(sourceResult, "Source result must be initialized.");
+        Objects.requireNonNull(sourceHttpResult, "Source HTTP result must be initialized.");
         Objects.requireNonNull(conversionFunction, "Conversion function must be initialized.");
 
-        String sourceRequestMethod = sourceResult.getRequestMethod();
-        String sourceRequestUri = sourceResult.getRequestUri();
-        HttpResponse<S> sourceHttpResponse = sourceResult.getHttpResponse().orElse(null);
-        Throwable sourceCause = sourceResult.getCause().orElse(null);
+        String sourceRequestMethod = sourceHttpResult.getRequestMethod();
+        String sourceRequestUri = sourceHttpResult.getRequestUri();
+        HttpResponse<S> sourceHttpResponse = sourceHttpResult.getHttpResponse().orElse(null);
+        Throwable sourceCause = sourceHttpResult.getCause().orElse(null);
 
-        final MigratableResult<T> destinationMigratableResult;
+        final MigratableHttpResult<T> destinationHttpResult;
+
         if (sourceHttpResponse != null) {
-            // Source result contains a HTTP response.
+            // Source HTTP result contains a HTTP response.
             int sourceCode = sourceHttpResponse.getCode();
             Set<Integer> sourceExpectedCodes = sourceHttpResponse.getExpectedCodes();
             S sourceMessageBody = sourceHttpResponse.getMessageBody().orElse(null);
@@ -189,12 +190,12 @@ abstract class AbstractMigratableBdApi extends AbstractBdApi {
                         migratedMetaHistory);
             }
 
-            destinationMigratableResult = new MigratableResult<>(sourceRequestMethod, sourceRequestUri, destinationMigratableHttpResponse, sourceCause);
+            destinationHttpResult = new MigratableHttpResult<>(sourceRequestMethod, sourceRequestUri, destinationMigratableHttpResponse, sourceCause);
         } else {
-            // Source result does NOT contain a HTTP response.
-            destinationMigratableResult = new MigratableResult<>(sourceRequestMethod, sourceRequestUri, null, sourceCause);
+            // Source HTTP result does NOT contain a HTTP response.
+            destinationHttpResult = new MigratableHttpResult<>(sourceRequestMethod, sourceRequestUri, null, sourceCause);
         }
 
-        return destinationMigratableResult;
+        return destinationHttpResult;
     }
 }

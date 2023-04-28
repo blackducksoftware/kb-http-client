@@ -29,13 +29,13 @@ import com.synopsys.bd.kb.httpclient.api.IBdComponentApi;
 import com.synopsys.bd.kb.httpclient.api.IBdComponentVariantApi;
 import com.synopsys.bd.kb.httpclient.api.IBdComponentVersionApi;
 import com.synopsys.bd.kb.httpclient.api.MigratableHttpResponse;
-import com.synopsys.bd.kb.httpclient.api.MigratableResult;
+import com.synopsys.bd.kb.httpclient.api.MigratableHttpResult;
 import com.synopsys.bd.kb.httpclient.model.BdComponentVariant;
 import com.synopsys.bd.kb.httpclient.model.BdComponentVariantHierarchy;
 import com.synopsys.bd.kb.httpclient.model.BdComponentVersion;
 import com.synopsys.bd.kb.httpclient.model.BdComponentVersionHierarchy;
 import com.synopsys.kb.httpclient.api.HttpResponse;
-import com.synopsys.kb.httpclient.api.Result;
+import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.model.Component;
 import com.synopsys.kb.httpclient.model.ComponentVariant;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
@@ -80,7 +80,7 @@ public class BdComponentFinderTest extends AbstractBdTest {
         // Find component version - absent response.
         MigratableHttpResponse<BdComponentVersion> componentVersionHttpResponse = new MigratableHttpResponse<>(404, Set.of(200, 402, 403, 404), null, null,
                 null);
-        MigratableResult<BdComponentVersion> componentVersionResult = new MigratableResult<BdComponentVersion>("GET",
+        MigratableHttpResult<BdComponentVersion> componentVersionResult = new MigratableHttpResult<BdComponentVersion>("GET",
                 BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID, componentVersionHttpResponse, null);
 
         Mockito.when(bdComponentVersionApi.find(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
@@ -100,11 +100,12 @@ public class BdComponentFinderTest extends AbstractBdTest {
         BdComponentVersion bdComponentVersion = new BdComponentVersion(componentVersion, BASE_HREF);
         MigratableHttpResponse<BdComponentVersion> componentVersionHttpResponse = new MigratableHttpResponse<>(200, Set.of(200, 402, 403, 404),
                 bdComponentVersion, null, null);
-        MigratableResult<BdComponentVersion> componentVersionResult = new MigratableResult<>("GET", BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID,
+        MigratableHttpResult<BdComponentVersion> componentVersionResult = new MigratableHttpResult<>("GET", BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID,
                 componentVersionHttpResponse, null);
 
         MigratableHttpResponse<Component> componentHttpResponse = new MigratableHttpResponse<>(404, Set.of(200, 404), null, null, null);
-        MigratableResult<Component> componentResult = new MigratableResult<>("GET", BASE_HREF + "/api/components/" + COMPONENT_ID, componentHttpResponse, null);
+        MigratableHttpResult<Component> componentResult = new MigratableHttpResult<>("GET", BASE_HREF + "/api/components/" + COMPONENT_ID,
+                componentHttpResponse, null);
 
         Mockito.when(bdComponentVersionApi.find(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
                 .thenReturn(componentVersionResult);
@@ -126,7 +127,8 @@ public class BdComponentFinderTest extends AbstractBdTest {
         BdComponentVersion bdComponentVersion1 = new BdComponentVersion(componentVersion1, BASE_HREF);
         MigratableHttpResponse<BdComponentVersion> componentVersionHttpResponse1 = new MigratableHttpResponse<>(200, Set.of(200, 402, 403, 404),
                 bdComponentVersion1, null, null);
-        MigratableResult<BdComponentVersion> componentVersionResult1 = new MigratableResult<>("GET", BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID,
+        MigratableHttpResult<BdComponentVersion> componentVersionResult1 = new MigratableHttpResult<>("GET",
+                BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID,
                 componentVersionHttpResponse1, null);
 
         UUID componentId2 = UUID.randomUUID();
@@ -134,7 +136,7 @@ public class BdComponentFinderTest extends AbstractBdTest {
         List<Meta> migratedComponentMetaHistory = List.of(new Meta(BASE_HREF + "/api/components/" + COMPONENT_ID, Collections.emptyList()));
         MigratableHttpResponse<Component> migratedComponentHttpResponse = new MigratableHttpResponse<>(200, Set.of(200, 404), migratedComponent, null,
                 migratedComponentMetaHistory);
-        MigratableResult<Component> migratedComponentResult = new MigratableResult<>("GET", BASE_HREF + "/api/components/" + componentId2,
+        MigratableHttpResult<Component> migratedComponentResult = new MigratableHttpResult<>("GET", BASE_HREF + "/api/components/" + componentId2,
                 migratedComponentHttpResponse, null);
 
         UUID componentVersionId2 = UUID.randomUUID();
@@ -142,7 +144,7 @@ public class BdComponentFinderTest extends AbstractBdTest {
         BdComponentVersion bdComponentVersion2 = new BdComponentVersion(componentVersion2, BASE_HREF);
         MigratableHttpResponse<BdComponentVersion> componentVersionHttpResponse2 = new MigratableHttpResponse<>(200, Set.of(200, 402, 403, 404),
                 bdComponentVersion2, null, null);
-        MigratableResult<BdComponentVersion> componentVersionResult2 = new MigratableResult<>("GET", BASE_HREF + "/api/versions/" + componentVersionId2,
+        MigratableHttpResult<BdComponentVersion> componentVersionResult2 = new MigratableHttpResult<>("GET", BASE_HREF + "/api/versions/" + componentVersionId2,
                 componentVersionHttpResponse2, null);
 
         Mockito.when(bdComponentVersionApi.find(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
@@ -166,12 +168,13 @@ public class BdComponentFinderTest extends AbstractBdTest {
         BdComponentVersion bdComponentVersion = new BdComponentVersion(componentVersion, BASE_HREF);
         MigratableHttpResponse<BdComponentVersion> componentVersionHttpResponse = new MigratableHttpResponse<>(200, Set.of(200, 402, 403, 404),
                 bdComponentVersion, null, null);
-        MigratableResult<BdComponentVersion> componentVersionResult = new MigratableResult<>("GET", BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID,
+        MigratableHttpResult<BdComponentVersion> componentVersionResult = new MigratableHttpResult<>("GET", BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID,
                 componentVersionHttpResponse, null);
 
         Component component = constructComponent(COMPONENT_ID, "MigratedComponent");
         MigratableHttpResponse<Component> componentHttpResponse = new MigratableHttpResponse<>(200, Set.of(200, 404), component, null, null);
-        MigratableResult<Component> componentResult = new MigratableResult<>("GET", BASE_HREF + "/api/components/" + COMPONENT_ID, componentHttpResponse, null);
+        MigratableHttpResult<Component> componentResult = new MigratableHttpResult<>("GET", BASE_HREF + "/api/components/" + COMPONENT_ID,
+                componentHttpResponse, null);
 
         Mockito.when(bdComponentVersionApi.find(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
                 .thenReturn(componentVersionResult);
@@ -193,7 +196,8 @@ public class BdComponentFinderTest extends AbstractBdTest {
         BdComponentVersion bdComponentVersion1 = new BdComponentVersion(componentVersion1, BASE_HREF);
         MigratableHttpResponse<BdComponentVersion> componentVersionHttpResponse1 = new MigratableHttpResponse<>(200, Set.of(200, 402, 403, 404),
                 bdComponentVersion1, null, null);
-        MigratableResult<BdComponentVersion> componentVersionResult1 = new MigratableResult<>("GET", BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID,
+        MigratableHttpResult<BdComponentVersion> componentVersionResult1 = new MigratableHttpResult<>("GET",
+                BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID,
                 componentVersionHttpResponse1, null);
 
         UUID componentId2 = UUID.randomUUID();
@@ -201,7 +205,7 @@ public class BdComponentFinderTest extends AbstractBdTest {
         List<Meta> migratedComponentMetaHistory1 = List.of(new Meta(BASE_HREF + "/api/components/" + COMPONENT_ID, Collections.emptyList()));
         MigratableHttpResponse<Component> migratedComponentHttpResponse1 = new MigratableHttpResponse<>(200, Set.of(200, 404), migratedComponent1, null,
                 migratedComponentMetaHistory1);
-        MigratableResult<Component> migratedComponentResult1 = new MigratableResult<>("GET", BASE_HREF + "/api/components/" + componentId2,
+        MigratableHttpResult<Component> migratedComponentResult1 = new MigratableHttpResult<>("GET", BASE_HREF + "/api/components/" + componentId2,
                 migratedComponentHttpResponse1, null);
 
         UUID componentVersionId2 = UUID.randomUUID();
@@ -209,7 +213,7 @@ public class BdComponentFinderTest extends AbstractBdTest {
         BdComponentVersion bdComponentVersion2 = new BdComponentVersion(componentVersion2, BASE_HREF);
         MigratableHttpResponse<BdComponentVersion> componentVersionHttpResponse2 = new MigratableHttpResponse<>(200, Set.of(200, 402, 403, 404),
                 bdComponentVersion2, null, null);
-        MigratableResult<BdComponentVersion> componentVersionResult2 = new MigratableResult<>("GET", BASE_HREF + "/api/versions/" + componentVersionId2,
+        MigratableHttpResult<BdComponentVersion> componentVersionResult2 = new MigratableHttpResult<>("GET", BASE_HREF + "/api/versions/" + componentVersionId2,
                 componentVersionHttpResponse2, null);
 
         UUID componentId3 = UUID.randomUUID();
@@ -217,7 +221,7 @@ public class BdComponentFinderTest extends AbstractBdTest {
         List<Meta> migratedComponentMetaHistory2 = List.of(new Meta(BASE_HREF + "/api/components/" + COMPONENT_ID, Collections.emptyList()));
         MigratableHttpResponse<Component> migratedComponentHttpResponse2 = new MigratableHttpResponse<>(200, Set.of(200, 404), migratedComponent2, null,
                 migratedComponentMetaHistory2);
-        MigratableResult<Component> migratedComponentResult2 = new MigratableResult<>("GET", BASE_HREF + "/api/components/" + componentId3,
+        MigratableHttpResult<Component> migratedComponentResult2 = new MigratableHttpResult<>("GET", BASE_HREF + "/api/components/" + componentId3,
                 migratedComponentHttpResponse2, null);
 
         Mockito.when(bdComponentVersionApi.find(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
@@ -239,7 +243,7 @@ public class BdComponentFinderTest extends AbstractBdTest {
     public void testFindComponentVariantHierarchyWithAbsentComponentVariant() {
         // Find component variant - absent response.
         HttpResponse<BdComponentVariant> componentVariantHttpResponse = new HttpResponse<>(404, Set.of(200, 404), null, null);
-        Result<BdComponentVariant> componentVariantResult = new Result<>("GET", BASE_HREF + "/api/variants/" + COMPONENT_VARIANT_ID,
+        HttpResult<BdComponentVariant> componentVariantResult = new HttpResult<>("GET", BASE_HREF + "/api/variants/" + COMPONENT_VARIANT_ID,
                 componentVariantHttpResponse);
 
         Mockito.when(bdComponentVariantApi.find(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult);
@@ -257,12 +261,12 @@ public class BdComponentFinderTest extends AbstractBdTest {
         ComponentVariant componentVariant = constructComponentVariant(COMPONENT_ID, COMPONENT_VERSION_ID, COMPONENT_VARIANT_ID, "1.0", "maven", "foo:foo:1.0");
         BdComponentVariant bdComponentVariant = new BdComponentVariant(componentVariant);
         HttpResponse<BdComponentVariant> componentVariantHttpResponse = new HttpResponse<>(200, Set.of(200, 404), bdComponentVariant, null);
-        Result<BdComponentVariant> componentVariantResult = new Result<>("GET", BASE_HREF + "/api/variants/" + COMPONENT_VARIANT_ID,
+        HttpResult<BdComponentVariant> componentVariantResult = new HttpResult<>("GET", BASE_HREF + "/api/variants/" + COMPONENT_VARIANT_ID,
                 componentVariantHttpResponse);
 
         MigratableHttpResponse<BdComponentVersion> componentVersionHttpResponse = new MigratableHttpResponse<>(404, Set.of(200, 402, 403, 404),
                 null, null, null);
-        MigratableResult<BdComponentVersion> componentVersionResult = new MigratableResult<>("GET", BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID,
+        MigratableHttpResult<BdComponentVersion> componentVersionResult = new MigratableHttpResult<>("GET", BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID,
                 componentVersionHttpResponse, null);
 
         Mockito.when(bdComponentVariantApi.find(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult);
@@ -284,7 +288,7 @@ public class BdComponentFinderTest extends AbstractBdTest {
         ComponentVariant componentVariant1 = constructComponentVariant(COMPONENT_ID, COMPONENT_VERSION_ID, COMPONENT_VARIANT_ID, "1.0", "maven", "foo:foo:1.0");
         BdComponentVariant bdComponentVariant1 = new BdComponentVariant(componentVariant1);
         HttpResponse<BdComponentVariant> componentVariantHttpResponse1 = new HttpResponse<>(200, Set.of(200, 404), bdComponentVariant1, null);
-        Result<BdComponentVariant> componentVariantResult1 = new Result<>("GET", BASE_HREF + "/api/variants/" + COMPONENT_VARIANT_ID,
+        HttpResult<BdComponentVariant> componentVariantResult1 = new HttpResult<>("GET", BASE_HREF + "/api/variants/" + COMPONENT_VARIANT_ID,
                 componentVariantHttpResponse1);
 
         UUID componentId2 = UUID.randomUUID();
@@ -294,18 +298,19 @@ public class BdComponentFinderTest extends AbstractBdTest {
         List<Meta> migratedComponentVersionMetaHistory = List.of(new Meta(BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID, Collections.emptyList()));
         MigratableHttpResponse<BdComponentVersion> migratedComponentVersionHttpResponse = new MigratableHttpResponse<>(200, Set.of(200, 402, 403, 404),
                 migratedBdComponentVersion, null, migratedComponentVersionMetaHistory);
-        MigratableResult<BdComponentVersion> migratedComponentVersionResult = new MigratableResult<>("GET", BASE_HREF + "/api/versions/" + componentVersionId2,
+        MigratableHttpResult<BdComponentVersion> migratedComponentVersionResult = new MigratableHttpResult<>("GET",
+                BASE_HREF + "/api/versions/" + componentVersionId2,
                 migratedComponentVersionHttpResponse, null);
 
         ComponentVariant componentVariant2 = constructComponentVariant(componentId2, componentVersionId2, COMPONENT_VARIANT_ID, "1.0", "maven", "foo:foo:1.0");
         BdComponentVariant bdComponentVariant2 = new BdComponentVariant(componentVariant2);
         HttpResponse<BdComponentVariant> componentVariantHttpResponse2 = new HttpResponse<>(200, Set.of(200, 404), bdComponentVariant2, null);
-        Result<BdComponentVariant> componentVariantResult2 = new Result<>("GET", BASE_HREF + "/api/variants/" + COMPONENT_VARIANT_ID,
+        HttpResult<BdComponentVariant> componentVariantResult2 = new HttpResult<>("GET", BASE_HREF + "/api/variants/" + COMPONENT_VARIANT_ID,
                 componentVariantHttpResponse2);
 
         Component component2 = constructComponent(componentId2, "MigratedComponent");
         MigratableHttpResponse<Component> componentHttpResponse2 = new MigratableHttpResponse<>(200, Set.of(200, 404), component2, null, null);
-        MigratableResult<Component> componentResult2 = new MigratableResult<>("GET", BASE_HREF + "/api/components/" + componentId2,
+        MigratableHttpResult<Component> componentResult2 = new MigratableHttpResult<>("GET", BASE_HREF + "/api/components/" + componentId2,
                 componentHttpResponse2, null);
 
         Mockito.when(bdComponentVariantApi.find(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult1);
@@ -330,18 +335,18 @@ public class BdComponentFinderTest extends AbstractBdTest {
         ComponentVariant componentVariant = constructComponentVariant(COMPONENT_ID, COMPONENT_VERSION_ID, COMPONENT_VARIANT_ID, "1.0", "maven", "foo:foo:1.0");
         BdComponentVariant bdComponentVariant = new BdComponentVariant(componentVariant);
         HttpResponse<BdComponentVariant> componentVariantHttpResponse = new HttpResponse<>(200, Set.of(200, 404), bdComponentVariant, null);
-        Result<BdComponentVariant> componentVariantResult = new Result<>("GET", BASE_HREF + "/api/variants/" + COMPONENT_VARIANT_ID,
+        HttpResult<BdComponentVariant> componentVariantResult = new HttpResult<>("GET", BASE_HREF + "/api/variants/" + COMPONENT_VARIANT_ID,
                 componentVariantHttpResponse);
 
         ComponentVersion componentVersion = constructComponentVersion(COMPONENT_ID, COMPONENT_VERSION_ID, "1.0");
         BdComponentVersion bdComponentVersion = new BdComponentVersion(componentVersion, BASE_HREF);
         MigratableHttpResponse<BdComponentVersion> componentVersionHttpResponse = new MigratableHttpResponse<>(200, Set.of(200, 402, 403, 404),
                 bdComponentVersion, null, null);
-        MigratableResult<BdComponentVersion> componentVersionResult = new MigratableResult<>("GET", BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID,
+        MigratableHttpResult<BdComponentVersion> componentVersionResult = new MigratableHttpResult<>("GET", BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID,
                 componentVersionHttpResponse, null);
 
         MigratableHttpResponse<Component> componentHttpResponse = new MigratableHttpResponse<>(404, Set.of(200, 404), null, null, null);
-        MigratableResult<Component> componentResult = new MigratableResult<>("GET", BASE_HREF + "/api/components/" + COMPONENT_ID,
+        MigratableHttpResult<Component> componentResult = new MigratableHttpResult<>("GET", BASE_HREF + "/api/components/" + COMPONENT_ID,
                 componentHttpResponse, null);
 
         Mockito.when(bdComponentVariantApi.find(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult);
@@ -366,14 +371,15 @@ public class BdComponentFinderTest extends AbstractBdTest {
         ComponentVariant componentVariant1 = constructComponentVariant(COMPONENT_ID, COMPONENT_VERSION_ID, COMPONENT_VARIANT_ID, "1.0", "maven", "foo:foo:1.0");
         BdComponentVariant bdComponentVariant1 = new BdComponentVariant(componentVariant1);
         HttpResponse<BdComponentVariant> componentVariantHttpResponse1 = new HttpResponse<>(200, Set.of(200, 404), bdComponentVariant1, null);
-        Result<BdComponentVariant> componentVariantResult1 = new Result<>("GET", BASE_HREF + "/api/variants/" + COMPONENT_VARIANT_ID,
+        HttpResult<BdComponentVariant> componentVariantResult1 = new HttpResult<>("GET", BASE_HREF + "/api/variants/" + COMPONENT_VARIANT_ID,
                 componentVariantHttpResponse1);
 
         ComponentVersion componentVersion1 = constructComponentVersion(COMPONENT_ID, COMPONENT_VERSION_ID, "1.0");
         BdComponentVersion bdComponentVersion1 = new BdComponentVersion(componentVersion1, BASE_HREF);
         MigratableHttpResponse<BdComponentVersion> componentVersionHttpResponse1 = new MigratableHttpResponse<>(200, Set.of(200, 402, 403, 404),
                 bdComponentVersion1, null, null);
-        MigratableResult<BdComponentVersion> componentVersionResult1 = new MigratableResult<>("GET", BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID,
+        MigratableHttpResult<BdComponentVersion> componentVersionResult1 = new MigratableHttpResult<>("GET",
+                BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID,
                 componentVersionHttpResponse1, null);
 
         UUID componentId2 = UUID.randomUUID();
@@ -381,21 +387,21 @@ public class BdComponentFinderTest extends AbstractBdTest {
         List<Meta> migratedComponentMetaHistory = List.of(new Meta(BASE_HREF + "/api/components/" + COMPONENT_ID, Collections.emptyList()));
         MigratableHttpResponse<Component> migratedComponentHttpResponse = new MigratableHttpResponse<>(200, Set.of(200, 404), migratedComponent, null,
                 migratedComponentMetaHistory);
-        MigratableResult<Component> migratedComponentResult = new MigratableResult<>("GET", BASE_HREF + "/api/components/" + componentId2,
+        MigratableHttpResult<Component> migratedComponentResult = new MigratableHttpResult<>("GET", BASE_HREF + "/api/components/" + componentId2,
                 migratedComponentHttpResponse, null);
 
         UUID componentVersionId2 = UUID.randomUUID();
         ComponentVariant componentVariant2 = constructComponentVariant(componentId2, componentVersionId2, COMPONENT_VARIANT_ID, "1.0", "maven", "foo:foo:1.0");
         BdComponentVariant bdComponentVariant2 = new BdComponentVariant(componentVariant2);
         HttpResponse<BdComponentVariant> componentVariantHttpResponse2 = new HttpResponse<>(200, Set.of(200, 404), bdComponentVariant2, null);
-        Result<BdComponentVariant> componentVariantResult2 = new Result<>("GET", BASE_HREF + "/api/variants/" + COMPONENT_VARIANT_ID,
+        HttpResult<BdComponentVariant> componentVariantResult2 = new HttpResult<>("GET", BASE_HREF + "/api/variants/" + COMPONENT_VARIANT_ID,
                 componentVariantHttpResponse2);
 
         ComponentVersion componentVersion2 = constructComponentVersion(componentId2, componentVersionId2, "1.0");
         BdComponentVersion bdComponentVersion2 = new BdComponentVersion(componentVersion2, BASE_HREF);
         MigratableHttpResponse<BdComponentVersion> componentVersionHttpResponse2 = new MigratableHttpResponse<>(200, Set.of(200, 402, 403, 404),
                 bdComponentVersion2, null, null);
-        MigratableResult<BdComponentVersion> componentVersionResult2 = new MigratableResult<>("GET", BASE_HREF + "/api/versions/" + componentVersionId2,
+        MigratableHttpResult<BdComponentVersion> componentVersionResult2 = new MigratableHttpResult<>("GET", BASE_HREF + "/api/versions/" + componentVersionId2,
                 componentVersionHttpResponse2, null);
 
         Mockito.when(bdComponentVariantApi.find(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult1);
@@ -421,19 +427,20 @@ public class BdComponentFinderTest extends AbstractBdTest {
         ComponentVariant componentVariant = constructComponentVariant(COMPONENT_ID, COMPONENT_VERSION_ID, COMPONENT_VARIANT_ID, "1.0", "maven", "foo:foo:1.0");
         BdComponentVariant bdComponentVariant = new BdComponentVariant(componentVariant);
         HttpResponse<BdComponentVariant> componentVariantHttpResponse = new HttpResponse<>(200, Set.of(200, 404), bdComponentVariant, null);
-        Result<BdComponentVariant> componentVariantResult = new Result<>("GET", BASE_HREF + "/api/variants/" + COMPONENT_VARIANT_ID,
+        HttpResult<BdComponentVariant> componentVariantResult = new HttpResult<>("GET", BASE_HREF + "/api/variants/" + COMPONENT_VARIANT_ID,
                 componentVariantHttpResponse);
 
         ComponentVersion componentVersion = constructComponentVersion(COMPONENT_ID, COMPONENT_VERSION_ID, "1.0");
         BdComponentVersion bdComponentVersion = new BdComponentVersion(componentVersion, BASE_HREF);
         MigratableHttpResponse<BdComponentVersion> componentVersionHttpResponse = new MigratableHttpResponse<>(200, Set.of(200, 402, 403, 404),
                 bdComponentVersion, null, null);
-        MigratableResult<BdComponentVersion> componentVersionResult = new MigratableResult<>("GET", BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID,
+        MigratableHttpResult<BdComponentVersion> componentVersionResult = new MigratableHttpResult<>("GET", BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID,
                 componentVersionHttpResponse, null);
 
         Component component = constructComponent(COMPONENT_ID, "MigratedComponent");
         MigratableHttpResponse<Component> componentHttpResponse = new MigratableHttpResponse<>(200, Set.of(200, 404), component, null, null);
-        MigratableResult<Component> componentResult = new MigratableResult<>("GET", BASE_HREF + "/api/components/" + COMPONENT_ID, componentHttpResponse, null);
+        MigratableHttpResult<Component> componentResult = new MigratableHttpResult<>("GET", BASE_HREF + "/api/components/" + COMPONENT_ID,
+                componentHttpResponse, null);
 
         Mockito.when(bdComponentVariantApi.find(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult);
         Mockito.when(bdComponentVersionApi.find(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
@@ -457,14 +464,15 @@ public class BdComponentFinderTest extends AbstractBdTest {
         ComponentVariant componentVariant1 = constructComponentVariant(COMPONENT_ID, COMPONENT_VERSION_ID, COMPONENT_VARIANT_ID, "1.0", "maven", "foo:foo:1.0");
         BdComponentVariant bdComponentVariant1 = new BdComponentVariant(componentVariant1);
         HttpResponse<BdComponentVariant> componentVariantHttpResponse1 = new HttpResponse<>(200, Set.of(200, 404), bdComponentVariant1, null);
-        Result<BdComponentVariant> componentVariantResult1 = new Result<>("GET", BASE_HREF + "/api/variants/" + COMPONENT_VARIANT_ID,
+        HttpResult<BdComponentVariant> componentVariantResult1 = new HttpResult<>("GET", BASE_HREF + "/api/variants/" + COMPONENT_VARIANT_ID,
                 componentVariantHttpResponse1);
 
         ComponentVersion componentVersion1 = constructComponentVersion(COMPONENT_ID, COMPONENT_VERSION_ID, "1.0");
         BdComponentVersion bdComponentVersion1 = new BdComponentVersion(componentVersion1, BASE_HREF);
         MigratableHttpResponse<BdComponentVersion> componentVersionHttpResponse1 = new MigratableHttpResponse<>(200, Set.of(200, 402, 403, 404),
                 bdComponentVersion1, null, null);
-        MigratableResult<BdComponentVersion> componentVersionResult1 = new MigratableResult<>("GET", BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID,
+        MigratableHttpResult<BdComponentVersion> componentVersionResult1 = new MigratableHttpResult<>("GET",
+                BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID,
                 componentVersionHttpResponse1, null);
 
         UUID componentId2 = UUID.randomUUID();
@@ -472,21 +480,21 @@ public class BdComponentFinderTest extends AbstractBdTest {
         List<Meta> migratedComponentMetaHistory1 = List.of(new Meta(BASE_HREF + "/api/components/" + COMPONENT_ID, Collections.emptyList()));
         MigratableHttpResponse<Component> migratedComponentHttpResponse1 = new MigratableHttpResponse<>(200, Set.of(200, 404), migratedComponent1, null,
                 migratedComponentMetaHistory1);
-        MigratableResult<Component> migratedComponentResult1 = new MigratableResult<>("GET", BASE_HREF + "/api/components/" + componentId2,
+        MigratableHttpResult<Component> migratedComponentResult1 = new MigratableHttpResult<>("GET", BASE_HREF + "/api/components/" + componentId2,
                 migratedComponentHttpResponse1, null);
 
         UUID componentVersionId2 = UUID.randomUUID();
         ComponentVariant componentVariant2 = constructComponentVariant(componentId2, componentVersionId2, COMPONENT_VARIANT_ID, "1.0", "maven", "foo:foo:1.0");
         BdComponentVariant bdComponentVariant2 = new BdComponentVariant(componentVariant2);
         HttpResponse<BdComponentVariant> componentVariantHttpResponse2 = new HttpResponse<>(200, Set.of(200, 404), bdComponentVariant2, null);
-        Result<BdComponentVariant> componentVariantResult2 = new Result<>("GET", BASE_HREF + "/api/variants/" + COMPONENT_VARIANT_ID,
+        HttpResult<BdComponentVariant> componentVariantResult2 = new HttpResult<>("GET", BASE_HREF + "/api/variants/" + COMPONENT_VARIANT_ID,
                 componentVariantHttpResponse2);
 
         ComponentVersion componentVersion2 = constructComponentVersion(componentId2, componentVersionId2, "1.0");
         BdComponentVersion bdComponentVersion2 = new BdComponentVersion(componentVersion2, BASE_HREF);
         MigratableHttpResponse<BdComponentVersion> componentVersionHttpResponse2 = new MigratableHttpResponse<>(200, Set.of(200, 402, 403, 404),
                 bdComponentVersion2, null, null);
-        MigratableResult<BdComponentVersion> componentVersionResult2 = new MigratableResult<>("GET", BASE_HREF + "/api/versions/" + componentVersionId2,
+        MigratableHttpResult<BdComponentVersion> componentVersionResult2 = new MigratableHttpResult<>("GET", BASE_HREF + "/api/versions/" + componentVersionId2,
                 componentVersionHttpResponse2, null);
 
         UUID componentId3 = UUID.randomUUID();
@@ -494,7 +502,7 @@ public class BdComponentFinderTest extends AbstractBdTest {
         List<Meta> migratedComponentMetaHistory2 = List.of(new Meta(BASE_HREF + "/api/components/" + componentId2, Collections.emptyList()));
         MigratableHttpResponse<Component> migratedComponentHttpResponse2 = new MigratableHttpResponse<>(200, Set.of(200, 404), migratedComponent2, null,
                 migratedComponentMetaHistory2);
-        MigratableResult<Component> migratedComponentResult2 = new MigratableResult<>("GET", BASE_HREF + "/api/components/" + componentId3,
+        MigratableHttpResult<Component> migratedComponentResult2 = new MigratableHttpResult<>("GET", BASE_HREF + "/api/components/" + componentId3,
                 migratedComponentHttpResponse2, null);
 
         Mockito.when(bdComponentVariantApi.find(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult1);

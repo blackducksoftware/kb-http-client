@@ -20,11 +20,11 @@ import javax.annotation.Nullable;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.synopsys.bd.kb.httpclient.api.IBdComponentVersionApi;
-import com.synopsys.bd.kb.httpclient.api.MigratableResult;
+import com.synopsys.bd.kb.httpclient.api.MigratableHttpResult;
 import com.synopsys.bd.kb.httpclient.model.BdComponentVersion;
+import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.api.IComponentVersionApi;
 import com.synopsys.kb.httpclient.api.PageRequest;
-import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.BdsaVulnerability;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
 import com.synopsys.kb.httpclient.model.CveVulnerability;
@@ -67,7 +67,7 @@ public class BdComponentVersionApi extends AbstractMigratableBdApi implements IB
     }
 
     @Override
-    public MigratableResult<BdComponentVersion> find(UUID componentVersionId,
+    public MigratableHttpResult<BdComponentVersion> find(UUID componentVersionId,
             final VulnerabilitySourcePriority vulnerabilitySourcePriority,
             final VulnerabilityScorePriority vulnerabilityScorePriority) {
         Objects.requireNonNull(componentVersionId, "Component version id must be initialized.");
@@ -76,7 +76,7 @@ public class BdComponentVersionApi extends AbstractMigratableBdApi implements IB
 
         // Find a component version result given a dynamic component version id.
         // Source priority and score priority should remain consistent across multiple requests.
-        Function<UUID, Result<ComponentVersion>> resultFunction = (sourceComponentVersionId) -> componentVersionApi
+        Function<UUID, HttpResult<ComponentVersion>> resultFunction = (sourceComponentVersionId) -> componentVersionApi
                 .find(sourceComponentVersionId, vulnerabilitySourcePriority, vulnerabilityScorePriority);
 
         // Convert from a component version to a Black Duck-centric component version.
@@ -84,25 +84,25 @@ public class BdComponentVersionApi extends AbstractMigratableBdApi implements IB
             return new BdComponentVersion(componentVersion, baseHref);
         };
 
-        return findMigratableResult(componentVersionId, resultFunction, conversionFunction, "versions");
+        return findMigratableHttpResult(componentVersionId, resultFunction, conversionFunction, "versions");
     }
 
     @Override
-    public MigratableResult<NextVersion> findNextVersion(UUID componentVersionId) {
+    public MigratableHttpResult<NextVersion> findNextVersion(UUID componentVersionId) {
         Objects.requireNonNull(componentVersionId, "Component version id must be initialized.");
 
         // Find a next version result given a dynamic component version id.
         // Source priority and score priority should remain consistent across multiple requests.
-        Function<UUID, Result<NextVersion>> resultFunction = (sourceComponentVersionId) -> componentVersionApi.findNextVersion(sourceComponentVersionId);
+        Function<UUID, HttpResult<NextVersion>> resultFunction = (sourceComponentVersionId) -> componentVersionApi.findNextVersion(sourceComponentVersionId);
 
         // No conversion is required.
         Function<NextVersion, NextVersion> conversionFunction = Function.identity();
 
-        return findMigratableResult(componentVersionId, resultFunction, conversionFunction, "versions");
+        return findMigratableHttpResult(componentVersionId, resultFunction, conversionFunction, "versions");
     }
 
     @Override
-    public MigratableResult<Page<CveVulnerability>> findCveVulnerabilities(final PageRequest pageRequest,
+    public MigratableHttpResult<Page<CveVulnerability>> findCveVulnerabilities(final PageRequest pageRequest,
             UUID componentVersionId,
             @Nullable final String searchTermFilter) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
@@ -110,17 +110,17 @@ public class BdComponentVersionApi extends AbstractMigratableBdApi implements IB
 
         // Find a CVE vulnerability page result given a dynamic component version id.
         // Page request should remain consistent across multiple requests.
-        Function<UUID, Result<Page<CveVulnerability>>> resultFunction = (sourceComponentVersionId) -> componentVersionApi
+        Function<UUID, HttpResult<Page<CveVulnerability>>> resultFunction = (sourceComponentVersionId) -> componentVersionApi
                 .findCveVulnerabilities(pageRequest, sourceComponentVersionId, searchTermFilter);
 
         // No conversion is required.
         Function<Page<CveVulnerability>, Page<CveVulnerability>> conversionFunction = Function.identity();
 
-        return findMigratableResult(componentVersionId, resultFunction, conversionFunction, "versions");
+        return findMigratableHttpResult(componentVersionId, resultFunction, conversionFunction, "versions");
     }
 
     @Override
-    public MigratableResult<Page<BdsaVulnerability>> findBdsaVulnerabilities(final PageRequest pageRequest,
+    public MigratableHttpResult<Page<BdsaVulnerability>> findBdsaVulnerabilities(final PageRequest pageRequest,
             UUID componentVersionId,
             @Nullable final String searchTermFilter) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
@@ -128,17 +128,17 @@ public class BdComponentVersionApi extends AbstractMigratableBdApi implements IB
 
         // Find a BDSA vulnerability page result given a dynamic component version id.
         // Page request should remain consistent across multiple requests.
-        Function<UUID, Result<Page<BdsaVulnerability>>> resultFunction = (sourceComponentVersionId) -> componentVersionApi
+        Function<UUID, HttpResult<Page<BdsaVulnerability>>> resultFunction = (sourceComponentVersionId) -> componentVersionApi
                 .findBdsaVulnerabilities(pageRequest, sourceComponentVersionId, searchTermFilter);
 
         // No conversion is required.
         Function<Page<BdsaVulnerability>, Page<BdsaVulnerability>> conversionFunction = Function.identity();
 
-        return findMigratableResult(componentVersionId, resultFunction, conversionFunction, "versions");
+        return findMigratableHttpResult(componentVersionId, resultFunction, conversionFunction, "versions");
     }
 
     @Override
-    public MigratableResult<UpgradeGuidance> findUpgradeGuidance(UUID componentVersionId,
+    public MigratableHttpResult<UpgradeGuidance> findUpgradeGuidance(UUID componentVersionId,
             final VulnerabilitySourcePriority vulnerabilitySourcePriority,
             final VulnerabilityScorePriority vulnerabilityScorePriority) {
         Objects.requireNonNull(componentVersionId, "Component version id must be initialized.");
@@ -147,12 +147,12 @@ public class BdComponentVersionApi extends AbstractMigratableBdApi implements IB
 
         // Find a component version result given a dynamic component version id.
         // Source priority and score priority should remain consistent across multiple requests.
-        Function<UUID, Result<UpgradeGuidance>> resultFunction = (sourceComponentVersionId) -> componentVersionApi
+        Function<UUID, HttpResult<UpgradeGuidance>> resultFunction = (sourceComponentVersionId) -> componentVersionApi
                 .findUpgradeGuidance(sourceComponentVersionId, vulnerabilitySourcePriority, vulnerabilityScorePriority);
 
         // No conversion is required.
         Function<UpgradeGuidance, UpgradeGuidance> conversionFunction = Function.identity();
 
-        return findMigratableResult(componentVersionId, resultFunction, conversionFunction, "versions");
+        return findMigratableHttpResult(componentVersionId, resultFunction, conversionFunction, "versions");
     }
 }

@@ -22,10 +22,10 @@ import org.testng.annotations.Test;
 
 import com.synopsys.kb.httpclient.AbstractFuncTest;
 import com.synopsys.kb.httpclient.api.HttpResponse;
+import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.api.IComponentApi;
 import com.synopsys.kb.httpclient.api.IKbHttpApi;
 import com.synopsys.kb.httpclient.api.PageRequest;
-import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.Component;
 import com.synopsys.kb.httpclient.model.ComponentSearchResult;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
@@ -53,9 +53,9 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
     @Test(enabled = false)
     public void testFindComponent() {
         UUID componentId = UUID.fromString("b75f622a-30da-46e4-a9c9-56f4ab75e22e");
-        Result<Component> result = componentApi.findComponent(componentId);
+        HttpResult<Component> httpResult = componentApi.findComponent(componentId);
 
-        HttpResponse<Component> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<Component> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
 
@@ -75,9 +75,9 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
     @Test(enabled = false)
     public void testFindComponentWhenMergeMigrated() {
         UUID mergeComponentId = UUID.fromString("d82fb719-977c-49aa-b799-3953356aa15c");
-        Result<Component> result = componentApi.findComponent(mergeComponentId);
+        HttpResult<Component> httpResult = componentApi.findComponent(mergeComponentId);
 
-        HttpResponse<Component> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<Component> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MOVED_PERMANENTLY, "Codes should be equal.");
@@ -91,9 +91,9 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
     @Test(enabled = false)
     public void testFindComponentWhenSplitMigrated() {
         UUID splitComponentId = UUID.fromString("2510dcac-ef8a-4088-a60c-ae6605054c3c");
-        Result<Component> result = componentApi.findComponent(splitComponentId);
+        HttpResult<Component> httpResult = componentApi.findComponent(splitComponentId);
 
-        HttpResponse<Component> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<Component> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MULTIPLE_CHOICES, "Codes should be equal.");
@@ -109,10 +109,11 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
         UUID componentId = UUID.fromString("b75f622a-30da-46e4-a9c9-56f4ab75e22e");
 
-        Result<Page<ComponentVersion>> result = componentApi.findComponentVersionsByComponent(pageRequest, componentId, null, VulnerabilitySourcePriority.BDSA,
+        HttpResult<Page<ComponentVersion>> httpResult = componentApi.findComponentVersionsByComponent(pageRequest, componentId, null,
+                VulnerabilitySourcePriority.BDSA,
                 VulnerabilityScorePriority.CVSS_3, Boolean.FALSE);
 
-        HttpResponse<Page<ComponentVersion>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<Page<ComponentVersion>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
 
@@ -136,10 +137,10 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
         UUID mergeComponentId = UUID.fromString("d82fb719-977c-49aa-b799-3953356aa15c");
 
-        Result<Page<ComponentVersion>> result = componentApi.findComponentVersionsByComponent(pageRequest, mergeComponentId, null,
+        HttpResult<Page<ComponentVersion>> httpResult = componentApi.findComponentVersionsByComponent(pageRequest, mergeComponentId, null,
                 VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3, Boolean.FALSE);
 
-        HttpResponse<Page<ComponentVersion>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<Page<ComponentVersion>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MOVED_PERMANENTLY, "Codes should be equal.");
@@ -155,10 +156,10 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
         UUID splitComponentId = UUID.fromString("2510dcac-ef8a-4088-a60c-ae6605054c3c");
 
-        Result<Page<ComponentVersion>> result = componentApi.findComponentVersionsByComponent(pageRequest, splitComponentId, null,
+        HttpResult<Page<ComponentVersion>> httpResult = componentApi.findComponentVersionsByComponent(pageRequest, splitComponentId, null,
                 VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3, Boolean.FALSE);
 
-        HttpResponse<Page<ComponentVersion>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<Page<ComponentVersion>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MULTIPLE_CHOICES, "Codes should be equal.");
@@ -174,9 +175,10 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
         UUID componentId = UUID.fromString("b75f622a-30da-46e4-a9c9-56f4ab75e22e");
 
-        Result<Page<ComponentVersionSummary>> result = componentApi.findComponentVersionSummariesByComponent(pageRequest, componentId, null, Boolean.FALSE);
+        HttpResult<Page<ComponentVersionSummary>> httpResult = componentApi.findComponentVersionSummariesByComponent(pageRequest, componentId, null,
+                Boolean.FALSE);
 
-        HttpResponse<Page<ComponentVersionSummary>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<Page<ComponentVersionSummary>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
 
@@ -200,10 +202,10 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
         UUID mergeComponentId = UUID.fromString("d82fb719-977c-49aa-b799-3953356aa15c");
 
-        Result<Page<ComponentVersionSummary>> result = componentApi.findComponentVersionSummariesByComponent(pageRequest, mergeComponentId, null,
+        HttpResult<Page<ComponentVersionSummary>> httpResult = componentApi.findComponentVersionSummariesByComponent(pageRequest, mergeComponentId, null,
                 Boolean.FALSE);
 
-        HttpResponse<Page<ComponentVersionSummary>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<Page<ComponentVersionSummary>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MOVED_PERMANENTLY, "Codes should be equal.");
@@ -219,10 +221,10 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
         UUID splitComponentId = UUID.fromString("2510dcac-ef8a-4088-a60c-ae6605054c3c");
 
-        Result<Page<ComponentVersionSummary>> result = componentApi.findComponentVersionSummariesByComponent(pageRequest, splitComponentId, null,
+        HttpResult<Page<ComponentVersionSummary>> httpResult = componentApi.findComponentVersionSummariesByComponent(pageRequest, splitComponentId, null,
                 Boolean.FALSE);
 
-        HttpResponse<Page<ComponentVersionSummary>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<Page<ComponentVersionSummary>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MULTIPLE_CHOICES, "Codes should be equal.");
@@ -237,9 +239,9 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
     public void testFindOngoingVersionByComponent() {
         UUID componentId = UUID.fromString("9f74f66e-5c27-48d0-9083-e31e3563b7b2");
 
-        Result<OngoingVersion> result = componentApi.findOngoingVersionByComponent(componentId);
+        HttpResult<OngoingVersion> httpResult = componentApi.findOngoingVersionByComponent(componentId);
 
-        HttpResponse<OngoingVersion> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<OngoingVersion> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
 
@@ -260,9 +262,9 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
     public void testFindOngoingVersionByComponentWhenMergeMigrated() {
         UUID mergeComponentId = UUID.fromString("d82fb719-977c-49aa-b799-3953356aa15c");
 
-        Result<OngoingVersion> result = componentApi.findOngoingVersionByComponent(mergeComponentId);
+        HttpResult<OngoingVersion> httpResult = componentApi.findOngoingVersionByComponent(mergeComponentId);
 
-        HttpResponse<OngoingVersion> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<OngoingVersion> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MOVED_PERMANENTLY, "Codes should be equal.");
@@ -277,9 +279,9 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
     public void testFindOngoingVersionByComponentWhenSplitMigrated() {
         UUID splitComponentId = UUID.fromString("2510dcac-ef8a-4088-a60c-ae6605054c3c");
 
-        Result<OngoingVersion> result = componentApi.findOngoingVersionByComponent(splitComponentId);
+        HttpResult<OngoingVersion> httpResult = componentApi.findOngoingVersionByComponent(splitComponentId);
 
-        HttpResponse<OngoingVersion> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<OngoingVersion> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MULTIPLE_CHOICES, "Codes should be equal.");
@@ -294,9 +296,9 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
     public void testSearch() {
         PageRequest pageRequest = new PageRequest(0, 100, Collections.emptyList());
         String searchTermFilter = "maven:org.apache.logging.log4j:log4j-core:2.4.1";
-        Result<Page<ComponentSearchResult>> result = componentApi.search(pageRequest, searchTermFilter, false);
+        HttpResult<Page<ComponentSearchResult>> httpResult = componentApi.search(pageRequest, searchTermFilter, false);
 
-        HttpResponse<Page<ComponentSearchResult>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<Page<ComponentSearchResult>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");

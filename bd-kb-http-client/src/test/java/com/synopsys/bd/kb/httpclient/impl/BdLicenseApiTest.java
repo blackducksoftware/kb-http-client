@@ -28,9 +28,9 @@ import com.synopsys.bd.kb.httpclient.AbstractBdTest;
 import com.synopsys.bd.kb.httpclient.api.IBdLicenseApi;
 import com.synopsys.bd.kb.httpclient.model.BdLicense;
 import com.synopsys.kb.httpclient.api.HttpResponse;
+import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.api.ILicenseApi;
 import com.synopsys.kb.httpclient.api.PageRequest;
-import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.License;
 import com.synopsys.kb.httpclient.model.LicenseCodeSharing;
 import com.synopsys.kb.httpclient.model.LicenseOwnership;
@@ -85,51 +85,51 @@ public class BdLicenseApiTest extends AbstractBdTest {
 
     @Test
     public void testFindLicenseWithoutHttpResponse() {
-        Result<License> sourceResult = new Result<>(REQUEST_METHOD, LICENSE_REQUEST_URI + '/' + LICENSE_ID, CAUSE);
+        HttpResult<License> sourceResult = new HttpResult<>(REQUEST_METHOD, LICENSE_REQUEST_URI + '/' + LICENSE_ID, CAUSE);
 
         Mockito.when(licenseApi.findLicense(LICENSE_ID)).thenReturn(sourceResult);
 
-        Result<BdLicense> result = bdLicenseApi.findLicense(LICENSE_ID);
+        HttpResult<BdLicense> httpResult = bdLicenseApi.findLicense(LICENSE_ID);
 
-        assertResult(sourceResult, result);
+        assertHttpResult(sourceResult, httpResult);
     }
 
     @Test
     public void testFindLicenseWithoutHttpResponseMessageBody() {
         HttpResponse<License> sourceHttpResponse = new HttpResponse<>(404, Set.of(200, 404), null, null);
-        Result<License> sourceResult = new Result<>(REQUEST_METHOD, LICENSE_REQUEST_URI + '/' + LICENSE_ID, sourceHttpResponse);
+        HttpResult<License> sourceResult = new HttpResult<>(REQUEST_METHOD, LICENSE_REQUEST_URI + '/' + LICENSE_ID, sourceHttpResponse);
 
         Mockito.when(licenseApi.findLicense(LICENSE_ID)).thenReturn(sourceResult);
 
-        Result<BdLicense> result = bdLicenseApi.findLicense(LICENSE_ID);
+        HttpResult<BdLicense> httpResult = bdLicenseApi.findLicense(LICENSE_ID);
 
-        assertResult(sourceResult, result);
+        assertHttpResult(sourceResult, httpResult);
     }
 
     @Test
     public void testFindLicense() {
         License license = new License(NAME, CODE_SHARING, OWNERSHIP, LAST_UPDATED_AT, SPDX_ID, PARENT_DELETED, RESTRICTION, META);
         HttpResponse<License> sourceHttpResponse = new HttpResponse<>(200, Set.of(200, 404), license, null);
-        Result<License> sourceResult = new Result<>(REQUEST_METHOD, LICENSE_REQUEST_URI + '/' + LICENSE_ID, sourceHttpResponse);
+        HttpResult<License> sourceResult = new HttpResult<>(REQUEST_METHOD, LICENSE_REQUEST_URI + '/' + LICENSE_ID, sourceHttpResponse);
 
         Mockito.when(licenseApi.findLicense(LICENSE_ID)).thenReturn(sourceResult);
 
-        Result<BdLicense> result = bdLicenseApi.findLicense(LICENSE_ID);
+        HttpResult<BdLicense> httpResult = bdLicenseApi.findLicense(LICENSE_ID);
 
-        assertResult(sourceResult, result);
+        assertHttpResult(sourceResult, httpResult);
     }
 
     @Test
     public void testFindManyLicensesWithoutHttpResponse() {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
 
-        Result<Page<License>> sourceResult = new Result<>(REQUEST_METHOD, LICENSE_REQUEST_URI, CAUSE);
+        HttpResult<Page<License>> sourceResult = new HttpResult<>(REQUEST_METHOD, LICENSE_REQUEST_URI, CAUSE);
 
         Mockito.when(licenseApi.findManyLicenses(pageRequest, null, null)).thenReturn(sourceResult);
 
-        Result<Page<BdLicense>> result = bdLicenseApi.findManyLicenses(pageRequest, null, null);
+        HttpResult<Page<BdLicense>> httpResult = bdLicenseApi.findManyLicenses(pageRequest, null, null);
 
-        assertResult(sourceResult, result);
+        assertHttpResult(sourceResult, httpResult);
     }
 
     @Test
@@ -137,13 +137,13 @@ public class BdLicenseApiTest extends AbstractBdTest {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
 
         HttpResponse<Page<License>> sourceHttpResponse = new HttpResponse<>(422, Set.of(200), null, null);
-        Result<Page<License>> sourceResult = new Result<>(REQUEST_METHOD, LICENSE_REQUEST_URI, sourceHttpResponse);
+        HttpResult<Page<License>> sourceResult = new HttpResult<>(REQUEST_METHOD, LICENSE_REQUEST_URI, sourceHttpResponse);
 
         Mockito.when(licenseApi.findManyLicenses(pageRequest, null, null)).thenReturn(sourceResult);
 
-        Result<Page<BdLicense>> result = bdLicenseApi.findManyLicenses(pageRequest, null, null);
+        HttpResult<Page<BdLicense>> httpResult = bdLicenseApi.findManyLicenses(pageRequest, null, null);
 
-        assertResult(sourceResult, result);
+        assertHttpResult(sourceResult, httpResult);
     }
 
     @Test
@@ -154,13 +154,13 @@ public class BdLicenseApiTest extends AbstractBdTest {
         Meta licensePageMeta = new Meta(LICENSE_REQUEST_URI, Collections.emptyList());
         Page<License> licensePage = new Page<>(1, List.of(license), licensePageMeta);
         HttpResponse<Page<License>> sourceHttpResponse = new HttpResponse<>(200, Set.of(200), licensePage, null);
-        Result<Page<License>> sourceResult = new Result<>(REQUEST_METHOD, LICENSE_REQUEST_URI, sourceHttpResponse);
+        HttpResult<Page<License>> sourceResult = new HttpResult<>(REQUEST_METHOD, LICENSE_REQUEST_URI, sourceHttpResponse);
 
         Mockito.when(licenseApi.findManyLicenses(pageRequest, null, null)).thenReturn(sourceResult);
 
-        Result<Page<BdLicense>> result = bdLicenseApi.findManyLicenses(pageRequest, null, null);
+        HttpResult<Page<BdLicense>> httpResult = bdLicenseApi.findManyLicenses(pageRequest, null, null);
 
-        assertResult(sourceResult, result);
+        assertHttpResult(sourceResult, httpResult);
     }
 
     @Test
@@ -168,13 +168,13 @@ public class BdLicenseApiTest extends AbstractBdTest {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
         UUID licenseTermId = UUID.randomUUID();
 
-        Result<Page<License>> sourceResult = new Result<>(REQUEST_METHOD, LICENSE_REQUEST_URI, CAUSE);
+        HttpResult<Page<License>> sourceResult = new HttpResult<>(REQUEST_METHOD, LICENSE_REQUEST_URI, CAUSE);
 
         Mockito.when(licenseApi.findLicensesByLicenseTerm(pageRequest, licenseTermId)).thenReturn(sourceResult);
 
-        Result<Page<BdLicense>> result = bdLicenseApi.findLicensesByLicenseTerm(pageRequest, licenseTermId);
+        HttpResult<Page<BdLicense>> httpResult = bdLicenseApi.findLicensesByLicenseTerm(pageRequest, licenseTermId);
 
-        assertResult(sourceResult, result);
+        assertHttpResult(sourceResult, httpResult);
     }
 
     @Test
@@ -183,13 +183,13 @@ public class BdLicenseApiTest extends AbstractBdTest {
         UUID licenseTermId = UUID.randomUUID();
 
         HttpResponse<Page<License>> sourceHttpResponse = new HttpResponse<>(422, Set.of(200), null, null);
-        Result<Page<License>> sourceResult = new Result<>(REQUEST_METHOD, LICENSE_REQUEST_URI, sourceHttpResponse);
+        HttpResult<Page<License>> sourceResult = new HttpResult<>(REQUEST_METHOD, LICENSE_REQUEST_URI, sourceHttpResponse);
 
         Mockito.when(licenseApi.findLicensesByLicenseTerm(pageRequest, licenseTermId)).thenReturn(sourceResult);
 
-        Result<Page<BdLicense>> result = bdLicenseApi.findLicensesByLicenseTerm(pageRequest, licenseTermId);
+        HttpResult<Page<BdLicense>> httpResult = bdLicenseApi.findLicensesByLicenseTerm(pageRequest, licenseTermId);
 
-        assertResult(sourceResult, result);
+        assertHttpResult(sourceResult, httpResult);
     }
 
     @Test
@@ -201,12 +201,12 @@ public class BdLicenseApiTest extends AbstractBdTest {
         Meta licensePageMeta = new Meta(LICENSE_REQUEST_URI, Collections.emptyList());
         Page<License> licensePage = new Page<>(1, List.of(license), licensePageMeta);
         HttpResponse<Page<License>> sourceHttpResponse = new HttpResponse<>(200, Set.of(200), licensePage, null);
-        Result<Page<License>> sourceResult = new Result<>(REQUEST_METHOD, LICENSE_REQUEST_URI, sourceHttpResponse);
+        HttpResult<Page<License>> sourceResult = new HttpResult<>(REQUEST_METHOD, LICENSE_REQUEST_URI, sourceHttpResponse);
 
         Mockito.when(licenseApi.findLicensesByLicenseTerm(pageRequest, licenseTermId)).thenReturn(sourceResult);
 
-        Result<Page<BdLicense>> result = bdLicenseApi.findLicensesByLicenseTerm(pageRequest, licenseTermId);
+        HttpResult<Page<BdLicense>> httpResult = bdLicenseApi.findLicensesByLicenseTerm(pageRequest, licenseTermId);
 
-        assertResult(sourceResult, result);
+        assertHttpResult(sourceResult, httpResult);
     }
 }

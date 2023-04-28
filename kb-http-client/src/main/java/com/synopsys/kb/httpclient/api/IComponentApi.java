@@ -49,7 +49,7 @@ public interface IComponentApi {
      *            The component id.
      * @return Returns the component result.
      */
-    Result<Component> findComponent(UUID componentId);
+    HttpResult<Component> findComponent(UUID componentId);
 
     /**
      * Finds component versions for a given component.
@@ -94,7 +94,7 @@ public interface IComponentApi {
      *            default. Optional.
      * @return Returns the component version page result.
      */
-    Result<Page<ComponentVersion>> findComponentVersionsByComponent(PageRequest pageRequest,
+    HttpResult<Page<ComponentVersion>> findComponentVersionsByComponent(PageRequest pageRequest,
             UUID componentId,
             @Nullable String searchTermFilter,
             VulnerabilitySourcePriority vulnerabilitySourcePriority,
@@ -131,7 +131,7 @@ public interface IComponentApi {
      *            default. Optional.
      * @return Returns the component version summary page result.
      */
-    Result<Page<ComponentVersionSummary>> findComponentVersionSummariesByComponent(PageRequest pageRequest,
+    HttpResult<Page<ComponentVersionSummary>> findComponentVersionSummariesByComponent(PageRequest pageRequest,
             UUID componentId,
             @Nullable String searchTermFilter,
             @Nullable Boolean excludeDeleted);
@@ -155,7 +155,7 @@ public interface IComponentApi {
      *            The component id.
      * @return Returns the ongoing version result.
      */
-    Result<OngoingVersion> findOngoingVersionByComponent(UUID componentId);
+    HttpResult<OngoingVersion> findOngoingVersionByComponent(UUID componentId);
 
     /**
      * Search for components.
@@ -183,5 +183,5 @@ public interface IComponentApi {
      *            exact component results are supported.
      * @return Returns a component search result page result.
      */
-    Result<Page<ComponentSearchResult>> search(PageRequest pageRequest, String searchTermFilter, boolean allowPartialMatches);
+    HttpResult<Page<ComponentSearchResult>> search(PageRequest pageRequest, String searchTermFilter, boolean allowPartialMatches);
 }

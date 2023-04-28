@@ -14,7 +14,7 @@ package com.synopsys.bd.kb.httpclient.api;
 import java.util.UUID;
 
 import com.synopsys.bd.kb.httpclient.model.BdComponentVariant;
-import com.synopsys.kb.httpclient.api.Result;
+import com.synopsys.kb.httpclient.api.HttpResult;
 
 /**
  * Black Duck-centric component variant API interface.
@@ -33,5 +33,5 @@ public interface IBdComponentVariantApi {
      *            The component variant id.
      * @return Returns the Black Duck-centric component variant result.
      */
-    Result<BdComponentVariant> find(UUID componentVariantId);
+    HttpResult<BdComponentVariant> find(UUID componentVariantId);
 }

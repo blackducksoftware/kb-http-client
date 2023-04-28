@@ -17,8 +17,8 @@ import java.util.function.Function;
 
 import com.synopsys.bd.kb.httpclient.api.IBdComponentVariantApi;
 import com.synopsys.bd.kb.httpclient.model.BdComponentVariant;
+import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.api.IComponentVariantApi;
-import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.ComponentVariant;
 
 /**
@@ -38,16 +38,16 @@ public class BdComponentVariantApi extends AbstractBdApi implements IBdComponent
     }
 
     @Override
-    public Result<BdComponentVariant> find(UUID componentVariantId) {
+    public HttpResult<BdComponentVariant> find(UUID componentVariantId) {
         Objects.requireNonNull(componentVariantId, "Component variant id must be initialized.");
 
-        Result<ComponentVariant> result = componentVariantApi.find(componentVariantId);
+        HttpResult<ComponentVariant> httpResult = componentVariantApi.find(componentVariantId);
 
         // Convert a component variant to a BD component variant.
         Function<ComponentVariant, BdComponentVariant> conversionFunction = (componentVariant) -> {
             return new BdComponentVariant(componentVariant);
         };
 
-        return convert(result, conversionFunction);
+        return convert(httpResult, conversionFunction);
     }
 }

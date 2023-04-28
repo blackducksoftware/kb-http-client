@@ -24,9 +24,9 @@ import org.testng.annotations.Test;
 
 import com.synopsys.kb.httpclient.AbstractFuncTest;
 import com.synopsys.kb.httpclient.api.HttpResponse;
+import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.api.IActivityApi;
 import com.synopsys.kb.httpclient.api.IKbHttpApi;
-import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.BdsaVulnerabilityActivity;
 import com.synopsys.kb.httpclient.model.ComponentActivity;
 import com.synopsys.kb.httpclient.model.ComponentVariantActivity;
@@ -60,9 +60,9 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         // Assign to far past date for results.
         OffsetDateTime activitySince = OffsetDateTime.now().minusYears(20L);
 
-        Result<ListHolder<ComponentActivity>> result = activityApi.findComponentActivities(componentIds, activitySince);
+        HttpResult<ListHolder<ComponentActivity>> httpResult = activityApi.findComponentActivities(componentIds, activitySince);
 
-        HttpResponse<ListHolder<ComponentActivity>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<ListHolder<ComponentActivity>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
@@ -85,9 +85,9 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         // Assign to far past date for results.
         OffsetDateTime activitySince = OffsetDateTime.now().minusYears(20L);
 
-        Result<ListHolder<ComponentActivity>> result = activityApi.findOngoingVersionActivities(componentIds, activitySince);
+        HttpResult<ListHolder<ComponentActivity>> httpResult = activityApi.findOngoingVersionActivities(componentIds, activitySince);
 
-        HttpResponse<ListHolder<ComponentActivity>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<ListHolder<ComponentActivity>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
@@ -110,9 +110,9 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         // Assign to far past date for results.
         OffsetDateTime activitySince = OffsetDateTime.now().minusYears(20L);
 
-        Result<ListHolder<ComponentVersionActivity>> result = activityApi.findComponentVersionActivities(componentVersionIds, activitySince);
+        HttpResult<ListHolder<ComponentVersionActivity>> httpResult = activityApi.findComponentVersionActivities(componentVersionIds, activitySince);
 
-        HttpResponse<ListHolder<ComponentVersionActivity>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<ListHolder<ComponentVersionActivity>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
@@ -136,9 +136,9 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         // Assign to far past date for results.
         OffsetDateTime activitySince = OffsetDateTime.now().minusYears(20L);
 
-        Result<ListHolder<ComponentVersionActivity>> result = activityApi.findComponentVersionLicenseActivities(componentVersionIds, activitySince);
+        HttpResult<ListHolder<ComponentVersionActivity>> httpResult = activityApi.findComponentVersionLicenseActivities(componentVersionIds, activitySince);
 
-        HttpResponse<ListHolder<ComponentVersionActivity>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<ListHolder<ComponentVersionActivity>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
@@ -162,9 +162,10 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         // Assign to far past date for results.
         OffsetDateTime activitySince = OffsetDateTime.now().minusYears(20L);
 
-        Result<ListHolder<ComponentVersionActivity>> result = activityApi.findComponentVersionCveVulnerabilityActivities(componentVersionIds, activitySince);
+        HttpResult<ListHolder<ComponentVersionActivity>> httpResult = activityApi.findComponentVersionCveVulnerabilityActivities(componentVersionIds,
+                activitySince);
 
-        HttpResponse<ListHolder<ComponentVersionActivity>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<ListHolder<ComponentVersionActivity>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
@@ -190,9 +191,10 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         // Assign to far past date for results.
         OffsetDateTime activitySince = OffsetDateTime.now().minusYears(20L);
 
-        Result<ListHolder<ComponentVersionActivity>> result = activityApi.findComponentVersionBdsaVulnerabilityActivities(componentVersionIds, activitySince);
+        HttpResult<ListHolder<ComponentVersionActivity>> httpResult = activityApi.findComponentVersionBdsaVulnerabilityActivities(componentVersionIds,
+                activitySince);
 
-        HttpResponse<ListHolder<ComponentVersionActivity>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<ListHolder<ComponentVersionActivity>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
@@ -218,9 +220,10 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         // Assign to far past date for results.
         OffsetDateTime activitySince = OffsetDateTime.now().minusYears(20L);
 
-        Result<ListHolder<ComponentVersionActivity>> result = activityApi.findComponentVersionUpgradeGuidanceActivities(componentVersionIds, activitySince);
+        HttpResult<ListHolder<ComponentVersionActivity>> httpResult = activityApi.findComponentVersionUpgradeGuidanceActivities(componentVersionIds,
+                activitySince);
 
-        HttpResponse<ListHolder<ComponentVersionActivity>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<ListHolder<ComponentVersionActivity>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
@@ -246,9 +249,9 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         // Assign to far past date for results.
         OffsetDateTime activitySince = OffsetDateTime.now().minusYears(20L);
 
-        Result<ListHolder<ComponentVariantActivity>> result = activityApi.findComponentVariantActivities(componentVariantIds, activitySince);
+        HttpResult<ListHolder<ComponentVariantActivity>> httpResult = activityApi.findComponentVariantActivities(componentVariantIds, activitySince);
 
-        HttpResponse<ListHolder<ComponentVariantActivity>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<ListHolder<ComponentVariantActivity>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
@@ -272,9 +275,10 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         // Assign to far past date for results.
         OffsetDateTime activitySince = OffsetDateTime.now().minusYears(20L);
 
-        Result<ListHolder<ComponentVariantActivity>> result = activityApi.findComponentVariantCveVulnerabilityActivities(componentVariantIds, activitySince);
+        HttpResult<ListHolder<ComponentVariantActivity>> httpResult = activityApi.findComponentVariantCveVulnerabilityActivities(componentVariantIds,
+                activitySince);
 
-        HttpResponse<ListHolder<ComponentVariantActivity>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<ListHolder<ComponentVariantActivity>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
@@ -300,9 +304,10 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         // Assign to far past date for results.
         OffsetDateTime activitySince = OffsetDateTime.now().minusYears(20L);
 
-        Result<ListHolder<ComponentVariantActivity>> result = activityApi.findComponentVariantBdsaVulnerabilityActivities(componentVariantIds, activitySince);
+        HttpResult<ListHolder<ComponentVariantActivity>> httpResult = activityApi.findComponentVariantBdsaVulnerabilityActivities(componentVariantIds,
+                activitySince);
 
-        HttpResponse<ListHolder<ComponentVariantActivity>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<ListHolder<ComponentVariantActivity>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
@@ -328,9 +333,10 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         // Assign to far past date for results.
         OffsetDateTime activitySince = OffsetDateTime.now().minusYears(20L);
 
-        Result<ListHolder<ComponentVariantActivity>> result = activityApi.findComponentVariantUpgradeGuidanceActivities(componentVariantIds, activitySince);
+        HttpResult<ListHolder<ComponentVariantActivity>> httpResult = activityApi.findComponentVariantUpgradeGuidanceActivities(componentVariantIds,
+                activitySince);
 
-        HttpResponse<ListHolder<ComponentVariantActivity>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<ListHolder<ComponentVariantActivity>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
@@ -356,10 +362,10 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         // Assign to far past date for results.
         OffsetDateTime activitySince = OffsetDateTime.now().minusYears(20L);
 
-        Result<ListHolder<ComponentVariantActivity>> result = activityApi.findComponentVariantTransitiveUpgradeGuidanceActivities(componentVariantIds,
+        HttpResult<ListHolder<ComponentVariantActivity>> httpResult = activityApi.findComponentVariantTransitiveUpgradeGuidanceActivities(componentVariantIds,
                 activitySince);
 
-        HttpResponse<ListHolder<ComponentVariantActivity>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<ListHolder<ComponentVariantActivity>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
@@ -385,9 +391,9 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         // Assign to far past date for results.
         OffsetDateTime activitySince = OffsetDateTime.now().minusYears(20L);
 
-        Result<ListHolder<LicenseActivity>> result = activityApi.findLicenseActivities(licenseIds, activitySince);
+        HttpResult<ListHolder<LicenseActivity>> httpResult = activityApi.findLicenseActivities(licenseIds, activitySince);
 
-        HttpResponse<ListHolder<LicenseActivity>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<ListHolder<LicenseActivity>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
@@ -410,9 +416,9 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         // Assign to far past date for results.
         OffsetDateTime activitySince = OffsetDateTime.now().minusYears(20L);
 
-        Result<ListHolder<LicenseActivity>> result = activityApi.findLicenseLicenseTermActivities(licenseIds, activitySince);
+        HttpResult<ListHolder<LicenseActivity>> httpResult = activityApi.findLicenseLicenseTermActivities(licenseIds, activitySince);
 
-        HttpResponse<ListHolder<LicenseActivity>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<ListHolder<LicenseActivity>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
@@ -435,9 +441,9 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         // Assign to far past date for results.
         OffsetDateTime activitySince = OffsetDateTime.now().minusYears(20L);
 
-        Result<ListHolder<CveVulnerabilityActivity>> result = activityApi.findCveVulnerabilityActivities(cveVulnerabilityIds, activitySince);
+        HttpResult<ListHolder<CveVulnerabilityActivity>> httpResult = activityApi.findCveVulnerabilityActivities(cveVulnerabilityIds, activitySince);
 
-        HttpResponse<ListHolder<CveVulnerabilityActivity>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<ListHolder<CveVulnerabilityActivity>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
@@ -461,9 +467,9 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         // Assign to far past date for results.
         OffsetDateTime activitySince = OffsetDateTime.now().minusYears(20L);
 
-        Result<ListHolder<BdsaVulnerabilityActivity>> result = activityApi.findBdsaVulnerabilityActivities(bdsaVulnerabilityIds, activitySince);
+        HttpResult<ListHolder<BdsaVulnerabilityActivity>> httpResult = activityApi.findBdsaVulnerabilityActivities(bdsaVulnerabilityIds, activitySince);
 
-        HttpResponse<ListHolder<BdsaVulnerabilityActivity>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<ListHolder<BdsaVulnerabilityActivity>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");

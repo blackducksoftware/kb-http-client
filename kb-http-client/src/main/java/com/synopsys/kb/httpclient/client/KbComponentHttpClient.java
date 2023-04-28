@@ -37,7 +37,7 @@ import com.synopsys.kb.httpclient.api.AuthorizationProvider;
 import com.synopsys.kb.httpclient.api.IComponentApi;
 import com.synopsys.kb.httpclient.api.KbConfiguration;
 import com.synopsys.kb.httpclient.api.PageRequest;
-import com.synopsys.kb.httpclient.api.Result;
+import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.model.Component;
 import com.synopsys.kb.httpclient.model.OngoingVersion;
 import com.synopsys.kb.httpclient.model.ComponentSearchResult;
@@ -63,7 +63,7 @@ public class KbComponentHttpClient extends AbstractKbHttpClient implements IComp
     }
 
     @Override
-    public Result<Component> findComponent(UUID componentId) {
+    public HttpResult<Component> findComponent(UUID componentId) {
         Objects.requireNonNull(componentId, "Component id must be initialized.");
 
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_COMPONENT_DETAILS_V4_JSON);
@@ -79,7 +79,7 @@ public class KbComponentHttpClient extends AbstractKbHttpClient implements IComp
     }
 
     @Override
-    public Result<Page<ComponentVersion>> findComponentVersionsByComponent(PageRequest pageRequest,
+    public HttpResult<Page<ComponentVersion>> findComponentVersionsByComponent(PageRequest pageRequest,
             UUID componentId,
             @Nullable String searchTermFilter,
             VulnerabilitySourcePriority vulnerabilitySourcePriority,
@@ -116,7 +116,7 @@ public class KbComponentHttpClient extends AbstractKbHttpClient implements IComp
     }
 
     @Override
-    public Result<Page<ComponentVersionSummary>> findComponentVersionSummariesByComponent(PageRequest pageRequest,
+    public HttpResult<Page<ComponentVersionSummary>> findComponentVersionSummariesByComponent(PageRequest pageRequest,
             UUID componentId,
             @Nullable String searchTermFilter,
             @Nullable Boolean excludeDeleted) {
@@ -147,7 +147,7 @@ public class KbComponentHttpClient extends AbstractKbHttpClient implements IComp
     }
 
     @Override
-    public Result<OngoingVersion> findOngoingVersionByComponent(UUID componentId) {
+    public HttpResult<OngoingVersion> findOngoingVersionByComponent(UUID componentId) {
         Objects.requireNonNull(componentId, "Component id must be initialized.");
 
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_COMPONENT_DETAILS_V3_JSON);
@@ -163,7 +163,7 @@ public class KbComponentHttpClient extends AbstractKbHttpClient implements IComp
     }
 
     @Override
-    public Result<Page<ComponentSearchResult>> search(PageRequest pageRequest, String searchTermFilter, boolean allowPartialMatches) {
+    public HttpResult<Page<ComponentSearchResult>> search(PageRequest pageRequest, String searchTermFilter, boolean allowPartialMatches) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
         Preconditions.checkArgument(!Strings.isNullOrEmpty(searchTermFilter), "Search term filter must not be null or empty");
 

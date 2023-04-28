@@ -19,12 +19,12 @@ import com.google.common.base.Preconditions;
 import com.synopsys.bd.kb.httpclient.api.IBdComponentApi;
 import com.synopsys.bd.kb.httpclient.api.IBdComponentVariantApi;
 import com.synopsys.bd.kb.httpclient.api.IBdComponentVersionApi;
-import com.synopsys.bd.kb.httpclient.api.MigratableResult;
+import com.synopsys.bd.kb.httpclient.api.MigratableHttpResult;
 import com.synopsys.bd.kb.httpclient.model.BdComponentVariant;
 import com.synopsys.bd.kb.httpclient.model.BdComponentVariantHierarchy;
 import com.synopsys.bd.kb.httpclient.model.BdComponentVersion;
 import com.synopsys.bd.kb.httpclient.model.BdComponentVersionHierarchy;
-import com.synopsys.kb.httpclient.api.Result;
+import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.model.Component;
 import com.synopsys.kb.httpclient.model.VulnerabilityScorePriority;
 import com.synopsys.kb.httpclient.model.VulnerabilitySourcePriority;
@@ -133,9 +133,9 @@ public class BdComponentFinder {
         }
 
         // Find component version
-        MigratableResult<BdComponentVersion> componentVersionResult = bdComponentVersionApi.find(componentVersionId, vulnerabilitySourcePriority,
-                vulnerabilityScorePriority);
-        UUID sourceComponentId = componentVersionResult.getMigratableHttpResponse()
+        MigratableHttpResult<BdComponentVersion> componentVersionHttpResult = bdComponentVersionApi.find(componentVersionId,
+                vulnerabilitySourcePriority, vulnerabilityScorePriority);
+        UUID sourceComponentId = componentVersionHttpResult.getMigratableHttpResponse()
                 .map((migratableHttpResponse) -> migratableHttpResponse.getMessageBody().orElse(null))
                 .map(BdComponentVersion::getComponentId)
                 .orElse(null);
@@ -145,8 +145,8 @@ public class BdComponentFinder {
         } // Component version presence. Continue to find parent component result.
 
         // Find parent component
-        MigratableResult<Component> componentResult = bdComponentApi.findComponent(sourceComponentId);
-        UUID destinationComponentId = componentResult.getMigratableHttpResponse()
+        MigratableHttpResult<Component> componentHttpResult = bdComponentApi.findComponent(sourceComponentId);
+        UUID destinationComponentId = componentHttpResult.getMigratableHttpResponse()
                 .map((migratableHttpResponse) -> migratableHttpResponse.getMessageBody().orElse(null))
                 .map(Component::getId).orElse(null);
         if (null == destinationComponentId) {
@@ -163,7 +163,7 @@ public class BdComponentFinder {
         }
 
         // Otherwise, hierarchy is not migrated and consistent from component version to component so return it.
-        BdComponentVersionHierarchy hierarchy = new BdComponentVersionHierarchy(componentResult, componentVersionResult);
+        BdComponentVersionHierarchy hierarchy = new BdComponentVersionHierarchy(componentHttpResult, componentVersionHttpResult);
 
         return Optional.of(hierarchy);
     }
@@ -178,8 +178,8 @@ public class BdComponentFinder {
         }
 
         // Find component variant
-        Result<BdComponentVariant> componentVariantResult = bdComponentVariantApi.find(componentVariantId);
-        UUID sourceComponentVersionId = componentVariantResult.getHttpResponse()
+        HttpResult<BdComponentVariant> componentVariantHttpResult = bdComponentVariantApi.find(componentVariantId);
+        UUID sourceComponentVersionId = componentVariantHttpResult.getHttpResponse()
                 .map((httpResponse) -> httpResponse.getMessageBody().orElse(null))
                 .map(BdComponentVariant::getComponentVersionId).orElse(null);
         if (null == sourceComponentVersionId) {
@@ -188,9 +188,9 @@ public class BdComponentFinder {
         } // Component variant presence. Continue to find parent component version result.
 
         // Find parent component version
-        MigratableResult<BdComponentVersion> componentVersionResult = bdComponentVersionApi.find(sourceComponentVersionId, vulnerabilitySourcePriority,
-                vulnerabilityScorePriority);
-        BdComponentVersion componentVersion = componentVersionResult.getMigratableHttpResponse()
+        MigratableHttpResult<BdComponentVersion> componentVersionHttpResult = bdComponentVersionApi.find(sourceComponentVersionId,
+                vulnerabilitySourcePriority, vulnerabilityScorePriority);
+        BdComponentVersion componentVersion = componentVersionHttpResult.getMigratableHttpResponse()
                 .map((migratableHttpResponse) -> migratableHttpResponse.getMessageBody().orElse(null)).orElse(null);
         if (null == componentVersion) {
             // Absent. Could not successfully retrieve component version. Return emptiness.
@@ -207,8 +207,8 @@ public class BdComponentFinder {
         }
 
         // Find grandparent component
-        MigratableResult<Component> componentResult = bdComponentApi.findComponent(sourceComponentId);
-        UUID destinationComponentId = componentResult.getMigratableHttpResponse()
+        MigratableHttpResult<Component> componentHttpResult = bdComponentApi.findComponent(sourceComponentId);
+        UUID destinationComponentId = componentHttpResult.getMigratableHttpResponse()
                 .map((migratableHttpResponse) -> migratableHttpResponse.getMessageBody().orElse(null))
                 .map(Component::getId).orElse(null);
         if (null == destinationComponentId) {
@@ -226,7 +226,7 @@ public class BdComponentFinder {
 
         // Otherwise, hierarchy is not migrated and consistent from component variant to component version to component
         // so return it.
-        BdComponentVariantHierarchy hierarchy = new BdComponentVariantHierarchy(componentResult, componentVersionResult, componentVariantResult);
+        BdComponentVariantHierarchy hierarchy = new BdComponentVariantHierarchy(componentHttpResult, componentVersionHttpResult, componentVariantHttpResult);
 
         return Optional.of(hierarchy);
     }

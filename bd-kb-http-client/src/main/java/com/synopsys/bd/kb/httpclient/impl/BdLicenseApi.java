@@ -22,9 +22,9 @@ import javax.annotation.Nullable;
 
 import com.synopsys.bd.kb.httpclient.api.IBdLicenseApi;
 import com.synopsys.bd.kb.httpclient.model.BdLicense;
+import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.api.ILicenseApi;
 import com.synopsys.kb.httpclient.api.PageRequest;
-import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.License;
 import com.synopsys.kb.httpclient.model.Meta;
 import com.synopsys.kb.httpclient.model.Page;
@@ -46,26 +46,26 @@ public class BdLicenseApi extends AbstractBdApi implements IBdLicenseApi {
     }
 
     @Override
-    public Result<BdLicense> findLicense(UUID licenseId) {
+    public HttpResult<BdLicense> findLicense(UUID licenseId) {
         Objects.requireNonNull(licenseId, "License id must be initialized.");
 
-        Result<License> result = licenseApi.findLicense(licenseId);
+        HttpResult<License> httpResult = licenseApi.findLicense(licenseId);
 
         // Convert a license to a BD license.
         Function<License, BdLicense> conversionFunction = (license) -> {
             return new BdLicense(license);
         };
 
-        return convert(result, conversionFunction);
+        return convert(httpResult, conversionFunction);
     }
 
     @Override
-    public Result<Page<BdLicense>> findManyLicenses(PageRequest pageRequest,
+    public HttpResult<Page<BdLicense>> findManyLicenses(PageRequest pageRequest,
             @Nullable String searchTermFilter,
             @Nullable Map<String, String> filters) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
 
-        Result<Page<License>> result = licenseApi.findManyLicenses(pageRequest, searchTermFilter, filters);
+        HttpResult<Page<License>> httpResult = licenseApi.findManyLicenses(pageRequest, searchTermFilter, filters);
 
         Function<Page<License>, Page<BdLicense>> conversionFunction = (licensePage) -> {
             int totalCount = licensePage.getTotalCount();
@@ -75,15 +75,15 @@ public class BdLicenseApi extends AbstractBdApi implements IBdLicenseApi {
             return new Page<>(totalCount, bdLicenses, meta);
         };
 
-        return convert(result, conversionFunction);
+        return convert(httpResult, conversionFunction);
     }
 
     @Override
-    public Result<Page<BdLicense>> findLicensesByLicenseTerm(PageRequest pageRequest, UUID licenseTermId) {
+    public HttpResult<Page<BdLicense>> findLicensesByLicenseTerm(PageRequest pageRequest, UUID licenseTermId) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
         Objects.requireNonNull(licenseTermId, "License term id must be initialized.");
 
-        Result<Page<License>> result = licenseApi.findLicensesByLicenseTerm(pageRequest, licenseTermId);
+        HttpResult<Page<License>> httpResult = licenseApi.findLicensesByLicenseTerm(pageRequest, licenseTermId);
 
         Function<Page<License>, Page<BdLicense>> conversionFunction = (licensePage) -> {
             int totalCount = licensePage.getTotalCount();
@@ -93,6 +93,6 @@ public class BdLicenseApi extends AbstractBdApi implements IBdLicenseApi {
             return new Page<>(totalCount, bdLicenses, meta);
         };
 
-        return convert(result, conversionFunction);
+        return convert(httpResult, conversionFunction);
     }
 }

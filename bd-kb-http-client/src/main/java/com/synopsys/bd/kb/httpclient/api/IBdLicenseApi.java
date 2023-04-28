@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 
 import com.synopsys.bd.kb.httpclient.model.BdLicense;
 import com.synopsys.kb.httpclient.api.PageRequest;
-import com.synopsys.kb.httpclient.api.Result;
+import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.model.Page;
 
 /**
@@ -38,7 +38,7 @@ public interface IBdLicenseApi {
      *            The license id.
      * @return Returns the Black Duck-centric license result.
      */
-    Result<BdLicense> findLicense(UUID licenseId);
+    HttpResult<BdLicense> findLicense(UUID licenseId);
 
     /**
      * Finds many Black Duck-centric licenses.
@@ -57,7 +57,7 @@ public interface IBdLicenseApi {
      *            restriction. Optional.
      * @return Returns the Black Duck-centric license page result.
      */
-    Result<Page<BdLicense>> findManyLicenses(PageRequest pageRequest,
+    HttpResult<Page<BdLicense>> findManyLicenses(PageRequest pageRequest,
             @Nullable String searchTermFilter,
             @Nullable Map<String, String> filters);
 
@@ -74,5 +74,5 @@ public interface IBdLicenseApi {
      *            The license term id.
      * @return Returns the license page result.
      */
-    Result<Page<BdLicense>> findLicensesByLicenseTerm(PageRequest pageRequest, UUID licenseTermId);
+    HttpResult<Page<BdLicense>> findLicensesByLicenseTerm(PageRequest pageRequest, UUID licenseTermId);
 }

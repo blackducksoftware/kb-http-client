@@ -68,10 +68,10 @@ public class AuthorizationProviderTest extends AbstractTest {
     public void testGetOrAuthenticateWhenAbsentAndInvalidAuthentication() {
         Set<Integer> expectedCodes = Set.of(HttpStatus.SC_OK, HttpStatus.SC_NOT_FOUND);
         HttpResponse<Authentication> httpResponse = new HttpResponse<>(HttpStatus.SC_UNAUTHORIZED, expectedCodes, null, null);
-        Result<Authentication> authenticationResult = new Result<>(Method.POST.name(), "/api/authenticate", httpResponse);
+        HttpResult<Authentication> authenticationHttpResult = new HttpResult<>(Method.POST.name(), "/api/authenticate", httpResponse);
 
         Mockito.when(licenseKeySupplier.get()).thenReturn(LICENSE_KEY);
-        Mockito.when(authenticationApi.authenticate(LICENSE_KEY)).thenReturn(authenticationResult);
+        Mockito.when(authenticationApi.authenticate(LICENSE_KEY)).thenReturn(authenticationHttpResult);
 
         Optional<Authentication> result = provider.getOrAuthenticate();
 
@@ -83,10 +83,10 @@ public class AuthorizationProviderTest extends AbstractTest {
         Set<Integer> expectedCodes = Set.of(HttpStatus.SC_OK, HttpStatus.SC_NOT_FOUND);
         Authentication authentication = new Authentication(false, "67890", TimeUnit.MINUTES.toMillis(1L));
         HttpResponse<Authentication> httpResponse = new HttpResponse<>(HttpStatus.SC_OK, expectedCodes, authentication, null);
-        Result<Authentication> authenticationResult = new Result<>(Method.POST.name(), "/api/authenticate", httpResponse);
+        HttpResult<Authentication> authenticationHttpResult = new HttpResult<>(Method.POST.name(), "/api/authenticate", httpResponse);
 
         Mockito.when(licenseKeySupplier.get()).thenReturn(LICENSE_KEY);
-        Mockito.when(authenticationApi.authenticate(LICENSE_KEY)).thenReturn(authenticationResult);
+        Mockito.when(authenticationApi.authenticate(LICENSE_KEY)).thenReturn(authenticationHttpResult);
 
         Optional<Authentication> result = provider.getOrAuthenticate();
 

@@ -36,7 +36,7 @@ import com.synopsys.kb.httpclient.api.AuthorizationProvider;
 import com.synopsys.kb.httpclient.api.ILicenseApi;
 import com.synopsys.kb.httpclient.api.KbConfiguration;
 import com.synopsys.kb.httpclient.api.PageRequest;
-import com.synopsys.kb.httpclient.api.Result;
+import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.model.License;
 import com.synopsys.kb.httpclient.model.LicenseTerm;
 import com.synopsys.kb.httpclient.model.Page;
@@ -57,7 +57,7 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
     }
 
     @Override
-    public Result<License> findLicense(UUID licenseId) {
+    public HttpResult<License> findLicense(UUID licenseId) {
         Objects.requireNonNull(licenseId, "License id must be initialized.");
 
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_COMPONENT_DETAILS_V4_JSON);
@@ -71,7 +71,7 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
     }
 
     @Override
-    public Result<String> findLicenseText(UUID licenseId) {
+    public HttpResult<String> findLicenseText(UUID licenseId) {
         Objects.requireNonNull(licenseId, "License id must be initialized.");
 
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_LICENSE_TEXT_ORIGINAL_V1);
@@ -86,7 +86,7 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
     }
 
     @Override
-    public Result<Page<License>> findManyLicenses(PageRequest pageRequest,
+    public HttpResult<Page<License>> findManyLicenses(PageRequest pageRequest,
             @Nullable String searchTermFilter,
             @Nullable Map<String, String> filters) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
@@ -115,7 +115,7 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
     }
 
     @Override
-    public Result<Page<License>> findLicensesByLicenseTerm(PageRequest pageRequest, UUID licenseTermId) {
+    public HttpResult<Page<License>> findLicensesByLicenseTerm(PageRequest pageRequest, UUID licenseTermId) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
         Objects.requireNonNull(licenseTermId, "License term id must be initialized.");
 
@@ -136,7 +136,7 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
     }
 
     @Override
-    public Result<LicenseTerm> findLicenseTerm(UUID licenseTermId) {
+    public HttpResult<LicenseTerm> findLicenseTerm(UUID licenseTermId) {
         Objects.requireNonNull(licenseTermId, "License term id must be initialized.");
 
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_COMPONENT_DETAILS_V4_JSON);
@@ -150,7 +150,7 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
     }
 
     @Override
-    public Result<Page<LicenseTerm>> findManyLicenseTerms(PageRequest pageRequest) {
+    public HttpResult<Page<LicenseTerm>> findManyLicenseTerms(PageRequest pageRequest) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
 
         Map<String, String> pageRequestParameters = constructPageRequestParameters(pageRequest);
@@ -170,7 +170,7 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
     }
 
     @Override
-    public Result<Page<LicenseTerm>> findLicenseTermsByLicense(PageRequest pageRequest, UUID licenseId) {
+    public HttpResult<Page<LicenseTerm>> findLicenseTermsByLicense(PageRequest pageRequest, UUID licenseId) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
         Objects.requireNonNull(licenseId, "License id must be initialized.");
 

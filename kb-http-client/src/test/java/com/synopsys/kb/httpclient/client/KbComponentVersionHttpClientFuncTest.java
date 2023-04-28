@@ -22,10 +22,10 @@ import org.testng.annotations.Test;
 
 import com.synopsys.kb.httpclient.AbstractFuncTest;
 import com.synopsys.kb.httpclient.api.HttpResponse;
+import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.api.IComponentVersionApi;
 import com.synopsys.kb.httpclient.api.IKbHttpApi;
 import com.synopsys.kb.httpclient.api.PageRequest;
-import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.BdsaVulnerability;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
 import com.synopsys.kb.httpclient.model.CveVulnerability;
@@ -53,10 +53,10 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
     public void testFind() {
         UUID componentVersionId = UUID.fromString("d10c3ded-9e0e-468e-909e-637d81ecc554");
 
-        Result<ComponentVersion> result = componentVersionApi.find(componentVersionId, VulnerabilitySourcePriority.CVE,
+        HttpResult<ComponentVersion> httpResult = componentVersionApi.find(componentVersionId, VulnerabilitySourcePriority.CVE,
                 VulnerabilityScorePriority.CVSS_2);
 
-        HttpResponse<ComponentVersion> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<ComponentVersion> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
 
@@ -76,10 +76,10 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
     public void testFindWhenMergeMigrated() {
         UUID componentVersionId = UUID.fromString("0bca7263-1033-4731-9985-809eb87ecfb7");
 
-        Result<ComponentVersion> result = componentVersionApi.find(componentVersionId, VulnerabilitySourcePriority.CVE,
+        HttpResult<ComponentVersion> httpResult = componentVersionApi.find(componentVersionId, VulnerabilitySourcePriority.CVE,
                 VulnerabilityScorePriority.CVSS_2);
 
-        HttpResponse<ComponentVersion> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<ComponentVersion> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MOVED_PERMANENTLY, "Codes should be equal.");
@@ -94,10 +94,10 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
     public void testFindWhenSplitMigrated() {
         UUID componentVersionId = UUID.fromString("1623f022-fb37-428a-a491-ab1ce1918d16");
 
-        Result<ComponentVersion> result = componentVersionApi.find(componentVersionId, VulnerabilitySourcePriority.CVE,
+        HttpResult<ComponentVersion> httpResult = componentVersionApi.find(componentVersionId, VulnerabilitySourcePriority.CVE,
                 VulnerabilityScorePriority.CVSS_2);
 
-        HttpResponse<ComponentVersion> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<ComponentVersion> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MULTIPLE_CHOICES, "Codes should be equal.");
@@ -112,9 +112,9 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
     public void testFindNextVersion() {
         UUID componentVersionId = UUID.fromString("d10c3ded-9e0e-468e-909e-637d81ecc554");
 
-        Result<NextVersion> result = componentVersionApi.findNextVersion(componentVersionId);
+        HttpResult<NextVersion> httpResult = componentVersionApi.findNextVersion(componentVersionId);
 
-        HttpResponse<NextVersion> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<NextVersion> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
 
@@ -134,9 +134,9 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
     public void testFindNextVersionWhenMergeMigrated() {
         UUID componentVersionId = UUID.fromString("0bca7263-1033-4731-9985-809eb87ecfb7");
 
-        Result<NextVersion> result = componentVersionApi.findNextVersion(componentVersionId);
+        HttpResult<NextVersion> httpResult = componentVersionApi.findNextVersion(componentVersionId);
 
-        HttpResponse<NextVersion> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<NextVersion> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MOVED_PERMANENTLY, "Codes should be equal.");
@@ -151,9 +151,9 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
     public void testFindNextVersionWhenSplitMigrated() {
         UUID componentVersionId = UUID.fromString("1623f022-fb37-428a-a491-ab1ce1918d16");
 
-        Result<NextVersion> result = componentVersionApi.findNextVersion(componentVersionId);
+        HttpResult<NextVersion> httpResult = componentVersionApi.findNextVersion(componentVersionId);
 
-        HttpResponse<NextVersion> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<NextVersion> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MULTIPLE_CHOICES, "Codes should be equal.");
@@ -169,9 +169,9 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
         PageRequest pageRequest = new PageRequest(0, 100, Collections.emptyList());
         UUID componentVersionId = UUID.fromString("c365269e-7378-4277-85dc-f84b217e2d89");
 
-        Result<Page<CveVulnerability>> result = componentVersionApi.findCveVulnerabilities(pageRequest, componentVersionId, null);
+        HttpResult<Page<CveVulnerability>> httpResult = componentVersionApi.findCveVulnerabilities(pageRequest, componentVersionId, null);
 
-        HttpResponse<Page<CveVulnerability>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<Page<CveVulnerability>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
 
@@ -195,9 +195,9 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
         PageRequest pageRequest = new PageRequest(0, 100, Collections.emptyList());
         UUID componentVersionId = UUID.fromString("0bca7263-1033-4731-9985-809eb87ecfb7");
 
-        Result<Page<CveVulnerability>> result = componentVersionApi.findCveVulnerabilities(pageRequest, componentVersionId, null);
+        HttpResult<Page<CveVulnerability>> httpResult = componentVersionApi.findCveVulnerabilities(pageRequest, componentVersionId, null);
 
-        HttpResponse<Page<CveVulnerability>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<Page<CveVulnerability>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MOVED_PERMANENTLY, "Codes should be equal.");
@@ -213,9 +213,9 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
         PageRequest pageRequest = new PageRequest(0, 100, Collections.emptyList());
         UUID componentVersionId = UUID.fromString("1623f022-fb37-428a-a491-ab1ce1918d16");
 
-        Result<Page<CveVulnerability>> result = componentVersionApi.findCveVulnerabilities(pageRequest, componentVersionId, null);
+        HttpResult<Page<CveVulnerability>> httpResult = componentVersionApi.findCveVulnerabilities(pageRequest, componentVersionId, null);
 
-        HttpResponse<Page<CveVulnerability>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<Page<CveVulnerability>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MULTIPLE_CHOICES, "Codes should be equal.");
@@ -231,9 +231,9 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
         PageRequest pageRequest = new PageRequest(0, 100, Collections.emptyList());
         UUID componentVersionId = UUID.fromString("c365269e-7378-4277-85dc-f84b217e2d89");
 
-        Result<Page<BdsaVulnerability>> result = componentVersionApi.findBdsaVulnerabilities(pageRequest, componentVersionId, null);
+        HttpResult<Page<BdsaVulnerability>> httpResult = componentVersionApi.findBdsaVulnerabilities(pageRequest, componentVersionId, null);
 
-        HttpResponse<Page<BdsaVulnerability>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<Page<BdsaVulnerability>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
 
@@ -257,9 +257,9 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
         PageRequest pageRequest = new PageRequest(0, 100, Collections.emptyList());
         UUID componentVersionId = UUID.fromString("0bca7263-1033-4731-9985-809eb87ecfb7");
 
-        Result<Page<BdsaVulnerability>> result = componentVersionApi.findBdsaVulnerabilities(pageRequest, componentVersionId, null);
+        HttpResult<Page<BdsaVulnerability>> httpResult = componentVersionApi.findBdsaVulnerabilities(pageRequest, componentVersionId, null);
 
-        HttpResponse<Page<BdsaVulnerability>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<Page<BdsaVulnerability>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MOVED_PERMANENTLY, "Codes should be equal.");
@@ -275,9 +275,9 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
         PageRequest pageRequest = new PageRequest(0, 100, Collections.emptyList());
         UUID componentVersionId = UUID.fromString("1623f022-fb37-428a-a491-ab1ce1918d16");
 
-        Result<Page<BdsaVulnerability>> result = componentVersionApi.findBdsaVulnerabilities(pageRequest, componentVersionId, null);
+        HttpResult<Page<BdsaVulnerability>> httpResult = componentVersionApi.findBdsaVulnerabilities(pageRequest, componentVersionId, null);
 
-        HttpResponse<Page<BdsaVulnerability>> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<Page<BdsaVulnerability>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MULTIPLE_CHOICES, "Codes should be equal.");
@@ -292,10 +292,10 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
     public void testFindUpgradeGuidance() {
         UUID componentVersionId = UUID.fromString("d10c3ded-9e0e-468e-909e-637d81ecc554");
 
-        Result<UpgradeGuidance> result = componentVersionApi.findUpgradeGuidance(componentVersionId, VulnerabilitySourcePriority.CVE,
+        HttpResult<UpgradeGuidance> httpResult = componentVersionApi.findUpgradeGuidance(componentVersionId, VulnerabilitySourcePriority.CVE,
                 VulnerabilityScorePriority.CVSS_2);
 
-        HttpResponse<UpgradeGuidance> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<UpgradeGuidance> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
 
@@ -315,10 +315,10 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
     public void testFindUpgradeGuidanceWhenMergeMigrated() {
         UUID componentVersionId = UUID.fromString("0bca7263-1033-4731-9985-809eb87ecfb7");
 
-        Result<UpgradeGuidance> result = componentVersionApi.findUpgradeGuidance(componentVersionId, VulnerabilitySourcePriority.CVE,
+        HttpResult<UpgradeGuidance> httpResult = componentVersionApi.findUpgradeGuidance(componentVersionId, VulnerabilitySourcePriority.CVE,
                 VulnerabilityScorePriority.CVSS_2);
 
-        HttpResponse<UpgradeGuidance> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<UpgradeGuidance> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MOVED_PERMANENTLY, "Codes should be equal.");
@@ -333,10 +333,10 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
     public void testFindUpgradeGuidanceWhenSplitMigrated() {
         UUID componentVersionId = UUID.fromString("1623f022-fb37-428a-a491-ab1ce1918d16");
 
-        Result<UpgradeGuidance> result = componentVersionApi.findUpgradeGuidance(componentVersionId, VulnerabilitySourcePriority.CVE,
+        HttpResult<UpgradeGuidance> httpResult = componentVersionApi.findUpgradeGuidance(componentVersionId, VulnerabilitySourcePriority.CVE,
                 VulnerabilityScorePriority.CVSS_2);
 
-        HttpResponse<UpgradeGuidance> httpResponse = result.getHttpResponse().orElse(null);
+        HttpResponse<UpgradeGuidance> httpResponse = httpResult.getHttpResponse().orElse(null);
 
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
         Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_MULTIPLE_CHOICES, "Codes should be equal.");

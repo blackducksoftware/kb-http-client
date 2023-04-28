@@ -23,10 +23,10 @@ import javax.annotation.Nullable;
 import org.testng.Assert;
 
 import com.synopsys.bd.kb.httpclient.api.MigratableHttpResponse;
-import com.synopsys.bd.kb.httpclient.api.MigratableResult;
+import com.synopsys.bd.kb.httpclient.api.MigratableHttpResult;
 import com.synopsys.kb.httpclient.api.HttpResponse;
+import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.api.Relationship;
-import com.synopsys.kb.httpclient.api.Result;
 import com.synopsys.kb.httpclient.model.ActivityTrend;
 import com.synopsys.kb.httpclient.model.BdsaVulnerability;
 import com.synopsys.kb.httpclient.model.CodeBaseMaturity;
@@ -127,18 +127,18 @@ public abstract class AbstractBdTest {
         return new HttpResponse<>(code, expectedCodes, messageBody, migratedMeta);
     }
 
-    protected <T> Result<T> constructResult(String requestMethod, String requestUri, HttpResponse<T> httpResponse) {
-        return new Result<>(requestMethod, requestUri, httpResponse);
+    protected <T> HttpResult<T> constructHttpResult(String requestMethod, String requestUri, HttpResponse<T> httpResponse) {
+        return new HttpResult<>(requestMethod, requestUri, httpResponse);
     }
 
-    protected <S, T> void assertResult(Result<S> sourceResult, Result<T> destinationResult) {
-        Assert.assertNotNull(sourceResult, "Source result should be initialized.");
-        Assert.assertNotNull(destinationResult, "Destination result should be initialized.");
-        Assert.assertEquals(destinationResult.getRequestMethod(), sourceResult.getRequestMethod(), "Request methods should be equal.");
-        Assert.assertEquals(destinationResult.getRequestUri(), sourceResult.getRequestUri(), "Request URIs should be equal.");
+    protected <S, T> void assertHttpResult(HttpResult<S> sourceHttpResult, HttpResult<T> destinationHttpResult) {
+        Assert.assertNotNull(sourceHttpResult, "Source HTTP result should be initialized.");
+        Assert.assertNotNull(destinationHttpResult, "Destination HTTP result should be initialized.");
+        Assert.assertEquals(destinationHttpResult.getRequestMethod(), sourceHttpResult.getRequestMethod(), "Request methods should be equal.");
+        Assert.assertEquals(destinationHttpResult.getRequestUri(), sourceHttpResult.getRequestUri(), "Request URIs should be equal.");
 
-        HttpResponse<S> sourceHttpResponse = sourceResult.getHttpResponse().orElse(null);
-        HttpResponse<T> destinationHttpResponse = destinationResult.getHttpResponse().orElse(null);
+        HttpResponse<S> sourceHttpResponse = sourceHttpResult.getHttpResponse().orElse(null);
+        HttpResponse<T> destinationHttpResponse = destinationHttpResult.getHttpResponse().orElse(null);
         if (sourceHttpResponse != null) {
             Assert.assertNotNull(destinationHttpResponse, "Destination HTTP response should be initialized.");
 
@@ -163,16 +163,16 @@ public abstract class AbstractBdTest {
         }
     }
 
-    protected <S, T> void assertResult(Result<S> sourceResult,
-            MigratableResult<T> actualMigratableResult,
+    protected <S, T> void assertHttpResult(HttpResult<S> sourceHttpResult,
+            MigratableHttpResult<T> actualHttpResult,
             List<Meta> expectedMigratedMetaHistory) {
-        Assert.assertNotNull(sourceResult, "Source result should be initialized.");
-        Assert.assertNotNull(actualMigratableResult, "Actual migratable result should be initialized.");
-        Assert.assertEquals(actualMigratableResult.getRequestMethod(), sourceResult.getRequestMethod(), "Request methods should be equal.");
-        Assert.assertEquals(actualMigratableResult.getRequestUri(), sourceResult.getRequestUri(), "Request URIs should be equal.");
+        Assert.assertNotNull(sourceHttpResult, "Source HTTP result should be initialized.");
+        Assert.assertNotNull(actualHttpResult, "Actual HTTP result should be initialized.");
+        Assert.assertEquals(actualHttpResult.getRequestMethod(), sourceHttpResult.getRequestMethod(), "Request methods should be equal.");
+        Assert.assertEquals(actualHttpResult.getRequestUri(), sourceHttpResult.getRequestUri(), "Request URIs should be equal.");
 
-        HttpResponse<S> sourceHttpResponse = sourceResult.getHttpResponse().orElse(null);
-        MigratableHttpResponse<T> actualMigratableHttpResponse = actualMigratableResult.getMigratableHttpResponse().orElse(null);
+        HttpResponse<S> sourceHttpResponse = sourceHttpResult.getHttpResponse().orElse(null);
+        MigratableHttpResponse<T> actualMigratableHttpResponse = actualHttpResult.getMigratableHttpResponse().orElse(null);
         if (sourceHttpResponse != null) {
             Assert.assertNotNull(actualMigratableHttpResponse, "Actual migratable HTTP response should be initialized.");
 

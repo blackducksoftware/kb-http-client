@@ -41,7 +41,7 @@ public interface ILicenseApi {
      *            The license id.
      * @return Returns the license result.
      */
-    Result<License> findLicense(UUID licenseId);
+    HttpResult<License> findLicense(UUID licenseId);
 
     /**
      * Finds a license's original license text by its id.
@@ -56,7 +56,7 @@ public interface ILicenseApi {
      *            The license id.
      * @return Returns the original license text result.
      */
-    Result<String> findLicenseText(UUID licenseId);
+    HttpResult<String> findLicenseText(UUID licenseId);
 
     /**
      * Finds many licenses.
@@ -77,7 +77,7 @@ public interface ILicenseApi {
      *            restriction. Optional.
      * @return Returns the license page result.
      */
-    Result<Page<License>> findManyLicenses(PageRequest pageRequest,
+    HttpResult<Page<License>> findManyLicenses(PageRequest pageRequest,
             @Nullable String searchTermFilter,
             @Nullable Map<String, String> filters);
 
@@ -96,7 +96,7 @@ public interface ILicenseApi {
      *            The license term id.
      * @return Returns the license page result.
      */
-    Result<Page<License>> findLicensesByLicenseTerm(PageRequest pageRequest, UUID licenseTermId);
+    HttpResult<Page<License>> findLicensesByLicenseTerm(PageRequest pageRequest, UUID licenseTermId);
 
     /**
      * Finds a license term by its id.
@@ -111,7 +111,7 @@ public interface ILicenseApi {
      *            The license term id.
      * @return Returns the license term result.
      */
-    Result<LicenseTerm> findLicenseTerm(UUID licenseTermId);
+    HttpResult<LicenseTerm> findLicenseTerm(UUID licenseTermId);
 
     /**
      * Finds many license terms.
@@ -125,7 +125,7 @@ public interface ILicenseApi {
      *            The page request.
      * @return Returns the license term page result.
      */
-    Result<Page<LicenseTerm>> findManyLicenseTerms(PageRequest pageRequest);
+    HttpResult<Page<LicenseTerm>> findManyLicenseTerms(PageRequest pageRequest);
 
     /**
      * Finds license terms for a given license.
@@ -136,5 +136,5 @@ public interface ILicenseApi {
      *            The license id.
      * @return Returns the license term page result.
      */
-    Result<Page<LicenseTerm>> findLicenseTermsByLicense(PageRequest pageRequest, UUID licenseId);
+    HttpResult<Page<LicenseTerm>> findLicenseTermsByLicense(PageRequest pageRequest, UUID licenseId);
 }

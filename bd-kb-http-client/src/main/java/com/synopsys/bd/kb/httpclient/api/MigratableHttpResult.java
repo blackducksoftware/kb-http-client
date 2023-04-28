@@ -15,21 +15,21 @@ import java.util.Optional;
 
 import javax.annotation.Nullable;
 
-import com.synopsys.kb.httpclient.api.AbstractResult;
+import com.synopsys.kb.httpclient.api.AbstractHttpResult;
 
 /**
- * Migratable operational result.
+ * Migratable HTTP result representation.
  * 
  * @author skatzman
  *
  * @param <T>
  *            The message body type.
  */
-public class MigratableResult<T> extends AbstractResult {
+public class MigratableHttpResult<T> extends AbstractHttpResult {
     @Nullable
     private final MigratableHttpResponse<T> migratableHttpResponse;
 
-    public MigratableResult(String requestMethod,
+    public MigratableHttpResult(String requestMethod,
             String requestUri,
             @Nullable MigratableHttpResponse<T> migratableHttpResponse,
             @Nullable Throwable cause) {
