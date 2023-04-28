@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 import org.apache.hc.core5.http.HttpStatus;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.synopsys.kb.httpclient.AbstractFuncTest;
@@ -44,13 +44,13 @@ import com.synopsys.kb.httpclient.model.ListHolder;
 public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
     private IActivityApi activityApi;
 
-    @BeforeMethod
-    public void beforeMethod() {
+    @BeforeClass
+    public void beforeClass() {
         IKbHttpApi kbHttpApi = getKbHttpApi();
         this.activityApi = kbHttpApi.getActivityApi();
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindComponentActivities() {
         UUID componentId1 = UUID.fromString("b75f622a-30da-46e4-a9c9-56f4ab75e22e");
         UUID componentId2 = UUID.fromString("d82fb719-977c-49aa-b799-3953356aa15c");
@@ -77,7 +77,7 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertTrue(actualComponentIds.containsAll(componentIds), "Component ids should be present.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindOngoingVersionActivities() {
         UUID componentId = UUID.fromString("9f74f66e-5c27-48d0-9083-e31e3563b7b2");
         Set<UUID> componentIds = Set.of(componentId);
@@ -102,7 +102,7 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertTrue(actualComponentIds.containsAll(componentIds), "Component ids should be present.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindComponentVersionActivities() {
         UUID componentVersionId1 = UUID.fromString("0bca7263-1033-4731-9985-809eb87ecfb7");
         Set<UUID> componentVersionIds = Set.of(componentVersionId1);
@@ -128,7 +128,7 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertTrue(actualComponentVersionIds.containsAll(componentVersionIds), "Component version ids should be present.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindComponentVersionLicenseActivities() {
         UUID componentVersionId1 = UUID.fromString("0bca7263-1033-4731-9985-809eb87ecfb7");
         Set<UUID> componentVersionIds = Set.of(componentVersionId1);
@@ -154,7 +154,7 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertTrue(actualComponentVersionIds.containsAll(componentVersionIds), "Component version ids should be present.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindComponentVersionCveVulnerabilityActivities() {
         UUID componentVersionId1 = UUID.fromString("0bca7263-1033-4731-9985-809eb87ecfb7");
         Set<UUID> componentVersionIds = Set.of(componentVersionId1);
@@ -183,7 +183,7 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertTrue(actualComponentVersionIds.containsAll(componentVersionIds), "Component version ids should be present.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindComponentVersionBdsaVulnerabilityActivities() {
         UUID componentVersionId1 = UUID.fromString("c365269e-7378-4277-85dc-f84b217e2d89");
         Set<UUID> componentVersionIds = Set.of(componentVersionId1);
@@ -212,7 +212,7 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertTrue(actualComponentVersionIds.containsAll(componentVersionIds), "Component version ids should be present.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindComponentVersionUpgradeGuidanceActivities() {
         UUID componentVersionId1 = UUID.fromString("c365269e-7378-4277-85dc-f84b217e2d89");
         Set<UUID> componentVersionIds = Set.of(componentVersionId1);
@@ -241,7 +241,7 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertTrue(actualComponentVersionIds.containsAll(componentVersionIds), "Component version ids should be present.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindComponentVariantActivities() {
         UUID componentVariantId1 = UUID.fromString("64b5b35d-0cfa-4a0e-b0aa-90db4dcf2734");
         Set<UUID> componentVariantIds = Set.of(componentVariantId1);
@@ -267,7 +267,7 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertTrue(actualComponentVariantIds.containsAll(componentVariantIds), "Component variant ids should be present.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindComponentVariantCveVulnerabilityActivities() {
         UUID componentVariantId1 = UUID.fromString("0186d8d0-a29c-4c51-a37c-c03d76d4effa");
         Set<UUID> componentVariantIds = Set.of(componentVariantId1);
@@ -296,7 +296,7 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertTrue(actualComponentVariantIds.containsAll(componentVariantIds), "Component variant ids should be present.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindComponentVariantBdsaVulnerabilityActivities() {
         UUID componentVariantId1 = UUID.fromString("a8254896-a7a5-4495-a6eb-a8977d67639d");
         Set<UUID> componentVariantIds = Set.of(componentVariantId1);
@@ -325,7 +325,7 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertTrue(actualComponentVariantIds.containsAll(componentVariantIds), "Component variant ids should be present.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindComponentVariantUpgradeGuidanceActivities() {
         UUID componentVariantId1 = UUID.fromString("0186d8d0-a29c-4c51-a37c-c03d76d4effa");
         Set<UUID> componentVariantIds = Set.of(componentVariantId1);
@@ -354,7 +354,7 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertTrue(actualComponentVariantIds.containsAll(componentVariantIds), "Component variant ids should be present.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindComponentVariantTransitiveUpgradeGuidanceActivities() {
         UUID componentVariantId1 = UUID.fromString("6fe9d2a3-71cc-4157-a5ef-373f7b93f406");
         Set<UUID> componentVariantIds = Set.of(componentVariantId1);
@@ -383,7 +383,7 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertTrue(actualComponentVariantIds.containsAll(componentVariantIds), "Component variant ids should be present.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindLicenseActivities() {
         UUID licenseId1 = UUID.fromString("7cae335f-1193-421e-92f1-8802b4243e93");
         Set<UUID> licenseIds = Set.of(licenseId1);
@@ -408,7 +408,7 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertTrue(actualLicenseIds.containsAll(licenseIds), "License ids should be present.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindLicenseLicenseTermActivities() {
         UUID licenseId1 = UUID.fromString("7cae335f-1193-421e-92f1-8802b4243e93");
         Set<UUID> licenseIds = Set.of(licenseId1);
@@ -433,7 +433,7 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertTrue(actualLicenseIds.containsAll(licenseIds), "License ids should be present.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindCveVulnerabilityActivities() {
         String cveVulnerabilityId1 = "CVE-2014-0160";
         Set<String> cveVulnerabilityIds = Set.of(cveVulnerabilityId1);
@@ -459,7 +459,7 @@ public class KbActivityHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertTrue(actualCveVulnerabilityIds.containsAll(cveVulnerabilityIds), "CVE vulnerability ids should be present.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindBdsaVulnerabilityActivities() {
         String bdsaVulnerabilityId1 = "BDSA-2014-0028";
         Set<String> bdsaVulnerabilityIds = Set.of(bdsaVulnerabilityId1);

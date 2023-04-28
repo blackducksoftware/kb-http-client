@@ -11,11 +11,9 @@
  */
 package com.synopsys.kb.httpclient.client;
 
-import java.util.UUID;
-
 import org.apache.hc.core5.http.HttpStatus;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.synopsys.kb.httpclient.AbstractFuncTest;
@@ -33,13 +31,13 @@ import com.synopsys.kb.httpclient.model.Authentication;
 public class KbAuthenticationHttpClientFuncTest extends AbstractFuncTest {
     private IAuthenticationApi authenticationApi;
 
-    @BeforeMethod
-    public void beforeMethod() {
+    @BeforeClass
+    public void beforeClass() {
         IKbHttpApi kbHttpApi = getKbHttpApi();
         this.authenticationApi = kbHttpApi.getAuthenticationApi();
     }
 
-    @Test(enabled = false)
+    @Test
     public void testAuthenticateWithInvalidLicenseKey() {
         HttpResult<Authentication> httpResult = authenticationApi.authenticate("this-is-an-invalid-bds-license-key");
 
@@ -50,10 +48,10 @@ public class KbAuthenticationHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertFalse(httpResponse.getMessageBody().isPresent(), "Message body should not be present.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testAuthenticateWithValidLicenseKey() {
         // Requires KB test product registration key.
-        String licenseKey = UUID.randomUUID().toString();
+        String licenseKey = getLicenseKey();
         HttpResult<Authentication> httpResult = authenticationApi.authenticate(licenseKey);
 
         HttpResponse<Authentication> httpResponse = httpResult.getHttpResponse().orElse(null);

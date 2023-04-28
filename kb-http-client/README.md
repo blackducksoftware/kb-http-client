@@ -16,8 +16,6 @@ The KB HTTP client library requires Java 11 or later.
 
 ## License
 
-## License
-
 The kb-http-client is licensed under the MIT License.
 
 ## Notes and caveats
@@ -78,6 +76,13 @@ The KB HTTP client makes certain assumptions in favor of convention...
     - Find CVE vulnerability activities
     - Find BDSA vulnerability activities
                             
+## Build
+
++ TestNG is used as the test library harness.
+    - Functional tests are conditionally ran if a JVM parameter of 'synopsys_kb_httpclient_license_key_path' is provided with the path to a present file that contains a single line with the KnowledgeBase license key credential.
++ Javadoc is linted and created.
++ Jacoco is used for code coverage. 
+
 ## TODOs
 
 * Add SLF4J API to support debug logging.

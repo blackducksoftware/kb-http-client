@@ -17,7 +17,8 @@ import java.util.UUID;
 
 import org.apache.hc.core5.http.HttpStatus;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
+import org.testng.SkipException;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.synopsys.kb.httpclient.AbstractFuncTest;
@@ -43,13 +44,13 @@ import com.synopsys.kb.httpclient.model.VulnerabilitySourcePriority;
 public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
     private IComponentVersionApi componentVersionApi;
 
-    @BeforeMethod
-    public void beforeMethod() {
+    @BeforeClass
+    public void beforeClass() {
         IKbHttpApi kbHttpApi = getKbHttpApi();
         this.componentVersionApi = kbHttpApi.getComponentVersionApi();
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFind() {
         UUID componentVersionId = UUID.fromString("d10c3ded-9e0e-468e-909e-637d81ecc554");
 
@@ -61,7 +62,7 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
 
         if (httpResponse.isMigrated()) {
-            Assert.fail("This functional test method was written using a non-migrated component version id.  "
+            throw new SkipException("This functional test method was written using a non-migrated component version id.  "
                     + "Since then, this component version id has been migrated by the KnowledgeBase.  "
                     + "Update this test with a new non-migrated component version id.");
         }
@@ -72,7 +73,7 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertNotNull(componentVersion, "Component version should be initialized.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindWhenMergeMigrated() {
         UUID componentVersionId = UUID.fromString("0bca7263-1033-4731-9985-809eb87ecfb7");
 
@@ -90,7 +91,7 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertFalse(httpResponse.isSplitMigrated(), "Entity should not be split migrated.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindWhenSplitMigrated() {
         UUID componentVersionId = UUID.fromString("1623f022-fb37-428a-a491-ab1ce1918d16");
 
@@ -108,7 +109,7 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertTrue(httpResponse.isSplitMigrated(), "Entity should be split migrated.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindNextVersion() {
         UUID componentVersionId = UUID.fromString("d10c3ded-9e0e-468e-909e-637d81ecc554");
 
@@ -119,7 +120,7 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
 
         if (httpResponse.isMigrated()) {
-            Assert.fail("This functional test method was written using a non-migrated component version id.  "
+            throw new SkipException("This functional test method was written using a non-migrated component version id.  "
                     + "Since then, this component version id has been migrated by the KnowledgeBase.  "
                     + "Update this test with a new non-migrated component version id.");
         }
@@ -130,7 +131,7 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertNotNull(nextVersion, "Next version should be initialized.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindNextVersionWhenMergeMigrated() {
         UUID componentVersionId = UUID.fromString("0bca7263-1033-4731-9985-809eb87ecfb7");
 
@@ -147,7 +148,7 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertFalse(httpResponse.isSplitMigrated(), "Entity should not be split migrated.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindNextVersionWhenSplitMigrated() {
         UUID componentVersionId = UUID.fromString("1623f022-fb37-428a-a491-ab1ce1918d16");
 
@@ -164,7 +165,7 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertTrue(httpResponse.isSplitMigrated(), "Entity should be split migrated.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindCveVulnerabilities() {
         PageRequest pageRequest = new PageRequest(0, 100, Collections.emptyList());
         UUID componentVersionId = UUID.fromString("c365269e-7378-4277-85dc-f84b217e2d89");
@@ -176,7 +177,7 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
 
         if (httpResponse.isMigrated()) {
-            Assert.fail("This functional test method was written using a non-migrated component version id.  "
+            throw new SkipException("This functional test method was written using a non-migrated component version id.  "
                     + "Since then, this component version id has been migrated by the KnowledgeBase.  "
                     + "Update this test with a new non-migrated component version id.");
         }
@@ -190,7 +191,7 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertFalse(items.isEmpty(), "Items should not be empty.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindCveVulnerabilitiesWhenMergeMigrated() {
         PageRequest pageRequest = new PageRequest(0, 100, Collections.emptyList());
         UUID componentVersionId = UUID.fromString("0bca7263-1033-4731-9985-809eb87ecfb7");
@@ -208,7 +209,7 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertFalse(httpResponse.isSplitMigrated(), "Entity should not be split migrated.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindCveVulnerabilitiesWhenSplitMigrated() {
         PageRequest pageRequest = new PageRequest(0, 100, Collections.emptyList());
         UUID componentVersionId = UUID.fromString("1623f022-fb37-428a-a491-ab1ce1918d16");
@@ -226,7 +227,7 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertTrue(httpResponse.isSplitMigrated(), "Entity should be split migrated.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindBdsaVulnerabilities() {
         PageRequest pageRequest = new PageRequest(0, 100, Collections.emptyList());
         UUID componentVersionId = UUID.fromString("c365269e-7378-4277-85dc-f84b217e2d89");
@@ -238,7 +239,7 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
 
         if (httpResponse.isMigrated()) {
-            Assert.fail("This functional test method was written using a non-migrated component version id.  "
+            throw new SkipException("This functional test method was written using a non-migrated component version id.  "
                     + "Since then, this component version id has been migrated by the KnowledgeBase.  "
                     + "Update this test with a new non-migrated component version id.");
         }
@@ -252,7 +253,7 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertFalse(items.isEmpty(), "Items should not be empty.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindBdsaVulnerabilitiesWhenMergeMigrated() {
         PageRequest pageRequest = new PageRequest(0, 100, Collections.emptyList());
         UUID componentVersionId = UUID.fromString("0bca7263-1033-4731-9985-809eb87ecfb7");
@@ -270,7 +271,7 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertFalse(httpResponse.isSplitMigrated(), "Entity should not be split migrated.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindBdsaVulnerabilitiesWhenSplitMigrated() {
         PageRequest pageRequest = new PageRequest(0, 100, Collections.emptyList());
         UUID componentVersionId = UUID.fromString("1623f022-fb37-428a-a491-ab1ce1918d16");
@@ -288,7 +289,7 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertTrue(httpResponse.isSplitMigrated(), "Entity should be split migrated.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindUpgradeGuidance() {
         UUID componentVersionId = UUID.fromString("d10c3ded-9e0e-468e-909e-637d81ecc554");
 
@@ -300,7 +301,7 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
 
         if (httpResponse.isMigrated()) {
-            Assert.fail("This functional test method was written using a non-migrated component version id.  "
+            throw new SkipException("This functional test method was written using a non-migrated component version id.  "
                     + "Since then, this component version id has been migrated by the KnowledgeBase.  "
                     + "Update this test with a new non-migrated component version id.");
         }
@@ -311,7 +312,7 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertNotNull(upgradeGuidance, "Upgrade guidance should be initialized.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindUpgradeGuidanceWhenMergeMigrated() {
         UUID componentVersionId = UUID.fromString("0bca7263-1033-4731-9985-809eb87ecfb7");
 
@@ -329,7 +330,7 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
         Assert.assertFalse(httpResponse.isSplitMigrated(), "Entity should not be split migrated.");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testFindUpgradeGuidanceWhenSplitMigrated() {
         UUID componentVersionId = UUID.fromString("1623f022-fb37-428a-a491-ab1ce1918d16");
 
