@@ -29,7 +29,11 @@ import com.google.common.collect.ImmutableSet;
  * @author skatzman
  */
 public class LicenseDefinition extends AbstractEntity {
-    private static final int MAX_DEPTH = 10;
+    /**
+     * The default maximum depth that should be traversed for a multi-depth license definition as an internal
+     * self-protection.
+     */
+    public static final int MAX_DEPTH = 10;
 
     private final LicenseDefinitionType type;
 

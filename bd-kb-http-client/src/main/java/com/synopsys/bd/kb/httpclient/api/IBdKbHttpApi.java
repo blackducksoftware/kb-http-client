@@ -12,6 +12,7 @@
 package com.synopsys.bd.kb.httpclient.api;
 
 import com.synopsys.bd.kb.httpclient.impl.BdComponentFinder;
+import com.synopsys.bd.kb.httpclient.impl.BdLicenseDefinitionFinder;
 import com.synopsys.bd.kb.httpclient.impl.BdVulnerabilityMerger;
 import com.synopsys.kb.httpclient.api.IKbHttpApi;
 
@@ -67,6 +68,16 @@ public interface IBdKbHttpApi {
      * @return Returns the Black Duck-centric component finder.
      */
     BdComponentFinder getBdComponentFinder();
+
+    /**
+     * Gets the Black Duck-centric license definition finder.
+     * 
+     * The Black Duck-centric license definition finder contains utility methods for finding license definitions with
+     * complete license metadata.
+     * 
+     * @return Returns the Black Duck-centric license definition finder.
+     */
+    BdLicenseDefinitionFinder getBdLicenseDefinitionFinder();
 
     /**
      * Gets the Black Duck-centric vulnerability merger.

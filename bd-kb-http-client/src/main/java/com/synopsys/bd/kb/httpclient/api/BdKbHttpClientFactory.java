@@ -19,6 +19,7 @@ import com.synopsys.bd.kb.httpclient.impl.BdComponentVariantApi;
 import com.synopsys.bd.kb.httpclient.impl.BdComponentVersionApi;
 import com.synopsys.bd.kb.httpclient.impl.BdKbHttpApi;
 import com.synopsys.bd.kb.httpclient.impl.BdLicenseApi;
+import com.synopsys.bd.kb.httpclient.impl.BdLicenseDefinitionFinder;
 import com.synopsys.bd.kb.httpclient.impl.BdVulnerabilityMerger;
 import com.synopsys.kb.httpclient.api.HttpClientConfiguration;
 import com.synopsys.kb.httpclient.api.IComponentApi;
@@ -71,8 +72,10 @@ class BdKbHttpClientFactory {
         IBdLicenseApi bdLicenseApi = new BdLicenseApi(licenseApi);
 
         BdComponentFinder bdComponentFinder = new BdComponentFinder(bdComponentApi, bdComponentVersionApi, bdComponentVariantApi);
+        BdLicenseDefinitionFinder bdLicenseDefinitionFinder = new BdLicenseDefinitionFinder(bdLicenseApi);
         BdVulnerabilityMerger bdVulnerabilityMerger = new BdVulnerabilityMerger();
 
-        return new BdKbHttpApi(bdComponentApi, bdComponentVersionApi, bdComponentVariantApi, bdLicenseApi, bdComponentFinder, bdVulnerabilityMerger, kbHttpApi);
+        return new BdKbHttpApi(bdComponentApi, bdComponentVersionApi, bdComponentVariantApi, bdLicenseApi, bdComponentFinder, bdLicenseDefinitionFinder,
+                bdVulnerabilityMerger, kbHttpApi);
     }
 }

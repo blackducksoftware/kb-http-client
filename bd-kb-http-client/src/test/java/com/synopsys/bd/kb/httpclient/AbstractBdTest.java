@@ -59,9 +59,13 @@ import com.synopsys.kb.httpclient.model.Cvss3Scope;
 import com.synopsys.kb.httpclient.model.Cvss3Score;
 import com.synopsys.kb.httpclient.model.Cvss3TemporalMetrics;
 import com.synopsys.kb.httpclient.model.Cvss3UserInteraction;
+import com.synopsys.kb.httpclient.model.License;
+import com.synopsys.kb.httpclient.model.LicenseCodeSharing;
 import com.synopsys.kb.httpclient.model.LicenseDefinition;
 import com.synopsys.kb.httpclient.model.LicenseDefinitionItem;
 import com.synopsys.kb.httpclient.model.LicenseDefinitionType;
+import com.synopsys.kb.httpclient.model.LicenseOwnership;
+import com.synopsys.kb.httpclient.model.LicenseRestriction;
 import com.synopsys.kb.httpclient.model.Link;
 import com.synopsys.kb.httpclient.model.MainLanguage;
 import com.synopsys.kb.httpclient.model.Meta;
@@ -247,6 +251,23 @@ public abstract class AbstractBdTest {
         Meta meta = new Meta(BASE_HREF + "/api/versions/" + componentVersionId + "/next", Collections.emptyList());
 
         return new NextVersion(100, 90, meta);
+    }
+
+    protected License constructLicense(UUID licenseId, String name) {
+        Meta meta = new Meta(BASE_HREF + "/api/licenses/" + licenseId, Collections.emptyList());
+
+        return new License(name, LicenseCodeSharing.PERMISSIVE, LicenseOwnership.OPEN_SOURCE, OffsetDateTime.now(), null, Boolean.FALSE,
+                LicenseRestriction.UNRESTRICTED, meta);
+    }
+
+    protected LicenseDefinitionItem constructLicenseDefinitionItem(@Nullable UUID licenseId, @Nullable LicenseDefinition licenseDefinition) {
+        String href = (licenseId != null) ? BASE_HREF + "/api/licenses/" + licenseId : null;
+
+        return new LicenseDefinitionItem(href, licenseDefinition);
+    }
+
+    protected LicenseDefinition constructLicenseDefinition(LicenseDefinitionType type, List<LicenseDefinitionItem> items) {
+        return new LicenseDefinition(type, items);
     }
 
     protected CveVulnerability constructCveVulnerability(String id, VulnerabilityStatus status) {
