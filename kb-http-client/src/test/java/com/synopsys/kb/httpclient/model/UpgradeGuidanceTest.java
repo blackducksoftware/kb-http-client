@@ -104,4 +104,28 @@ public class UpgradeGuidanceTest extends AbstractTest {
         Assert.assertEquals(result.getLongTermSuggestion().orElse(null), LONG_TERM_SUGGESTION, "Long term suggestions should be equal.");
         Assert.assertEquals(result.getMeta(), META, "Metas should be equal.");
     }
+
+    @Test
+    public void testHashCode() {
+        UpgradeGuidance upgradeGuidance = new UpgradeGuidance(COMPONENT, VERSION, VARIANT, COMPONENT_NAME, VERSION_NAME, VARIANT_NAME,
+                VARIANT_EXTERNAL_NAMESPACE, VARIANT_EXTERNAL_ID, SHORT_TERM_SUGGESTION, LONG_TERM_SUGGESTION, META);
+        UpgradeGuidance copyUpgradeGuidance = new UpgradeGuidance(COMPONENT, VERSION, VARIANT, COMPONENT_NAME, VERSION_NAME, VARIANT_NAME,
+                VARIANT_EXTERNAL_NAMESPACE, VARIANT_EXTERNAL_ID, SHORT_TERM_SUGGESTION, LONG_TERM_SUGGESTION, META);
+        UpgradeGuidance differentUpgradeGuidance = new UpgradeGuidance(COMPONENT, VERSION, VARIANT, COMPONENT_NAME, VERSION_NAME, VARIANT_NAME,
+                VARIANT_EXTERNAL_NAMESPACE, "differentExternalId", SHORT_TERM_SUGGESTION, LONG_TERM_SUGGESTION, META);
+
+        assertHashCode(upgradeGuidance, copyUpgradeGuidance, differentUpgradeGuidance);
+    }
+
+    @Test
+    public void testEquals() {
+        UpgradeGuidance upgradeGuidance = new UpgradeGuidance(COMPONENT, VERSION, VARIANT, COMPONENT_NAME, VERSION_NAME, VARIANT_NAME,
+                VARIANT_EXTERNAL_NAMESPACE, VARIANT_EXTERNAL_ID, SHORT_TERM_SUGGESTION, LONG_TERM_SUGGESTION, META);
+        UpgradeGuidance copyUpgradeGuidance = new UpgradeGuidance(COMPONENT, VERSION, VARIANT, COMPONENT_NAME, VERSION_NAME, VARIANT_NAME,
+                VARIANT_EXTERNAL_NAMESPACE, VARIANT_EXTERNAL_ID, SHORT_TERM_SUGGESTION, LONG_TERM_SUGGESTION, META);
+        UpgradeGuidance differentUpgradeGuidance = new UpgradeGuidance(COMPONENT, VERSION, VARIANT, COMPONENT_NAME, VERSION_NAME, VARIANT_NAME,
+                VARIANT_EXTERNAL_NAMESPACE, "differentExternalId", SHORT_TERM_SUGGESTION, LONG_TERM_SUGGESTION, META);
+
+        assertEquals(upgradeGuidance, copyUpgradeGuidance, differentUpgradeGuidance);
+    }
 }

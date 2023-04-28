@@ -51,4 +51,22 @@ public class AuthenticationTest extends AbstractTest {
         Assert.assertEquals(result.getJsonWebToken(), JSON_WEB_TOKEN, "JSON web tokens should be equal.");
         Assert.assertEquals(result.getExpiresInMillis(), EXPIRES_IN_MILLIS, "Expires in millis should be equal.");
     }
+
+    @Test
+    public void testHashCode() {
+        Authentication authentication = new Authentication(EXPIRATION_WARNING, JSON_WEB_TOKEN, EXPIRES_IN_MILLIS);
+        Authentication copyAuthentication = new Authentication(EXPIRATION_WARNING, JSON_WEB_TOKEN, EXPIRES_IN_MILLIS);
+        Authentication differentAuthentication = new Authentication(EXPIRATION_WARNING, JSON_WEB_TOKEN, 1000L);
+
+        assertHashCode(authentication, copyAuthentication, differentAuthentication);
+    }
+
+    @Test
+    public void testEquals() {
+        Authentication authentication = new Authentication(EXPIRATION_WARNING, JSON_WEB_TOKEN, EXPIRES_IN_MILLIS);
+        Authentication copyAuthentication = new Authentication(EXPIRATION_WARNING, JSON_WEB_TOKEN, EXPIRES_IN_MILLIS);
+        Authentication differentAuthentication = new Authentication(EXPIRATION_WARNING, JSON_WEB_TOKEN, 1000L);
+
+        assertEquals(authentication, copyAuthentication, differentAuthentication);
+    }
 }

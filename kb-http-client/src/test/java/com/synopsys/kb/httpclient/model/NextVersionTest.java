@@ -60,4 +60,22 @@ public class NextVersionTest extends AbstractTest {
                 "Next versions excluding deleted counts should be equal.");
         Assert.assertEquals(result.getMeta(), META, "Metas should be equal.");
     }
+
+    @Test
+    public void testHashCode() {
+        NextVersion nextVersion = new NextVersion(NEXT_VERSIONS_INCLUDING_DELETED_COUNT, NEXT_VERSIONS_EXCLUDING_DELETED_COUNT, META);
+        NextVersion copyNextVersion = new NextVersion(NEXT_VERSIONS_INCLUDING_DELETED_COUNT, NEXT_VERSIONS_EXCLUDING_DELETED_COUNT, META);
+        NextVersion differentNextVersion = new NextVersion(NEXT_VERSIONS_INCLUDING_DELETED_COUNT, 99999, META);
+
+        assertHashCode(nextVersion, copyNextVersion, differentNextVersion);
+    }
+
+    @Test
+    public void testEquals() {
+        NextVersion nextVersion = new NextVersion(NEXT_VERSIONS_INCLUDING_DELETED_COUNT, NEXT_VERSIONS_EXCLUDING_DELETED_COUNT, META);
+        NextVersion copyNextVersion = new NextVersion(NEXT_VERSIONS_INCLUDING_DELETED_COUNT, NEXT_VERSIONS_EXCLUDING_DELETED_COUNT, META);
+        NextVersion differentNextVersion = new NextVersion(NEXT_VERSIONS_INCLUDING_DELETED_COUNT, 99999, META);
+
+        assertEquals(nextVersion, copyNextVersion, differentNextVersion);
+    }
 }

@@ -79,6 +79,27 @@ public class ComponentVariantTest extends AbstractTest {
     }
 
     @Test
+    public void testConstructorWithNullValues() {
+        ComponentVariant componentVariant = new ComponentVariant(VERSION, EXTERNAL_NAMESPACE, EXTERNAL_ID, null, PACKAGE_URL, TYPE,
+                LICENSE_DEFINITION, null, null, META);
+
+        Assert.assertEquals(componentVariant.getVersion(), VERSION, "Versions should be equal.");
+        Assert.assertEquals(componentVariant.getExternalNamespace().orElse(null), EXTERNAL_NAMESPACE, "External namespaces should be equal.");
+        Assert.assertEquals(componentVariant.getExternalId().orElse(null), EXTERNAL_ID, "External ids should be equal.");
+        Assert.assertFalse(componentVariant.isExternalNamespaceDistribution(), "External namespace should not be a distribution.");
+        Assert.assertEquals(componentVariant.getPackageUrl().orElse(null), PACKAGE_URL, "Package URLs should be equal.");
+        Assert.assertEquals(componentVariant.getType(), TYPE, "Types should be equal.");
+        Assert.assertEquals(componentVariant.getLicenseDefinition().orElse(null), LICENSE_DEFINITION, "License definitions should be equal.");
+        Assert.assertFalse(componentVariant.isDeleted(), "Component variant should not be deleted.");
+        Assert.assertFalse(componentVariant.isComponentIntelligencePresent(), "Component intelligence should not be present.");
+        Assert.assertEquals(componentVariant.getMeta(), META, "Metas should be equal.");
+
+        Assert.assertEquals(componentVariant.getId(), ID, "Ids should be equal.");
+        Assert.assertEquals(componentVariant.getComponentId(), COMPONENT_ID, "Component ids should be equal.");
+        Assert.assertEquals(componentVariant.getComponentVersionId(), COMPONENT_VERSION_ID, "Component version ids should be equal.");
+    }
+
+    @Test
     public void testDeserialization() throws JsonProcessingException {
         ComponentVariant componentVariant = new ComponentVariant(VERSION, EXTERNAL_NAMESPACE, EXTERNAL_ID, EXTERNAL_NAMESPACE_DISTRIBUTION, PACKAGE_URL, TYPE,
                 LICENSE_DEFINITION, DELETED, COMPONENT_INTELLIGENCE, META);
@@ -96,5 +117,29 @@ public class ComponentVariantTest extends AbstractTest {
         Assert.assertFalse(result.isDeleted(), "Component variant should not be deleted.");
         Assert.assertFalse(result.isComponentIntelligencePresent(), "Component intelligence should not be present.");
         Assert.assertEquals(result.getMeta(), META, "Metas should be equal.");
+    }
+
+    @Test
+    public void testHashCode() {
+        ComponentVariant componentVariant = new ComponentVariant(VERSION, EXTERNAL_NAMESPACE, EXTERNAL_ID, EXTERNAL_NAMESPACE_DISTRIBUTION, PACKAGE_URL, TYPE,
+                LICENSE_DEFINITION, DELETED, COMPONENT_INTELLIGENCE, META);
+        ComponentVariant copyComponentVariant = new ComponentVariant(VERSION, EXTERNAL_NAMESPACE, EXTERNAL_ID, EXTERNAL_NAMESPACE_DISTRIBUTION, PACKAGE_URL,
+                TYPE, LICENSE_DEFINITION, DELETED, COMPONENT_INTELLIGENCE, META);
+        ComponentVariant differentComponentVariant = new ComponentVariant(VERSION, EXTERNAL_NAMESPACE, EXTERNAL_ID, EXTERNAL_NAMESPACE_DISTRIBUTION,
+                PACKAGE_URL, TYPE, LICENSE_DEFINITION, DELETED, Boolean.TRUE, META);
+
+        assertHashCode(componentVariant, copyComponentVariant, differentComponentVariant);
+    }
+
+    @Test
+    public void testEquals() {
+        ComponentVariant componentVariant = new ComponentVariant(VERSION, EXTERNAL_NAMESPACE, EXTERNAL_ID, EXTERNAL_NAMESPACE_DISTRIBUTION, PACKAGE_URL, TYPE,
+                LICENSE_DEFINITION, DELETED, COMPONENT_INTELLIGENCE, META);
+        ComponentVariant copyComponentVariant = new ComponentVariant(VERSION, EXTERNAL_NAMESPACE, EXTERNAL_ID, EXTERNAL_NAMESPACE_DISTRIBUTION, PACKAGE_URL,
+                TYPE, LICENSE_DEFINITION, DELETED, COMPONENT_INTELLIGENCE, META);
+        ComponentVariant differentComponentVariant = new ComponentVariant(VERSION, EXTERNAL_NAMESPACE, EXTERNAL_ID, EXTERNAL_NAMESPACE_DISTRIBUTION,
+                PACKAGE_URL, TYPE, LICENSE_DEFINITION, DELETED, Boolean.TRUE, META);
+
+        assertEquals(componentVariant, copyComponentVariant, differentComponentVariant);
     }
 }

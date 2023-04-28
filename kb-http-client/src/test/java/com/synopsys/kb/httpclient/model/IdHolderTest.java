@@ -46,6 +46,13 @@ public class IdHolderTest extends AbstractTest {
     }
 
     @Test
+    public void testConstructorWithNullIds() {
+        IdHolder<String> idHolder = new IdHolder<>(null);
+
+        Assert.assertTrue(idHolder.getIds().isEmpty(), "Ids should be empty.");
+    }
+
+    @Test
     public void testDeserializationForUuid() throws JsonProcessingException {
         IdHolder<UUID> idHolder = new IdHolder<>(UUID_IDS);
 

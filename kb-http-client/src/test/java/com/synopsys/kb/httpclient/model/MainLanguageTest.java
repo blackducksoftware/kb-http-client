@@ -41,4 +41,22 @@ public class MainLanguageTest extends AbstractTest {
 
         Assert.assertEquals(result.getLanguageName().orElse(null), LANGUAGE_NAME, "Language names should be equal.");
     }
+
+    @Test
+    public void testHashCode() {
+        MainLanguage mainLanguage = new MainLanguage(LANGUAGE_NAME);
+        MainLanguage copyMainLanguage = new MainLanguage(LANGUAGE_NAME);
+        MainLanguage differentMainLanguage = new MainLanguage("differentLanguageName");
+
+        assertHashCode(mainLanguage, copyMainLanguage, differentMainLanguage);
+    }
+
+    @Test
+    public void testEquals() {
+        MainLanguage mainLanguage = new MainLanguage(LANGUAGE_NAME);
+        MainLanguage copyMainLanguage = new MainLanguage(LANGUAGE_NAME);
+        MainLanguage differentMainLanguage = new MainLanguage("differentLanguageName");
+
+        assertEquals(mainLanguage, copyMainLanguage, differentMainLanguage);
+    }
 }

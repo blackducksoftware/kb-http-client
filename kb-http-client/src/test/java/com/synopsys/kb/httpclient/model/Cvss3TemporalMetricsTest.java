@@ -53,4 +53,24 @@ public class Cvss3TemporalMetricsTest extends AbstractTest {
         Assert.assertEquals(result.getRemediationLevel().orElse(null), REMEDIATION_LEVEL, "Remediation levels should be equal.");
         Assert.assertEquals(result.getReportConfidence().orElse(null), REPORT_CONFIDENCE, "Report confidences should be equal.");
     }
+
+    @Test
+    public void testHashCode() {
+        Cvss3TemporalMetrics cvss3TemporalMetrics = new Cvss3TemporalMetrics(SCORE, EXPLOIT_CODE_MATURITY, REMEDIATION_LEVEL, REPORT_CONFIDENCE);
+        Cvss3TemporalMetrics copyCvss3TemporalMetrics = new Cvss3TemporalMetrics(SCORE, EXPLOIT_CODE_MATURITY, REMEDIATION_LEVEL, REPORT_CONFIDENCE);
+        Cvss3TemporalMetrics differentCvss3TemporalMetrics = new Cvss3TemporalMetrics(SCORE, EXPLOIT_CODE_MATURITY, REMEDIATION_LEVEL,
+                Cvss3ReportConfidence.NOT_DEFINED);
+
+        assertHashCode(cvss3TemporalMetrics, copyCvss3TemporalMetrics, differentCvss3TemporalMetrics);
+    }
+
+    @Test
+    public void testEquals() {
+        Cvss3TemporalMetrics cvss3TemporalMetrics = new Cvss3TemporalMetrics(SCORE, EXPLOIT_CODE_MATURITY, REMEDIATION_LEVEL, REPORT_CONFIDENCE);
+        Cvss3TemporalMetrics copyCvss3TemporalMetrics = new Cvss3TemporalMetrics(SCORE, EXPLOIT_CODE_MATURITY, REMEDIATION_LEVEL, REPORT_CONFIDENCE);
+        Cvss3TemporalMetrics differentCvss3TemporalMetrics = new Cvss3TemporalMetrics(SCORE, EXPLOIT_CODE_MATURITY, REMEDIATION_LEVEL,
+                Cvss3ReportConfidence.NOT_DEFINED);
+
+        assertEquals(cvss3TemporalMetrics, copyCvss3TemporalMetrics, differentCvss3TemporalMetrics);
+    }
 }

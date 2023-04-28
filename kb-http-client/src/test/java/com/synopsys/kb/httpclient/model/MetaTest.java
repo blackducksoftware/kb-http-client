@@ -11,6 +11,7 @@
  */
 package com.synopsys.kb.httpclient.model;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -291,5 +292,23 @@ public class MetaTest extends AbstractTest {
 
         Assert.assertEquals(result.getHref().orElse(null), HREF, "HREFs should be equal.");
         Assert.assertEquals(result.getLinks(), LINKS, "Links should be equal.");
+    }
+
+    @Test
+    public void testHashCode() {
+        Meta meta = new Meta(HREF, LINKS);
+        Meta copyMeta = new Meta(HREF, LINKS);
+        Meta differentMeta = new Meta(HREF, Collections.emptyList());
+
+        assertHashCode(meta, copyMeta, differentMeta);
+    }
+
+    @Test
+    public void testEquals() {
+        Meta meta = new Meta(HREF, LINKS);
+        Meta copyMeta = new Meta(HREF, LINKS);
+        Meta differentMeta = new Meta(HREF, Collections.emptyList());
+
+        assertEquals(meta, copyMeta, differentMeta);
     }
 }

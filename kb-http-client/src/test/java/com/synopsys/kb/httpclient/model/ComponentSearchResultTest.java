@@ -63,6 +63,25 @@ public class ComponentSearchResultTest extends AbstractTest {
     }
 
     @Test
+    public void testConstructorWithNullValues() {
+        ComponentSearchResult componentSearchResult = new ComponentSearchResult(COMPONENT_NAME, VERSION_NAME, EXTERNAL_ID, COMPONENT_HREF, VERSION_HREF,
+                VARIANT_HREF, null, META);
+
+        Assert.assertEquals(componentSearchResult.getComponentName(), COMPONENT_NAME, "Component names should be equal.");
+        Assert.assertEquals(componentSearchResult.getVersionName().orElse(null), VERSION_NAME, "Version names should be equal.");
+        Assert.assertEquals(componentSearchResult.getExternalId().orElse(null), EXTERNAL_ID, "External ids should be equal.");
+        Assert.assertEquals(componentSearchResult.getComponent(), COMPONENT_HREF, "Component HREFs should be equal.");
+        Assert.assertEquals(componentSearchResult.getVersion().orElse(null), VERSION_HREF, "Version HREFs should be equal.");
+        Assert.assertEquals(componentSearchResult.getVariant().orElse(null), VARIANT_HREF, "Variant HREFs should be equal.");
+        Assert.assertFalse(componentSearchResult.isPartialMatch(), "Partial match should not be enabled.");
+        Assert.assertEquals(componentSearchResult.getMeta(), META, "Metas should be equal.");
+
+        Assert.assertEquals(componentSearchResult.getComponentId().orElse(null), COMPONENT_ID, "Component ids should be equal.");
+        Assert.assertEquals(componentSearchResult.getVersionId().orElse(null), VERSION_ID, "Version ids should be equal.");
+        Assert.assertEquals(componentSearchResult.getVariantId().orElse(null), VARIANT_ID, "Variant ids should be equal.");
+    }
+
+    @Test
     public void testDeserialization() throws JsonProcessingException {
         ComponentSearchResult componentSearchResult = new ComponentSearchResult(COMPONENT_NAME, VERSION_NAME, EXTERNAL_ID, COMPONENT_HREF, VERSION_HREF,
                 VARIANT_HREF, Boolean.FALSE, META);
@@ -78,5 +97,29 @@ public class ComponentSearchResultTest extends AbstractTest {
         Assert.assertEquals(result.getVariant().orElse(null), VARIANT_HREF, "Variant HREFs should be equal.");
         Assert.assertFalse(result.isPartialMatch(), "Partial match should not be enabled.");
         Assert.assertEquals(componentSearchResult.getMeta(), META, "Metas should be equal.");
+    }
+
+    @Test
+    public void testHashCode() {
+        ComponentSearchResult componentSearchResult = new ComponentSearchResult(COMPONENT_NAME, VERSION_NAME, EXTERNAL_ID, COMPONENT_HREF, VERSION_HREF,
+                VARIANT_HREF, Boolean.FALSE, META);
+        ComponentSearchResult copyComponentSearchResult = new ComponentSearchResult(COMPONENT_NAME, VERSION_NAME, EXTERNAL_ID, COMPONENT_HREF, VERSION_HREF,
+                VARIANT_HREF, Boolean.FALSE, META);
+        ComponentSearchResult differentComponentSearchResult = new ComponentSearchResult(COMPONENT_NAME, VERSION_NAME, EXTERNAL_ID, COMPONENT_HREF,
+                VERSION_HREF, VARIANT_HREF, Boolean.TRUE, META);
+
+        assertHashCode(componentSearchResult, copyComponentSearchResult, differentComponentSearchResult);
+    }
+
+    @Test
+    public void testEquals() {
+        ComponentSearchResult componentSearchResult = new ComponentSearchResult(COMPONENT_NAME, VERSION_NAME, EXTERNAL_ID, COMPONENT_HREF, VERSION_HREF,
+                VARIANT_HREF, Boolean.FALSE, META);
+        ComponentSearchResult copyComponentSearchResult = new ComponentSearchResult(COMPONENT_NAME, VERSION_NAME, EXTERNAL_ID, COMPONENT_HREF, VERSION_HREF,
+                VARIANT_HREF, Boolean.FALSE, META);
+        ComponentSearchResult differentComponentSearchResult = new ComponentSearchResult(COMPONENT_NAME, VERSION_NAME, EXTERNAL_ID, COMPONENT_HREF,
+                VERSION_HREF, VARIANT_HREF, Boolean.TRUE, META);
+
+        assertEquals(componentSearchResult, copyComponentSearchResult, differentComponentSearchResult);
     }
 }

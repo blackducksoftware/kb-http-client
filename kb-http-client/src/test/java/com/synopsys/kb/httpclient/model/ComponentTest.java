@@ -64,6 +64,21 @@ public class ComponentTest extends AbstractTest {
     }
 
     @Test
+    public void testConstructorWithNullValues() {
+        Component component = new Component(NAME, DESCRIPTION, PRIMARY_LANGUAGE, null, null, null, META);
+
+        Assert.assertEquals(component.getName(), NAME, "Names should be equal.");
+        Assert.assertEquals(component.getDescription(), DESCRIPTION, "Descriptions should be equal.");
+        Assert.assertEquals(component.getPrimaryLanguage().orElse(null), PRIMARY_LANGUAGE, "Primary languages should be equal.");
+        Assert.assertTrue(component.getTags().isEmpty(), "Tags should be empty.");
+        Assert.assertTrue(component.getLogos().isEmpty(), "Logos should be empty.");
+        Assert.assertFalse(component.isDeleted(), "Component should not be deleted.");
+        Assert.assertEquals(component.getMeta(), META, "Metas should be equal.");
+
+        Assert.assertEquals(component.getId(), ID, "Ids should be equal.");
+    }
+
+    @Test
     public void testGetHomepageLinkWhenAbsent() {
         Component component = new Component(NAME, DESCRIPTION, PRIMARY_LANGUAGE, TAGS, LOGOS, DELETED, META);
 
@@ -141,5 +156,23 @@ public class ComponentTest extends AbstractTest {
         Assert.assertEquals(result.getLogos(), LOGOS, "Logos should be equal.");
         Assert.assertFalse(result.isDeleted(), "Component should not be deleted.");
         Assert.assertEquals(result.getMeta(), META, "Metas should be equal.");
+    }
+
+    @Test
+    public void testHashCode() {
+        Component component = new Component(NAME, DESCRIPTION, PRIMARY_LANGUAGE, TAGS, LOGOS, DELETED, META);
+        Component copyComponent = new Component(NAME, DESCRIPTION, PRIMARY_LANGUAGE, TAGS, LOGOS, DELETED, META);
+        Component differentComponent = new Component(NAME, DESCRIPTION, PRIMARY_LANGUAGE, TAGS, LOGOS, Boolean.TRUE, META);
+
+        assertHashCode(component, copyComponent, differentComponent);
+    }
+
+    @Test
+    public void testEquals() {
+        Component component = new Component(NAME, DESCRIPTION, PRIMARY_LANGUAGE, TAGS, LOGOS, DELETED, META);
+        Component copyComponent = new Component(NAME, DESCRIPTION, PRIMARY_LANGUAGE, TAGS, LOGOS, DELETED, META);
+        Component differentComponent = new Component(NAME, DESCRIPTION, PRIMARY_LANGUAGE, TAGS, LOGOS, Boolean.TRUE, META);
+
+        assertEquals(component, copyComponent, differentComponent);
     }
 }

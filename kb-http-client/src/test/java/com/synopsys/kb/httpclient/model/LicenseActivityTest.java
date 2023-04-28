@@ -52,4 +52,22 @@ public class LicenseActivityTest extends AbstractTest {
         Assert.assertEquals(result.getLicense(), LICENSE, "Licenses should be equal.");
         Assert.assertNotNull(result.getUpdatedDate(), "Updated date should be initialized.");
     }
+
+    @Test
+    public void testHashCode() {
+        LicenseActivity activity = new LicenseActivity(LICENSE, UPDATED_DATE);
+        LicenseActivity copyActivity = new LicenseActivity(LICENSE, UPDATED_DATE);
+        LicenseActivity differentActivity = new LicenseActivity(LICENSE, OffsetDateTime.now().plusDays(1L));
+
+        assertHashCode(activity, copyActivity, differentActivity);
+    }
+
+    @Test
+    public void testEquals() {
+        LicenseActivity activity = new LicenseActivity(LICENSE, UPDATED_DATE);
+        LicenseActivity copyActivity = new LicenseActivity(LICENSE, UPDATED_DATE);
+        LicenseActivity differentActivity = new LicenseActivity(LICENSE, OffsetDateTime.now().plusDays(1L));
+
+        assertEquals(activity, copyActivity, differentActivity);
+    }
 }

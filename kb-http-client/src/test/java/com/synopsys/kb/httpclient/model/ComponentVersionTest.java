@@ -64,6 +64,22 @@ public class ComponentVersionTest extends AbstractTest {
     }
 
     @Test
+    public void testConstructorWithNullValues() {
+        ComponentVersion componentVersion = new ComponentVersion(VERSION, RELEASED_ON, LICENSE_DEFINITION, null, null, null, META);
+
+        Assert.assertEquals(componentVersion.getVersion().orElse(null), VERSION, "Versions should be equal.");
+        Assert.assertEquals(componentVersion.getReleasedOn().orElse(null), RELEASED_ON, "Released ons should be equal.");
+        Assert.assertEquals(componentVersion.getLicenseDefinition().orElse(null), LICENSE_DEFINITION, "License definitions should be equal.");
+        Assert.assertEquals(componentVersion.getRiskProfile(), new RiskProfile(), "Risk profiles should be equal.");
+        Assert.assertFalse(componentVersion.isDeleted(), "Component version should not be deleted.");
+        Assert.assertFalse(componentVersion.isComponentIntelligencePresent(), "Component intelligence should not be present.");
+        Assert.assertEquals(componentVersion.getMeta(), META, "Metas should be equal.");
+
+        Assert.assertEquals(componentVersion.getId(), ID, "Ids should be equal.");
+        Assert.assertEquals(componentVersion.getComponentId(), COMPONENT_ID, "Component ids should be equal.");
+    }
+
+    @Test
     public void testDeserialization() throws JsonProcessingException {
         ComponentVersion componentVersion = new ComponentVersion(VERSION, RELEASED_ON, LICENSE_DEFINITION, RISK_PROFILE, DELETED, COMPONENT_INTELLIGENCE, META);
 
@@ -77,5 +93,27 @@ public class ComponentVersionTest extends AbstractTest {
         Assert.assertFalse(result.isDeleted(), "Component version should not be deleted.");
         Assert.assertTrue(result.isComponentIntelligencePresent(), "Component intelligence should be present.");
         Assert.assertEquals(result.getMeta(), META, "Metas should be equal.");
+    }
+
+    @Test
+    public void testHashCode() {
+        ComponentVersion componentVersion = new ComponentVersion(VERSION, RELEASED_ON, LICENSE_DEFINITION, RISK_PROFILE, DELETED, COMPONENT_INTELLIGENCE, META);
+        ComponentVersion copyComponentVersion = new ComponentVersion(VERSION, RELEASED_ON, LICENSE_DEFINITION, RISK_PROFILE, DELETED, COMPONENT_INTELLIGENCE,
+                META);
+        ComponentVersion differentComponentVersion = new ComponentVersion(VERSION, RELEASED_ON, LICENSE_DEFINITION, RISK_PROFILE, DELETED,
+                Boolean.FALSE, META);
+
+        assertHashCode(componentVersion, copyComponentVersion, differentComponentVersion);
+    }
+
+    @Test
+    public void testEquals() {
+        ComponentVersion componentVersion = new ComponentVersion(VERSION, RELEASED_ON, LICENSE_DEFINITION, RISK_PROFILE, DELETED, COMPONENT_INTELLIGENCE, META);
+        ComponentVersion copyComponentVersion = new ComponentVersion(VERSION, RELEASED_ON, LICENSE_DEFINITION, RISK_PROFILE, DELETED, COMPONENT_INTELLIGENCE,
+                META);
+        ComponentVersion differentComponentVersion = new ComponentVersion(VERSION, RELEASED_ON, LICENSE_DEFINITION, RISK_PROFILE, DELETED,
+                Boolean.FALSE, META);
+
+        assertEquals(componentVersion, copyComponentVersion, differentComponentVersion);
     }
 }

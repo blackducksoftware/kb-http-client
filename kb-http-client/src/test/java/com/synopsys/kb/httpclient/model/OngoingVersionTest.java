@@ -80,6 +80,34 @@ public class OngoingVersionTest extends AbstractTest {
                 "Committer counts over 12 months should be equal.");
         Assert.assertEquals(ongoingVersion.getCommitterCountTotal().orElse(null), COMMITTER_COUNT_TOTAL,
                 "Committer counts in total should be equal.");
+        Assert.assertEquals(ongoingVersion.getReviewCount(), REVIEW_COUNT, "Review counts should be equal.");
+        Assert.assertEquals(ongoingVersion.getMeta(), META, "Metas should be equal.");
+
+        Assert.assertEquals(ongoingVersion.getComponentId(), COMPONENT_ID, "Component ids should be equal.");
+    }
+
+    @Test
+    public void testConstructorWithNullValues() {
+        OngoingVersion ongoingVersion = new OngoingVersion(ACTIVITY_TREND, TEAM_SIZE, CODE_BASE_MATURITY, MAIN_LANGUAGE, LAST_COMMIT,
+                LINES_OF_CODE, RATING_AVERAGE, null, COMMIT_COUNT_12_MONTH, COMMIT_COUNT_TOTAL, COMMITTER_COUNT_12_MONTH, COMMITTER_COUNT_TOTAL,
+                0, META);
+
+        Assert.assertEquals(ongoingVersion.getActivityTrend().orElse(null), ACTIVITY_TREND, "Activity trends should be equal.");
+        Assert.assertEquals(ongoingVersion.getTeamSize().orElse(null), TEAM_SIZE, "Team sizes should be equal.");
+        Assert.assertEquals(ongoingVersion.getCodeBaseMaturity().orElse(null), CODE_BASE_MATURITY, "Code base maturity counts should be equal.");
+        Assert.assertEquals(ongoingVersion.getMainLanguage().orElse(null), MAIN_LANGUAGE, "Main languages should be equal.");
+        Assert.assertEquals(ongoingVersion.getLastCommit().orElse(null), LAST_COMMIT, "Last commits should be equal.");
+        Assert.assertEquals(ongoingVersion.getLinesOfCode().orElse(null), LINES_OF_CODE, "Lines of code should be equal.");
+        Assert.assertEquals(ongoingVersion.getRatingAverage().orElse(null), RATING_AVERAGE, "Rating averages should be equal.");
+        Assert.assertEquals(ongoingVersion.getRatingCount(), 0, "Rating counts should be equal.");
+        Assert.assertEquals(ongoingVersion.getCommitCount12Month().orElse(null), COMMIT_COUNT_12_MONTH,
+                "Commit counts over 12 months should be equal.");
+        Assert.assertEquals(ongoingVersion.getCommitCountTotal().orElse(null), COMMIT_COUNT_TOTAL, "Commit counts in total should be equal.");
+        Assert.assertEquals(ongoingVersion.getCommitterCount12Month().orElse(null), COMMITTER_COUNT_12_MONTH,
+                "Committer counts over 12 months should be equal.");
+        Assert.assertEquals(ongoingVersion.getCommitterCountTotal().orElse(null), COMMITTER_COUNT_TOTAL,
+                "Committer counts in total should be equal.");
+        Assert.assertEquals(ongoingVersion.getReviewCount(), 0, "Review counts should be equal.");
         Assert.assertEquals(ongoingVersion.getMeta(), META, "Metas should be equal.");
 
         Assert.assertEquals(ongoingVersion.getComponentId(), COMPONENT_ID, "Component ids should be equal.");
@@ -110,5 +138,35 @@ public class OngoingVersionTest extends AbstractTest {
         Assert.assertEquals(result.getCommitterCountTotal().orElse(null), COMMITTER_COUNT_TOTAL,
                 "Committer counts in total should be equal.");
         Assert.assertEquals(result.getMeta(), META, "Metas should be equal.");
+    }
+
+    @Test
+    public void testHashCode() {
+        OngoingVersion ongoingVersion = new OngoingVersion(ACTIVITY_TREND, TEAM_SIZE, CODE_BASE_MATURITY, MAIN_LANGUAGE, LAST_COMMIT,
+                LINES_OF_CODE, RATING_AVERAGE, RATING_COUNT, COMMIT_COUNT_12_MONTH, COMMIT_COUNT_TOTAL, COMMITTER_COUNT_12_MONTH, COMMITTER_COUNT_TOTAL,
+                REVIEW_COUNT, META);
+        OngoingVersion copyOngoingVersion = new OngoingVersion(ACTIVITY_TREND, TEAM_SIZE, CODE_BASE_MATURITY, MAIN_LANGUAGE, LAST_COMMIT,
+                LINES_OF_CODE, RATING_AVERAGE, RATING_COUNT, COMMIT_COUNT_12_MONTH, COMMIT_COUNT_TOTAL, COMMITTER_COUNT_12_MONTH, COMMITTER_COUNT_TOTAL,
+                REVIEW_COUNT, META);
+        OngoingVersion differentOngoingVersion = new OngoingVersion(ACTIVITY_TREND, TEAM_SIZE, CODE_BASE_MATURITY, MAIN_LANGUAGE, LAST_COMMIT,
+                LINES_OF_CODE, RATING_AVERAGE, RATING_COUNT, COMMIT_COUNT_12_MONTH, COMMIT_COUNT_TOTAL, COMMITTER_COUNT_12_MONTH, COMMITTER_COUNT_TOTAL,
+                99999, META);
+
+        assertHashCode(ongoingVersion, copyOngoingVersion, differentOngoingVersion);
+    }
+
+    @Test
+    public void testEquals() {
+        OngoingVersion ongoingVersion = new OngoingVersion(ACTIVITY_TREND, TEAM_SIZE, CODE_BASE_MATURITY, MAIN_LANGUAGE, LAST_COMMIT,
+                LINES_OF_CODE, RATING_AVERAGE, RATING_COUNT, COMMIT_COUNT_12_MONTH, COMMIT_COUNT_TOTAL, COMMITTER_COUNT_12_MONTH, COMMITTER_COUNT_TOTAL,
+                REVIEW_COUNT, META);
+        OngoingVersion copyOngoingVersion = new OngoingVersion(ACTIVITY_TREND, TEAM_SIZE, CODE_BASE_MATURITY, MAIN_LANGUAGE, LAST_COMMIT,
+                LINES_OF_CODE, RATING_AVERAGE, RATING_COUNT, COMMIT_COUNT_12_MONTH, COMMIT_COUNT_TOTAL, COMMITTER_COUNT_12_MONTH, COMMITTER_COUNT_TOTAL,
+                REVIEW_COUNT, META);
+        OngoingVersion differentOngoingVersion = new OngoingVersion(ACTIVITY_TREND, TEAM_SIZE, CODE_BASE_MATURITY, MAIN_LANGUAGE, LAST_COMMIT,
+                LINES_OF_CODE, RATING_AVERAGE, RATING_COUNT, COMMIT_COUNT_12_MONTH, COMMIT_COUNT_TOTAL, COMMITTER_COUNT_12_MONTH, COMMITTER_COUNT_TOTAL,
+                99999, META);
+
+        assertEquals(ongoingVersion, copyOngoingVersion, differentOngoingVersion);
     }
 }

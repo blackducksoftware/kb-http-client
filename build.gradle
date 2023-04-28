@@ -16,12 +16,19 @@ allprojects {
 
 subprojects {
     apply plugin: 'java-library'
+    apply plugin: 'jacoco'
     
     // Setup default test behavior, including failure logging
     test {
         useTestNG() {
             useDefaultListeners = true
         }
+        
+        finalizedBy jacocoTestReport
+    }
+    
+    jacocoTestReport {
+        dependsOn test
     }
     
     // Set Java 9 automatic module name to prevent future collisions

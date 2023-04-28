@@ -78,4 +78,28 @@ public class UpgradeGuidanceSuggestionTest extends AbstractTest {
         Assert.assertEquals(result.getVariantExternalId(), VARIANT_EXTERNAL_ID, "Variant external ids should be equal.");
         Assert.assertEquals(result.getRiskProfile(), RISK_PROFILE, "Risk profiles should be equal.");
     }
+
+    @Test
+    public void testHashCode() {
+        UpgradeGuidanceSuggestion upgradeGuidanceSuggestion = new UpgradeGuidanceSuggestion(VERSION, VERSION_NAME, VARIANT, VARIANT_NAME,
+                VARIANT_EXTERNAL_NAMESPACE, VARIANT_EXTERNAL_ID, RISK_PROFILE);
+        UpgradeGuidanceSuggestion copyUpgradeGuidanceSuggestion = new UpgradeGuidanceSuggestion(VERSION, VERSION_NAME, VARIANT, VARIANT_NAME,
+                VARIANT_EXTERNAL_NAMESPACE, VARIANT_EXTERNAL_ID, RISK_PROFILE);
+        UpgradeGuidanceSuggestion differentUpgradeGuidanceSuggestion = new UpgradeGuidanceSuggestion(VERSION, VERSION_NAME, VARIANT, VARIANT_NAME,
+                VARIANT_EXTERNAL_NAMESPACE, "differentExternalId", RISK_PROFILE);
+
+        assertHashCode(upgradeGuidanceSuggestion, copyUpgradeGuidanceSuggestion, differentUpgradeGuidanceSuggestion);
+    }
+
+    @Test
+    public void testEquals() {
+        UpgradeGuidanceSuggestion upgradeGuidanceSuggestion = new UpgradeGuidanceSuggestion(VERSION, VERSION_NAME, VARIANT, VARIANT_NAME,
+                VARIANT_EXTERNAL_NAMESPACE, VARIANT_EXTERNAL_ID, RISK_PROFILE);
+        UpgradeGuidanceSuggestion copyUpgradeGuidanceSuggestion = new UpgradeGuidanceSuggestion(VERSION, VERSION_NAME, VARIANT, VARIANT_NAME,
+                VARIANT_EXTERNAL_NAMESPACE, VARIANT_EXTERNAL_ID, RISK_PROFILE);
+        UpgradeGuidanceSuggestion differentUpgradeGuidanceSuggestion = new UpgradeGuidanceSuggestion(VERSION, VERSION_NAME, VARIANT, VARIANT_NAME,
+                VARIANT_EXTERNAL_NAMESPACE, "differentExternalId", RISK_PROFILE);
+
+        assertEquals(upgradeGuidanceSuggestion, copyUpgradeGuidanceSuggestion, differentUpgradeGuidanceSuggestion);
+    }
 }

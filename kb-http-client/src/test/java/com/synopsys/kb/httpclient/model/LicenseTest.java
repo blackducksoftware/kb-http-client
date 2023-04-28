@@ -65,6 +65,21 @@ public class LicenseTest extends AbstractTest {
     }
 
     @Test
+    public void testConstructorWithNullValues() {
+        License license = new License(NAME, null, null, LAST_UPDATED_AT, SPDX_ID, null, null, META);
+
+        Assert.assertEquals(license.getId(), ID, "Ids should be equal.");
+        Assert.assertEquals(license.getName(), NAME, "Names should be equal.");
+        Assert.assertEquals(license.getCodeSharing(), LicenseCodeSharing.UNKNOWN, "Code sharings should be equal.");
+        Assert.assertEquals(license.getOwnership(), LicenseOwnership.UNKNOWN, "Ownerships should be equal.");
+        Assert.assertEquals(license.getLastUpdatedAt(), LAST_UPDATED_AT, "Last updated ats should be equal.");
+        Assert.assertEquals(license.getSpdxId().orElse(null), SPDX_ID, "SPDX ids should be equal.");
+        Assert.assertFalse(license.isParentDeleted(), "Parent should not be deleted.");
+        Assert.assertEquals(license.getRestriction(), LicenseRestriction.UNKNOWN, "Restrictions should be equal.");
+        Assert.assertEquals(license.getMeta(), META, "Metas should be equal.");
+    }
+
+    @Test
     public void testDeserialization() throws JsonProcessingException {
         License license = new License(NAME, CODE_SHARING, OWNERSHIP, LAST_UPDATED_AT, SPDX_ID, PARENT_DELETED, RESTRICTION, META);
 
@@ -79,5 +94,23 @@ public class LicenseTest extends AbstractTest {
         Assert.assertEquals(result.isParentDeleted(), PARENT_DELETED.booleanValue(), "Is parent deleted flags should be equal.");
         Assert.assertEquals(result.getRestriction(), RESTRICTION, "Restrictions should be equal.");
         Assert.assertEquals(result.getMeta(), META, "Metas should be equal.");
+    }
+
+    @Test
+    public void testHashCode() {
+        License license = new License(NAME, CODE_SHARING, OWNERSHIP, LAST_UPDATED_AT, SPDX_ID, PARENT_DELETED, RESTRICTION, META);
+        License copyLicense = new License(NAME, CODE_SHARING, OWNERSHIP, LAST_UPDATED_AT, SPDX_ID, PARENT_DELETED, RESTRICTION, META);
+        License differentLicense = new License(NAME, CODE_SHARING, OWNERSHIP, LAST_UPDATED_AT, SPDX_ID, PARENT_DELETED, LicenseRestriction.UNKNOWN, META);
+
+        assertHashCode(license, copyLicense, differentLicense);
+    }
+
+    @Test
+    public void testEquals() {
+        License license = new License(NAME, CODE_SHARING, OWNERSHIP, LAST_UPDATED_AT, SPDX_ID, PARENT_DELETED, RESTRICTION, META);
+        License copyLicense = new License(NAME, CODE_SHARING, OWNERSHIP, LAST_UPDATED_AT, SPDX_ID, PARENT_DELETED, RESTRICTION, META);
+        License differentLicense = new License(NAME, CODE_SHARING, OWNERSHIP, LAST_UPDATED_AT, SPDX_ID, PARENT_DELETED, LicenseRestriction.UNKNOWN, META);
+
+        assertEquals(license, copyLicense, differentLicense);
     }
 }

@@ -52,4 +52,22 @@ public class ComponentActivityTest extends AbstractTest {
         Assert.assertEquals(result.getComponent(), COMPONENT, "Components should be equal.");
         Assert.assertNotNull(result.getUpdatedDate(), "Updated date should be initialized.");
     }
+
+    @Test
+    public void testHashCode() {
+        ComponentActivity activity = new ComponentActivity(COMPONENT, UPDATED_DATE);
+        ComponentActivity copyActivity = new ComponentActivity(COMPONENT, UPDATED_DATE);
+        ComponentActivity differentActivity = new ComponentActivity(COMPONENT, OffsetDateTime.now().plusDays(1L));
+
+        assertHashCode(activity, copyActivity, differentActivity);
+    }
+
+    @Test
+    public void testEquals() {
+        ComponentActivity activity = new ComponentActivity(COMPONENT, UPDATED_DATE);
+        ComponentActivity copyActivity = new ComponentActivity(COMPONENT, UPDATED_DATE);
+        ComponentActivity differentActivity = new ComponentActivity(COMPONENT, OffsetDateTime.now().plusDays(1L));
+
+        assertEquals(activity, copyActivity, differentActivity);
+    }
 }

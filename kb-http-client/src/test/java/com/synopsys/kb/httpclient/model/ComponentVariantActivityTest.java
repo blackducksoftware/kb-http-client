@@ -52,4 +52,22 @@ public class ComponentVariantActivityTest extends AbstractTest {
         Assert.assertEquals(result.getVariant(), VARIANT, "Variants should be equal.");
         Assert.assertNotNull(result.getUpdatedDate(), "Updated date should be initialized.");
     }
+
+    @Test
+    public void testHashCode() {
+        ComponentVariantActivity activity = new ComponentVariantActivity(VARIANT, UPDATED_DATE);
+        ComponentVariantActivity copyActivity = new ComponentVariantActivity(VARIANT, UPDATED_DATE);
+        ComponentVariantActivity differentActivity = new ComponentVariantActivity(VARIANT, OffsetDateTime.now().plusDays(1L));
+
+        assertHashCode(activity, copyActivity, differentActivity);
+    }
+
+    @Test
+    public void testEquals() {
+        ComponentVariantActivity activity = new ComponentVariantActivity(VARIANT, UPDATED_DATE);
+        ComponentVariantActivity copyActivity = new ComponentVariantActivity(VARIANT, UPDATED_DATE);
+        ComponentVariantActivity differentActivity = new ComponentVariantActivity(VARIANT, OffsetDateTime.now().plusDays(1L));
+
+        assertEquals(activity, copyActivity, differentActivity);
+    }
 }

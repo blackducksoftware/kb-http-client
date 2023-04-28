@@ -87,4 +87,26 @@ public class LicenseDefinitionItemTest extends AbstractTest {
         Assert.assertFalse(result.getHref().isPresent(), "HREF should not be present.");
         Assert.assertEquals(result.getLicenseDefinition().orElse(null), licenseDefinition, "License definitions should be equal.");
     }
+
+    @Test
+    public void testHashCode() {
+        String href = LICENSES_BASE_HREF + LICENSE_ID_1;
+        LicenseDefinitionItem licenseDefinitionItem = new LicenseDefinitionItem(href, null);
+        LicenseDefinitionItem copyLicenseDefinitionItem = new LicenseDefinitionItem(href, null);
+        String differentHref = LICENSES_BASE_HREF + LICENSE_ID_2;
+        LicenseDefinitionItem differentLicenseDefinitionItem = new LicenseDefinitionItem(differentHref, null);
+
+        assertHashCode(licenseDefinitionItem, copyLicenseDefinitionItem, differentLicenseDefinitionItem);
+    }
+
+    @Test
+    public void testEquals() {
+        String href = LICENSES_BASE_HREF + LICENSE_ID_1;
+        LicenseDefinitionItem licenseDefinitionItem = new LicenseDefinitionItem(href, null);
+        LicenseDefinitionItem copyLicenseDefinitionItem = new LicenseDefinitionItem(href, null);
+        String differentHref = LICENSES_BASE_HREF + LICENSE_ID_2;
+        LicenseDefinitionItem differentLicenseDefinitionItem = new LicenseDefinitionItem(differentHref, null);
+
+        assertEquals(licenseDefinitionItem, copyLicenseDefinitionItem, differentLicenseDefinitionItem);
+    }
 }

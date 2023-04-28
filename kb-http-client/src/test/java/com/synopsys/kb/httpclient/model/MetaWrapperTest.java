@@ -47,4 +47,26 @@ public class MetaWrapperTest extends AbstractTest {
 
         Assert.assertEquals(result.getMeta().orElse(null), META, "Metas should be equal.");
     }
+
+    @Test
+    public void testHashCode() {
+        MetaWrapper metaWrapper = new MetaWrapper(META);
+        MetaWrapper copyMetaWrapper = new MetaWrapper(META);
+        Meta differentMeta = new Meta(BASE_HREF + "/api/components/" + UUID.randomUUID(),
+                List.of(new Link("moved", BASE_HREF + "/api/components/" + UUID.randomUUID())));
+        MetaWrapper differentMetaWrapper = new MetaWrapper(differentMeta);
+
+        assertHashCode(metaWrapper, copyMetaWrapper, differentMetaWrapper);
+    }
+
+    @Test
+    public void testEquals() {
+        MetaWrapper metaWrapper = new MetaWrapper(META);
+        MetaWrapper copyMetaWrapper = new MetaWrapper(META);
+        Meta differentMeta = new Meta(BASE_HREF + "/api/components/" + UUID.randomUUID(),
+                List.of(new Link("moved", BASE_HREF + "/api/components/" + UUID.randomUUID())));
+        MetaWrapper differentMetaWrapper = new MetaWrapper(differentMeta);
+
+        assertEquals(metaWrapper, copyMetaWrapper, differentMetaWrapper);
+    }
 }

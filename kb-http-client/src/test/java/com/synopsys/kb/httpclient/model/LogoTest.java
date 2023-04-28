@@ -45,4 +45,22 @@ public class LogoTest extends AbstractTest {
         Assert.assertEquals(result.getType(), TYPE, "Types should be equal.");
         Assert.assertEquals(result.getUrl(), URL, "URLs should be equal.");
     }
+
+    @Test
+    public void testHashCode() {
+        Logo logo = new Logo(TYPE, URL);
+        Logo copyLogo = new Logo(TYPE, URL);
+        Logo differentLogo = new Logo(TYPE, "https://different.com");
+
+        assertHashCode(logo, copyLogo, differentLogo);
+    }
+
+    @Test
+    public void testEquals() {
+        Logo logo = new Logo(TYPE, URL);
+        Logo copyLogo = new Logo(TYPE, URL);
+        Logo differentLogo = new Logo(TYPE, "https://different.com");
+
+        assertEquals(logo, copyLogo, differentLogo);
+    }
 }

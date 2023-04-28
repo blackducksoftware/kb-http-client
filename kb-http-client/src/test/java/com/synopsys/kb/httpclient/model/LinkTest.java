@@ -68,4 +68,22 @@ public class LinkTest extends AbstractTest {
         Assert.assertEquals(result.getRel(), REL, "Rels should be equal.");
         Assert.assertEquals(result.getHref(), HREF, "HREFs should be equal.");
     }
+
+    @Test
+    public void testHashCode() {
+        Link link = new Link(REL, HREF);
+        Link copyLink = new Link(REL, HREF);
+        Link differentLink = new Link(REL, BASE_HREF + "/api/differences");
+
+        assertHashCode(link, copyLink, differentLink);
+    }
+
+    @Test
+    public void testEquals() {
+        Link link = new Link(REL, HREF);
+        Link copyLink = new Link(REL, HREF);
+        Link differentLink = new Link(REL, BASE_HREF + "/api/differences");
+
+        assertEquals(link, copyLink, differentLink);
+    }
 }

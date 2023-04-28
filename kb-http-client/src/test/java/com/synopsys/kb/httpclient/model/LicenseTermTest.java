@@ -57,4 +57,22 @@ public class LicenseTermTest extends AbstractTest {
         Assert.assertEquals(result.getResponsibility(), RESPONSIBILITY, "Responsibilities should be equal.");
         Assert.assertEquals(result.getMeta(), META, "Metas should be equal.");
     }
+
+    @Test
+    public void testHashCode() {
+        LicenseTerm licenseTerm = new LicenseTerm(NAME, DESCRIPTION, RESPONSIBILITY, META);
+        LicenseTerm copyLicenseTerm = new LicenseTerm(NAME, DESCRIPTION, RESPONSIBILITY, META);
+        LicenseTerm differentLicenseTerm = new LicenseTerm(NAME, DESCRIPTION, LicenseTermResponsibility.REQUIRED, META);
+
+        assertHashCode(licenseTerm, copyLicenseTerm, differentLicenseTerm);
+    }
+
+    @Test
+    public void testEquals() {
+        LicenseTerm licenseTerm = new LicenseTerm(NAME, DESCRIPTION, RESPONSIBILITY, META);
+        LicenseTerm copyLicenseTerm = new LicenseTerm(NAME, DESCRIPTION, RESPONSIBILITY, META);
+        LicenseTerm differentLicenseTerm = new LicenseTerm(NAME, DESCRIPTION, LicenseTermResponsibility.REQUIRED, META);
+
+        assertEquals(licenseTerm, copyLicenseTerm, differentLicenseTerm);
+    }
 }

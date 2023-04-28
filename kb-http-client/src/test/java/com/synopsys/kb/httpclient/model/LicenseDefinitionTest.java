@@ -190,4 +190,28 @@ public class LicenseDefinitionTest extends AbstractTest {
         Assert.assertEquals(result.getType(), TYPE, "Types should be equal.");
         Assert.assertEquals(result.getItems(), items, "Items should be equal.");
     }
+
+    @Test
+    public void testHashCode() {
+        String href = LICENSES_BASE_HREF + LICENSE_ID_1;
+        LicenseDefinitionItem licenseDefinitionItem = new LicenseDefinitionItem(href, null);
+        List<LicenseDefinitionItem> items = List.of(licenseDefinitionItem);
+        LicenseDefinition licenseDefinition = new LicenseDefinition(TYPE, items);
+        LicenseDefinition copyLicenseDefinition = new LicenseDefinition(TYPE, items);
+        LicenseDefinition differentLicenseDefinition = new LicenseDefinition(LicenseDefinitionType.CONJUNCTIVE, items);
+
+        assertHashCode(licenseDefinition, copyLicenseDefinition, differentLicenseDefinition);
+    }
+
+    @Test
+    public void testEquals() {
+        String href = LICENSES_BASE_HREF + LICENSE_ID_1;
+        LicenseDefinitionItem licenseDefinitionItem = new LicenseDefinitionItem(href, null);
+        List<LicenseDefinitionItem> items = List.of(licenseDefinitionItem);
+        LicenseDefinition licenseDefinition = new LicenseDefinition(TYPE, items);
+        LicenseDefinition copyLicenseDefinition = new LicenseDefinition(TYPE, items);
+        LicenseDefinition differentLicenseDefinition = new LicenseDefinition(LicenseDefinitionType.CONJUNCTIVE, items);
+
+        assertEquals(licenseDefinition, copyLicenseDefinition, differentLicenseDefinition);
+    }
 }

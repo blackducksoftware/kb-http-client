@@ -54,6 +54,27 @@ public class ComponentVersionSummaryTest extends AbstractTest {
     }
 
     @Test
+    public void testConstructorWithNullValues() {
+        ComponentVersionSummary componentVersionSummary = new ComponentVersionSummary(VERSION, RELEASED_ON, null, META);
+
+        Assert.assertEquals(componentVersionSummary.getVersion().orElse(null), VERSION, "Versions should be equal.");
+        Assert.assertEquals(componentVersionSummary.getReleasedOn().orElse(null), RELEASED_ON, "Released ons should be equal.");
+        Assert.assertFalse(componentVersionSummary.isDeleted(), "Component version should not be deleted.");
+        Assert.assertEquals(componentVersionSummary.getMeta(), META, "Metas should be equal.");
+
+        Assert.assertEquals(componentVersionSummary.getId(), ID, "Ids should be equal.");
+        Assert.assertEquals(componentVersionSummary.getComponentId(), COMPONENT_ID, "Component ids should be equal.");
+    }
+
+    @Test
+    public void testCopyConstructor() {
+        ComponentVersionSummary sourceComponentVersionSummary = new ComponentVersionSummary(VERSION, RELEASED_ON, DELETED, META);
+        ComponentVersionSummary componentVersionSummary = new ComponentVersionSummary(sourceComponentVersionSummary);
+
+        Assert.assertEquals(componentVersionSummary, sourceComponentVersionSummary, "Component version summaries should be equal.");
+    }
+
+    @Test
     public void testDeserialization() throws JsonProcessingException {
         ComponentVersionSummary componentVersionSummary = new ComponentVersionSummary(VERSION, RELEASED_ON, DELETED, META);
 
@@ -64,5 +85,23 @@ public class ComponentVersionSummaryTest extends AbstractTest {
         Assert.assertNotNull(result.getReleasedOn().orElse(null), "Released on should be initialized.");
         Assert.assertFalse(result.isDeleted(), "Component version should not be deleted.");
         Assert.assertEquals(result.getMeta(), META, "Metas should be equal.");
+    }
+
+    @Test
+    public void testHashCode() {
+        ComponentVersionSummary componentVersionSummary = new ComponentVersionSummary(VERSION, RELEASED_ON, DELETED, META);
+        ComponentVersionSummary copyComponentVersionSummary = new ComponentVersionSummary(VERSION, RELEASED_ON, DELETED, META);
+        ComponentVersionSummary differentComponentVersionSummary = new ComponentVersionSummary(VERSION, RELEASED_ON, Boolean.TRUE, META);
+
+        assertHashCode(componentVersionSummary, copyComponentVersionSummary, differentComponentVersionSummary);
+    }
+
+    @Test
+    public void testEquals() {
+        ComponentVersionSummary componentVersionSummary = new ComponentVersionSummary(VERSION, RELEASED_ON, DELETED, META);
+        ComponentVersionSummary copyComponentVersionSummary = new ComponentVersionSummary(VERSION, RELEASED_ON, DELETED, META);
+        ComponentVersionSummary differentComponentVersionSummary = new ComponentVersionSummary(VERSION, RELEASED_ON, Boolean.TRUE, META);
+
+        assertEquals(componentVersionSummary, copyComponentVersionSummary, differentComponentVersionSummary);
     }
 }

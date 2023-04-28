@@ -45,6 +45,17 @@ public class RiskProfileTest extends AbstractTest {
     }
 
     @Test
+    public void testConstructorWithNullValues() {
+        RiskProfile riskProfile = new RiskProfile(null, null, null, null, null);
+
+        Assert.assertEquals(riskProfile.getCritical(), 0, "Critical counts should be equal.");
+        Assert.assertEquals(riskProfile.getHigh(), 0, "High counts should be equal.");
+        Assert.assertEquals(riskProfile.getMedium(), 0, "Medium counts should be equal.");
+        Assert.assertEquals(riskProfile.getLow(), 0, "Low counts should be equal.");
+        Assert.assertEquals(riskProfile.getUnscored(), 0, "Unscored counts should be equal.");
+    }
+
+    @Test
     public void testDeserialization() throws JsonProcessingException {
         RiskProfile riskProfile = new RiskProfile(CRITICAL, HIGH, MEDIUM, LOW, UNSCORED);
 
@@ -56,5 +67,23 @@ public class RiskProfileTest extends AbstractTest {
         Assert.assertEquals(result.getMedium(), MEDIUM, "Medium counts should be equal.");
         Assert.assertEquals(result.getLow(), LOW, "Low counts should be equal.");
         Assert.assertEquals(result.getUnscored(), UNSCORED, "Unscored counts should be equal.");
+    }
+
+    @Test
+    public void testHashCode() {
+        RiskProfile riskProfile = new RiskProfile(CRITICAL, HIGH, MEDIUM, LOW, UNSCORED);
+        RiskProfile copyRiskProfile = new RiskProfile(CRITICAL, HIGH, MEDIUM, LOW, UNSCORED);
+        RiskProfile differentRiskProfile = new RiskProfile(CRITICAL, HIGH, MEDIUM, LOW, 9999);
+
+        assertHashCode(riskProfile, copyRiskProfile, differentRiskProfile);
+    }
+
+    @Test
+    public void testEquals() {
+        RiskProfile riskProfile = new RiskProfile(CRITICAL, HIGH, MEDIUM, LOW, UNSCORED);
+        RiskProfile copyRiskProfile = new RiskProfile(CRITICAL, HIGH, MEDIUM, LOW, UNSCORED);
+        RiskProfile differentRiskProfile = new RiskProfile(CRITICAL, HIGH, MEDIUM, LOW, 9999);
+
+        assertEquals(riskProfile, copyRiskProfile, differentRiskProfile);
     }
 }
