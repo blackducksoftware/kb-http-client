@@ -102,7 +102,7 @@ KbConfiguration kbConfiguration = new KbConfiguration("my_license_key");
 IKbHttpApi kbHttpApi = new KbHttpClientFactory().create(httpClientConfiguration, kbConfiguration);
 ILicenseApi licenseApi = kbHttpApi.getLicenseApi();
 // Result contains the request method, request URI, HTTP response if available, and exception cause if available.
-Result<License> result = licenseApi.find(licenseId);
+Result<License> result = licenseApi.findLicenseV4(licenseId);
 // HTTP response contains response code, expected response codes, message body if available, and migration metadata if available.
 Optional<HttpResponse<License>> httpResponse = result.getHttpResponse();
 ```

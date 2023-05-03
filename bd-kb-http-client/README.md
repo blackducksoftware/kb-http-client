@@ -69,7 +69,7 @@ KbConfiguration kbConfiguration = new KbConfiguration("my_license_key");
 IBdKbHttpApi bdKbHttpApi = new BdKbHttpClientFactory().create(httpClientConfiguration, kbConfiguration);
 IBdLicenseApi bdLicenseApi = bdKbHttpApi.getBdLicenseApi();
 // Result contains the request method, request URI, HTTP response if available, and exception cause if available.
-Result<BdLicense> result = bdLicenseApi.findBd(licenseId);
+Result<BdLicense> result = bdLicenseApi.findLicenseV4(licenseId);
 // HTTP response contains response code, expected response codes, message body if available, and migration metadata if available.
 Optional<HttpResponse<BdLicense>> httpResponse = result.getHttpResponse();
 ```
