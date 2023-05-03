@@ -18,6 +18,7 @@ import javax.annotation.Nullable;
 
 import com.synopsys.kb.httpclient.model.License;
 import com.synopsys.kb.httpclient.model.LicenseTerm;
+import com.synopsys.kb.httpclient.model.LicenseVsl;
 import com.synopsys.kb.httpclient.model.Page;
 
 /**
@@ -130,6 +131,12 @@ public interface ILicenseApi {
     /**
      * Finds license terms for a given license.
      * 
+     * Version: 4
+     * 
+     * Expected response codes
+     * 200 OK
+     * 404 Not Found
+     * 
      * @param pageRequest
      *            The page request.
      * @param licenseId
@@ -137,4 +144,18 @@ public interface ILicenseApi {
      * @return Returns the license term page result.
      */
     HttpResult<Page<LicenseTerm>> findLicenseTermsByLicense(PageRequest pageRequest, UUID licenseId);
+
+    /**
+     * Finds many license VSLs.
+     * 
+     * Version: 4
+     * 
+     * Expected response codes
+     * 200 OK
+     * 
+     * @param pageRequest
+     *            The page request.
+     * @return Returns the license VSL page result.
+     */
+    HttpResult<Page<LicenseVsl>> findManyLicenseVsls(PageRequest pageRequest);
 }
