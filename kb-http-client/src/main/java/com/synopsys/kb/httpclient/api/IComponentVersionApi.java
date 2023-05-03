@@ -59,7 +59,7 @@ public interface IComponentVersionApi {
      *            The vulnerability score priority.
      * @return Returns the component version result.
      */
-    HttpResult<ComponentVersion> find(UUID componentVersionId,
+    HttpResult<ComponentVersion> findComponentVersionV4(UUID componentVersionId,
             VulnerabilitySourcePriority vulnerabilitySourcePriority,
             VulnerabilityScorePriority vulnerabilityScorePriority);
 
@@ -82,7 +82,7 @@ public interface IComponentVersionApi {
      *            The component version id.
      * @return Returns the next version result.
      */
-    HttpResult<NextVersion> findNextVersion(UUID componentVersionId);
+    HttpResult<NextVersion> findNextVersionV4(UUID componentVersionId);
 
     /**
      * Finds the CVE vulnerabilities associated to the given component version.
@@ -112,7 +112,7 @@ public interface IComponentVersionApi {
      *            Supported fields are id and description. Optional.
      * @return Returns the CVE vulnerability page result.
      */
-    HttpResult<Page<CveVulnerability>> findCveVulnerabilities(PageRequest pageRequest,
+    HttpResult<Page<CveVulnerability>> findCveVulnerabilitiesV7(PageRequest pageRequest,
             UUID componentVersionId,
             @Nullable String searchTermFilter);
 
@@ -149,7 +149,7 @@ public interface IComponentVersionApi {
      *            Supported fields are id and description. Optional.
      * @return Returns the BDSA vulnerability page result.
      */
-    HttpResult<Page<BdsaVulnerability>> findBdsaVulnerabilities(PageRequest pageRequest,
+    HttpResult<Page<BdsaVulnerability>> findBdsaVulnerabilitiesV7(PageRequest pageRequest,
             UUID componentVersionId,
             @Nullable String searchTermFilter);
 
@@ -182,7 +182,7 @@ public interface IComponentVersionApi {
      *            The vulnerability score priority.
      * @return Returns the upgrade guidance result.
      */
-    HttpResult<UpgradeGuidance> findUpgradeGuidance(UUID componentVersionId,
+    HttpResult<UpgradeGuidance> findUpgradeGuidanceV4(UUID componentVersionId,
             VulnerabilitySourcePriority vulnerabilitySourcePriority,
             VulnerabilityScorePriority vulnerabilityScorePriority);
 }

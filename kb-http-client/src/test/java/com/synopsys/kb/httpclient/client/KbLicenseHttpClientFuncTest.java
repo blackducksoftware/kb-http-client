@@ -47,8 +47,8 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindLicenseWhenAbsent() {
-        HttpResult<License> httpResult = licenseApi.findLicense(UUID.randomUUID());
+    public void testFindLicenseV4WhenAbsent() {
+        HttpResult<License> httpResult = licenseApi.findLicenseV4(UUID.randomUUID());
 
         HttpResponse<License> httpResponse = httpResult.getHttpResponse().orElse(null);
 
@@ -58,9 +58,9 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindLicenseWhenPresent() {
+    public void testFindLicenseV4WhenPresent() {
         UUID apacheLicense20LicenseId = UUID.fromString("7cae335f-1193-421e-92f1-8802b4243e93");
-        HttpResult<License> httpResult = licenseApi.findLicense(apacheLicense20LicenseId);
+        HttpResult<License> httpResult = licenseApi.findLicenseV4(apacheLicense20LicenseId);
 
         HttpResponse<License> httpResponse = httpResult.getHttpResponse().orElse(null);
 
@@ -73,9 +73,9 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindLicenseText() {
+    public void testFindLicenseTextV1() {
         UUID apacheLicense20LicenseId = UUID.fromString("7cae335f-1193-421e-92f1-8802b4243e93");
-        HttpResult<String> httpResult = licenseApi.findLicenseText(apacheLicense20LicenseId);
+        HttpResult<String> httpResult = licenseApi.findLicenseTextV1(apacheLicense20LicenseId);
 
         HttpResponse<String> httpResponse = httpResult.getHttpResponse().orElse(null);
 
@@ -87,10 +87,10 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindManyLicenses() {
+    public void testFindManyLicensesV4() {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
 
-        HttpResult<Page<License>> httpResult = licenseApi.findManyLicenses(pageRequest, null, null);
+        HttpResult<Page<License>> httpResult = licenseApi.findManyLicensesV4(pageRequest, null, null);
 
         HttpResponse<Page<License>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
@@ -105,11 +105,11 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindLicensesByLicenseTerm() {
+    public void testFindLicensesByLicenseTermV4() {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
         UUID licenseTermId = UUID.fromString("052a4876-67d7-4f72-959f-e56914ecbb33");
 
-        HttpResult<Page<License>> httpResult = licenseApi.findLicensesByLicenseTerm(pageRequest, licenseTermId);
+        HttpResult<Page<License>> httpResult = licenseApi.findLicensesByLicenseTermV4(pageRequest, licenseTermId);
 
         HttpResponse<Page<License>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
@@ -124,10 +124,10 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindLicenseTerm() {
+    public void testFindLicenseTermV4() {
         UUID licenseTermId = UUID.fromString("04625083-2bc6-407c-ba9f-f461152859de");
 
-        HttpResult<LicenseTerm> httpResult = licenseApi.findLicenseTerm(licenseTermId);
+        HttpResult<LicenseTerm> httpResult = licenseApi.findLicenseTermV4(licenseTermId);
 
         HttpResponse<LicenseTerm> httpResponse = httpResult.getHttpResponse().orElse(null);
 
@@ -140,10 +140,10 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindManyLicenseTerms() {
+    public void testFindManyLicenseTermsV4() {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
 
-        HttpResult<Page<LicenseTerm>> httpResult = licenseApi.findManyLicenseTerms(pageRequest);
+        HttpResult<Page<LicenseTerm>> httpResult = licenseApi.findManyLicenseTermsV4(pageRequest);
 
         HttpResponse<Page<LicenseTerm>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
@@ -158,11 +158,11 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindLicenseTermsByLicense() {
+    public void testFindLicenseTermsByLicenseV4() {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
         UUID apacheLicense20LicenseId = UUID.fromString("7cae335f-1193-421e-92f1-8802b4243e93");
 
-        HttpResult<Page<LicenseTerm>> httpResult = licenseApi.findLicenseTermsByLicense(pageRequest, apacheLicense20LicenseId);
+        HttpResult<Page<LicenseTerm>> httpResult = licenseApi.findLicenseTermsByLicenseV4(pageRequest, apacheLicense20LicenseId);
 
         HttpResponse<Page<LicenseTerm>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
@@ -177,10 +177,10 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindManyLicenseVsls() {
+    public void testFindManyLicenseVslsV4() {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
 
-        HttpResult<Page<LicenseVsl>> httpResult = licenseApi.findManyLicenseVsls(pageRequest);
+        HttpResult<Page<LicenseVsl>> httpResult = licenseApi.findManyLicenseVslsV4(pageRequest);
 
         HttpResponse<Page<LicenseVsl>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
@@ -195,10 +195,10 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindManyLicenseFamilyVsls() {
+    public void testFindManyLicenseFamilyVslsV4() {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
 
-        HttpResult<Page<LicenseFamilyVsl>> httpResult = licenseApi.findManyLicenseFamilyVsls(pageRequest);
+        HttpResult<Page<LicenseFamilyVsl>> httpResult = licenseApi.findManyLicenseFamilyVslsV4(pageRequest);
 
         HttpResponse<Page<LicenseFamilyVsl>> httpResponse = httpResult.getHttpResponse().orElse(null);
 

@@ -25,6 +25,8 @@ public interface IBdComponentVariantApi {
     /**
      * Finds a component variant by its id and follows migration links.
      * 
+     * Version: 4
+     * 
      * Expected response codes
      * 200 OK
      * 404 Not Found
@@ -33,5 +35,5 @@ public interface IBdComponentVariantApi {
      *            The component variant id.
      * @return Returns the Black Duck-centric component variant result.
      */
-    HttpResult<BdComponentVariant> find(UUID componentVariantId);
+    HttpResult<BdComponentVariant> findComponentVariantV4(UUID componentVariantId);
 }

@@ -67,7 +67,7 @@ public class BdComponentVersionApi extends AbstractMigratableBdApi implements IB
     }
 
     @Override
-    public MigratableHttpResult<BdComponentVersion> find(UUID componentVersionId,
+    public MigratableHttpResult<BdComponentVersion> findComponentVersionV4(UUID componentVersionId,
             final VulnerabilitySourcePriority vulnerabilitySourcePriority,
             final VulnerabilityScorePriority vulnerabilityScorePriority) {
         Objects.requireNonNull(componentVersionId, "Component version id must be initialized.");
@@ -77,7 +77,7 @@ public class BdComponentVersionApi extends AbstractMigratableBdApi implements IB
         // Find a component version result given a dynamic component version id.
         // Source priority and score priority should remain consistent across multiple requests.
         Function<UUID, HttpResult<ComponentVersion>> resultFunction = (sourceComponentVersionId) -> componentVersionApi
-                .find(sourceComponentVersionId, vulnerabilitySourcePriority, vulnerabilityScorePriority);
+                .findComponentVersionV4(sourceComponentVersionId, vulnerabilitySourcePriority, vulnerabilityScorePriority);
 
         // Convert from a component version to a Black Duck-centric component version.
         Function<ComponentVersion, BdComponentVersion> conversionFunction = (componentVersion) -> {
@@ -88,12 +88,12 @@ public class BdComponentVersionApi extends AbstractMigratableBdApi implements IB
     }
 
     @Override
-    public MigratableHttpResult<NextVersion> findNextVersion(UUID componentVersionId) {
+    public MigratableHttpResult<NextVersion> findNextVersionV4(UUID componentVersionId) {
         Objects.requireNonNull(componentVersionId, "Component version id must be initialized.");
 
         // Find a next version result given a dynamic component version id.
         // Source priority and score priority should remain consistent across multiple requests.
-        Function<UUID, HttpResult<NextVersion>> resultFunction = (sourceComponentVersionId) -> componentVersionApi.findNextVersion(sourceComponentVersionId);
+        Function<UUID, HttpResult<NextVersion>> resultFunction = (sourceComponentVersionId) -> componentVersionApi.findNextVersionV4(sourceComponentVersionId);
 
         // No conversion is required.
         Function<NextVersion, NextVersion> conversionFunction = Function.identity();
@@ -102,7 +102,7 @@ public class BdComponentVersionApi extends AbstractMigratableBdApi implements IB
     }
 
     @Override
-    public MigratableHttpResult<Page<CveVulnerability>> findCveVulnerabilities(final PageRequest pageRequest,
+    public MigratableHttpResult<Page<CveVulnerability>> findCveVulnerabilitiesV7(final PageRequest pageRequest,
             UUID componentVersionId,
             @Nullable final String searchTermFilter) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
@@ -111,7 +111,7 @@ public class BdComponentVersionApi extends AbstractMigratableBdApi implements IB
         // Find a CVE vulnerability page result given a dynamic component version id.
         // Page request should remain consistent across multiple requests.
         Function<UUID, HttpResult<Page<CveVulnerability>>> resultFunction = (sourceComponentVersionId) -> componentVersionApi
-                .findCveVulnerabilities(pageRequest, sourceComponentVersionId, searchTermFilter);
+                .findCveVulnerabilitiesV7(pageRequest, sourceComponentVersionId, searchTermFilter);
 
         // No conversion is required.
         Function<Page<CveVulnerability>, Page<CveVulnerability>> conversionFunction = Function.identity();
@@ -120,7 +120,7 @@ public class BdComponentVersionApi extends AbstractMigratableBdApi implements IB
     }
 
     @Override
-    public MigratableHttpResult<Page<BdsaVulnerability>> findBdsaVulnerabilities(final PageRequest pageRequest,
+    public MigratableHttpResult<Page<BdsaVulnerability>> findBdsaVulnerabilitiesV7(final PageRequest pageRequest,
             UUID componentVersionId,
             @Nullable final String searchTermFilter) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
@@ -129,7 +129,7 @@ public class BdComponentVersionApi extends AbstractMigratableBdApi implements IB
         // Find a BDSA vulnerability page result given a dynamic component version id.
         // Page request should remain consistent across multiple requests.
         Function<UUID, HttpResult<Page<BdsaVulnerability>>> resultFunction = (sourceComponentVersionId) -> componentVersionApi
-                .findBdsaVulnerabilities(pageRequest, sourceComponentVersionId, searchTermFilter);
+                .findBdsaVulnerabilitiesV7(pageRequest, sourceComponentVersionId, searchTermFilter);
 
         // No conversion is required.
         Function<Page<BdsaVulnerability>, Page<BdsaVulnerability>> conversionFunction = Function.identity();
@@ -138,7 +138,7 @@ public class BdComponentVersionApi extends AbstractMigratableBdApi implements IB
     }
 
     @Override
-    public MigratableHttpResult<UpgradeGuidance> findUpgradeGuidance(UUID componentVersionId,
+    public MigratableHttpResult<UpgradeGuidance> findUpgradeGuidanceV4(UUID componentVersionId,
             final VulnerabilitySourcePriority vulnerabilitySourcePriority,
             final VulnerabilityScorePriority vulnerabilityScorePriority) {
         Objects.requireNonNull(componentVersionId, "Component version id must be initialized.");
@@ -148,7 +148,7 @@ public class BdComponentVersionApi extends AbstractMigratableBdApi implements IB
         // Find a component version result given a dynamic component version id.
         // Source priority and score priority should remain consistent across multiple requests.
         Function<UUID, HttpResult<UpgradeGuidance>> resultFunction = (sourceComponentVersionId) -> componentVersionApi
-                .findUpgradeGuidance(sourceComponentVersionId, vulnerabilitySourcePriority, vulnerabilityScorePriority);
+                .findUpgradeGuidanceV4(sourceComponentVersionId, vulnerabilitySourcePriority, vulnerabilityScorePriority);
 
         // No conversion is required.
         Function<UpgradeGuidance, UpgradeGuidance> conversionFunction = Function.identity();

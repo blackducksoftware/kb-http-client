@@ -38,8 +38,8 @@ public class KbAuthenticationHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testAuthenticateWithInvalidLicenseKey() {
-        HttpResult<Authentication> httpResult = authenticationApi.authenticate("this-is-an-invalid-bds-license-key");
+    public void testAuthenticateV1WithInvalidLicenseKey() {
+        HttpResult<Authentication> httpResult = authenticationApi.authenticateV1("this-is-an-invalid-bds-license-key");
 
         HttpResponse<Authentication> httpResponse = httpResult.getHttpResponse().orElse(null);
 
@@ -49,10 +49,10 @@ public class KbAuthenticationHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testAuthenticateWithValidLicenseKey() {
+    public void testAuthenticateV1WithValidLicenseKey() {
         // Requires KB test product registration key.
         String licenseKey = getLicenseKey();
-        HttpResult<Authentication> httpResult = authenticationApi.authenticate(licenseKey);
+        HttpResult<Authentication> httpResult = authenticationApi.authenticateV1(licenseKey);
 
         HttpResponse<Authentication> httpResponse = httpResult.getHttpResponse().orElse(null);
 

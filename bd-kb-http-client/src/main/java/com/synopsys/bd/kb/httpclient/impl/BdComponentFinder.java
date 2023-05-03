@@ -133,7 +133,7 @@ public class BdComponentFinder {
         }
 
         // Find component version
-        MigratableHttpResult<BdComponentVersion> componentVersionHttpResult = bdComponentVersionApi.find(componentVersionId,
+        MigratableHttpResult<BdComponentVersion> componentVersionHttpResult = bdComponentVersionApi.findComponentVersionV4(componentVersionId,
                 vulnerabilitySourcePriority, vulnerabilityScorePriority);
         UUID sourceComponentId = componentVersionHttpResult.getMigratableHttpResponse()
                 .map((migratableHttpResponse) -> migratableHttpResponse.getMessageBody().orElse(null))
@@ -145,7 +145,7 @@ public class BdComponentFinder {
         } // Component version presence. Continue to find parent component result.
 
         // Find parent component
-        MigratableHttpResult<Component> componentHttpResult = bdComponentApi.findComponent(sourceComponentId);
+        MigratableHttpResult<Component> componentHttpResult = bdComponentApi.findComponentV4(sourceComponentId);
         UUID destinationComponentId = componentHttpResult.getMigratableHttpResponse()
                 .map((migratableHttpResponse) -> migratableHttpResponse.getMessageBody().orElse(null))
                 .map(Component::getId).orElse(null);
@@ -178,7 +178,7 @@ public class BdComponentFinder {
         }
 
         // Find component variant
-        HttpResult<BdComponentVariant> componentVariantHttpResult = bdComponentVariantApi.find(componentVariantId);
+        HttpResult<BdComponentVariant> componentVariantHttpResult = bdComponentVariantApi.findComponentVariantV4(componentVariantId);
         UUID sourceComponentVersionId = componentVariantHttpResult.getHttpResponse()
                 .map((httpResponse) -> httpResponse.getMessageBody().orElse(null))
                 .map(BdComponentVariant::getComponentVersionId).orElse(null);
@@ -188,7 +188,7 @@ public class BdComponentFinder {
         } // Component variant presence. Continue to find parent component version result.
 
         // Find parent component version
-        MigratableHttpResult<BdComponentVersion> componentVersionHttpResult = bdComponentVersionApi.find(sourceComponentVersionId,
+        MigratableHttpResult<BdComponentVersion> componentVersionHttpResult = bdComponentVersionApi.findComponentVersionV4(sourceComponentVersionId,
                 vulnerabilitySourcePriority, vulnerabilityScorePriority);
         BdComponentVersion componentVersion = componentVersionHttpResult.getMigratableHttpResponse()
                 .map((migratableHttpResponse) -> migratableHttpResponse.getMessageBody().orElse(null)).orElse(null);
@@ -207,7 +207,7 @@ public class BdComponentFinder {
         }
 
         // Find grandparent component
-        MigratableHttpResult<Component> componentHttpResult = bdComponentApi.findComponent(sourceComponentId);
+        MigratableHttpResult<Component> componentHttpResult = bdComponentApi.findComponentV4(sourceComponentId);
         UUID destinationComponentId = componentHttpResult.getMigratableHttpResponse()
                 .map((migratableHttpResponse) -> migratableHttpResponse.getMessageBody().orElse(null))
                 .map(Component::getId).orElse(null);

@@ -38,10 +38,10 @@ public class BdComponentVariantApi extends AbstractBdApi implements IBdComponent
     }
 
     @Override
-    public HttpResult<BdComponentVariant> find(UUID componentVariantId) {
+    public HttpResult<BdComponentVariant> findComponentVariantV4(UUID componentVariantId) {
         Objects.requireNonNull(componentVariantId, "Component variant id must be initialized.");
 
-        HttpResult<ComponentVariant> httpResult = componentVariantApi.find(componentVariantId);
+        HttpResult<ComponentVariant> httpResult = componentVariantApi.findComponentVariantV4(componentVariantId);
 
         // Convert a component variant to a BD component variant.
         Function<ComponentVariant, BdComponentVariant> conversionFunction = (componentVariant) -> {

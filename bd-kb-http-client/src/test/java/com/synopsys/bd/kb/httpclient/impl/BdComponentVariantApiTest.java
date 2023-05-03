@@ -84,14 +84,14 @@ public class BdComponentVariantApiTest extends AbstractBdTest {
     }
 
     @Test
-    public void testFind() {
+    public void testFindComponentVariantV4() {
         ComponentVariant componentVariant = new ComponentVariant(VERSION, EXTERNAL_NAMESPACE, EXTERNAL_ID, EXTERNAL_NAMESPACE_DISTRIBUTION, PACKAGE_URL, TYPE,
                 LICENSE_DEFINITION, DELETED, COMPONENT_INTELLIGENCE, META);
         HttpResponse<ComponentVariant> sourceHttpResponse = new HttpResponse<>(200, Set.of(200, 404), componentVariant, null);
         HttpResult<ComponentVariant> sourceResult = new HttpResult<>("GET", HREF, sourceHttpResponse);
-        Mockito.when(componentVariantApi.find(COMPONENT_VARIANT_ID)).thenReturn(sourceResult);
+        Mockito.when(componentVariantApi.findComponentVariantV4(COMPONENT_VARIANT_ID)).thenReturn(sourceResult);
 
-        HttpResult<BdComponentVariant> httpResult = bdComponentVariantApi.find(COMPONENT_VARIANT_ID);
+        HttpResult<BdComponentVariant> httpResult = bdComponentVariantApi.findComponentVariantV4(COMPONENT_VARIANT_ID);
 
         assertHttpResult(sourceResult, httpResult);
     }

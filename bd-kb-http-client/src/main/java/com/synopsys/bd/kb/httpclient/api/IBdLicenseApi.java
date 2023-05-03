@@ -17,8 +17,8 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.synopsys.bd.kb.httpclient.model.BdLicense;
-import com.synopsys.kb.httpclient.api.PageRequest;
 import com.synopsys.kb.httpclient.api.HttpResult;
+import com.synopsys.kb.httpclient.api.PageRequest;
 import com.synopsys.kb.httpclient.model.Page;
 
 /**
@@ -30,6 +30,8 @@ public interface IBdLicenseApi {
     /**
      * Finds a Black Duck-centric license by its id.
      * 
+     * Version: 4
+     * 
      * Expected response codes
      * 200 OK
      * 404 Not Found
@@ -38,10 +40,12 @@ public interface IBdLicenseApi {
      *            The license id.
      * @return Returns the Black Duck-centric license result.
      */
-    HttpResult<BdLicense> findLicense(UUID licenseId);
+    HttpResult<BdLicense> findLicenseV4(UUID licenseId);
 
     /**
      * Finds many Black Duck-centric licenses.
+     * 
+     * Version: 4
      * 
      * Expected response codes
      * 200 OK
@@ -57,12 +61,14 @@ public interface IBdLicenseApi {
      *            restriction. Optional.
      * @return Returns the Black Duck-centric license page result.
      */
-    HttpResult<Page<BdLicense>> findManyLicenses(PageRequest pageRequest,
+    HttpResult<Page<BdLicense>> findManyLicensesV4(PageRequest pageRequest,
             @Nullable String searchTermFilter,
             @Nullable Map<String, String> filters);
 
     /**
      * Finds Black Duck-centric licenses that are associated to the given license term.
+     * 
+     * Version: 4
      * 
      * Expected response codes
      * 200 OK
@@ -74,5 +80,5 @@ public interface IBdLicenseApi {
      *            The license term id.
      * @return Returns the license page result.
      */
-    HttpResult<Page<BdLicense>> findLicensesByLicenseTerm(PageRequest pageRequest, UUID licenseTermId);
+    HttpResult<Page<BdLicense>> findLicensesByLicenseTermV4(PageRequest pageRequest, UUID licenseTermId);
 }

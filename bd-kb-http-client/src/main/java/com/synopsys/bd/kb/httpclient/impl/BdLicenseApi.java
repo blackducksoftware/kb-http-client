@@ -46,10 +46,10 @@ public class BdLicenseApi extends AbstractBdApi implements IBdLicenseApi {
     }
 
     @Override
-    public HttpResult<BdLicense> findLicense(UUID licenseId) {
+    public HttpResult<BdLicense> findLicenseV4(UUID licenseId) {
         Objects.requireNonNull(licenseId, "License id must be initialized.");
 
-        HttpResult<License> httpResult = licenseApi.findLicense(licenseId);
+        HttpResult<License> httpResult = licenseApi.findLicenseV4(licenseId);
 
         // Convert a license to a BD license.
         Function<License, BdLicense> conversionFunction = (license) -> {
@@ -60,12 +60,12 @@ public class BdLicenseApi extends AbstractBdApi implements IBdLicenseApi {
     }
 
     @Override
-    public HttpResult<Page<BdLicense>> findManyLicenses(PageRequest pageRequest,
+    public HttpResult<Page<BdLicense>> findManyLicensesV4(PageRequest pageRequest,
             @Nullable String searchTermFilter,
             @Nullable Map<String, String> filters) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
 
-        HttpResult<Page<License>> httpResult = licenseApi.findManyLicenses(pageRequest, searchTermFilter, filters);
+        HttpResult<Page<License>> httpResult = licenseApi.findManyLicensesV4(pageRequest, searchTermFilter, filters);
 
         Function<Page<License>, Page<BdLicense>> conversionFunction = (licensePage) -> {
             int totalCount = licensePage.getTotalCount();
@@ -79,11 +79,11 @@ public class BdLicenseApi extends AbstractBdApi implements IBdLicenseApi {
     }
 
     @Override
-    public HttpResult<Page<BdLicense>> findLicensesByLicenseTerm(PageRequest pageRequest, UUID licenseTermId) {
+    public HttpResult<Page<BdLicense>> findLicensesByLicenseTermV4(PageRequest pageRequest, UUID licenseTermId) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
         Objects.requireNonNull(licenseTermId, "License term id must be initialized.");
 
-        HttpResult<Page<License>> httpResult = licenseApi.findLicensesByLicenseTerm(pageRequest, licenseTermId);
+        HttpResult<Page<License>> httpResult = licenseApi.findLicensesByLicenseTermV4(pageRequest, licenseTermId);
 
         Function<Page<License>, Page<BdLicense>> conversionFunction = (licensePage) -> {
             int totalCount = licensePage.getTotalCount();

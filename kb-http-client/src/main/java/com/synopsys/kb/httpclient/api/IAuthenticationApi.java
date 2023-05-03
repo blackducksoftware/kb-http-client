@@ -33,5 +33,5 @@ public interface IAuthenticationApi {
      *            The license key.
      * @return Returns the authentication result.
      */
-    HttpResult<Authentication> authenticate(String licenseKey);
+    HttpResult<Authentication> authenticateV1(String licenseKey);
 }

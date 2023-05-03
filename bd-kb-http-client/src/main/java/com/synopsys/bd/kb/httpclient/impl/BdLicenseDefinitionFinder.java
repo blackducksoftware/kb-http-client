@@ -118,7 +118,7 @@ public class BdLicenseDefinitionFinder {
     private Optional<BdLicense> findBdLicense(UUID licenseId) {
         // License definition finder does not provide an explicit caching mechanism itself for duplicative finds of the
         // same license id.
-        HttpResult<BdLicense> bdLicenseHttpResult = bdLicenseApi.findLicense(licenseId);
+        HttpResult<BdLicense> bdLicenseHttpResult = bdLicenseApi.findLicenseV4(licenseId);
 
         return bdLicenseHttpResult.getHttpResponse().map((httpResponse) -> httpResponse.getMessageBody().orElse(null));
     }

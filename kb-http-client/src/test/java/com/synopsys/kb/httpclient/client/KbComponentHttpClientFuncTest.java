@@ -52,9 +52,9 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindComponent() {
+    public void testFindComponentV4() {
         UUID componentId = UUID.fromString("b75f622a-30da-46e4-a9c9-56f4ab75e22e");
-        HttpResult<Component> httpResult = componentApi.findComponent(componentId);
+        HttpResult<Component> httpResult = componentApi.findComponentV4(componentId);
 
         HttpResponse<Component> httpResponse = httpResult.getHttpResponse().orElse(null);
 
@@ -74,9 +74,9 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindComponentWhenMergeMigrated() {
+    public void testFindComponentV4WhenMergeMigrated() {
         UUID mergeComponentId = UUID.fromString("d82fb719-977c-49aa-b799-3953356aa15c");
-        HttpResult<Component> httpResult = componentApi.findComponent(mergeComponentId);
+        HttpResult<Component> httpResult = componentApi.findComponentV4(mergeComponentId);
 
         HttpResponse<Component> httpResponse = httpResult.getHttpResponse().orElse(null);
 
@@ -90,9 +90,9 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindComponentWhenSplitMigrated() {
+    public void testFindComponentV4WhenSplitMigrated() {
         UUID splitComponentId = UUID.fromString("2510dcac-ef8a-4088-a60c-ae6605054c3c");
-        HttpResult<Component> httpResult = componentApi.findComponent(splitComponentId);
+        HttpResult<Component> httpResult = componentApi.findComponentV4(splitComponentId);
 
         HttpResponse<Component> httpResponse = httpResult.getHttpResponse().orElse(null);
 
@@ -106,11 +106,11 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindComponentVersionsByComponent() {
+    public void testFindComponentVersionsByComponentV4() {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
         UUID componentId = UUID.fromString("b75f622a-30da-46e4-a9c9-56f4ab75e22e");
 
-        HttpResult<Page<ComponentVersion>> httpResult = componentApi.findComponentVersionsByComponent(pageRequest, componentId, null,
+        HttpResult<Page<ComponentVersion>> httpResult = componentApi.findComponentVersionsByComponentV4(pageRequest, componentId, null,
                 VulnerabilitySourcePriority.BDSA,
                 VulnerabilityScorePriority.CVSS_3, Boolean.FALSE);
 
@@ -134,11 +134,11 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindComponentVersionsByComponentWhenMergeMigrated() {
+    public void testFindComponentVersionsByComponentV4WhenMergeMigrated() {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
         UUID mergeComponentId = UUID.fromString("d82fb719-977c-49aa-b799-3953356aa15c");
 
-        HttpResult<Page<ComponentVersion>> httpResult = componentApi.findComponentVersionsByComponent(pageRequest, mergeComponentId, null,
+        HttpResult<Page<ComponentVersion>> httpResult = componentApi.findComponentVersionsByComponentV4(pageRequest, mergeComponentId, null,
                 VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3, Boolean.FALSE);
 
         HttpResponse<Page<ComponentVersion>> httpResponse = httpResult.getHttpResponse().orElse(null);
@@ -153,11 +153,11 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindComponentVersionsByComponentWhenSplitMigrated() {
+    public void testFindComponentVersionsByComponentV4WhenSplitMigrated() {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
         UUID splitComponentId = UUID.fromString("2510dcac-ef8a-4088-a60c-ae6605054c3c");
 
-        HttpResult<Page<ComponentVersion>> httpResult = componentApi.findComponentVersionsByComponent(pageRequest, splitComponentId, null,
+        HttpResult<Page<ComponentVersion>> httpResult = componentApi.findComponentVersionsByComponentV4(pageRequest, splitComponentId, null,
                 VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3, Boolean.FALSE);
 
         HttpResponse<Page<ComponentVersion>> httpResponse = httpResult.getHttpResponse().orElse(null);
@@ -172,11 +172,11 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindComponentVersionSummariesByComponent() {
+    public void testFindComponentVersionSummariesByComponentV2() {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
         UUID componentId = UUID.fromString("b75f622a-30da-46e4-a9c9-56f4ab75e22e");
 
-        HttpResult<Page<ComponentVersionSummary>> httpResult = componentApi.findComponentVersionSummariesByComponent(pageRequest, componentId, null,
+        HttpResult<Page<ComponentVersionSummary>> httpResult = componentApi.findComponentVersionSummariesByComponentV2(pageRequest, componentId, null,
                 Boolean.FALSE);
 
         HttpResponse<Page<ComponentVersionSummary>> httpResponse = httpResult.getHttpResponse().orElse(null);
@@ -199,11 +199,11 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindComponentVersionSummariesByComponentWhenMergeMigrated() {
+    public void testFindComponentVersionSummariesByComponentV2WhenMergeMigrated() {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
         UUID mergeComponentId = UUID.fromString("d82fb719-977c-49aa-b799-3953356aa15c");
 
-        HttpResult<Page<ComponentVersionSummary>> httpResult = componentApi.findComponentVersionSummariesByComponent(pageRequest, mergeComponentId, null,
+        HttpResult<Page<ComponentVersionSummary>> httpResult = componentApi.findComponentVersionSummariesByComponentV2(pageRequest, mergeComponentId, null,
                 Boolean.FALSE);
 
         HttpResponse<Page<ComponentVersionSummary>> httpResponse = httpResult.getHttpResponse().orElse(null);
@@ -218,11 +218,11 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindComponentVersionSummariesByComponentWhenSplitMigrated() {
+    public void testFindComponentVersionSummariesByComponentV2WhenSplitMigrated() {
         PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
         UUID splitComponentId = UUID.fromString("2510dcac-ef8a-4088-a60c-ae6605054c3c");
 
-        HttpResult<Page<ComponentVersionSummary>> httpResult = componentApi.findComponentVersionSummariesByComponent(pageRequest, splitComponentId, null,
+        HttpResult<Page<ComponentVersionSummary>> httpResult = componentApi.findComponentVersionSummariesByComponentV2(pageRequest, splitComponentId, null,
                 Boolean.FALSE);
 
         HttpResponse<Page<ComponentVersionSummary>> httpResponse = httpResult.getHttpResponse().orElse(null);
@@ -237,10 +237,10 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindOngoingVersionByComponent() {
+    public void testFindOngoingVersionByComponentV3() {
         UUID componentId = UUID.fromString("9f74f66e-5c27-48d0-9083-e31e3563b7b2");
 
-        HttpResult<OngoingVersion> httpResult = componentApi.findOngoingVersionByComponent(componentId);
+        HttpResult<OngoingVersion> httpResult = componentApi.findOngoingVersionByComponentV3(componentId);
 
         HttpResponse<OngoingVersion> httpResponse = httpResult.getHttpResponse().orElse(null);
 
@@ -260,10 +260,10 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindOngoingVersionByComponentWhenMergeMigrated() {
+    public void testFindOngoingVersionByComponentV3WhenMergeMigrated() {
         UUID mergeComponentId = UUID.fromString("d82fb719-977c-49aa-b799-3953356aa15c");
 
-        HttpResult<OngoingVersion> httpResult = componentApi.findOngoingVersionByComponent(mergeComponentId);
+        HttpResult<OngoingVersion> httpResult = componentApi.findOngoingVersionByComponentV3(mergeComponentId);
 
         HttpResponse<OngoingVersion> httpResponse = httpResult.getHttpResponse().orElse(null);
 
@@ -277,10 +277,10 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindOngoingVersionByComponentWhenSplitMigrated() {
+    public void testFindOngoingVersionByComponentV3WhenSplitMigrated() {
         UUID splitComponentId = UUID.fromString("2510dcac-ef8a-4088-a60c-ae6605054c3c");
 
-        HttpResult<OngoingVersion> httpResult = componentApi.findOngoingVersionByComponent(splitComponentId);
+        HttpResult<OngoingVersion> httpResult = componentApi.findOngoingVersionByComponentV3(splitComponentId);
 
         HttpResponse<OngoingVersion> httpResponse = httpResult.getHttpResponse().orElse(null);
 
@@ -294,10 +294,10 @@ public class KbComponentHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testSearch() {
+    public void testSearchComponentsV3() {
         PageRequest pageRequest = new PageRequest(0, 100, Collections.emptyList());
         String searchTermFilter = "maven:org.apache.logging.log4j:log4j-core:2.4.1";
-        HttpResult<Page<ComponentSearchResult>> httpResult = componentApi.search(pageRequest, searchTermFilter, false);
+        HttpResult<Page<ComponentSearchResult>> httpResult = componentApi.searchComponentsV3(pageRequest, searchTermFilter, false);
 
         HttpResponse<Page<ComponentSearchResult>> httpResponse = httpResult.getHttpResponse().orElse(null);
 

@@ -33,10 +33,10 @@ import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.synopsys.kb.httpclient.api.AuthorizationProvider;
+import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.api.IComponentVersionApi;
 import com.synopsys.kb.httpclient.api.KbConfiguration;
 import com.synopsys.kb.httpclient.api.PageRequest;
-import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.model.BdsaVulnerability;
 import com.synopsys.kb.httpclient.model.ComponentVersion;
 import com.synopsys.kb.httpclient.model.CveVulnerability;
@@ -62,7 +62,7 @@ public class KbComponentVersionHttpClient extends AbstractKbHttpClient implement
     }
 
     @Override
-    public HttpResult<ComponentVersion> find(UUID componentVersionId,
+    public HttpResult<ComponentVersion> findComponentVersionV4(UUID componentVersionId,
             VulnerabilitySourcePriority vulnerabilitySourcePriority,
             VulnerabilityScorePriority vulnerabilityScorePriority) {
         Objects.requireNonNull(componentVersionId, "Component version id must be initialized.");
@@ -86,7 +86,7 @@ public class KbComponentVersionHttpClient extends AbstractKbHttpClient implement
     }
 
     @Override
-    public HttpResult<NextVersion> findNextVersion(UUID componentVersionId) {
+    public HttpResult<NextVersion> findNextVersionV4(UUID componentVersionId) {
         Objects.requireNonNull(componentVersionId, "Component version id must be initialized.");
 
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_COMPONENT_DETAILS_V4_JSON);
@@ -102,7 +102,7 @@ public class KbComponentVersionHttpClient extends AbstractKbHttpClient implement
     }
 
     @Override
-    public HttpResult<Page<CveVulnerability>> findCveVulnerabilities(PageRequest pageRequest,
+    public HttpResult<Page<CveVulnerability>> findCveVulnerabilitiesV7(PageRequest pageRequest,
             UUID componentVersionId,
             @Nullable String searchTermFilter) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
@@ -129,7 +129,7 @@ public class KbComponentVersionHttpClient extends AbstractKbHttpClient implement
     }
 
     @Override
-    public HttpResult<Page<BdsaVulnerability>> findBdsaVulnerabilities(PageRequest pageRequest,
+    public HttpResult<Page<BdsaVulnerability>> findBdsaVulnerabilitiesV7(PageRequest pageRequest,
             UUID componentVersionId,
             @Nullable String searchTermFilter) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
@@ -156,7 +156,7 @@ public class KbComponentVersionHttpClient extends AbstractKbHttpClient implement
     }
 
     @Override
-    public HttpResult<UpgradeGuidance> findUpgradeGuidance(UUID componentVersionId,
+    public HttpResult<UpgradeGuidance> findUpgradeGuidanceV4(UUID componentVersionId,
             VulnerabilitySourcePriority vulnerabilitySourcePriority,
             VulnerabilityScorePriority vulnerabilityScorePriority) {
         Objects.requireNonNull(componentVersionId, "Component version id must be initialized.");

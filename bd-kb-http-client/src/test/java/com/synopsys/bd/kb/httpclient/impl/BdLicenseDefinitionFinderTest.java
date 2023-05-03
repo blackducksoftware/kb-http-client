@@ -99,7 +99,7 @@ public class BdLicenseDefinitionFinderTest extends AbstractBdTest {
         HttpResponse<BdLicense> httpResponse1 = new HttpResponse<>(404, Set.of(200, 404), null, null);
         HttpResult<BdLicense> bdLicenseResult1 = new HttpResult<>("GET", BASE_HREF + "/api/licenses/" + LICENSE_ID_1, httpResponse1);
 
-        Mockito.when(bdLicenseApi.findLicense(LICENSE_ID_1)).thenReturn(bdLicenseResult1);
+        Mockito.when(bdLicenseApi.findLicenseV4(LICENSE_ID_1)).thenReturn(bdLicenseResult1);
 
         Optional<BdLicenseDefinition> httpResult = licenseDefinitionFinder.find(licenseDefinition);
 
@@ -114,7 +114,7 @@ public class BdLicenseDefinitionFinderTest extends AbstractBdTest {
         HttpResponse<BdLicense> httpResponse1 = new HttpResponse<>(200, Set.of(200, 404), bdLicense1, null);
         HttpResult<BdLicense> bdLicenseResult1 = new HttpResult<>("GET", BASE_HREF + "/api/licenses/" + LICENSE_ID_1, httpResponse1);
 
-        Mockito.when(bdLicenseApi.findLicense(LICENSE_ID_1)).thenReturn(bdLicenseResult1);
+        Mockito.when(bdLicenseApi.findLicenseV4(LICENSE_ID_1)).thenReturn(bdLicenseResult1);
 
         BdLicenseDefinition bdLicenseDefinition = licenseDefinitionFinder.find(licenseDefinition).orElse(null);
 
@@ -135,8 +135,8 @@ public class BdLicenseDefinitionFinderTest extends AbstractBdTest {
         HttpResponse<BdLicense> httpResponse2 = new HttpResponse<>(404, Set.of(200, 404), null, null);
         HttpResult<BdLicense> bdLicenseResult2 = new HttpResult<>("GET", BASE_HREF + "/api/licenses/" + LICENSE_ID_2, httpResponse2);
 
-        Mockito.when(bdLicenseApi.findLicense(LICENSE_ID_1)).thenReturn(bdLicenseResult1);
-        Mockito.when(bdLicenseApi.findLicense(LICENSE_ID_2)).thenReturn(bdLicenseResult2);
+        Mockito.when(bdLicenseApi.findLicenseV4(LICENSE_ID_1)).thenReturn(bdLicenseResult1);
+        Mockito.when(bdLicenseApi.findLicenseV4(LICENSE_ID_2)).thenReturn(bdLicenseResult2);
 
         Optional<BdLicenseDefinition> httpResult = licenseDefinitionFinder.find(licenseDefinition);
 
@@ -156,8 +156,8 @@ public class BdLicenseDefinitionFinderTest extends AbstractBdTest {
         HttpResponse<BdLicense> httpResponse2 = new HttpResponse<>(200, Set.of(200, 404), bdLicense2, null);
         HttpResult<BdLicense> bdLicenseResult2 = new HttpResult<>("GET", BASE_HREF + "/api/licenses/" + LICENSE_ID_2, httpResponse2);
 
-        Mockito.when(bdLicenseApi.findLicense(LICENSE_ID_1)).thenReturn(bdLicenseResult1);
-        Mockito.when(bdLicenseApi.findLicense(LICENSE_ID_2)).thenReturn(bdLicenseResult2);
+        Mockito.when(bdLicenseApi.findLicenseV4(LICENSE_ID_1)).thenReturn(bdLicenseResult1);
+        Mockito.when(bdLicenseApi.findLicenseV4(LICENSE_ID_2)).thenReturn(bdLicenseResult2);
 
         BdLicenseDefinition bdLicenseDefinition = licenseDefinitionFinder.find(licenseDefinition).orElse(null);
 
@@ -200,10 +200,10 @@ public class BdLicenseDefinitionFinderTest extends AbstractBdTest {
         HttpResponse<BdLicense> httpResponse4 = new HttpResponse<>(404, Set.of(200, 404), null, null);
         HttpResult<BdLicense> bdLicenseResult4 = new HttpResult<>("GET", BASE_HREF + "/api/licenses/" + LICENSE_ID_4, httpResponse4);
 
-        Mockito.when(bdLicenseApi.findLicense(LICENSE_ID_1)).thenReturn(bdLicenseResult1);
-        Mockito.when(bdLicenseApi.findLicense(LICENSE_ID_2)).thenReturn(bdLicenseResult2);
-        Mockito.when(bdLicenseApi.findLicense(LICENSE_ID_3)).thenReturn(bdLicenseResult3);
-        Mockito.when(bdLicenseApi.findLicense(LICENSE_ID_4)).thenReturn(bdLicenseResult4);
+        Mockito.when(bdLicenseApi.findLicenseV4(LICENSE_ID_1)).thenReturn(bdLicenseResult1);
+        Mockito.when(bdLicenseApi.findLicenseV4(LICENSE_ID_2)).thenReturn(bdLicenseResult2);
+        Mockito.when(bdLicenseApi.findLicenseV4(LICENSE_ID_3)).thenReturn(bdLicenseResult3);
+        Mockito.when(bdLicenseApi.findLicenseV4(LICENSE_ID_4)).thenReturn(bdLicenseResult4);
 
         Optional<BdLicenseDefinition> httpResult = licenseDefinitionFinder.find(licenseDefinition);
 
@@ -239,10 +239,10 @@ public class BdLicenseDefinitionFinderTest extends AbstractBdTest {
         HttpResponse<BdLicense> httpResponse4 = new HttpResponse<>(200, Set.of(200, 404), bdLicense4, null);
         HttpResult<BdLicense> bdLicenseResult4 = new HttpResult<>("GET", BASE_HREF + "/api/licenses/" + LICENSE_ID_4, httpResponse4);
 
-        Mockito.when(bdLicenseApi.findLicense(LICENSE_ID_1)).thenReturn(bdLicenseResult1);
-        Mockito.when(bdLicenseApi.findLicense(LICENSE_ID_2)).thenReturn(bdLicenseResult2);
-        Mockito.when(bdLicenseApi.findLicense(LICENSE_ID_3)).thenReturn(bdLicenseResult3);
-        Mockito.when(bdLicenseApi.findLicense(LICENSE_ID_4)).thenReturn(bdLicenseResult4);
+        Mockito.when(bdLicenseApi.findLicenseV4(LICENSE_ID_1)).thenReturn(bdLicenseResult1);
+        Mockito.when(bdLicenseApi.findLicenseV4(LICENSE_ID_2)).thenReturn(bdLicenseResult2);
+        Mockito.when(bdLicenseApi.findLicenseV4(LICENSE_ID_3)).thenReturn(bdLicenseResult3);
+        Mockito.when(bdLicenseApi.findLicenseV4(LICENSE_ID_4)).thenReturn(bdLicenseResult4);
 
         BdLicenseDefinition bdLicenseDefinition = licenseDefinitionFinder.find(licenseDefinition).orElse(null);
 
@@ -306,11 +306,11 @@ public class BdLicenseDefinitionFinderTest extends AbstractBdTest {
         HttpResponse<BdLicense> httpResponse5 = new HttpResponse<>(200, Set.of(200, 404), bdLicense5, null);
         HttpResult<BdLicense> bdLicenseResult5 = new HttpResult<>("GET", BASE_HREF + "/api/licenses/" + LICENSE_ID_5, httpResponse5);
 
-        Mockito.when(bdLicenseApi.findLicense(LICENSE_ID_1)).thenReturn(bdLicenseResult1);
-        Mockito.when(bdLicenseApi.findLicense(LICENSE_ID_2)).thenReturn(bdLicenseResult2);
-        Mockito.when(bdLicenseApi.findLicense(LICENSE_ID_3)).thenReturn(bdLicenseResult3);
-        Mockito.when(bdLicenseApi.findLicense(LICENSE_ID_4)).thenReturn(bdLicenseResult4);
-        Mockito.when(bdLicenseApi.findLicense(LICENSE_ID_5)).thenReturn(bdLicenseResult5);
+        Mockito.when(bdLicenseApi.findLicenseV4(LICENSE_ID_1)).thenReturn(bdLicenseResult1);
+        Mockito.when(bdLicenseApi.findLicenseV4(LICENSE_ID_2)).thenReturn(bdLicenseResult2);
+        Mockito.when(bdLicenseApi.findLicenseV4(LICENSE_ID_3)).thenReturn(bdLicenseResult3);
+        Mockito.when(bdLicenseApi.findLicenseV4(LICENSE_ID_4)).thenReturn(bdLicenseResult4);
+        Mockito.when(bdLicenseApi.findLicenseV4(LICENSE_ID_5)).thenReturn(bdLicenseResult5);
 
         Optional<BdLicenseDefinition> httpResult = licenseDefinitionFinder.find(licenseDefinition1And);
 

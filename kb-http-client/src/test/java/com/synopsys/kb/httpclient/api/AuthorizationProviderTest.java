@@ -71,7 +71,7 @@ public class AuthorizationProviderTest extends AbstractTest {
         HttpResult<Authentication> authenticationHttpResult = new HttpResult<>(Method.POST.name(), "/api/authenticate", httpResponse);
 
         Mockito.when(licenseKeySupplier.get()).thenReturn(LICENSE_KEY);
-        Mockito.when(authenticationApi.authenticate(LICENSE_KEY)).thenReturn(authenticationHttpResult);
+        Mockito.when(authenticationApi.authenticateV1(LICENSE_KEY)).thenReturn(authenticationHttpResult);
 
         Optional<Authentication> result = provider.getOrAuthenticate();
 
@@ -86,7 +86,7 @@ public class AuthorizationProviderTest extends AbstractTest {
         HttpResult<Authentication> authenticationHttpResult = new HttpResult<>(Method.POST.name(), "/api/authenticate", httpResponse);
 
         Mockito.when(licenseKeySupplier.get()).thenReturn(LICENSE_KEY);
-        Mockito.when(authenticationApi.authenticate(LICENSE_KEY)).thenReturn(authenticationHttpResult);
+        Mockito.when(authenticationApi.authenticateV1(LICENSE_KEY)).thenReturn(authenticationHttpResult);
 
         Optional<Authentication> result = provider.getOrAuthenticate();
 

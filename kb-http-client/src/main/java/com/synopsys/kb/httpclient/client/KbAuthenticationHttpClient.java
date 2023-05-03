@@ -28,9 +28,9 @@ import org.apache.hc.core5.http.message.BasicHeader;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.api.IAuthenticationApi;
 import com.synopsys.kb.httpclient.api.KbConfiguration;
-import com.synopsys.kb.httpclient.api.HttpResult;
 import com.synopsys.kb.httpclient.model.Authentication;
 
 /**
@@ -50,7 +50,7 @@ public class KbAuthenticationHttpClient extends AbstractKbHttpClient implements 
     }
 
     @Override
-    public HttpResult<Authentication> authenticate(String licenseKey) {
+    public HttpResult<Authentication> authenticateV1(String licenseKey) {
         Preconditions.checkArgument(!Strings.isNullOrEmpty(licenseKey), "License key must not be null or empty.");
 
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_AUTHENTICATE_V1_JSON);

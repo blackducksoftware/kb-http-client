@@ -51,10 +51,10 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFind() {
+    public void testFindComponentVersionV4() {
         UUID componentVersionId = UUID.fromString("d10c3ded-9e0e-468e-909e-637d81ecc554");
 
-        HttpResult<ComponentVersion> httpResult = componentVersionApi.find(componentVersionId, VulnerabilitySourcePriority.CVE,
+        HttpResult<ComponentVersion> httpResult = componentVersionApi.findComponentVersionV4(componentVersionId, VulnerabilitySourcePriority.CVE,
                 VulnerabilityScorePriority.CVSS_2);
 
         HttpResponse<ComponentVersion> httpResponse = httpResult.getHttpResponse().orElse(null);
@@ -74,10 +74,10 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindWhenMergeMigrated() {
+    public void testFindComponentVersionV4WhenMergeMigrated() {
         UUID componentVersionId = UUID.fromString("0bca7263-1033-4731-9985-809eb87ecfb7");
 
-        HttpResult<ComponentVersion> httpResult = componentVersionApi.find(componentVersionId, VulnerabilitySourcePriority.CVE,
+        HttpResult<ComponentVersion> httpResult = componentVersionApi.findComponentVersionV4(componentVersionId, VulnerabilitySourcePriority.CVE,
                 VulnerabilityScorePriority.CVSS_2);
 
         HttpResponse<ComponentVersion> httpResponse = httpResult.getHttpResponse().orElse(null);
@@ -92,10 +92,10 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindWhenSplitMigrated() {
+    public void testFindComponentVersionV4WhenSplitMigrated() {
         UUID componentVersionId = UUID.fromString("1623f022-fb37-428a-a491-ab1ce1918d16");
 
-        HttpResult<ComponentVersion> httpResult = componentVersionApi.find(componentVersionId, VulnerabilitySourcePriority.CVE,
+        HttpResult<ComponentVersion> httpResult = componentVersionApi.findComponentVersionV4(componentVersionId, VulnerabilitySourcePriority.CVE,
                 VulnerabilityScorePriority.CVSS_2);
 
         HttpResponse<ComponentVersion> httpResponse = httpResult.getHttpResponse().orElse(null);
@@ -110,10 +110,10 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindNextVersion() {
+    public void testFindNextVersionV4() {
         UUID componentVersionId = UUID.fromString("d10c3ded-9e0e-468e-909e-637d81ecc554");
 
-        HttpResult<NextVersion> httpResult = componentVersionApi.findNextVersion(componentVersionId);
+        HttpResult<NextVersion> httpResult = componentVersionApi.findNextVersionV4(componentVersionId);
 
         HttpResponse<NextVersion> httpResponse = httpResult.getHttpResponse().orElse(null);
 
@@ -132,10 +132,10 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindNextVersionWhenMergeMigrated() {
+    public void testFindNextVersionV4WhenMergeMigrated() {
         UUID componentVersionId = UUID.fromString("0bca7263-1033-4731-9985-809eb87ecfb7");
 
-        HttpResult<NextVersion> httpResult = componentVersionApi.findNextVersion(componentVersionId);
+        HttpResult<NextVersion> httpResult = componentVersionApi.findNextVersionV4(componentVersionId);
 
         HttpResponse<NextVersion> httpResponse = httpResult.getHttpResponse().orElse(null);
 
@@ -149,10 +149,10 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindNextVersionWhenSplitMigrated() {
+    public void testFindNextVersionV4WhenSplitMigrated() {
         UUID componentVersionId = UUID.fromString("1623f022-fb37-428a-a491-ab1ce1918d16");
 
-        HttpResult<NextVersion> httpResult = componentVersionApi.findNextVersion(componentVersionId);
+        HttpResult<NextVersion> httpResult = componentVersionApi.findNextVersionV4(componentVersionId);
 
         HttpResponse<NextVersion> httpResponse = httpResult.getHttpResponse().orElse(null);
 
@@ -166,11 +166,11 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindCveVulnerabilities() {
+    public void testFindCveVulnerabilitiesV7() {
         PageRequest pageRequest = new PageRequest(0, 100, Collections.emptyList());
         UUID componentVersionId = UUID.fromString("c365269e-7378-4277-85dc-f84b217e2d89");
 
-        HttpResult<Page<CveVulnerability>> httpResult = componentVersionApi.findCveVulnerabilities(pageRequest, componentVersionId, null);
+        HttpResult<Page<CveVulnerability>> httpResult = componentVersionApi.findCveVulnerabilitiesV7(pageRequest, componentVersionId, null);
 
         HttpResponse<Page<CveVulnerability>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
@@ -192,11 +192,11 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindCveVulnerabilitiesWhenMergeMigrated() {
+    public void testFindCveVulnerabilitiesV7WhenMergeMigrated() {
         PageRequest pageRequest = new PageRequest(0, 100, Collections.emptyList());
         UUID componentVersionId = UUID.fromString("0bca7263-1033-4731-9985-809eb87ecfb7");
 
-        HttpResult<Page<CveVulnerability>> httpResult = componentVersionApi.findCveVulnerabilities(pageRequest, componentVersionId, null);
+        HttpResult<Page<CveVulnerability>> httpResult = componentVersionApi.findCveVulnerabilitiesV7(pageRequest, componentVersionId, null);
 
         HttpResponse<Page<CveVulnerability>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
@@ -210,11 +210,11 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindCveVulnerabilitiesWhenSplitMigrated() {
+    public void testFindCveVulnerabilitiesV7WhenSplitMigrated() {
         PageRequest pageRequest = new PageRequest(0, 100, Collections.emptyList());
         UUID componentVersionId = UUID.fromString("1623f022-fb37-428a-a491-ab1ce1918d16");
 
-        HttpResult<Page<CveVulnerability>> httpResult = componentVersionApi.findCveVulnerabilities(pageRequest, componentVersionId, null);
+        HttpResult<Page<CveVulnerability>> httpResult = componentVersionApi.findCveVulnerabilitiesV7(pageRequest, componentVersionId, null);
 
         HttpResponse<Page<CveVulnerability>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
@@ -228,11 +228,11 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindBdsaVulnerabilities() {
+    public void testFindBdsaVulnerabilitiesV7() {
         PageRequest pageRequest = new PageRequest(0, 100, Collections.emptyList());
         UUID componentVersionId = UUID.fromString("c365269e-7378-4277-85dc-f84b217e2d89");
 
-        HttpResult<Page<BdsaVulnerability>> httpResult = componentVersionApi.findBdsaVulnerabilities(pageRequest, componentVersionId, null);
+        HttpResult<Page<BdsaVulnerability>> httpResult = componentVersionApi.findBdsaVulnerabilitiesV7(pageRequest, componentVersionId, null);
 
         HttpResponse<Page<BdsaVulnerability>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
@@ -254,11 +254,11 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindBdsaVulnerabilitiesWhenMergeMigrated() {
+    public void testFindBdsaVulnerabilitiesV7WhenMergeMigrated() {
         PageRequest pageRequest = new PageRequest(0, 100, Collections.emptyList());
         UUID componentVersionId = UUID.fromString("0bca7263-1033-4731-9985-809eb87ecfb7");
 
-        HttpResult<Page<BdsaVulnerability>> httpResult = componentVersionApi.findBdsaVulnerabilities(pageRequest, componentVersionId, null);
+        HttpResult<Page<BdsaVulnerability>> httpResult = componentVersionApi.findBdsaVulnerabilitiesV7(pageRequest, componentVersionId, null);
 
         HttpResponse<Page<BdsaVulnerability>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
@@ -272,11 +272,11 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindBdsaVulnerabilitiesWhenSplitMigrated() {
+    public void testFindBdsaVulnerabilitiesV7WhenSplitMigrated() {
         PageRequest pageRequest = new PageRequest(0, 100, Collections.emptyList());
         UUID componentVersionId = UUID.fromString("1623f022-fb37-428a-a491-ab1ce1918d16");
 
-        HttpResult<Page<BdsaVulnerability>> httpResult = componentVersionApi.findBdsaVulnerabilities(pageRequest, componentVersionId, null);
+        HttpResult<Page<BdsaVulnerability>> httpResult = componentVersionApi.findBdsaVulnerabilitiesV7(pageRequest, componentVersionId, null);
 
         HttpResponse<Page<BdsaVulnerability>> httpResponse = httpResult.getHttpResponse().orElse(null);
 
@@ -290,10 +290,10 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindUpgradeGuidance() {
+    public void testFindUpgradeGuidanceV4() {
         UUID componentVersionId = UUID.fromString("d10c3ded-9e0e-468e-909e-637d81ecc554");
 
-        HttpResult<UpgradeGuidance> httpResult = componentVersionApi.findUpgradeGuidance(componentVersionId, VulnerabilitySourcePriority.CVE,
+        HttpResult<UpgradeGuidance> httpResult = componentVersionApi.findUpgradeGuidanceV4(componentVersionId, VulnerabilitySourcePriority.CVE,
                 VulnerabilityScorePriority.CVSS_2);
 
         HttpResponse<UpgradeGuidance> httpResponse = httpResult.getHttpResponse().orElse(null);
@@ -313,10 +313,10 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindUpgradeGuidanceWhenMergeMigrated() {
+    public void testFindUpgradeGuidanceV4WhenMergeMigrated() {
         UUID componentVersionId = UUID.fromString("0bca7263-1033-4731-9985-809eb87ecfb7");
 
-        HttpResult<UpgradeGuidance> httpResult = componentVersionApi.findUpgradeGuidance(componentVersionId, VulnerabilitySourcePriority.CVE,
+        HttpResult<UpgradeGuidance> httpResult = componentVersionApi.findUpgradeGuidanceV4(componentVersionId, VulnerabilitySourcePriority.CVE,
                 VulnerabilityScorePriority.CVSS_2);
 
         HttpResponse<UpgradeGuidance> httpResponse = httpResult.getHttpResponse().orElse(null);
@@ -331,10 +331,10 @@ public class KbComponentVersionHttpClientFuncTest extends AbstractFuncTest {
     }
 
     @Test
-    public void testFindUpgradeGuidanceWhenSplitMigrated() {
+    public void testFindUpgradeGuidanceV4WhenSplitMigrated() {
         UUID componentVersionId = UUID.fromString("1623f022-fb37-428a-a491-ab1ce1918d16");
 
-        HttpResult<UpgradeGuidance> httpResult = componentVersionApi.findUpgradeGuidance(componentVersionId, VulnerabilitySourcePriority.CVE,
+        HttpResult<UpgradeGuidance> httpResult = componentVersionApi.findUpgradeGuidanceV4(componentVersionId, VulnerabilitySourcePriority.CVE,
                 VulnerabilityScorePriority.CVSS_2);
 
         HttpResponse<UpgradeGuidance> httpResponse = httpResult.getHttpResponse().orElse(null);

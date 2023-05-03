@@ -59,7 +59,7 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
     }
 
     @Override
-    public HttpResult<License> findLicense(UUID licenseId) {
+    public HttpResult<License> findLicenseV4(UUID licenseId) {
         Objects.requireNonNull(licenseId, "License id must be initialized.");
 
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_COMPONENT_DETAILS_V4_JSON);
@@ -73,7 +73,7 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
     }
 
     @Override
-    public HttpResult<String> findLicenseText(UUID licenseId) {
+    public HttpResult<String> findLicenseTextV1(UUID licenseId) {
         Objects.requireNonNull(licenseId, "License id must be initialized.");
 
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_LICENSE_TEXT_ORIGINAL_V1);
@@ -88,7 +88,7 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
     }
 
     @Override
-    public HttpResult<Page<License>> findManyLicenses(PageRequest pageRequest,
+    public HttpResult<Page<License>> findManyLicensesV4(PageRequest pageRequest,
             @Nullable String searchTermFilter,
             @Nullable Map<String, String> filters) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
@@ -117,7 +117,7 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
     }
 
     @Override
-    public HttpResult<Page<License>> findLicensesByLicenseTerm(PageRequest pageRequest, UUID licenseTermId) {
+    public HttpResult<Page<License>> findLicensesByLicenseTermV4(PageRequest pageRequest, UUID licenseTermId) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
         Objects.requireNonNull(licenseTermId, "License term id must be initialized.");
 
@@ -138,7 +138,7 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
     }
 
     @Override
-    public HttpResult<LicenseTerm> findLicenseTerm(UUID licenseTermId) {
+    public HttpResult<LicenseTerm> findLicenseTermV4(UUID licenseTermId) {
         Objects.requireNonNull(licenseTermId, "License term id must be initialized.");
 
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_COMPONENT_DETAILS_V4_JSON);
@@ -152,7 +152,7 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
     }
 
     @Override
-    public HttpResult<Page<LicenseTerm>> findManyLicenseTerms(PageRequest pageRequest) {
+    public HttpResult<Page<LicenseTerm>> findManyLicenseTermsV4(PageRequest pageRequest) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
 
         Map<String, String> pageRequestParameters = constructPageRequestParameters(pageRequest);
@@ -170,7 +170,7 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
     }
 
     @Override
-    public HttpResult<Page<LicenseTerm>> findLicenseTermsByLicense(PageRequest pageRequest, UUID licenseId) {
+    public HttpResult<Page<LicenseTerm>> findLicenseTermsByLicenseV4(PageRequest pageRequest, UUID licenseId) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
         Objects.requireNonNull(licenseId, "License id must be initialized.");
 
@@ -189,7 +189,7 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
     }
 
     @Override
-    public HttpResult<Page<LicenseVsl>> findManyLicenseVsls(PageRequest pageRequest) {
+    public HttpResult<Page<LicenseVsl>> findManyLicenseVslsV4(PageRequest pageRequest) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
 
         ImmutableListMultimap.Builder<String, String> builder = ImmutableListMultimap.builder();
@@ -207,7 +207,7 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
     }
 
     @Override
-    public HttpResult<Page<LicenseFamilyVsl>> findManyLicenseFamilyVsls(PageRequest pageRequest) {
+    public HttpResult<Page<LicenseFamilyVsl>> findManyLicenseFamilyVslsV4(PageRequest pageRequest) {
         Objects.requireNonNull(pageRequest, "Page request must be initialized.");
 
         ImmutableListMultimap.Builder<String, String> builder = ImmutableListMultimap.builder();

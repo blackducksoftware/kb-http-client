@@ -83,7 +83,7 @@ public class BdComponentFinderTest extends AbstractBdTest {
         MigratableHttpResult<BdComponentVersion> componentVersionResult = new MigratableHttpResult<BdComponentVersion>("GET",
                 BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID, componentVersionHttpResponse, null);
 
-        Mockito.when(bdComponentVersionApi.find(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
+        Mockito.when(bdComponentVersionApi.findComponentVersionV4(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
                 .thenReturn(componentVersionResult);
 
         Optional<BdComponentVersionHierarchy> result = componentFinder.findComponentVersionHierarchy(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA,
@@ -107,9 +107,9 @@ public class BdComponentFinderTest extends AbstractBdTest {
         MigratableHttpResult<Component> componentResult = new MigratableHttpResult<>("GET", BASE_HREF + "/api/components/" + COMPONENT_ID,
                 componentHttpResponse, null);
 
-        Mockito.when(bdComponentVersionApi.find(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
+        Mockito.when(bdComponentVersionApi.findComponentVersionV4(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
                 .thenReturn(componentVersionResult);
-        Mockito.when(bdComponentApi.findComponent(COMPONENT_ID)).thenReturn(componentResult);
+        Mockito.when(bdComponentApi.findComponentV4(COMPONENT_ID)).thenReturn(componentResult);
 
         Optional<BdComponentVersionHierarchy> result = componentFinder.findComponentVersionHierarchy(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA,
                 VulnerabilityScorePriority.CVSS_3);
@@ -147,12 +147,12 @@ public class BdComponentFinderTest extends AbstractBdTest {
         MigratableHttpResult<BdComponentVersion> componentVersionResult2 = new MigratableHttpResult<>("GET", BASE_HREF + "/api/versions/" + componentVersionId2,
                 componentVersionHttpResponse2, null);
 
-        Mockito.when(bdComponentVersionApi.find(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
+        Mockito.when(bdComponentVersionApi.findComponentVersionV4(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
                 .thenReturn(componentVersionResult1);
-        Mockito.when(bdComponentApi.findComponent(COMPONENT_ID)).thenReturn(migratedComponentResult);
-        Mockito.when(bdComponentVersionApi.find(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
+        Mockito.when(bdComponentApi.findComponentV4(COMPONENT_ID)).thenReturn(migratedComponentResult);
+        Mockito.when(bdComponentVersionApi.findComponentVersionV4(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
                 .thenReturn(componentVersionResult2);
-        Mockito.when(bdComponentApi.findComponent(componentId2)).thenReturn(migratedComponentResult);
+        Mockito.when(bdComponentApi.findComponentV4(componentId2)).thenReturn(migratedComponentResult);
 
         Optional<BdComponentVersionHierarchy> result = componentFinder.findComponentVersionHierarchy(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA,
                 VulnerabilityScorePriority.CVSS_3);
@@ -176,9 +176,9 @@ public class BdComponentFinderTest extends AbstractBdTest {
         MigratableHttpResult<Component> componentResult = new MigratableHttpResult<>("GET", BASE_HREF + "/api/components/" + COMPONENT_ID,
                 componentHttpResponse, null);
 
-        Mockito.when(bdComponentVersionApi.find(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
+        Mockito.when(bdComponentVersionApi.findComponentVersionV4(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
                 .thenReturn(componentVersionResult);
-        Mockito.when(bdComponentApi.findComponent(COMPONENT_ID)).thenReturn(componentResult);
+        Mockito.when(bdComponentApi.findComponentV4(COMPONENT_ID)).thenReturn(componentResult);
 
         Optional<BdComponentVersionHierarchy> result = componentFinder.findComponentVersionHierarchy(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA,
                 VulnerabilityScorePriority.CVSS_3);
@@ -224,12 +224,12 @@ public class BdComponentFinderTest extends AbstractBdTest {
         MigratableHttpResult<Component> migratedComponentResult2 = new MigratableHttpResult<>("GET", BASE_HREF + "/api/components/" + componentId3,
                 migratedComponentHttpResponse2, null);
 
-        Mockito.when(bdComponentVersionApi.find(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
+        Mockito.when(bdComponentVersionApi.findComponentVersionV4(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
                 .thenReturn(componentVersionResult1);
-        Mockito.when(bdComponentApi.findComponent(COMPONENT_ID)).thenReturn(migratedComponentResult1);
-        Mockito.when(bdComponentVersionApi.find(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
+        Mockito.when(bdComponentApi.findComponentV4(COMPONENT_ID)).thenReturn(migratedComponentResult1);
+        Mockito.when(bdComponentVersionApi.findComponentVersionV4(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
                 .thenReturn(componentVersionResult2);
-        Mockito.when(bdComponentApi.findComponent(componentId2)).thenReturn(migratedComponentResult2);
+        Mockito.when(bdComponentApi.findComponentV4(componentId2)).thenReturn(migratedComponentResult2);
 
         Optional<BdComponentVersionHierarchy> result = componentFinder.findComponentVersionHierarchy(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA,
                 VulnerabilityScorePriority.CVSS_3);
@@ -246,7 +246,7 @@ public class BdComponentFinderTest extends AbstractBdTest {
         HttpResult<BdComponentVariant> componentVariantResult = new HttpResult<>("GET", BASE_HREF + "/api/variants/" + COMPONENT_VARIANT_ID,
                 componentVariantHttpResponse);
 
-        Mockito.when(bdComponentVariantApi.find(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult);
+        Mockito.when(bdComponentVariantApi.findComponentVariantV4(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult);
 
         Optional<BdComponentVariantHierarchy> result = componentFinder.findComponentVariantHierarchy(COMPONENT_VARIANT_ID, VulnerabilitySourcePriority.BDSA,
                 VulnerabilityScorePriority.CVSS_3);
@@ -269,8 +269,8 @@ public class BdComponentFinderTest extends AbstractBdTest {
         MigratableHttpResult<BdComponentVersion> componentVersionResult = new MigratableHttpResult<>("GET", BASE_HREF + "/api/versions/" + COMPONENT_VERSION_ID,
                 componentVersionHttpResponse, null);
 
-        Mockito.when(bdComponentVariantApi.find(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult);
-        Mockito.when(bdComponentVersionApi.find(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
+        Mockito.when(bdComponentVariantApi.findComponentVariantV4(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult);
+        Mockito.when(bdComponentVersionApi.findComponentVersionV4(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
                 .thenReturn(componentVersionResult);
 
         Optional<BdComponentVariantHierarchy> result = componentFinder.findComponentVariantHierarchy(COMPONENT_VARIANT_ID, VulnerabilitySourcePriority.BDSA,
@@ -313,13 +313,13 @@ public class BdComponentFinderTest extends AbstractBdTest {
         MigratableHttpResult<Component> componentResult2 = new MigratableHttpResult<>("GET", BASE_HREF + "/api/components/" + componentId2,
                 componentHttpResponse2, null);
 
-        Mockito.when(bdComponentVariantApi.find(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult1);
-        Mockito.when(bdComponentVersionApi.find(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
+        Mockito.when(bdComponentVariantApi.findComponentVariantV4(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult1);
+        Mockito.when(bdComponentVersionApi.findComponentVersionV4(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
                 .thenReturn(migratedComponentVersionResult);
-        Mockito.when(bdComponentVariantApi.find(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult2);
-        Mockito.when(bdComponentVersionApi.find(componentVersionId2, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
+        Mockito.when(bdComponentVariantApi.findComponentVariantV4(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult2);
+        Mockito.when(bdComponentVersionApi.findComponentVersionV4(componentVersionId2, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
                 .thenReturn(migratedComponentVersionResult);
-        Mockito.when(bdComponentApi.findComponent(componentId2)).thenReturn(componentResult2);
+        Mockito.when(bdComponentApi.findComponentV4(componentId2)).thenReturn(componentResult2);
 
         Optional<BdComponentVariantHierarchy> result = componentFinder.findComponentVariantHierarchy(COMPONENT_VARIANT_ID, VulnerabilitySourcePriority.BDSA,
                 VulnerabilityScorePriority.CVSS_3);
@@ -349,10 +349,10 @@ public class BdComponentFinderTest extends AbstractBdTest {
         MigratableHttpResult<Component> componentResult = new MigratableHttpResult<>("GET", BASE_HREF + "/api/components/" + COMPONENT_ID,
                 componentHttpResponse, null);
 
-        Mockito.when(bdComponentVariantApi.find(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult);
-        Mockito.when(bdComponentVersionApi.find(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
+        Mockito.when(bdComponentVariantApi.findComponentVariantV4(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult);
+        Mockito.when(bdComponentVersionApi.findComponentVersionV4(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
                 .thenReturn(componentVersionResult);
-        Mockito.when(bdComponentApi.findComponent(COMPONENT_ID)).thenReturn(componentResult);
+        Mockito.when(bdComponentApi.findComponentV4(COMPONENT_ID)).thenReturn(componentResult);
 
         Optional<BdComponentVariantHierarchy> result = componentFinder.findComponentVariantHierarchy(COMPONENT_VARIANT_ID, VulnerabilitySourcePriority.BDSA,
                 VulnerabilityScorePriority.CVSS_3);
@@ -404,14 +404,14 @@ public class BdComponentFinderTest extends AbstractBdTest {
         MigratableHttpResult<BdComponentVersion> componentVersionResult2 = new MigratableHttpResult<>("GET", BASE_HREF + "/api/versions/" + componentVersionId2,
                 componentVersionHttpResponse2, null);
 
-        Mockito.when(bdComponentVariantApi.find(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult1);
-        Mockito.when(bdComponentVersionApi.find(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
+        Mockito.when(bdComponentVariantApi.findComponentVariantV4(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult1);
+        Mockito.when(bdComponentVersionApi.findComponentVersionV4(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
                 .thenReturn(componentVersionResult1);
-        Mockito.when(bdComponentApi.findComponent(COMPONENT_ID)).thenReturn(migratedComponentResult);
-        Mockito.when(bdComponentVariantApi.find(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult2);
-        Mockito.when(bdComponentVersionApi.find(componentVersionId2, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
+        Mockito.when(bdComponentApi.findComponentV4(COMPONENT_ID)).thenReturn(migratedComponentResult);
+        Mockito.when(bdComponentVariantApi.findComponentVariantV4(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult2);
+        Mockito.when(bdComponentVersionApi.findComponentVersionV4(componentVersionId2, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
                 .thenReturn(componentVersionResult2);
-        Mockito.when(bdComponentApi.findComponent(componentId2)).thenReturn(migratedComponentResult);
+        Mockito.when(bdComponentApi.findComponentV4(componentId2)).thenReturn(migratedComponentResult);
 
         Optional<BdComponentVariantHierarchy> result = componentFinder.findComponentVariantHierarchy(COMPONENT_VARIANT_ID, VulnerabilitySourcePriority.BDSA,
                 VulnerabilityScorePriority.CVSS_3);
@@ -442,10 +442,10 @@ public class BdComponentFinderTest extends AbstractBdTest {
         MigratableHttpResult<Component> componentResult = new MigratableHttpResult<>("GET", BASE_HREF + "/api/components/" + COMPONENT_ID,
                 componentHttpResponse, null);
 
-        Mockito.when(bdComponentVariantApi.find(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult);
-        Mockito.when(bdComponentVersionApi.find(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
+        Mockito.when(bdComponentVariantApi.findComponentVariantV4(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult);
+        Mockito.when(bdComponentVersionApi.findComponentVersionV4(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
                 .thenReturn(componentVersionResult);
-        Mockito.when(bdComponentApi.findComponent(COMPONENT_ID)).thenReturn(componentResult);
+        Mockito.when(bdComponentApi.findComponentV4(COMPONENT_ID)).thenReturn(componentResult);
 
         Optional<BdComponentVariantHierarchy> result = componentFinder.findComponentVariantHierarchy(COMPONENT_VARIANT_ID, VulnerabilitySourcePriority.BDSA,
                 VulnerabilityScorePriority.CVSS_3);
@@ -505,14 +505,14 @@ public class BdComponentFinderTest extends AbstractBdTest {
         MigratableHttpResult<Component> migratedComponentResult2 = new MigratableHttpResult<>("GET", BASE_HREF + "/api/components/" + componentId3,
                 migratedComponentHttpResponse2, null);
 
-        Mockito.when(bdComponentVariantApi.find(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult1);
-        Mockito.when(bdComponentVersionApi.find(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
+        Mockito.when(bdComponentVariantApi.findComponentVariantV4(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult1);
+        Mockito.when(bdComponentVersionApi.findComponentVersionV4(COMPONENT_VERSION_ID, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
                 .thenReturn(componentVersionResult1);
-        Mockito.when(bdComponentApi.findComponent(COMPONENT_ID)).thenReturn(migratedComponentResult1);
-        Mockito.when(bdComponentVariantApi.find(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult2);
-        Mockito.when(bdComponentVersionApi.find(componentVersionId2, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
+        Mockito.when(bdComponentApi.findComponentV4(COMPONENT_ID)).thenReturn(migratedComponentResult1);
+        Mockito.when(bdComponentVariantApi.findComponentVariantV4(COMPONENT_VARIANT_ID)).thenReturn(componentVariantResult2);
+        Mockito.when(bdComponentVersionApi.findComponentVersionV4(componentVersionId2, VulnerabilitySourcePriority.BDSA, VulnerabilityScorePriority.CVSS_3))
                 .thenReturn(componentVersionResult2);
-        Mockito.when(bdComponentApi.findComponent(componentId2)).thenReturn(migratedComponentResult2);
+        Mockito.when(bdComponentApi.findComponentV4(componentId2)).thenReturn(migratedComponentResult2);
 
         Optional<BdComponentVariantHierarchy> result = componentFinder.findComponentVariantHierarchy(COMPONENT_VARIANT_ID, VulnerabilitySourcePriority.BDSA,
                 VulnerabilityScorePriority.CVSS_3);

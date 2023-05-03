@@ -39,6 +39,8 @@ public interface IBdComponentVersionApi {
      * - As a defensive measure, this API will attempt to follow up to maximum ceiling of requests for migration
      * handling.
      * 
+     * Version: 4
+     * 
      * Expected response codes
      * 200 OK
      * 402 Payment Required
@@ -57,7 +59,7 @@ public interface IBdComponentVersionApi {
      *            The vulnerability score priority.
      * @return Returns the component version result.
      */
-    MigratableHttpResult<BdComponentVersion> find(UUID componentVersionId,
+    MigratableHttpResult<BdComponentVersion> findComponentVersionV4(UUID componentVersionId,
             VulnerabilitySourcePriority vulnerabilitySourcePriority,
             VulnerabilityScorePriority vulnerabilityScorePriority);
 
@@ -68,6 +70,8 @@ public interface IBdComponentVersionApi {
      * the case of a split migration, the first split moved link will be followed.
      * - As a defensive measure, this API will attempt to follow up to maximum ceiling of requests for migration
      * handling.
+     * 
+     * Version: 4
      * 
      * Expected response codes
      * 200 OK
@@ -81,7 +85,7 @@ public interface IBdComponentVersionApi {
      *            The component version id.
      * @return Returns the next version result.
      */
-    MigratableHttpResult<NextVersion> findNextVersion(UUID componentVersionId);
+    MigratableHttpResult<NextVersion> findNextVersionV4(UUID componentVersionId);
 
     /**
      * Finds the CVE vulnerabilities associated to the given component version and follows migration links.
@@ -93,6 +97,8 @@ public interface IBdComponentVersionApi {
      * handling.
      * - Take precaution for differing migration responses when making multiple requests for different pages for the
      * same component version id.
+     * 
+     * Version: 7
      * 
      * Expected response codes
      * 200 OK
@@ -111,7 +117,7 @@ public interface IBdComponentVersionApi {
      *            Supported fields are id and description. Optional.
      * @return Returns the CVE vulnerability page result.
      */
-    MigratableHttpResult<Page<CveVulnerability>> findCveVulnerabilities(PageRequest pageRequest,
+    MigratableHttpResult<Page<CveVulnerability>> findCveVulnerabilitiesV7(PageRequest pageRequest,
             UUID componentVersionId,
             @Nullable String searchTermFilter);
 
@@ -125,6 +131,8 @@ public interface IBdComponentVersionApi {
      * handling.
      * - Take precaution for differing migration responses when making multiple requests for different pages for the
      * same component version id.
+     * 
+     * Version: 7
      * 
      * Expected response codes
      * 200 OK
@@ -145,7 +153,7 @@ public interface IBdComponentVersionApi {
      *            Supported fields are id and description. Optional.
      * @return Returns the BDSA vulnerability page result.
      */
-    MigratableHttpResult<Page<BdsaVulnerability>> findBdsaVulnerabilities(PageRequest pageRequest,
+    MigratableHttpResult<Page<BdsaVulnerability>> findBdsaVulnerabilitiesV7(PageRequest pageRequest,
             UUID componentVersionId,
             @Nullable String searchTermFilter);
 
@@ -157,6 +165,8 @@ public interface IBdComponentVersionApi {
      * - As a defensive measure, this API will attempt to follow up to maximum ceiling of requests for migration
      * handling.
      *
+     * Version: 4
+     * 
      * Expected response codes
      * 200 OK
      * 402 Payment Required
@@ -175,7 +185,7 @@ public interface IBdComponentVersionApi {
      *            The vulnerability score priority.
      * @return Returns the upgrade guidance result.
      */
-    MigratableHttpResult<UpgradeGuidance> findUpgradeGuidance(UUID componentVersionId,
+    MigratableHttpResult<UpgradeGuidance> findUpgradeGuidanceV4(UUID componentVersionId,
             VulnerabilitySourcePriority vulnerabilitySourcePriority,
             VulnerabilityScorePriority vulnerabilityScorePriority);
 }
