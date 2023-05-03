@@ -27,6 +27,7 @@ import com.synopsys.kb.httpclient.api.IKbHttpApi;
 import com.synopsys.kb.httpclient.api.ILicenseApi;
 import com.synopsys.kb.httpclient.api.PageRequest;
 import com.synopsys.kb.httpclient.model.License;
+import com.synopsys.kb.httpclient.model.LicenseFamilyVsl;
 import com.synopsys.kb.httpclient.model.LicenseTerm;
 import com.synopsys.kb.httpclient.model.LicenseVsl;
 import com.synopsys.kb.httpclient.model.Page;
@@ -189,6 +190,24 @@ public class KbLicenseHttpClientFuncTest extends AbstractFuncTest {
         Page<LicenseVsl> page = httpResponse.getMessageBody().orElse(null);
         Assert.assertNotNull(page, "Page should be initialized.");
         List<LicenseVsl> items = page.getItems();
+        Assert.assertNotNull(items, "Items should be initialized.");
+        Assert.assertFalse(items.isEmpty(), "Items should not be empty.");
+    }
+
+    @Test
+    public void testFindManyLicenseFamilyVsls() {
+        PageRequest pageRequest = new PageRequest(0, 10, Collections.emptyList());
+
+        HttpResult<Page<LicenseFamilyVsl>> httpResult = licenseApi.findManyLicenseFamilyVsls(pageRequest);
+
+        HttpResponse<Page<LicenseFamilyVsl>> httpResponse = httpResult.getHttpResponse().orElse(null);
+
+        Assert.assertNotNull(httpResponse, "HTTP response should be initialized.");
+        Assert.assertEquals(httpResponse.getCode(), HttpStatus.SC_OK, "Codes should be equal.");
+        Assert.assertTrue(httpResponse.isMessageBodyPresent(), "Message body should be present.");
+        Page<LicenseFamilyVsl> page = httpResponse.getMessageBody().orElse(null);
+        Assert.assertNotNull(page, "Page should be initialized.");
+        List<LicenseFamilyVsl> items = page.getItems();
         Assert.assertNotNull(items, "Items should be initialized.");
         Assert.assertFalse(items.isEmpty(), "Items should not be empty.");
     }

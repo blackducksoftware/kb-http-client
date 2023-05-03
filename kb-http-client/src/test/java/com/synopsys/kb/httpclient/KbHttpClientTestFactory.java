@@ -50,6 +50,7 @@ import com.synopsys.kb.httpclient.model.IdHolderTest;
 import com.synopsys.kb.httpclient.model.LicenseActivityTest;
 import com.synopsys.kb.httpclient.model.LicenseDefinitionItemTest;
 import com.synopsys.kb.httpclient.model.LicenseDefinitionTest;
+import com.synopsys.kb.httpclient.model.LicenseFamilyVslTest;
 import com.synopsys.kb.httpclient.model.LicenseTermTest;
 import com.synopsys.kb.httpclient.model.LicenseTest;
 import com.synopsys.kb.httpclient.model.LicenseVslTest;
@@ -110,6 +111,7 @@ public class KbHttpClientTestFactory {
                 new LicenseDefinitionTest(),
                 new ListHolderTest(),
                 new LicenseActivityTest(),
+                new LicenseFamilyVslTest(),
                 new LicenseTermTest(),
                 new LicenseTest(),
                 new LicenseVslTest(),

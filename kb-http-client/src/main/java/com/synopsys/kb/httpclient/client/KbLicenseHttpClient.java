@@ -38,6 +38,7 @@ import com.synopsys.kb.httpclient.api.ILicenseApi;
 import com.synopsys.kb.httpclient.api.KbConfiguration;
 import com.synopsys.kb.httpclient.api.PageRequest;
 import com.synopsys.kb.httpclient.model.License;
+import com.synopsys.kb.httpclient.model.LicenseFamilyVsl;
 import com.synopsys.kb.httpclient.model.LicenseTerm;
 import com.synopsys.kb.httpclient.model.LicenseVsl;
 import com.synopsys.kb.httpclient.model.Page;
@@ -202,6 +203,24 @@ public class KbLicenseHttpClient extends AbstractKbHttpClient implements ILicens
                 DEFAULT_SUCCESS_CODES,
                 Set.of(HttpStatus.SC_OK),
                 new TypeReference<Page<LicenseVsl>>() {
+                });
+    }
+
+    @Override
+    public HttpResult<Page<LicenseFamilyVsl>> findManyLicenseFamilyVsls(PageRequest pageRequest) {
+        Objects.requireNonNull(pageRequest, "Page request must be initialized.");
+
+        ImmutableListMultimap.Builder<String, String> builder = ImmutableListMultimap.builder();
+        Map<String, String> pageRequestParameters = constructPageRequestParameters(pageRequest);
+        ListMultimap<String, String> parameters = builder.putAll(pageRequestParameters.entrySet()).build();
+        Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, KbContentType.KB_COMPONENT_DETAILS_V4_JSON);
+        Collection<Header> headers = List.of(acceptHeader);
+        ClassicHttpRequest request = constructGetHttpRequest("/api/licenses/family-vsl", parameters, headers);
+
+        return execute(request,
+                DEFAULT_SUCCESS_CODES,
+                Set.of(HttpStatus.SC_OK),
+                new TypeReference<Page<LicenseFamilyVsl>>() {
                 });
     }
 }

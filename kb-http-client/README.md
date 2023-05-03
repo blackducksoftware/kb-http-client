@@ -56,6 +56,7 @@ The KB HTTP client makes certain assumptions in favor of convention...
     - Find many license terms
     - Find license terms by license
     - Find many license VSLs
+    - Find many license family VSLs
 + Vulnerability APIs
     - Find CVE vulnerability
     - Find BDSA vulnerability    

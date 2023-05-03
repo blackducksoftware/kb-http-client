@@ -17,6 +17,7 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.synopsys.kb.httpclient.model.License;
+import com.synopsys.kb.httpclient.model.LicenseFamilyVsl;
 import com.synopsys.kb.httpclient.model.LicenseTerm;
 import com.synopsys.kb.httpclient.model.LicenseVsl;
 import com.synopsys.kb.httpclient.model.Page;
@@ -158,4 +159,18 @@ public interface ILicenseApi {
      * @return Returns the license VSL page result.
      */
     HttpResult<Page<LicenseVsl>> findManyLicenseVsls(PageRequest pageRequest);
+
+    /**
+     * Finds many license family VSLs.
+     * 
+     * Version: 4
+     * 
+     * Expected response codes
+     * 200 OK
+     * 
+     * @param pageRequest
+     *            The page request.
+     * @return Returns the license family VSL page result.
+     */
+    HttpResult<Page<LicenseFamilyVsl>> findManyLicenseFamilyVsls(PageRequest pageRequest);
 }
