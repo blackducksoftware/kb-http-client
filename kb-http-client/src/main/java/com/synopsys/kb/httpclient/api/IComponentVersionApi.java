@@ -124,8 +124,7 @@ public interface IComponentVersionApi {
      * - Raw unfiltered BDSA vulnerability representations are returned.
      * - Take precaution for differing migration responses when making multiple requests for different pages for the
      * same component version id.
-     * 
-     * Response codes of 402 Payment Required and 403 Forbidden are recommended to be gracefully handled as an absent
+     * - Response codes of 402 Payment Required and 403 Forbidden are recommended to be gracefully handled as an absent
      * result. These response codes can occur if a KB request is made without the BDSA feature enabled within product
      * licensing.
      * 

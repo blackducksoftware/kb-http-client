@@ -58,6 +58,7 @@ The KB HTTP client makes certain assumptions in favor of convention...
 + Vulnerability APIs
     - Find CVE vulnerability
     - Find BDSA vulnerability    
+    - Find BDSA vulnerability ranges
 + Activity APIs
     - Find component activities
     - Find component ongoing version activities

@@ -30,6 +30,7 @@ import com.synopsys.kb.httpclient.api.SortExpressionTest;
 import com.synopsys.kb.httpclient.api.StaticLicenseKeySupplierTest;
 import com.synopsys.kb.httpclient.model.AuthenticationTest;
 import com.synopsys.kb.httpclient.model.BdsaVulnerabilityActivityTest;
+import com.synopsys.kb.httpclient.model.BdsaVulnerabilityRangeTest;
 import com.synopsys.kb.httpclient.model.BdsaVulnerabilityTest;
 import com.synopsys.kb.httpclient.model.ComponentActivityTest;
 import com.synopsys.kb.httpclient.model.ComponentSearchResultTest;
@@ -80,6 +81,7 @@ public class KbHttpClientTestFactory {
                 new AuthorizationHttpRequestInterceptorTest(),
                 new AuthorizationProviderTest(),
                 new BdsaVulnerabilityActivityTest(),
+                new BdsaVulnerabilityRangeTest(),
                 new BdsaVulnerabilityTest(),
                 new ComponentActivityTest(),
                 new ComponentSearchResultTest(),

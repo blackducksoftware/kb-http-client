@@ -68,7 +68,7 @@ public abstract class AbstractFuncTest {
         String licenseKey = readLicenseKey().orElse(null);
 
         if (null == licenseKey) {
-            throw new SkipException("License key could not be read.");
+            throw new SkipException("License key could not be read.  The license key property may not be provided.");
         }
 
         return licenseKey;
