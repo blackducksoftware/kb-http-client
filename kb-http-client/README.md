@@ -16,7 +16,7 @@ The KB HTTP client library requires Java 11 or later.
 
 ## License
 
-The kb-http-client is licensed under the MIT License.
+The kb-http-client is licensed under the [MIT License](https://github.com/blackducksoftware/kb-http-client/blob/main/LICENSE).
 
 ## Notes and caveats
 
@@ -24,8 +24,8 @@ The KB HTTP client makes certain assumptions in favor of convention...
 
 * HTTP client configuration defaults - Users are encouraged to review configuration and carefully tailor configuration to their needs.
 * Value presence and absence - Representation values received in response from the KB are tailored to the [Black Duck KB REST API](https://kbtest.blackducksoftware.com/docs/index.html) documentation contents.  Fallbacks to default values generally are not assumed and absence of value is preferred in alignment to existing documentation.
-* BDSA feature flags - Requests for BDSA vulnerability data given a license with disabled BDSA feature flag can result in a HTTP 402 Payment Required or HTTP 403 Forbidden response from KnowledgeBase services.   The KB HTTP client gracefully accounts for these response codes for applicable endpoints by translating the response as absent rather than error as a means of graceful handling.   This is done to bolster reliability.   Users still have the option to check for these response codes and handle them in an alternate manner if desired.
-* Authentication and authorization - The KB HTTP client will automatically authenticate to the KnowledgeBase to provide an authorization token.   The KB HTTP client will automatically reauthenticate to the KnowledgeBase when an existing, provided authorization token expires.
+* BDSA feature flags - Requests for BDSA vulnerability data given a license with disabled BDSA feature flag can result in a `HTTP 402 Payment Required` or `HTTP 403 Forbidden` response code from KB services.   The KB HTTP client gracefully accounts for these response codes for applicable endpoints by translating the response as absent rather than error as a means of graceful handling.   This is done to bolster reliability.   Users still have the option to check for these response codes and handle them in an alternate manner if desired.
+* Authentication and authorization - The KB HTTP client will automatically authenticate to the KB to provide an authorization token.   The KB HTTP client will automatically reauthenticate to the KB when an existing, provided authorization token expires.
 
 ## Supported endpoints
 
@@ -81,10 +81,10 @@ The KB HTTP client makes certain assumptions in favor of convention...
                             
 ## Build
 
-+ TestNG is used as the test library harness.
-    - Functional tests are conditionally ran if a JVM parameter of 'synopsys_kb_httpclient_license_key_path' is provided with the path to a present file that contains a single line with the KnowledgeBase license key credential.
++ [TestNG](https://testng.org) is used as the test library harness.
+    - Functional tests are conditionally ran if a JVM parameter of `synopsys_kb_httpclient_license_key_path` is provided with the path to a present file that contains a single line with the KB license key credential.
 + Javadoc is linted and created.
-+ Jacoco is used for code coverage. 
++ [Jacoco](https://github.com/jacoco/jacoco) is used for code coverage. 
 
 ## TODOs
 
@@ -94,7 +94,7 @@ The KB HTTP client makes certain assumptions in favor of convention...
 
 ## Quick Start (code example)
 
-Quick-start for using the KB HTTP client library with an emphasis on using defaults and access to the production KnowledgeBase.  
+Quick-start for using the KB HTTP client library with an emphasis on using defaults and access to the production KB.  
 
 ```java
 // Initialization of the HTTP clients and APIs.

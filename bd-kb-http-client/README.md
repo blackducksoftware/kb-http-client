@@ -15,7 +15,7 @@ The Black Duck-centric KB HTTP client library requires Java 11 or later.
 
 ## License
 
-The bd-kb-http-client is licensed under the MIT License.
+The bd-kb-http-client is licensed under the [MIT License](https://github.com/blackducksoftware/kb-http-client/blob/main/LICENSE).
 
 ## Notes and caveats
 
@@ -31,11 +31,11 @@ The Black Duck-centric KB HTTP client makes certain assumptions in favor of conv
    - Adds a default external id of 'unknown' when no value is present.
    - Adds a default external namespace of 'unknown' when no value is present.
 + License
-   - Adds a license family field that enables support of the RESTRICTED_PROPRIETARY license family.
+   - Adds a license family field that enables support of the `RESTRICTED_PROPRIETARY` license family.
 
-* The BdComponentFinder finds hierarchies of component version and component variant entities.
-* The BdLicenseDefinitionFinder finds complete license definition metadata.
-* The BdVulnerabilityMerger contains utility methods for merging collections of NVD and BDSA vulnerabilities together (presumably for the same component version or component variant).
+* `BdComponentFinder` finds hierarchies of component version and component variant entities.
+* `BdLicenseDefinitionFinder` finds complete license definition metadata.
+* `BdVulnerabilityMerger` contains utility methods for merging collections of NVD and BDSA vulnerabilities together (presumably for the same component version or component variant).
    
 ## Supported operations
 
@@ -61,7 +61,7 @@ The Black Duck-centric KB HTTP client makes certain assumptions in favor of conv
 
 ## Quick Start (code example)
 
-Quick-start for using the Black Duck-centric KB HTTP client library with an emphasis on using defaults and access to the production KnowledgeBase.  
+Quick-start for using the Black Duck-centric KB HTTP client library with an emphasis on using defaults and access to the production KB.  
 
 ```java
 // Initialization of the HTTP clients and APIs.
