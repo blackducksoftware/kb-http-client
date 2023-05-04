@@ -32,9 +32,10 @@ The Black Duck-centric KB HTTP client makes certain assumptions in favor of conv
    - Adds a default external namespace of 'unknown' when no value is present.
 + License
    - Adds a license family field that enables support of the RESTRICTED_PROPRIETARY license family.
-   
-* The vulnerability merger merges collections of vulnerabilities from different sources into a common format.
-* The component finder aggregates collections of component version or component variant hierarchies in a consistent manner.
+
+* The BdComponentFinder finds hierarchies of component version and component variant entities.
+* The BdLicenseDefinitionFinder finds complete license definition metadata.
+* The BdVulnerabilityMerger contains utility methods for merging collections of NVD and BDSA vulnerabilities together (presumably for the same component version or component variant).
    
 ## Supported operations
 
