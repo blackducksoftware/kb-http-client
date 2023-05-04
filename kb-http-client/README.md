@@ -97,12 +97,19 @@ The KB HTTP client makes certain assumptions in favor of convention...
 Quick-start for using the KB HTTP client library with an emphasis on using defaults and access to the production KnowledgeBase.  
 
 ```java
+// Initialization of the HTTP clients and APIs.
 HttpClientConfiguration httpClientConfiguration = HttpClientConfigurationBuilder.create().userAgent("MyApplication/1.0").build();
 KbConfiguration kbConfiguration = new KbConfiguration("my_license_key");
 IKbHttpApi kbHttpApi = new KbHttpClientFactory().create(httpClientConfiguration, kbConfiguration);
+
+/* 
+ * Use the license API to find a license by its license id.
+ * 
+ * HTTP result contains the request method, request URI, HTTP response if available, and exception cause if available.
+ * 
+ * HTTP response contains response code, expected response codes, message body if available, and migration metadata if available.
+ */
 ILicenseApi licenseApi = kbHttpApi.getLicenseApi();
-// Result contains the request method, request URI, HTTP response if available, and exception cause if available.
-Result<License> result = licenseApi.findLicenseV4(licenseId);
-// HTTP response contains response code, expected response codes, message body if available, and migration metadata if available.
-Optional<HttpResponse<License>> httpResponse = result.getHttpResponse();
+HttpResult<License> httpResult = licenseApi.findLicenseV4(licenseId);
+Optional<HttpResponse<License>> httpResponse = httpResult.getHttpResponse();
 ```
