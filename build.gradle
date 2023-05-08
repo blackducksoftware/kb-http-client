@@ -8,6 +8,7 @@ buildscript {
 }
 
 project.ext.moduleName = 'com.synopsys.integration.kb-http-client'
+project.ext.synopsysOverrideIntegrationLicense=true
 version = '0.0.2-SNAPSHOT'
 
 apply plugin: 'com.synopsys.integration.library'
