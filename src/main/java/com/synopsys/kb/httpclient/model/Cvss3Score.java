@@ -112,7 +112,6 @@ public class Cvss3Score {
 
     public Optional<Cvss3ConfidentialityImpact> getConfidentialityImpact() {
         return Optional.ofNullable(confidentialityImpact);
-
     }
 
     public Optional<Cvss3IntegrityImpact> getIntegrityImpact() {
