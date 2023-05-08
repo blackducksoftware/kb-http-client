@@ -1,6 +1,22 @@
+buildscript {
+    apply from: 'https://raw.githubusercontent.com/blackducksoftware/integration-resources/master/gradle_common/buildscript-repositories.gradle', to: buildscript
+    apply from: 'https://raw.githubusercontent.com/blackducksoftware/integration-resources/master/gradle_common/buildscript-dependencies.gradle', to: buildscript
+
+    dependencies {
+        classpath "com.synopsys.integration:common-gradle-plugin:2.0.2"
+    }
+}
+
+project.ext.moduleName = 'com.synopsys.integration.kb-http-client'
+version = '0.0.2-SNAPSHOT'
+
+apply plugin: 'com.synopsys.integration.library'
+
 allprojects {
     apply plugin: 'base'
     apply plugin: 'eclipse'
+    apply plugin: 'java-library'
+    apply plugin: 'jacoco'
 
     // Always download sources, to allow debugging
     eclipse {
@@ -12,11 +28,6 @@ allprojects {
     repositories {
         mavenCentral()
     }
-}
-
-subprojects {
-    apply plugin: 'java-library'
-    apply plugin: 'jacoco'
     
     // Setup default test behavior, including failure logging
     test {
@@ -37,18 +48,19 @@ subprojects {
             attributes("Automatic-Module-Name": "${project.group}.${project.name}".replaceAll("-", "."))
         }
     }
+    
+    assemble.dependsOn sourcesJar
+    assemble.dependsOn javadocJar    
+}
 
-    task sourcesJar(type: Jar, dependsOn: classes) {
-        classifier = 'sources'
-        from sourceSets.main.allSource
-    }
-    
-    task javadocJar(type: Jar, dependsOn: javadoc) {
-    	classifier = 'javadoc'
-    	from javadoc
-	}
-	
-	assemble.dependsOn sourcesJar
-	assemble.dependsOn javadocJar
-    
+dependencies {
+    api 'com.google.guava:guava:31.1-jre'
+    api 'com.fasterxml.jackson.core:jackson-annotations:2.13.4'
+    api 'com.fasterxml.jackson.core:jackson-databind:2.13.4'
+    api 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.13.4'
+    api 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.4'
+    api 'org.apache.httpcomponents.client5:httpclient5:5.2.1'
+
+    testImplementation 'org.testng:testng:7.6.0'
+    testImplementation 'org.mockito:mockito-core:5.2.0'
 }
