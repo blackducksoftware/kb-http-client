@@ -16,7 +16,7 @@ The KB HTTP client library requires Java 11 or later.
 
 ## License
 
-The kb-http-client is licensed under the [MIT License](https://github.com/blackducksoftware/kb-http-client/blob/main/LICENSE).
+Licensed under the [MIT License](https://github.com/blackducksoftware/kb-http-client/blob/main/LICENSE).
 
 ## Notes and caveats
 
