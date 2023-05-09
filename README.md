@@ -20,7 +20,7 @@ Licensed under the [MIT License](https://github.com/blackducksoftware/kb-http-cl
 
 ## Notes and caveats
 
-The KB HTTP client makes certain assumptions in favor of convention...
+The KB HTTP client makes certain assumptions in favor of convention.
 
 * HTTP client configuration defaults - Users are encouraged to review configuration and carefully tailor configuration to their needs.
 * Value presence and absence - Representation values received in response from the KB are tailored to the [Black Duck KB REST API](https://kbtest.blackducksoftware.com/docs/index.html) documentation contents.  Fallbacks to default values generally are not assumed and absence of value is preferred in alignment to existing documentation.
