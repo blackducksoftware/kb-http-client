@@ -68,6 +68,10 @@ public class RiskProfile {
     public int getUnscored() {
         return unscored;
     }
+    
+    public boolean areVulnerabilitiesPresent() {
+    	return ((getCritical() > 0) || (getHigh() > 0) || (getMedium() > 0) || (getLow() > 0) || (getUnscored() > 0));
+    }
 
     @Override
     public int hashCode() {

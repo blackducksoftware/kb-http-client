@@ -56,6 +56,20 @@ public class RiskProfileTest extends AbstractTest {
     }
 
     @Test
+    public void testAreVulnerabilitiesPresentWhenAbsent() {
+    	RiskProfile riskProfile = new RiskProfile(0, 0, 0, 0, 0);
+    	
+    	Assert.assertFalse(riskProfile.areVulnerabilitiesPresent(), "Vulnerabilities should not be present.");
+    }
+    
+    @Test
+    public void testAreVulnerabilitiesPresentWhenPresent() {
+    	RiskProfile riskProfile = new RiskProfile(0, 0, 0, 0, 1);
+    	
+    	Assert.assertTrue(riskProfile.areVulnerabilitiesPresent(), "Vulnerabilities should be present.");
+    }
+    
+    @Test
     public void testDeserialization() throws JsonProcessingException {
         RiskProfile riskProfile = new RiskProfile(CRITICAL, HIGH, MEDIUM, LOW, UNSCORED);
 
